@@ -191,16 +191,30 @@ Buffer: deadline is 2026-06-15. Ship-ready target is 2026-06-12 to leave 3 days 
 - Choose MCP SDK (Python `mcp` package) and pin versions.
 - Sketch the architecture diagram (will be revised, but having a v1 forces clarity).
 
-### Week 2 (May 15 – May 21) — MCP Server v1
-- Implement first 6 typed tool functions (highest-signal, highest-frequency forensic ops):
-  1. `vol3_pslist`, `vol3_pstree`, `vol3_malfind` (memory triage)
-  2. `extract_mft_timeline` (TSK `fls`/`mactime`)
-  3. `parse_evtx` (EvtxECmd JSON output)
-  4. `extract_amcache` + `extract_shimcache` (program execution)
-  5. `extract_prefetch` (PECmd)
-  6. `yara_scan` (mounted image or directory)
-- Each function: validates inputs, runs underlying tool with RO mount, parses output, returns *structured JSON* (not raw text), records `exec_log.jsonl` row with `id|ts|tool|args|output_hash|exit_code`.
-- Spoliation test harness: `pytest` that asserts no file in `/cases/` mtime/ctime changed across a full agent run.
+### Week 2 (May 15 – May 21) — MCP Server v1 ✅ done early (May 9)
+
+**Shipped 9 days early.** 9 typed read-only memory-forensics functions are live as a FastMCP stdio server, all wired through the same architectural pattern:
+
+| Function | Wraps | E2E status |
+|---|---|---|
+| `vol3_image_info` | `windows.info` | ✅ MCP wire round-trip |
+| `vol3_psscan` | `windows.psscan` | ✅ |
+| `vol3_pstree` | `windows.pstree` | ✅ |
+| `vol3_cmdline` | `windows.cmdline` | ✅ |
+| `vol3_netscan` | `windows.netscan` | ✅ asserts 4 baseline RDP IPs |
+| `vol3_filescan` | `windows.filescan` | ✅ slow — asserts StarFury.zip + Vibrainium |
+| `vol3_malfind` | `windows.malfind` | ✅ slow |
+| `vol3_svcscan` | `windows.svcscan` | ✅ |
+| `vol3_userassist` | `windows.registry.userassist` | ✅ |
+
+Each function: validates path → runs Vol3 with `-r jsonl` → parses to structured dict → records audit row with `exec_id`, sha256(args), sha256(raw output), `parsed_summary`, `wall_ms` → returns parsed dict to caller.
+
+55 tests green non-slow + 2 slow (full ~6 min). The MCP server is reachable as `sift-mcp` (entry point in pyproject.toml).
+
+What W2 explicitly deferred to W2.5 / W3:
+- Disk-side functions (TSK + EZ Tools + Plaso). STARK-APT-001 needs them.
+- `vol3_handles` / `vol3_dlllist` / per-PID-filtered variants of psscan/cmdline.
+- Spoliation pytest that exercises a full agent run end-to-end (deferred until orchestrator lands).
 
 ### Week 3 (May 22 – May 28) — Multi-Agent Orchestrator
 - Pick framework: **LangGraph** (best fit — explicit state machine, easy termination conditions, plays well with MCP). Fallback: hand-rolled async loop.

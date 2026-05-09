@@ -1,0 +1,11 @@
+{"ts": "2026-05-09T16:49:52Z", "tool": "ToolSearch", "input": {"query": "select:mcp__sift-owl__vol3_image_info,mcp__sift-owl__vol3_psscan,mcp__sift-owl__vol3_pstree,mcp__sift-owl__vol3_cmdline,mcp__sift-owl__vol3_netscan", "max_results": 5}, "id": "toolu_013iAz4YzEsoMas337nz11St"}
+{"ts": "2026-05-09T16:49:56Z", "tool": "ToolSearch", "input": {"query": "select:mcp__sift-owl__vol3_filescan,mcp__sift-owl__vol3_userassist,mcp__sift-owl__vol3_svcscan,mcp__sift-owl__vol3_malfind", "max_results": 4}, "id": "toolu_01S1xVbVon3AP9EttERr6wrf"}
+{"ts": "2026-05-09T16:50:00Z", "tool": "mcp__sift-owl__vol3_image_info", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01TjHHjNFHWW5PaPYfNbaeAe"}
+{"ts": "2026-05-09T16:50:01Z", "tool": "mcp__sift-owl__vol3_psscan", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01J8BUSDvPSyGgHzoEJaU3rq"}
+{"ts": "2026-05-09T16:50:01Z", "tool": "mcp__sift-owl__vol3_pstree", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_012VQt4omN79TBEHHAZmjveZ"}
+{"ts": "2026-05-09T16:50:05Z", "tool": "mcp__sift-owl__vol3_cmdline", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01NLSPqrgiUzhtjgiAMoThJb"}
+{"ts": "2026-05-09T16:50:05Z", "tool": "mcp__sift-owl__vol3_netscan", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01Qocet3bXoQer2mfkZWFk7g"}
+{"ts": "2026-05-09T16:53:14Z", "tool": "mcp__sift-owl__vol3_userassist", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_016ssmYWY4N6LfQymqg5df8S"}
+{"ts": "2026-05-09T16:53:14Z", "tool": "mcp__sift-owl__vol3_svcscan", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01QHMU8aFjunrUaEqVS4uRdY"}
+{"ts": "2026-05-09T16:53:15Z", "tool": "mcp__sift-owl__vol3_filescan", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_018nez4uUjeEVPjXR2ML8ecM"}
+{"ts": "2026-05-09T16:53:15Z", "tool": "mcp__sift-owl__vol3_malfind", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01HepkohxXBwSwyop7bqVnVb"}

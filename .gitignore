@@ -30,9 +30,11 @@ audit/*
 eval/ground_truth/*/raw/
 
 # --- Eval results: keep curated artifacts (REPORT.md, summary.json, run_meta.json,
-#                   tool_calls.jsonl, final_response.md), exclude bulky run data
+#                   tool_calls.jsonl, final_response.md, audit/exec_log.jsonl),
+#                   exclude bulky run data
 eval/results/**/agent_outputs/
 eval/results/**/transcript.jsonl
+eval/results/**/audit/raw/
 eval/results/**/*.raw
 
 # --- Editor / OS ---
