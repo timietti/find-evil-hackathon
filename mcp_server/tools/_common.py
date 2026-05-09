@@ -209,6 +209,45 @@ class UserAssistArgs(_ImageOnlyArgs):
     pass
 
 
+# ---------------------------------------------------------------------------
+# Disk-side args.
+# ---------------------------------------------------------------------------
+
+
+class EwfVerifyArgs(_StrictModel):
+    image: str = Field(description="Absolute path to the E01 image.")
+
+
+class EwfInfoArgs(_StrictModel):
+    image: str = Field(description="Absolute path to the E01 image.")
+
+
+class TskPartitionTableArgs(_StrictModel):
+    image: str = Field(description="Absolute path to the E01 image.")
+
+
+class TskFsStatArgs(_StrictModel):
+    image: str = Field(description="Absolute path to the E01 image.")
+    offset: int | None = Field(
+        default=None, ge=0,
+        description=(
+            "Partition start sector. Omit for logical-drive images "
+            "(those without a partition table)."
+        ),
+    )
+
+
+class TskFlsListArgs(_StrictModel):
+    image: str = Field(description="Absolute path to the E01 image.")
+    offset: int | None = Field(default=None, ge=0)
+
+
+class TskIcatExtractArgs(_StrictModel):
+    image: str = Field(description="Absolute path to the E01 image.")
+    inode: int = Field(ge=0, description="Inode / MFT entry number to extract.")
+    offset: int | None = Field(default=None, ge=0)
+
+
 class QueryRowsArgs(_StrictModel):
     """Input schema for the `query_rows` follow-up tool.
 

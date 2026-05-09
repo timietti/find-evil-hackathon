@@ -46,6 +46,14 @@ from mcp_server.tools.memory import (
     vol3_svcscan as _svcscan,
     vol3_userassist as _userassist,
 )
+from mcp_server.tools.disk import (
+    ewf_info as _ewf_info,
+    ewf_verify as _ewf_verify,
+    tsk_fls_list as _tsk_fls_list,
+    tsk_fs_stat as _tsk_fs_stat,
+    tsk_icat_extract as _tsk_icat_extract,
+    tsk_partition_table as _tsk_partition_table,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -163,6 +171,73 @@ def vol3_userassist(image: str) -> dict[str, Any]:
     per user hive. Strong indicator for hands-on-keyboard activity (programs
     launched via Explorer/Start menu)."""
     return _userassist({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+# ---------------------------------------------------------------------------
+# Disk-side tools.
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool()
+def ewf_verify(image: str) -> dict[str, Any]:
+    """Verify an E01 image against its stored MD5/SHA1 acquisition hashes.
+
+    SLOW on large images — re-reads every byte. The harness already
+    pre-hashes evidence files; only call this if you specifically need
+    libewf-level integrity confirmation."""
+    return _ewf_verify(image, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def ewf_info(image: str) -> dict[str, Any]:
+    """E01 metadata — case number, examiner, acquisition tool, sector count,
+    stored MD5/SHA1 hashes. Useful first call on any new disk image to
+    confirm chain of custody and image type (logical vs full-disk)."""
+    return _ewf_info(image, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def tsk_partition_table(image: str) -> dict[str, Any]:
+    """`mmls -i ewf <image>` — list partitions and their start sectors.
+
+    Returns 0 partitions for logical-drive images (single-volume captures
+    common in SANS lab data) — that's expected and means subsequent
+    fsstat/fls/icat calls should pass `offset=null`."""
+    return _tsk_partition_table(image, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def tsk_fs_stat(image: str, offset: int | None = None) -> dict[str, Any]:
+    """`fsstat -i ewf [-o offset] <image>` — filesystem type, cluster size,
+    volume name, sector size."""
+    return _tsk_fs_stat(image, offset=offset, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def tsk_fls_list(image: str, offset: int | None = None) -> dict[str, Any]:
+    """`fls -i ewf -r -p -F [-o offset] <image>` — recursive listing of all
+    regular files in the volume, including deleted entries (marked
+    `deleted: true`).
+
+    Truncated at the MCP boundary to the first 50 entries; use
+    `query_rows(<exec_id>, "path", "<substring>")` to drill by filename
+    or by extension. Aggregates `count`, `deleted_count`, `by_extension`,
+    `by_top_dir` are unaffected by truncation."""
+    return _tsk_fls_list(image, offset=offset, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def tsk_icat_extract(
+    image: str, inode: int, offset: int | None = None,
+) -> dict[str, Any]:
+    """Extract a single file from the E01 by inode/MFT entry. Writes to
+    `audit/raw/extracts/<exec_id>.bin` (NEVER to /cases/, NEVER to user-
+    supplied paths). Returns size + sha256 of the extracted bytes plus
+    the on-disk path so subsequent tools (yara_scan, etc.) can reference it."""
+    return _tsk_icat_extract(
+        image, inode=inode, offset=offset,
+        audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
 
 
 @mcp.tool()

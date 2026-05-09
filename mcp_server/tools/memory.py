@@ -160,15 +160,18 @@ def vol3_image_info(
 # Maps tool name → key holding the bulky row list in the parser's output.
 # Used by `_truncate_rows()` and by `query_rows` for re-parse + filtering.
 _ROWS_KEY: dict[str, str] = {
-    "vol3_psscan":     "processes",
-    "vol3_pstree":     "nodes",
-    "vol3_cmdline":    "rows",
-    "vol3_netscan":    "connections",
-    "vol3_filescan":   "files",
-    "vol3_malfind":    "findings",
-    "vol3_svcscan":    "services",
-    "vol3_userassist": "entries",
-    # vol3_image_info has no row list — n/a
+    "vol3_psscan":         "processes",
+    "vol3_pstree":         "nodes",
+    "vol3_cmdline":        "rows",
+    "vol3_netscan":        "connections",
+    "vol3_filescan":       "files",
+    "vol3_malfind":        "findings",
+    "vol3_svcscan":        "services",
+    "vol3_userassist":     "entries",
+    "tsk_partition_table": "partitions",
+    "tsk_fls_list":        "files",
+    # ewf_info / ewf_verify / tsk_fs_stat have no row list — n/a
+    # tsk_icat_extract has no parsed-text output — n/a
 }
 
 # Maps tool name → parser fn (used by query_rows to re-parse raw output).
@@ -176,7 +179,11 @@ _PARSERS: dict[str, Any] = {}
 
 
 def _register_parsers() -> None:
-    """Populated lazily to avoid an import cycle in module-init order."""
+    """Populated lazily to avoid an import cycle in module-init order.
+
+    Disk-side parsers register themselves here too — query_rows needs to
+    know how to re-parse any tool's raw output.
+    """
     if _PARSERS:
         return
     _PARSERS.update({
@@ -189,6 +196,20 @@ def _register_parsers() -> None:
         "vol3_malfind":    parse_malfind,
         "vol3_svcscan":    parse_svcscan,
         "vol3_userassist": parse_userassist,
+    })
+    # Disk-side parsers — registered lazily here to avoid a circular import
+    # at module-load time (tools.disk imports from tools.memory).
+    from mcp_server.parsers.disk import (
+        parse_ewfinfo, parse_ewfverify, parse_fls, parse_fsstat, parse_mmls,
+    )
+    _PARSERS.update({
+        "ewf_info":            parse_ewfinfo,
+        "ewf_verify":          parse_ewfverify,
+        "tsk_partition_table": parse_mmls,
+        "tsk_fs_stat":         parse_fsstat,
+        "tsk_fls_list":        parse_fls,
+        # tsk_icat_extract has no parsed-text output; it writes raw bytes.
+        # Excluded from query_rows by omission.
     })
 
 

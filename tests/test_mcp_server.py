@@ -37,6 +37,7 @@ REQUIRES_SERVER = pytest.mark.skipif(
 )
 
 EXPECTED_TOOLS = {
+    # vol3 (memory)
     "vol3_image_info",
     "vol3_psscan",
     "vol3_pstree",
@@ -46,6 +47,14 @@ EXPECTED_TOOLS = {
     "vol3_malfind",
     "vol3_svcscan",
     "vol3_userassist",
+    # disk
+    "ewf_verify",
+    "ewf_info",
+    "tsk_partition_table",
+    "tsk_fs_stat",
+    "tsk_fls_list",
+    "tsk_icat_extract",
+    # query helper
     "query_rows",
 }
 
