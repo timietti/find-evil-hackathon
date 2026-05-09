@@ -140,6 +140,7 @@ DISALLOWED_BUILTINS = " ".join([
 
 # Allow-list grew by one (`query_rows`) compared to v0.
 ALLOWED_MCP_TOOLS = " ".join([
+    # memory (vol3)
     "mcp__sift-owl__vol3_image_info",
     "mcp__sift-owl__vol3_psscan",
     "mcp__sift-owl__vol3_pstree",
@@ -149,6 +150,14 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__vol3_malfind",
     "mcp__sift-owl__vol3_svcscan",
     "mcp__sift-owl__vol3_userassist",
+    # disk (TSK + EWF)
+    "mcp__sift-owl__ewf_info",
+    "mcp__sift-owl__ewf_verify",
+    "mcp__sift-owl__tsk_partition_table",
+    "mcp__sift-owl__tsk_fs_stat",
+    "mcp__sift-owl__tsk_fls_list",
+    "mcp__sift-owl__tsk_icat_extract",
+    # drill helper
     "mcp__sift-owl__query_rows",
 ])
 
