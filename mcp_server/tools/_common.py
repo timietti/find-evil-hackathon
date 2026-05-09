@@ -195,3 +195,15 @@ class NetScanArgs(_ImageOnlyArgs):
 
 class FileScanArgs(_ImageOnlyArgs):
     pass
+
+
+class MalfindArgs(_ImageOnlyArgs):
+    pass
+
+
+class SvcScanArgs(_ImageOnlyArgs):
+    pass
+
+
+class UserAssistArgs(_ImageOnlyArgs):
+    pass

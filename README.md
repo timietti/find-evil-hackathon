@@ -8,6 +8,13 @@
 
 🚧 Under active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the full strategy and weekly milestones.
 
+### What's working today
+
+- **`sift-mcp`** — FastMCP stdio server with 9 typed read-only memory-forensics functions (`vol3_image_info`, `vol3_psscan`, `vol3_pstree`, `vol3_cmdline`, `vol3_netscan`, `vol3_filescan`, `vol3_malfind`, `vol3_svcscan`, `vol3_userassist`). Any MCP client (Claude Code, custom agent, test harness) can connect and discover the inventory via `sift-mcp inspect`.
+- **Architectural trust boundaries** — agent-side has no shell. Path validation rejects anything outside `/cases/` (or `$SIFT_OWL_EVIDENCE_ROOT`). Subprocess invocations are argv-list, never `shell=True`.
+- **Per-call audit trail** — every MCP call writes one JSONL row to `audit/exec_log.jsonl` with `exec_id`, args, input/output sha256, parsed_summary, wall_ms. Every "confirmed" claim in a final report cites an `exec_id` for traceability.
+- **55 tests green** (parsers + path validation + subprocess + 6-plugin E2E + 3 MCP wire-protocol round-trip).
+
 ## What this is
 
 An autonomous, agentic AI forensics investigator that runs on the SANS SIFT Workstation and processes raw case data (disk images, memory captures, log archives) end-to-end without human checkpoints. It improves on the baseline [Protocol SIFT](https://github.com/teamdfir/protocol-sift) configuration along every judging axis:
@@ -25,16 +32,20 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the system design and tru
 
 ## Quick start
 
-> **Not yet runnable.** First runnable build target: end of W2 (May 21, 2026).
-
 ```bash
 git clone https://github.com/timietti/find-evil-hackathon.git
 cd find-evil-hackathon
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Point at a case directory containing E01 + memory image
-sift-owl --case /cases/<CASENAME> --max-iterations 3
+# Inspect the MCP tool inventory (no Vol3 / evidence required)
+sift-mcp inspect
+
+# Run the MCP server (stdio transport — for an MCP client to connect)
+sift-mcp --audit-dir ./audit --evidence-root /cases
+
+# Once the orchestrator lands (W3), point it at a case:
+# sift-owl --case /cases/<CASENAME> --max-iterations 3
 ```
 
 Full installation / setup: [`INSTALL.md`](INSTALL.md).

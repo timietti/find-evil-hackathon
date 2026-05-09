@@ -21,9 +21,12 @@ from mcp_server.audit import AuditLogger
 from mcp_server.tools.memory import (
     vol3_cmdline,
     vol3_filescan,
+    vol3_malfind,
     vol3_netscan,
     vol3_psscan,
     vol3_pstree,
+    vol3_svcscan,
+    vol3_userassist,
 )
 
 ROCBA_IMG = Path("/cases/find-evil-test/Rocba-Memory.raw")
@@ -115,6 +118,55 @@ def test_vol3_netscan_rocba_finds_baseline_rdp_ips(tmp_path: Path) -> None:
     row = _audit_row(tmp_path)
     assert row["tool"] == "vol3_netscan"
     assert "foreign_ip_counts" in row["parsed_summary"]
+
+
+@REQUIRES_E2E
+def test_vol3_svcscan_rocba(tmp_path: Path) -> None:
+    audit = _make_audit(tmp_path)
+    out = vol3_svcscan({"image": str(ROCBA_IMG)}, audit=audit, timeout_s=600)
+    assert out["count"] >= 50
+    assert "by_state" in out
+    # RpcEptMapper is a fundamental Windows service — must be in the list
+    names = {s["name"] for s in out["services"]}
+    assert "RpcEptMapper" in names
+    row = _audit_row(tmp_path)
+    assert row["tool"] == "vol3_svcscan"
+    assert "services" not in row["parsed_summary"]
+
+
+@REQUIRES_E2E
+def test_vol3_userassist_rocba(tmp_path: Path) -> None:
+    audit = _make_audit(tmp_path)
+    out = vol3_userassist({"image": str(ROCBA_IMG)}, audit=audit, timeout_s=600)
+    assert out["count"] >= 1, "ROCBA-001 has UserAssist activity for fredr"
+    # The fredr user hive must appear
+    hive_names = " ".join(out["by_hive"].keys())
+    assert "fredr" in hive_names.lower()
+    row = _audit_row(tmp_path)
+    assert row["tool"] == "vol3_userassist"
+    assert "entries" not in row["parsed_summary"]
+
+
+@REQUIRES_E2E
+@pytest.mark.slow
+def test_vol3_malfind_rocba(tmp_path: Path) -> None:
+    """malfind on the 18 GB image takes ~6 min on first cold run; faster
+    after pages have been touched by other plugins. Marked `slow`."""
+    audit = _make_audit(tmp_path)
+    out = vol3_malfind({"image": str(ROCBA_IMG)}, audit=audit, timeout_s=1800)
+    # ROCBA-001 has Microsoft Defender RWX regions (legitimate JIT) per the
+    # baseline run. Don't assert a specific count, just that the parser ran
+    # and produced a structurally valid result.
+    assert "count" in out
+    assert "rwx_count" in out
+    assert "by_process" in out
+    # Disasm/Hexdump must NOT appear in any finding (audit-bloat guard).
+    for f in out["findings"]:
+        assert "disasm" not in f
+        assert "hexdump" not in f
+    row = _audit_row(tmp_path)
+    assert row["tool"] == "vol3_malfind"
+    assert "findings" not in row["parsed_summary"]
 
 
 @REQUIRES_E2E

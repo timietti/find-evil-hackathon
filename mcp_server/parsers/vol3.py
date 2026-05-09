@@ -362,6 +362,168 @@ def summarise_netscan(parsed: dict[str, Any]) -> str:
     return f"{n} endpoints; top external IPs: {top_str}"
 
 
+def parse_malfind(stdout: str) -> dict[str, Any]:
+    """Parse `vol -r jsonl <image> windows.malfind` output.
+
+    malfind flags VAD regions with anomalous protection (RWX, no on-disk
+    backing, MZ headers in unexpected places). Each row carries multi-KB
+    `Disasm` and `Hexdump` strings — we drop those from the parsed result
+    (they're preserved on disk in the raw_output_path the audit log cites)
+    and keep only the discriminating fields.
+    """
+    rows = parse_jsonl_rows(stdout)
+    findings: list[dict[str, Any]] = []
+    rwx_count = 0
+    by_process: dict[str, int] = {}
+    for r in rows:
+        protection = r.get("Protection") or ""
+        is_rwx = "PAGE_EXECUTE_READWRITE" in protection
+        if is_rwx:
+            rwx_count += 1
+        finding = {
+            "pid":            r.get("PID"),
+            "process":        r.get("Process"),
+            "start_vpn":      r.get("Start VPN"),
+            "end_vpn":        r.get("End VPN"),
+            "tag":            r.get("Tag"),
+            "protection":     protection,
+            "rwx":            is_rwx,
+            "private_memory": r.get("PrivateMemory"),
+            "commit_charge":  r.get("CommitCharge"),
+            "notes":          r.get("Notes"),
+            # Disasm / Hexdump intentionally dropped — caller can reread
+            # raw_output_path if it needs the bytes.
+        }
+        findings.append(finding)
+        if finding["process"]:
+            by_process[finding["process"]] = by_process.get(finding["process"], 0) + 1
+    return {
+        "count": len(findings),
+        "rwx_count": rwx_count,
+        "by_process": dict(sorted(by_process.items(), key=lambda kv: -kv[1])),
+        "findings": findings,
+    }
+
+
+def summarise_malfind(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    rwx = parsed.get("rwx_count", 0)
+    nproc = len(parsed.get("by_process") or {})
+    if n == 0:
+        return "no malfind findings (0 suspicious VAD regions)"
+    return f"{n} suspicious VAD regions ({rwx} RWX) in {nproc} processes"
+
+
+def parse_svcscan(stdout: str) -> dict[str, Any]:
+    """Parse `vol -r jsonl <image> windows.svcscan` output."""
+    rows = parse_jsonl_rows(stdout)
+    services: list[dict[str, Any]] = []
+    by_state: dict[str, int] = {}
+    by_start: dict[str, int] = {}
+    by_type: dict[str, int] = {}
+    drivers = 0
+    running = 0
+    for r in rows:
+        state = r.get("State") or ""
+        start = r.get("Start") or ""
+        stype = r.get("Type") or ""
+        svc = {
+            "name":            r.get("Name"),
+            "display":         r.get("Display"),
+            "type":            stype,
+            "start":           start,
+            "state":           state,
+            "pid":             r.get("PID"),
+            "binary":          r.get("Binary"),
+            "binary_registry": r.get("Binary (Registry)"),
+            "dll":             r.get("Dll"),
+            "order":           r.get("Order"),
+            "offset":          r.get("Offset"),
+        }
+        services.append(svc)
+        if state:
+            by_state[state] = by_state.get(state, 0) + 1
+        if start:
+            by_start[start] = by_start.get(start, 0) + 1
+        if stype:
+            by_type[stype] = by_type.get(stype, 0) + 1
+        if "DRIVER" in stype:
+            drivers += 1
+        if state == "SERVICE_RUNNING":
+            running += 1
+    return {
+        "count":    len(services),
+        "running":  running,
+        "drivers":  drivers,
+        "by_state": by_state,
+        "by_start": by_start,
+        "by_type":  by_type,
+        "services": services,
+    }
+
+
+def summarise_svcscan(parsed: dict[str, Any]) -> str:
+    return (
+        f"{parsed.get('count', 0)} services "
+        f"({parsed.get('running', 0)} running, "
+        f"{parsed.get('drivers', 0)} drivers)"
+    )
+
+
+def parse_userassist(stdout: str) -> dict[str, Any]:
+    """Parse `vol -r jsonl <image> windows.registry.userassist` output.
+
+    UserAssist is a two-level hierarchy in Vol3's JSONL: top-level rows are
+    `Type: "Key"` (one per UserAssist subkey) with their `__children` being
+    `Type: "Value"` rows holding the actual recorded program-execution data.
+
+    The `Raw Data` field on the value rows is a 4 KB hex blob that Vol3 has
+    already decoded into Count / Focus Count / Time Focused — we drop the raw
+    blob entirely (caller can reread raw_output_path if needed).
+    """
+    rows = parse_jsonl_rows(stdout)
+    entries: list[dict[str, Any]] = []
+    by_hive: dict[str, int] = {}
+    for top in rows:
+        for child in top.get("__children", []) or []:
+            if child.get("Type") != "Value":
+                continue
+            name = child.get("Name") or ""
+            # The fake "UEME_CTLSESSION" record exists per UserAssist subkey
+            # and is not a program execution — skip it from the entry list
+            # but still let the user see the totals via `count`.
+            is_session_marker = name == "UEME_CTLSESSION"
+            entry = {
+                "name":            name,
+                "count":           child.get("Count"),
+                "focus_count":     child.get("Focus Count"),
+                "time_focused":    child.get("Time Focused"),
+                "last_updated":    _normalise_dt(child.get("Last Updated")),
+                "last_write_time": _normalise_dt(child.get("Last Write Time")),
+                "hive_name":       child.get("Hive Name"),
+                "session_marker":  is_session_marker,
+            }
+            entries.append(entry)
+            hive = child.get("Hive Name") or ""
+            if hive:
+                by_hive[hive] = by_hive.get(hive, 0) + 1
+    real = [e for e in entries if not e["session_marker"]]
+    return {
+        "count":          len(entries),
+        "real_count":     len(real),
+        "session_count":  len(entries) - len(real),
+        "by_hive":        by_hive,
+        "entries":        entries,
+    }
+
+
+def summarise_userassist(parsed: dict[str, Any]) -> str:
+    return (
+        f"{parsed.get('real_count', 0)} program-execution entries "
+        f"across {len(parsed.get('by_hive') or {})} user hives"
+    )
+
+
 def parse_filescan(stdout: str) -> dict[str, Any]:
     """Parse `vol -r jsonl <image> windows.filescan` output.
 

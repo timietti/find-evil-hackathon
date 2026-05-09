@@ -1,25 +1,240 @@
-"""SIFT-MCP — typed read-only forensic tool server.
+"""SIFT-OWL MCP server.
 
-W2 deliverable. Currently a stub entrypoint so the install can be smoke-tested.
+Exposes the typed read-only forensic functions from `mcp_server.tools.memory`
+as MCP tools over stdio. Any MCP client (Claude Code, an arbitrary LLM agent,
+or a test harness) can connect, discover the tool inventory, and invoke them.
+
+The agent on the other end of the wire **never has shell access** — it can only
+call the functions registered below. That is the architectural enforcement of
+trust boundary TB1 from `docs/ARCHITECTURE.md`.
+
+Configuration (env vars):
+
+    SIFT_OWL_AUDIT_DIR     — where to write exec_log.jsonl + raw/. Default:
+                             $PWD/audit. The dir is created if missing.
+    SIFT_OWL_EVIDENCE_ROOT — comma-separated allow-list of evidence roots.
+                             Default: /cases. Paths outside these are rejected.
+    SIFT_OWL_VOL3_BIN      — override the `vol` binary location. Default: PATH.
+
+Run with:
+
+    sift-mcp                # stdio transport (default for MCP clients)
+    sift-mcp inspect        # print tool inventory + version, exit
 """
 
+from __future__ import annotations
+
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
 import typer
+from mcp.server.fastmcp import FastMCP
+
+from mcp_server.audit import AuditLogger
+from mcp_server.tools.memory import (
+    vol3_cmdline as _cmdline,
+    vol3_filescan as _filescan,
+    vol3_image_info as _image_info,
+    vol3_malfind as _malfind,
+    vol3_netscan as _netscan,
+    vol3_psscan as _psscan,
+    vol3_pstree as _pstree,
+    vol3_svcscan as _svcscan,
+    vol3_userassist as _userassist,
+)
+
+
+# ---------------------------------------------------------------------------
+# Module-level state. FastMCP doesn't pass per-call context for state, so we
+# scope the AuditLogger and evidence-root config at the module level. This is
+# fine because the MCP server is single-process / single-tenant by design.
+# ---------------------------------------------------------------------------
+
+
+_AUDIT: AuditLogger | None = None
+_EVIDENCE_ROOTS: tuple[Path, ...] = (Path("/cases").resolve(),)
+
+
+def _init(audit_dir: Path, evidence_roots: tuple[Path, ...]) -> None:
+    global _AUDIT, _EVIDENCE_ROOTS
+    audit_dir.mkdir(parents=True, exist_ok=True)
+    _AUDIT = AuditLogger(
+        exec_log_path=audit_dir / "exec_log.jsonl",
+        raw_output_dir=audit_dir / "raw",
+    )
+    _EVIDENCE_ROOTS = evidence_roots
+
+
+def _audit() -> AuditLogger:
+    if _AUDIT is None:
+        raise RuntimeError(
+            "MCP server audit not initialised. Call _init() before mcp.run(), "
+            "or set SIFT_OWL_AUDIT_DIR and re-launch."
+        )
+    return _AUDIT
+
+
+# ---------------------------------------------------------------------------
+# FastMCP instance + tool registrations.
+#
+# Each registered tool is a thin wrapper around the underlying function in
+# `tools/memory.py`. We re-declare the signature here (one positional `image`
+# arg) so MCP clients see a clean schema. Internal kwargs like `audit=` and
+# `evidence_roots=` are bound to the module-level state at call time.
+# ---------------------------------------------------------------------------
+
+
+mcp = FastMCP("sift-owl")
+
+
+@mcp.tool()
+def vol3_image_info(image: str) -> dict[str, Any]:
+    """Get OS / build / arch / CPU count / capture-time from a Windows memory image.
+
+    Wraps `vol -q -f <image> windows.info`. Use this first on any new memory
+    image to confirm Vol3 can resolve symbols and to get the system time
+    anchor for cross-source correlation.
+    """
+    return _image_info({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_psscan(image: str) -> dict[str, Any]:
+    """Pool-tag scan for processes — finds hidden + exited processes that
+    pslist (EPROCESS list walk) misses. Use this as the primary process
+    enumeration method."""
+    return _psscan({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_pstree(image: str) -> dict[str, Any]:
+    """Process parent/child tree from EPROCESS hierarchy. Use to spot LOLBins
+    spawned from unexpected parents (e.g. cmd.exe under winword.exe)."""
+    return _pstree({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_cmdline(image: str) -> dict[str, Any]:
+    """Per-process command-line arguments. Most-revealing single plugin for
+    attacker activity — captures the actual command lines executed."""
+    return _cmdline({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_netscan(image: str) -> dict[str, Any]:
+    """TCP/UDP endpoints — current + historical (pool-tag scan). Returns the
+    full connection list plus a foreign-IP frequency table with loopback /
+    listen-only addresses pre-filtered."""
+    return _netscan({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_filescan(image: str) -> dict[str, Any]:
+    """File objects cached in pool memory — every file open at capture time
+    plus residue from recently-closed files. Slowest of the standard plugins
+    (~3 min on an 18 GB image) but the highest-signal source for what was on
+    disk during the incident."""
+    return _filescan({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_malfind(image: str) -> dict[str, Any]:
+    """Suspicious VAD regions — RWX, MZ-headed without on-disk backing,
+    classic shellcode-injection indicators. Note: Microsoft Defender JIT and
+    .NET CLR produce legitimate RWX regions; triage hits manually."""
+    return _malfind({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_svcscan(image: str) -> dict[str, Any]:
+    """Service Control Manager + driver enumeration. Look for services with
+    binary paths in user-writable directories (Temp, AppData) or service
+    names that don't match their on-disk binary."""
+    return _svcscan({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_userassist(image: str) -> dict[str, Any]:
+    """UserAssist registry values — Explorer-driven program-execution log
+    per user hive. Strong indicator for hands-on-keyboard activity (programs
+    launched via Explorer/Start menu)."""
+    return _userassist({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+# ---------------------------------------------------------------------------
+# CLI entry — parses env / flags, then either prints the tool inventory or
+# starts the stdio MCP server.
+# ---------------------------------------------------------------------------
+
 
 app = typer.Typer(help="SIFT-OWL MCP server (typed read-only DFIR functions).")
+
+
+def _resolve_config(
+    audit_dir: str | None,
+    evidence_root: str | None,
+) -> tuple[Path, tuple[Path, ...]]:
+    """Resolve audit dir + evidence roots from CLI args + env."""
+    audit = Path(
+        audit_dir
+        or os.environ.get("SIFT_OWL_AUDIT_DIR")
+        or "./audit"
+    ).resolve()
+    raw_roots = (
+        evidence_root
+        or os.environ.get("SIFT_OWL_EVIDENCE_ROOT")
+        or "/cases"
+    )
+    roots = tuple(Path(p.strip()).resolve() for p in raw_roots.split(",") if p.strip())
+    return audit, roots
+
+
+@app.command()
+def inspect(
+    audit_dir: str = typer.Option(None, "--audit-dir"),
+    evidence_root: str = typer.Option(None, "--evidence-root"),
+) -> None:
+    """Print the tool inventory and configuration, then exit."""
+    audit, roots = _resolve_config(audit_dir, evidence_root)
+    inventory = []
+    for name, tool in sorted(mcp._tool_manager._tools.items()):  # noqa: SLF001
+        inventory.append({
+            "name": name,
+            "description": (tool.description or "").strip().splitlines()[0],
+        })
+    typer.echo(json.dumps({
+        "server":     "sift-owl",
+        "audit_dir":  str(audit),
+        "evidence_roots": [str(r) for r in roots],
+        "tool_count": len(inventory),
+        "tools":      inventory,
+        "now_utc":    datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }, indent=2))
 
 
 @app.callback(invoke_without_command=True)
 def root(
     ctx: typer.Context,
-    case: str = typer.Option(None, "--case", help="Path to case root."),
+    audit_dir: str = typer.Option(None, "--audit-dir", help="Audit log directory."),
+    evidence_root: str = typer.Option(
+        None, "--evidence-root",
+        help="Comma-separated allow-list of evidence roots.",
+    ),
     transport: str = typer.Option(
-        "stdio", "--transport", help="MCP transport (stdio | sse)."
+        "stdio", "--transport", help="MCP transport (only 'stdio' supported).",
     ),
 ) -> None:
+    """Start the MCP server (default action when no subcommand given)."""
     if ctx.invoked_subcommand is not None:
         return
-    typer.echo(f"sift-mcp stub — case={case} transport={transport}")
-    typer.echo("MCP function inventory and stdio loop will be wired in W2.")
+    audit, roots = _resolve_config(audit_dir, evidence_root)
+    _init(audit, roots)
+    if transport != "stdio":
+        raise typer.BadParameter(f"only stdio transport is supported, got: {transport}")
+    mcp.run()
 
 
 def main() -> None:

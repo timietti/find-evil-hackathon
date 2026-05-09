@@ -17,14 +17,20 @@ from mcp_server.parsers.vol3 import (
     parse_cmdline,
     parse_filescan,
     parse_jsonl_rows,
+    parse_malfind,
     parse_netscan,
     parse_psscan,
     parse_pstree,
+    parse_svcscan,
+    parse_userassist,
     summarise_cmdline,
     summarise_filescan,
+    summarise_malfind,
     summarise_netscan,
     summarise_psscan,
     summarise_pstree,
+    summarise_svcscan,
+    summarise_userassist,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -207,3 +213,91 @@ def test_parse_filescan_rocba_head() -> None:
 def test_summarise_filescan() -> None:
     s = summarise_filescan({"count": 42802})
     assert "42802 file objects" in s
+
+
+# ---- malfind ---------------------------------------------------------------
+
+
+def test_parse_malfind_rocba_head() -> None:
+    text = _read_fixture("malfind_head.jsonl")
+    out = parse_malfind(text)
+    # parsed should have count + rwx_count + by_process + findings
+    assert "count" in out
+    assert "rwx_count" in out
+    assert "by_process" in out
+    assert "findings" in out
+    # Disasm and Hexdump must be dropped from each finding
+    for f in out["findings"]:
+        assert "disasm" not in f
+        assert "hexdump" not in f
+
+
+def test_summarise_malfind_with_findings() -> None:
+    s = summarise_malfind({
+        "count": 5,
+        "rwx_count": 3,
+        "by_process": {"MsMpEng.exe": 2, "explorer.exe": 1},
+    })
+    assert "5 suspicious" in s
+    assert "3 RWX" in s
+    assert "2 processes" in s
+
+
+def test_summarise_malfind_when_clean() -> None:
+    s = summarise_malfind({"count": 0, "rwx_count": 0, "by_process": {}})
+    assert "no malfind" in s.lower()
+
+
+# ---- svcscan ---------------------------------------------------------------
+
+
+def test_parse_svcscan_rocba_head() -> None:
+    text = _read_fixture("svcscan_head.jsonl")
+    out = parse_svcscan(text)
+    assert out["count"] >= 1
+    assert "by_state" in out
+    assert "by_start" in out
+    assert "by_type" in out
+    # All services must have name + state
+    for s in out["services"]:
+        assert "name" in s
+        assert "state" in s
+
+
+def test_summarise_svcscan() -> None:
+    s = summarise_svcscan({"count": 200, "running": 80, "drivers": 50})
+    assert "200 services" in s
+    assert "80 running" in s
+    assert "50 drivers" in s
+
+
+# ---- userassist ------------------------------------------------------------
+
+
+def test_parse_userassist_rocba_head() -> None:
+    text = _read_fixture("userassist_head.jsonl")
+    out = parse_userassist(text)
+    # entries are extracted from `__children` of top-level Key rows
+    assert "count" in out
+    assert "real_count" in out
+    assert "session_count" in out
+    # Raw Data must NOT appear in any entry
+    for e in out["entries"]:
+        assert "raw_data" not in e
+    # If we have any UEME_CTLSESSION entries they must be marked
+    sessions = [e for e in out["entries"] if e["session_marker"]]
+    for s in sessions:
+        assert s["name"] == "UEME_CTLSESSION"
+    # session_count must equal len(sessions)
+    assert out["session_count"] == len(sessions)
+    # real_count + session_count == count
+    assert out["real_count"] + out["session_count"] == out["count"]
+
+
+def test_summarise_userassist() -> None:
+    s = summarise_userassist({
+        "real_count": 42,
+        "by_hive": {"\\??\\C:\\Users\\fredr\\ntuser.dat": 42},
+    })
+    assert "42 program-execution" in s
+    assert "1 user hives" in s

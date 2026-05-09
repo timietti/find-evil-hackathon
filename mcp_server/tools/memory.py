@@ -27,26 +27,35 @@ from mcp_server.parsers.vol3 import (
     parse_cmdline,
     parse_filescan,
     parse_image_info,
+    parse_malfind,
     parse_netscan,
     parse_psscan,
     parse_pstree,
+    parse_svcscan,
+    parse_userassist,
     summarise_cmdline,
     summarise_filescan,
     summarise_image_info,
+    summarise_malfind,
     summarise_netscan,
     summarise_psscan,
     summarise_pstree,
+    summarise_svcscan,
+    summarise_userassist,
 )
 from mcp_server.tools._common import (
     DEFAULT_EVIDENCE_ROOTS,
     CmdlineArgs,
     FileScanArgs,
     ImageInfoArgs,
+    MalfindArgs,
     NetScanArgs,
     PathValidationError,
     PsScanArgs,
     PsTreeArgs,
+    SvcScanArgs,
     ToolError,
+    UserAssistArgs,
     run_subprocess,
     validate_evidence_path,
 )
@@ -204,7 +213,10 @@ def _run_jsonl_plugin(
     # can rehydrate full rows when checking a specific claim.
     parsed_summary_compact = {
         k: v for k, v in parsed.items()
-        if k not in {"processes", "rows", "nodes", "connections", "files"}
+        if k not in {
+            "processes", "rows", "nodes", "connections", "files",
+            "findings", "services", "entries",
+        }
     }
 
     audit.record(
@@ -351,6 +363,83 @@ def vol3_filescan(
         tool_name="vol3_filescan",
         parser=parse_filescan,
         summariser=summarise_filescan,
+        audit=audit,
+        agent=agent,
+        timeout_s=timeout_s,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Code injection / services / GUI execution.
+# ---------------------------------------------------------------------------
+
+
+def vol3_malfind(
+    args: MalfindArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 1800,
+) -> dict[str, Any]:
+    """Suspicious VAD regions — RWX, MZ-headed, no on-disk backing."""
+    if isinstance(args, dict):
+        args = MalfindArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.malfind",
+        tool_name="vol3_malfind",
+        parser=parse_malfind,
+        summariser=summarise_malfind,
+        audit=audit,
+        agent=agent,
+        timeout_s=timeout_s,
+    )
+
+
+def vol3_svcscan(
+    args: SvcScanArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 1200,
+) -> dict[str, Any]:
+    """Service Control Manager + driver enumeration."""
+    if isinstance(args, dict):
+        args = SvcScanArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.svcscan",
+        tool_name="vol3_svcscan",
+        parser=parse_svcscan,
+        summariser=summarise_svcscan,
+        audit=audit,
+        agent=agent,
+        timeout_s=timeout_s,
+    )
+
+
+def vol3_userassist(
+    args: UserAssistArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 1200,
+) -> dict[str, Any]:
+    """UserAssist registry values — Explorer-driven program execution log."""
+    if isinstance(args, dict):
+        args = UserAssistArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.registry.userassist",
+        tool_name="vol3_userassist",
+        parser=parse_userassist,
+        summariser=summarise_userassist,
         audit=audit,
         agent=agent,
         timeout_s=timeout_s,
