@@ -146,28 +146,42 @@ Missing any → eliminated. Track all 8 as workstreams from week 1.
 
 ## 5. Test Data & Ground Truth
 
-The user has access to **three** test datasets from the hackathon organisers. As of 2026-05-09:
+All three datasets are intaked as of 2026-05-09. Final split:
 
-| # | Status | Case | Description |
-|---|---|---|---|
-| 1 | **On disk** at `/cases/find-evil-test/` | `ROCBA-001` (Fred Rocba / SRL break-in) | 18 GB Win10 19041 RAM image + 39 MB PPTX briefing. Memory-only, no disk image. |
-| 2 | Pending download | TBD | Will assign DEV / VALIDATE / DEMO once contents known. |
-| 3 | Pending download | TBD | Same. |
+| Case ID | Role | Hosts | Bytes | Threat actor | Notes |
+|---|---|---|---|---|---|
+| `rocba-001` | **DEV** | 1 (memory only) | 18 GB | physical break-in | Single-host memory triage; baselined and v0/v1-evaluated |
+| `test2-stark-apt` | **TRAIN / SECONDARY DEV** | 4 (disk + memory) | ~58 GB | APT1 (2012) | Multi-host enterprise; cross-source correlation surface |
+| `test3-shieldbase` | **VALIDATE + DEMO (held-out)** | 15+ (disk + memory) | ~199 GB | CRIMSON OSPREY (state-level) | Canonical SANS FOR508 lab — the scenario Protocol SIFT was built around |
 
 Per-case authoring lives in `eval/cases/<case_id>/`:
 - `case.yaml` — machine-readable context (loaded by SIFT-OWL at runtime)
-- `case.md` — human-readable narrative
-- `intake/` — chain-of-custody artifacts (hash records, Vol3 windows.info, etc.)
+- `case.md` — human-readable narrative + held-out discipline notes
+- `intake/` — SHA-256 hashes, windows.info captures, acquisition-time MD5 sidecars
 
-**We do not write to `/cases/`.** Auto-mode classifier blocked an attempted update of `/cases/find-evil-test/CLAUDE.md` on day 1 — correct behaviour given the global rule. All case authoring stays in version control; SIFT-OWL output goes to `eval/results/<case_id>/`.
+**We do not write to `/cases/`.** Auto-mode classifier blocked an attempted update of `/cases/find-evil-test/CLAUDE.md` on day 1 — correct behaviour given the user's global rule. All case authoring stays in version control; SIFT-OWL output goes to `eval/results/<case_id>/`.
 
-### Dataset split policy (decided once all 3 land)
+### Dataset-split discipline
 
-- **DEV**: ROCBA-001 (already on disk; lots of analytical surface). We iterate on it freely.
-- **VALIDATE**: one of the remaining two. Touched only at the end for accuracy-report numbers. Never used for development.
-- **DEMO**: the other remaining. Used to record the 5-min screencast.
+The **only** SIFT-OWL runs allowed against `test3-shieldbase` between now and submission are:
 
-Final split assignments captured in `eval/cases/README.md` once all three are intaked.
+1. The final accuracy-report eval run.
+2. The 5-min demo recording.
+
+Everything else (agent debug, MCP-fn additions, validator tests) uses `rocba-001` or `test2-stark-apt`. The discipline is what makes the final numbers meaningful.
+
+### Privileged ground truth
+
+For each held-out case the eval harness has access to ground-truth labels that the agent does **not** see at run time:
+
+- `test3-shieldbase/case.yaml.ground_truth_iocs` — STUN.exe / msedge masquerade / pssdnsvc / atmfd.dll / `net use H: \\172.16.6.12\c$\Users` / 2023-01-25 timeline. Sourced from the Protocol SIFT case template, which IS this dataset's briefing.
+- `test2-stark-apt/case.md` — APT1 attribution from `precooked/redline/APT1 - IOCS/`.
+
+### Tool-path corrections discovered at intake (vs. Protocol SIFT global CLAUDE.md)
+
+| Tool | Protocol SIFT says | Actual on this instance |
+|---|---|---|
+| Volatility 3 | `python3 /opt/volatility3-2.20.0/vol.py` | `vol` in PATH (`/usr/local/bin/vol` → `/opt/volatility3/bin/vol`), v2.28.0 |
 
 ### Tool-path corrections discovered at intake (vs. Protocol SIFT global CLAUDE.md)
 

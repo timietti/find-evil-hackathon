@@ -1,0 +1,12 @@
+
+dc3dd 7.2.641 started at 2018-09-06 19:08:53 +0000
+compiled options:
+command line: dc3dd if=/mnt/nromanoff/base-rd-04/pmem/pmem of=./base-rd-04-memory.img hash=md5 hlog=./base-rd-04-memory.md5
+
+input results for file `/mnt/nromanoff/base-rd-04/pmem/pmem':
+   91cbbaba4248635a4978f09cfdf90fd7 (md5)
+
+output results for file `./base-rd-04-memory.img':
+
+dc3dd completed at 2018-09-06 19:09:47 +0000
+

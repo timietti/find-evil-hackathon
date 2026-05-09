@@ -1,0 +1,12 @@
+
+dc3dd 7.2.641 started at 2018-09-06 23:48:33 +0000
+compiled options:
+command line: dc3dd if=/mnt/base-av/base-av/pmem/pmem of=./base-av-memory.img hash=md5 hlog=./base-av-memory.md5
+
+input results for file `/mnt/base-av/base-av/pmem/pmem':
+   fa3ed63bba307302a6b98f6775ad2802 (md5)
+
+output results for file `./base-av-memory.img':
+
+dc3dd completed at 2018-09-06 23:50:06 +0000
+

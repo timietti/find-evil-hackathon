@@ -1,0 +1,12 @@
+
+dc3dd 7.2.641 started at 2018-09-06 22:07:12 +0000
+compiled options:
+command line: dc3dd if=/mnt/base-wkstn-02/base-wkstn-02/pmem/pmem of=./base-wkstn-02-memory.img hash=md5 hlog=./base-wkstn-02-memory.md5
+
+input results for file `/mnt/base-wkstn-02/base-wkstn-02/pmem/pmem':
+   b5c236dfb96b4ab2a97f49dff902f068 (md5)
+
+output results for file `./base-wkstn-02-memory.img':
+
+dc3dd completed at 2018-09-06 22:08:01 +0000
+

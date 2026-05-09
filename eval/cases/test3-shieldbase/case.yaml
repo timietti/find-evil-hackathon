@@ -1,0 +1,151 @@
+# Machine-readable case context loaded by SIFT-OWL.
+# Human-readable narrative lives in case.md alongside this file.
+
+case_id: SHIELDBASE-CRIMSON-OSPREY
+case_name: "Stark Research Labs — SHIELDBASE / CRIMSON OSPREY APT (SANS FOR508 Lab 1.1)"
+client: Stark Research Labs
+
+# !! HELD-OUT VALIDATION + DEMO CASE !!
+# This is the canonical scenario Rob Lee built Protocol SIFT around. The case
+# CLAUDE.md shipped with Protocol SIFT (and at /cases/find-evil-test{,2,3}/CLAUDE.md
+# unmodified — sha256 f248a36b...) IS the briefing for this dataset.
+#
+# DO NOT iterate SIFT-OWL on this case during development. It is reserved for:
+#   1. Final accuracy-report numbers (compared against the documented IOCs)
+#   2. The 5-min demo video for the hackathon submission
+#
+# Use ROCBA-001 (memory-only, ~$1/run) or STARK-APT-001 (multi-host APT1 from
+# 2012) for development iteration.
+status: held-out
+
+scenario:
+  domain: SHIELDBASE
+  domain_role: "Windows Server 2022, 2022 DFL"
+  threat_actor: CRIMSON OSPREY
+  threat_actor_class: state-level APT
+  incident_declared: "2023-01-24"
+  role: External IR consultant
+  initial_responders:
+    - { name: "Roger Sydow",  role: "IT Admin",            account: rsydow-a }
+    - { name: "Clint Barton", role: "IT Security Analyst", account: cbarton-a }
+
+# Network topology — preserved from the Protocol SIFT case template.
+networks:
+  management:    { subnet: "172.16.8.0/24",  hosts: ["log01", "assess01/02", "sft01", "trust01", "adusa01"] }
+  services:      { subnet: "172.16.4.0/24",  hosts: ["dc01", "file01", "exchange01", "proxy01", "dev01", "sql01"] }
+  business_line: { subnet: "172.16.7.0/24",  hosts: ["wksta01-10"] }
+  rd:            { subnet: "172.16.6.0/24",  hosts: ["rd01-rd10"], notes: "lateral movement target: 172.16.6.12" }
+  dmz:           { subnet: "172.16.19.0/24", hosts: ["dns01", "ftp01", "smtp01"] }
+  vpn:           { subnet: "172.16.30.0/24" }
+external_attacker_ip: 172.15.1.20
+
+# Domain accounts. PRIVILEGED context — provided to the agent so it can recognise
+# legitimate admin activity (filtering noise) but the agent should NOT assume the
+# accounts in the actual evidence are limited to this list.
+domain_accounts:
+  - { account: "rsydow-a",   role: "Domain Admin (Roger Sydow)" }
+  - { account: "cbarton-a",  role: "Domain Admin (Clint Barton)" }
+  - { account: "srl.admin",  role: "Emergency Domain Admin (break-glass)" }
+  - { account: "srladmin",   role: "Local Admin — all workstations" }
+
+evidence_dir: /cases/find-evil-test3/evidence
+
+# 7 disk images.
+disk_images:
+  - { host: dc,           role: "Domain Controller (dc01)",  path: /cases/find-evil-test3/evidence/disk/base-dc-cdrive.E01,         size_bytes: 12325692793 }
+  - { host: file,         role: "File Server",               path: /cases/find-evil-test3/evidence/disk/base-file-cdrive.E01,       size_bytes: 16401447045 }
+  - { host: rd-01,        role: "Remote Desktop Server (primary compromise host)",
+                                                              path: /cases/find-evil-test3/evidence/disk/base-rd-01-cdrive.E01,      size_bytes: 17820145297 }
+  - { host: rd-02,        role: "Remote Desktop Server",     path: /cases/find-evil-test3/evidence/disk/base-rd-02-cdrive.E01,      size_bytes: 17213574387 }
+  - { host: wkstn-01,     role: "Workstation",               path: /cases/find-evil-test3/evidence/disk/base-wkstn-01-c-drive.E01,  size_bytes: 16923891211 }
+  - { host: wkstn-05,     role: "Workstation",               path: /cases/find-evil-test3/evidence/disk/base-wkstn-05-cdrive.E01,   size_bytes: 14809873122 }
+  - { host: dmz-ftp,      role: "DMZ FTP server",            path: /cases/find-evil-test3/evidence/disk/dmz-ftp-cdrive.E01,         size_bytes: 12824779973 }
+
+# 23 memory images (multiple captures of some hosts — note wkstn-01 has both
+# 2018-era and 2021-era captures).
+memory_images:
+  # Servers
+  - { host: dc,            path: /cases/find-evil-test3/evidence/memory/base-dc-memory.img,      size_bytes: 5368709120, role: "Domain Controller" }
+  - { host: file,          path: /cases/find-evil-test3/evidence/memory/base-file-memory.img,    size_bytes: 2147483648, role: "File Server" }
+  - { host: file-snap5,    path: /cases/find-evil-test3/evidence/memory/base-file-snapshot5.img, size_bytes: 2147483648, role: "File Server (snapshot 5)" }
+  - { host: mail,          path: /cases/find-evil-test3/evidence/memory/base-mail-memory.img,    size_bytes: 18253611008, role: "Exchange / Mail server" }
+  - { host: av,            path: /cases/find-evil-test3/evidence/memory/base-av-memory.img,      size_bytes: 9663676416, role: "Antivirus server" }
+  - { host: hunt,          path: /cases/find-evil-test3/evidence/memory/base-hunt-memory.img,    size_bytes: 5368709120, role: "Threat-hunt forensic workstation" }
+  - { host: elf,           path: /cases/find-evil-test3/evidence/memory/base-elf-memory.img,     size_bytes: 5368709120, role: "Event Log Forwarder (likely log01 / adusa01)" }
+  - { host: sp,            path: /cases/find-evil-test3/evidence/memory/base-sp-memory.img,      size_bytes: 9663676416, role: "SharePoint" }
+  - { host: admin,         path: /cases/find-evil-test3/evidence/memory/base-admin-memory.img,   size_bytes: 5368709120, role: "Admin workstation" }
+
+  # Remote-Desktop servers (rd01 family)
+  - { host: rd01,          path: /cases/find-evil-test3/evidence/memory/base-rd01-memory.img,    size_bytes: 3221225472, role: "RD-01 (primary compromise)" }
+  - { host: rd-02,         path: /cases/find-evil-test3/evidence/memory/base-rd-02-memory.img,   size_bytes: 3221225472, role: "RD-02" }
+  - { host: rd-03,         path: /cases/find-evil-test3/evidence/memory/base-rd-03-memory.img,   size_bytes: 3221225472, role: "RD-03" }
+  - { host: rd-04,         path: /cases/find-evil-test3/evidence/memory/base-rd-04-memory.img,   size_bytes: 3221225472, role: "RD-04" }
+  - { host: rd-05,         path: /cases/find-evil-test3/evidence/memory/base-rd-05-memory.img,   size_bytes: 3221225472, role: "RD-05" }
+  - { host: rd-06,         path: /cases/find-evil-test3/evidence/memory/base-rd-06-memory.img,   size_bytes: 3221225472, role: "RD-06" }
+
+  # Workstations
+  - { host: wkstn-01,      path: /cases/find-evil-test3/evidence/memory/base-wkstn-01-memory.img, size_bytes: 3221225472, role: "Workstation 01 (2018-era capture)" }
+  - { host: wkstn-01-2021, path: /cases/find-evil-test3/evidence/memory/base-wkstn-01-mem.img,    size_bytes: 3221225472, role: "Workstation 01 (2021-era recapture)" }
+  - { host: wkstn-02,      path: /cases/find-evil-test3/evidence/memory/base-wkstn-02-memory.img, size_bytes: 3221225472, role: "Workstation 02" }
+  - { host: wkstn-03,      path: /cases/find-evil-test3/evidence/memory/base-wkstn-03-memory.img, size_bytes: 3221225472, role: "Workstation 03" }
+  - { host: wkstn-04,      path: /cases/find-evil-test3/evidence/memory/base-wkstn-04-memory.img, size_bytes: 3221225472, role: "Workstation 04" }
+  - { host: wkstn-05,      path: /cases/find-evil-test3/evidence/memory/base-wkstn-05-memory.img, size_bytes: 3221225472, role: "Workstation 05" }
+  - { host: wkstn-06,      path: /cases/find-evil-test3/evidence/memory/base-wkstn-06-memory.img, size_bytes: 3221225472, role: "Workstation 06" }
+
+# Pre-acquisition MD5s (per *.md5 sidecars in evidence/memory/).
+# Our SHA-256s of the same files are an independent additional check at
+# eval/cases/test3-shieldbase/intake/hashes/.
+acquisition_hashes_present: true
+
+# !! PRIVILEGED GROUND-TRUTH CONTEXT — DO NOT FEED TO THE AGENT !!
+# These IOCs come from the Protocol SIFT case template. The agent must
+# rediscover them from the evidence to score on accuracy. SIFT-OWL's
+# eval harness reads these only at scoring time, never at run time.
+ground_truth_iocs:
+  malware:
+    - { indicator: "STUN.exe",      type: malware_binary,
+        location:  "C:\\Windows\\System32\\STUN.exe",
+        host:      rd01,
+        pid:       1912,
+        parent:    "svchost.exe (PID 1244)" }
+    - { indicator: "msedge.exe (masquerading)", type: malware_binary_masquerade,
+        instances: 7, parents: ["STUN.exe", "explorer.exe"],
+        classification: "Trojan:Win32/PowerRunner.A",
+        notes: "Microsoft Edge masquerade" }
+    - { indicator: "pssdnsvc.exe",  type: suspicious_service,
+        location: "C:\\Windows\\",
+        notes: "name/path mismatch for PsShutdown" }
+    - { indicator: "atmfd.dll",     type: missing_driver,
+        notes: "in Autoruns but absent from filesystem" }
+  attacker_activity:
+    - { event: "Lateral movement",
+        cmd: "net use H: \\\\172.16.6.12\\c$\\Users",
+        process: "net.exe (PID 9128)" }
+    - { event: "Execution chain",
+        chain: "STUN.exe (scheduled task) → svchost.exe → taskhostw.exe" }
+    - { event: "Defender evasion",
+        notes: "msedge.exe masquerading; Defender detected + terminated repeatedly" }
+  timeline:
+    - { ts_utc: "2023-01-24T??:??:??Z", event: "Incident declared; F-Response agents deployed" }
+    - { ts_utc: "2023-01-25T14:52:04Z", event: "Lateral movement (net use H: \\\\172.16.6.12\\c$\\Users)" }
+    - { ts_utc: "2023-01-25T14:56:42Z..2023-01-25T15:04:43Z", event: "msedge.exe PIDs spawned" }
+    - { ts_utc: "2023-01-25T15:00:56Z", event: "msedge.exe PID 2524 active at memory capture time" }
+    - { ts_utc: "2023-01-29T12:23:16Z", event: "Kansa post-intrusion collection (Autorunsc timestamp)" }
+
+# Investigation goals — borrowed from the Protocol SIFT template / standard SANS
+# FOR508 lab questions for SHIELDBASE.
+goals:
+  - { id: G1, question: "Identify the primary compromise host and initial access vector." }
+  - { id: G2, question: "Identify all malware implants and their persistence mechanisms." }
+  - { id: G3, question: "Map lateral movement across SHIELDBASE — which hosts were touched, in what order?" }
+  - { id: G4, question: "What credentials were stolen / abused, and from which host?" }
+  - { id: G5, question: "What data was staged or exfiltrated, and how?" }
+  - { id: G6, question: "Build a unified UTC timeline across all evidence sources." }
+  - { id: G7, question: "Attribute the activity to a known TTP class (CRIMSON OSPREY signal)." }
+
+# SIFT-OWL output destinations. NEVER inside evidence_dir.
+output:
+  analysis_dir: ./eval/results/test3-shieldbase/analysis
+  exports_dir:  ./eval/results/test3-shieldbase/exports
+  reports_dir:  ./eval/results/test3-shieldbase/reports
+  audit_dir:    ./eval/results/test3-shieldbase/audit
