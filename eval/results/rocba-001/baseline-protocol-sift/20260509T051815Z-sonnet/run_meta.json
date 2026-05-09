@@ -1,0 +1,113 @@
+{
+  "run_id": "20260509T051815Z-sonnet",
+  "case": "rocba-001",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_turns": 80,
+  "started_utc": "2026-05-09T05:18:43Z",
+  "cwd": "/cases/find-evil-test",
+  "evidence_dir": "/cases/find-evil-test",
+  "pre_run_hashes": {
+    "/cases/find-evil-test/Rocba-Memory.raw": {
+      "expected_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "actual_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "size_bytes": 19050528768,
+      "match": true
+    },
+    "/cases/find-evil-test/ROCBA-BACKGROUND.pptx": {
+      "expected_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "actual_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "size_bytes": 40148560,
+      "match": true
+    }
+  },
+  "claude_version": "2.1.137 (Claude Code)",
+  "cmd": [
+    "claude",
+    "-p",
+    "# Protocol SIFT baseline prompt \u2014 ROCBA-001\n\n> Injected as the **first user message** to vanilla Claude Code (Protocol SIFT global\n> config + skill files installed). Working directory at launch: `/cases/find-evil-test/`.\n> The agent has full Protocol SIFT permissions: shell access, allow-listed forensic CLIs,\n> deny-list for `rm -rf:* / dd:* / wget:* / curl:* / ssh:* / WebFetch`.\n\n---\n\nYou are operating as a Principal DFIR Orchestrator on the SANS SIFT Workstation.\n\n## Case ROCBA-001 \u2014 Fred Rocba / SRL break-in & IP theft\n\nFred Rocba is a technical engineer hired by Stark Research Labs (SRL) on **2020-10-24** and\nshipped a Microsoft Surface for remote work. He used it from home with O365, OneDrive,\nDropbox, Google Drive, iCloud, and Zoom. Browsers installed: Edge, Firefox, Chrome.\nPersonal identities: `fred.rocba@gmail.com`, `fred.rocba@outlook.com`, iPhone +1-339-223-3317.\nCorporate email: `frocba@stark-research-labs.com`.\n\nOn **2020-11-10 morning EST** Fred and his family flew to Disney World on a planned vacation.\nOn the evening of **2020-11-13 EST** his residence was broken into. The intruders accessed\nhis SRL Surface (left logged in). Fred returned **2020-11-15 PM EST**, did not touch the\nlaptop, and SRL captured RAM at **2020-11-15 21:32:38 EST** (`2020-11-16T02:32:38Z`).\n\n**Temporal alibi:** any user-driven activity inside `2020-11-13T22:00Z .. 2020-11-16T02:32Z`\nthat is not iCloud / Dropbox / OneDrive / GoogleDrive / O365 sync is the intruder.\n\n## Evidence (read-only, do not modify)\n\n- `/cases/find-evil-test/Rocba-Memory.raw` \u2014 18 GB Windows 10 build 19041 (x64) RAM capture\n- `/cases/find-evil-test/ROCBA-BACKGROUND.pptx` \u2014 case briefing (you have already received the relevant context above; you do not need to open the PPTX)\n\n## Your task\n\nConduct a full memory-only investigation and answer all five goals:\n\n1. **G1** What key projects did Fred have access to?\n2. **G2** What was stolen?\n3. **G3** Where was it transferred to (cloud / USB / network share / etc.)?\n4. **G4** How was it stolen (tooling / technique)?\n5. **G5** When did the activity occur (correlate with break-in window)?\n\nUse the SIFT-installed memory-analysis toolset (Volatility 3 + Memory Baseliner). Consult\n`~/.claude/skills/memory-analysis/SKILL.md` and `~/.claude/skills/yara-hunting/SKILL.md`\nfor tool guidance.\n\nNote: on this instance Volatility 3 is in `$PATH` as `vol` (the global CLAUDE.md path\n`/opt/volatility3-2.20.0/vol.py` is stale). Use `vol -f <image> <plugin>` directly.\n\nWrite all output to `./analysis/`, `./exports/`, and `./reports/` (relative to this\ndirectory). Final report: `./reports/rocba_findings.md`.\n\nFor every claim in the final report, **tag it explicitly** as one of:\n\n- `[CONFIRMED]` \u2014 directly observed in tool output (cite the exact tool + plugin + line)\n- `[INFERRED]` \u2014 derived from observed evidence with explicit reasoning\n- `[HYPOTHESIS]` \u2014 plausible but not yet supported\n\nIf you encounter ambiguity, do not hallucinate \u2014 flag the gap instead.\n\nWhen you are done, print a one-line summary `BASELINE RUN COMPLETE` to stdout so the\nharness knows to stop streaming.\n",
+    "--model",
+    "sonnet",
+    "--max-budget-usd",
+    "5.0",
+    "--max-turns",
+    "80",
+    "--output-format",
+    "stream-json",
+    "--include-partial-messages",
+    "--include-hook-events",
+    "--no-session-persistence",
+    "--verbose"
+  ],
+  "harness_git_rev": "d70a51bd9dae6cffc49357b1802c842ca457e0dc",
+  "result_event": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "api_error_status": null,
+    "duration_ms": 775402,
+    "duration_api_ms": 766588,
+    "num_turns": 55,
+    "result": "---\n\n## Findings Summary \u2014 Case ROCBA-001\n\n### G1 \u2014 Key Projects Fred Had Access To [CONFIRMED]\nFred's laptop had nine SRL R&D projects in memory: **Airwolf**, **Blue Thunder**, **Gunstar** (Death Blossom, FTL Comms), **KITT** (Maria Hill \u2014 Hydrogen Hybrid Tech, Future of KITT), **Vibranium**, **Adamantium** (France DGSE Intel), **StarFury / SA-23E**, **Megaforce** (SharePoint), and **Ion Thruster Weaponization**.\n\n### G2 \u2014 What Was Stolen [CONFIRMED + INFERRED]\nFiles confirmed accessed and staged during the break-in window:\n- **KITT project documents** (3 versions of \"Future of KITT\" opened per Recent Items)\n- **Airwolf** folder browsed\n- **Vibranium** doc copied (copy \"(1)\" suffix in Office Recent)\n- **StarFury** data \u2014 `StarFury.zip` created on personal OneDrive; images placed on iCloud\n- **Fred's entire Outlook mailbox** \u2014 exported to `Exported-PST`, then the PST was deleted to Recycle Bin\n\n### G3 \u2014 Transfer Destinations [CONFIRMED]\n1. **Personal OneDrive** \u2014 `StarFury.zip` (confirmed in filescan; OneDrive.exe was actively syncing)\n2. **Apple iCloud** \u2014 `StarFuryHeader.jpg`, `fighter_starfury.jpg` (iCloudDrive)\n3. **USB drive `D:\\`** \u2014 KAPE + FTK Imager used for on-device forensic collection/imaging to the USB\n4. **Remote RDP sessions** \u2014 four external IPs had active/recent RDP sessions: `81.30.144.115`, `213.202.233.104`, `81.19.209.101`, `201.193.188.114`\n\n### G4 \u2014 How [CONFIRMED + INFERRED]\nPhysical break-in \u2192 unlocked laptop \u2192 browser-based SRL file access \u2192 file archiving to personal cloud \u2192 SDelete anti-forensic cleanup \u2192 USB drive inserted with **KAPE** (artifact collection), **AccessData FTK Imager** (drive imaging), and **MRC.exe** (Mini Remote Control for remote relay) \u2192 remote RDP connections from accomplices.\n\n### G5 \u2014 Timeline [CONFIRMED]\n| Key Event | UTC |\n|---|---|\n| Intruder unlocked laptop | 2020-11-14 03:42:49 |\n| Edge browser (SRL browsing) | 2020-11-14 04:12 \u2013 04:59 |\n| PDF reading (Adobe Reader) | 2020-11-14 04:28 \u2013 04:54 |\n| Office documents opened | 2020-11-14 14:17 |\n| USB drive inserted (KAPE/FTK/MRC) | 2020-11-16 02:29:33 |\n| MRC.exe launched | 2020-11-16 02:31:15 |\n| RAM captured by SRL IR | 2020-11-16 02:32:38 |\n\n**Total intrusion duration: ~46 hours 50 minutes.**\n\nFull report: `/cases/find-evil-test/reports/rocba_findings.md`\n\nBASELINE RUN COMPLETE",
+    "stop_reason": "end_turn",
+    "session_id": "3815a43c-3080-4ca7-b4e8-e161591185d0",
+    "total_cost_usd": 2.2623311999999993,
+    "usage": {
+      "input_tokens": 57,
+      "cache_creation_input_tokens": 126912,
+      "cache_read_input_tokens": 4079554,
+      "output_tokens": 37397,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 126912,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [
+        {
+          "input_tokens": 1,
+          "output_tokens": 813,
+          "cache_read_input_tokens": 139662,
+          "cache_creation_input_tokens": 346,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 346
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "modelUsage": {
+      "claude-haiku-4-5-20251001": {
+        "inputTokens": 1329,
+        "outputTokens": 18,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 0,
+        "webSearchRequests": 0,
+        "costUSD": 0.0014190000000000001,
+        "contextWindow": 200000,
+        "maxOutputTokens": 32000
+      },
+      "claude-sonnet-4-6": {
+        "inputTokens": 57,
+        "outputTokens": 37397,
+        "cacheReadInputTokens": 4079554,
+        "cacheCreationInputTokens": 126912,
+        "webSearchRequests": 0,
+        "costUSD": 2.2609121999999995,
+        "contextWindow": 200000,
+        "maxOutputTokens": 32000
+      }
+    },
+    "permission_denials": [],
+    "terminal_reason": "completed",
+    "fast_mode_state": "off",
+    "uuid": "55cdd2ae-eb3d-4605-b53a-8d007ffd33fa"
+  },
+  "finished_utc": "2026-05-09T05:31:44Z"
+}

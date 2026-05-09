@@ -1,0 +1,86 @@
+# Machine-readable case context loaded by SIFT-OWL.
+# Human-readable narrative lives in case.md alongside this file.
+
+case_id: ROCBA-001
+case_name: "Fred Rocba — SRL break-in / IP theft"
+client: Stark Research Labs
+victim:
+  name: Fred Rocba
+  role: technical engineer
+  hired_local_edt: 2020-10-24
+
+system:
+  os: Windows 10
+  build: "19041"
+  arch: x64
+  cpus: 4
+  hostname: null              # to be discovered from memory
+  user: frocba                # to be confirmed from memory
+  hardware: "Microsoft Surface"
+  timezone: EST5EDT
+
+evidence_dir: /cases/find-evil-test
+evidence:
+  - path: /cases/find-evil-test/Rocba-Memory.raw
+    kind: memory_image
+    size_bytes: 19050528768
+    sha256: eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563
+    captured_utc: "2020-11-16T02:32:38Z"
+  - path: /cases/find-evil-test/ROCBA-BACKGROUND.pptx
+    kind: case_briefing
+    size_bytes: 40148560
+    sha256: 44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834
+
+# Time anchors (all UTC unless noted).
+timeline:
+  - { local_est: "2020-10-24",          event: "Fred interviewed and accepted SRL job" }
+  - { local_est: "2020-10-24",          event: "SRL ships him a Microsoft Surface" }
+  - { local_est: "2020-10-26..2020-11-10", event: "Fred works from home on the new Surface" }
+  - { local_est: "2020-11-10 morning",  event: "Fred and family fly to Disney World" }
+  - { local_est: "2020-11-13 evening",  event: "Break-in at residence; intruders accessed the SRL Surface (left logged in)" }
+  - { local_est: "2020-11-15 PM",       event: "Family returns; Fred discovers forced door + signs of computer use" }
+  - { local_est: "2020-11-15 21:32:38", utc: "2020-11-16T02:32:38Z", event: "Memory captured" }
+
+# Anything user-driven inside this window, that is NOT photo/cloud sync, is the intruder.
+intruder_window:
+  start_utc: "2020-11-13T22:00:00Z"   # ~5pm EST = ~22:00 UTC; conservative lower bound
+  end_utc:   "2020-11-16T02:32:38Z"   # capture time
+
+# Identities the agent should already know about (so they're flagged as legitimate accounts).
+identities:
+  - { value: "frocba@stark-research-labs.com",     kind: email, scope: corporate }
+  - { value: "fred.rocba@gmail.com",               kind: email, scope: personal }
+  - { value: "fred.rocba@outlook.com",             kind: email, scope: personal }
+  - { value: "+1-339-223-3317",                    kind: phone, scope: personal }
+
+# Cloud / sync tooling installed on the system. Activity from these is *expected* during
+# the intruder window (e.g. iCloud syncing Disney photos). Use to suppress false positives.
+expected_legitimate_software:
+  - O365 (Outlook + OneDrive)
+  - Dropbox (personal)
+  - Google Drive
+  - iCloud (iPhone photo sync — actively syncing during the trip)
+  - Zoom
+  - Microsoft Edge
+  - Mozilla Firefox
+  - Google Chrome
+
+# Briefing-stated investigation goals — these become the orchestrator's task list.
+goals:
+  - id: G1
+    question: "What key projects did Fred have access to?"
+  - id: G2
+    question: "What was stolen?"
+  - id: G3
+    question: "Where was it transferred to (cloud / USB / network share / etc.)?"
+  - id: G4
+    question: "How was it stolen (tooling / technique)?"
+  - id: G5
+    question: "When did the activity occur (correlate with break-in window)?"
+
+# Where the agent writes its outputs. NEVER inside evidence_dir.
+output:
+  analysis_dir: ./eval/results/rocba-001/analysis
+  exports_dir:  ./eval/results/rocba-001/exports
+  reports_dir:  ./eval/results/rocba-001/reports
+  audit_dir:    ./eval/results/rocba-001/audit

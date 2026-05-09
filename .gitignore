@@ -1,0 +1,49 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+sift_owl.egg-info/
+.venv/
+venv/
+.env
+.python-version
+
+# --- Forensic outputs (case-specific, never committed) ---
+analysis/
+exports/
+reports/
+/cases/
+*.E01
+*.e01
+*.img
+*.dd
+*.raw
+*.mem
+*.dmp
+
+# --- Audit logs (gitignored except curated samples/) ---
+audit/*
+!audit/samples/
+!audit/.gitkeep
+
+# --- Eval / ground truth large artifacts ---
+eval/ground_truth/*/raw/
+
+# --- Eval results: keep curated artifacts (REPORT.md, summary.json, run_meta.json,
+#                   tool_calls.jsonl, final_response.md), exclude bulky run data
+eval/results/**/agent_outputs/
+eval/results/**/transcript.jsonl
+eval/results/**/*.raw
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# --- Build / tooling ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
