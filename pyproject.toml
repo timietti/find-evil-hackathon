@@ -59,3 +59,6 @@ target-version = "py312"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+markers = [
+  "slow: tests that take >30 seconds — deselected by default in CI with `-m 'not slow'`",
+]

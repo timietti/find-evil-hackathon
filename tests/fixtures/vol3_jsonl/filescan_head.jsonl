@@ -1,0 +1,10 @@
+{"Name": "\\System Volume Information\\tracking.log", "Offset": 201816000759280, "__children": []}
+{"Name": "\\Windows\\System32\\wfapigp.dll", "Offset": 201816000761360, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\raspppoe.sys", "Offset": 201816001319488, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\agilevpn.sys", "Offset": 201816001319872, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\condrv.sys", "Offset": 201816001321792, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\raspptp.sys", "Offset": 201816001322560, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\ndistapi.sys", "Offset": 201816001324480, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\ndiswan.sys", "Offset": 201816001325248, "__children": []}
+{"Name": "\\$MapAttributeValue", "Offset": 201816001328704, "__children": []}
+{"Name": "\\Windows\\System32\\drivers\\ndproxy.sys", "Offset": 201816001329088, "__children": []}

@@ -164,3 +164,34 @@ class ImageInfoArgs(_StrictModel):
         if not v:
             raise ValueError("image must be a non-empty path")
         return v
+
+
+class _ImageOnlyArgs(_StrictModel):
+    """Shared schema for plugins that take only an image path."""
+
+    image: str = Field(description="Absolute path to the memory image file.")
+
+
+class PsScanArgs(_ImageOnlyArgs):
+    pass
+
+
+class PsTreeArgs(_ImageOnlyArgs):
+    pass
+
+
+class CmdlineArgs(_ImageOnlyArgs):
+    """Cmdline can optionally narrow to a single PID, but we expose all-procs only.
+
+    Per-PID filtering re-parses the same memory regions; the agent should run
+    once and slice the parsed output rather than burning a Vol3 invocation per
+    PID. If we ever need filtered output, add `pid: int | None` here.
+    """
+
+
+class NetScanArgs(_ImageOnlyArgs):
+    pass
+
+
+class FileScanArgs(_ImageOnlyArgs):
+    pass
