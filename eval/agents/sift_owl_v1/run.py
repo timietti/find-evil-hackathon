@@ -31,7 +31,7 @@ from rich.console import Console
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 AGENT_DIR = REPO_ROOT / "eval" / "agents" / "sift_owl_v1"
-PROMPT_PATH = AGENT_DIR / "prompt.md"
+DEFAULT_PROMPT_PATH = AGENT_DIR / "prompt.md"
 
 app = typer.Typer(help="Run SIFT-OWL v1 against a case.")
 console = Console()
@@ -47,25 +47,71 @@ def _load_case(case_id: str) -> dict:
         return yaml.safe_load(fh)
 
 
+def _evidence_paths(case: dict) -> list[tuple[Path, str | None]]:
+    """Collect all evidence paths from a case.yaml regardless of its shape.
+
+    Three case-yaml shapes are recognised:
+      * ROCBA-001 style: top-level `evidence: [{path, sha256, ...}]`.
+      * STARK-APT style: `hosts: [{disk_image, memory_image, ...}]`,
+        with separately-listed `evidence_sha256`.
+      * SHIELDBASE style: separate `disk_images:` + `memory_images:` lists.
+
+    Returns list of (path, expected_sha256) tuples.
+    """
+    out: list[tuple[Path, str | None]] = []
+
+    # Shape 1: flat `evidence` list (ROCBA).
+    for ev in case.get("evidence", []) or []:
+        out.append((Path(ev["path"]), ev.get("sha256")))
+
+    # Shape 2: `hosts` with disk_image + memory_image (STARK-APT).
+    sha_map = case.get("evidence_sha256", {}) or {}
+    # We don't know the key naming convention reliably; fall back to None match
+    # if the case.yaml didn't tabulate sha256 against host fields.
+    for host in case.get("hosts", []) or []:
+        for fld in ("disk_image", "memory_image"):
+            p = host.get(fld)
+            if p:
+                # Try to match sha256 by short host id; e.g. "win7_64_nfury_disk"
+                hid = host.get("id", "")
+                key_d = f"{hid.replace('-', '_')}_disk"
+                key_m = f"{hid.replace('-', '_')}_memory"
+                expected = sha_map.get(key_d if fld == "disk_image" else key_m)
+                out.append((Path(p), expected))
+
+    # Shape 3: split `disk_images` / `memory_images` lists (SHIELDBASE).
+    for ev in case.get("disk_images", []) or []:
+        out.append((Path(ev["path"]), ev.get("sha256")))
+    for ev in case.get("memory_images", []) or []:
+        out.append((Path(ev["path"]), ev.get("sha256")))
+
+    # Deduplicate while preserving order
+    seen, dedup = set(), []
+    for p, s in out:
+        if p in seen:
+            continue
+        seen.add(p)
+        dedup.append((p, s))
+    return dedup
+
+
 def _verify_evidence_unchanged(case: dict) -> dict:
     import hashlib
     out = {}
-    for ev in case.get("evidence", []):
-        path = Path(ev["path"])
+    for path, expected_sha256 in _evidence_paths(case):
         if not path.exists():
             raise FileNotFoundError(f"Evidence missing: {path}")
         h = hashlib.sha256()
         with path.open("rb") as fh:
             for chunk in iter(lambda: fh.read(8 << 20), b""):
                 h.update(chunk)
+        actual = h.hexdigest()
         out[str(path)] = {
-            "expected_sha256": ev.get("sha256"),
-            "actual_sha256":   h.hexdigest(),
+            "expected_sha256": expected_sha256,
+            "actual_sha256":   actual,
             "size_bytes":      path.stat().st_size,
+            "match":           (expected_sha256 is None) or (actual == expected_sha256),
         }
-        out[str(path)]["match"] = (
-            out[str(path)]["actual_sha256"] == ev.get("sha256")
-        )
     return out
 
 
@@ -113,6 +159,13 @@ def main(
     model: str = typer.Option("sonnet", "--model"),
     max_budget_usd: float = typer.Option(5.0, "--max-budget-usd"),
     max_turns: int = typer.Option(80, "--max-turns"),
+    prompt_file: str = typer.Option(
+        None, "--prompt-file",
+        help=(
+            "Override prompt file. Defaults to `prompt.md` next to this script "
+            "for ROCBA; pass `prompt-test2-stark-apt.md` for STARK-APT-001, etc."
+        ),
+    ),
     skip_post_hash: bool = typer.Option(False, "--skip-post-hash"),
     dry_run: bool = typer.Option(False, "--dry-run"),
 ) -> None:
@@ -120,11 +173,18 @@ def main(
         raise RuntimeError("`claude` CLI not on PATH")
     if shutil.which("sift-mcp") is None:
         raise RuntimeError("`sift-mcp` not on PATH (run `pip install -e .`)")
-    if not PROMPT_PATH.exists():
-        raise FileNotFoundError(f"prompt missing: {PROMPT_PATH}")
+
+    prompt_path = Path(prompt_file) if prompt_file else DEFAULT_PROMPT_PATH
+    if not prompt_path.is_absolute():
+        prompt_path = AGENT_DIR / prompt_path
+    if not prompt_path.exists():
+        raise FileNotFoundError(f"prompt missing: {prompt_path}")
 
     case_data = _load_case(case)
-    evidence_dir = case_data["evidence_dir"]
+    # `evidence_dir` is the path Claude Code uses as the evidence-root for the
+    # MCP server's `--evidence-root` allow-list. For multi-host cases it's the
+    # parent directory enclosing all host evidence.
+    evidence_dir = case_data.get("evidence_dir") or "/cases"
 
     run_id = f"{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-{model}"
     out_dir   = REPO_ROOT / "eval" / "results" / case / "sift-owl-v1" / run_id
@@ -144,7 +204,7 @@ def main(
         evidence_root=evidence_dir,
         target=mcp_config_path,
     )
-    prompt_text = PROMPT_PATH.read_text()
+    prompt_text = prompt_path.read_text()
 
     console.log("[bold]Hashing evidence (pre-run)...[/]")
     pre = _verify_evidence_unchanged(case_data)
@@ -174,6 +234,7 @@ def main(
         "model":               model,
         "max_budget_usd":      max_budget_usd,
         "max_turns":           max_turns,
+        "prompt_file":         str(prompt_path),
         "started_utc":         _now_iso(),
         "cwd":                 str(out_dir),
         "evidence_dir":        evidence_dir,

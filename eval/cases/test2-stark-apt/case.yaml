@@ -6,7 +6,7 @@ case_name: "SANS FOR508 — Stark Research Labs Data Breach Intrusion (legacy / 
 client: Stark Research Labs
 victim:
   organisation: Stark Research Labs
-  scope: enterprise compromise (4 hosts: DC + 2 Win7 + 1 XP)
+  scope: "enterprise compromise (4 hosts: DC + 2 Win7 + 1 XP)"
 
 # Multi-host case — each system has its own paired disk + memory image.
 # Acquisition timestamps (per FTK Imager .E01.txt sidecars) are 2012-04-06 to 2012-04-09.

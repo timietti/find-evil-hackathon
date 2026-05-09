@@ -44,13 +44,14 @@ report = [
 [project.scripts]
 sift-owl = "agents.orchestrator:main"
 sift-mcp = "mcp_server.server:main"
+sift-validate = "agents.validator.validate:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["mcp_server*", "agents*", "eval*"]
+include = ["mcp_server*", "agents*", "agents.validator", "eval*"]
 
 [tool.ruff]
 line-length = 100
