@@ -46,7 +46,12 @@ EXPECTED_TOOLS = {
     "vol3_malfind",
     "vol3_svcscan",
     "vol3_userassist",
+    "query_rows",
 }
+
+# Tools whose first/required arg is `image: str`. Excludes query_rows whose
+# required arg is `exec_id: str` instead.
+TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {"query_rows"}
 
 
 def _server_params(audit_dir: Path) -> StdioServerParameters:
@@ -59,7 +64,7 @@ def _server_params(audit_dir: Path) -> StdioServerParameters:
 
 @REQUIRES_SERVER
 @pytest.mark.asyncio
-async def test_mcp_server_lists_all_9_tools(tmp_path: Path) -> None:
+async def test_mcp_server_lists_all_tools(tmp_path: Path) -> None:
     """Protocol-only: spawn server, init, list tools. No evidence needed."""
     async with stdio_client(_server_params(tmp_path / "audit")) as (read, write):
         async with ClientSession(read, write) as session:
@@ -75,17 +80,28 @@ async def test_mcp_server_lists_all_9_tools(tmp_path: Path) -> None:
 
 @REQUIRES_SERVER
 @pytest.mark.asyncio
-async def test_mcp_server_tool_schemas_have_image_arg(tmp_path: Path) -> None:
-    """Every registered tool exposes a single `image: str` arg."""
+async def test_mcp_server_tool_schemas(tmp_path: Path) -> None:
+    """Every vol3_* tool takes `image: str`; query_rows takes `exec_id: str`."""
     async with stdio_client(_server_params(tmp_path / "audit")) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
             tools_resp = await session.list_tools()
             for tool in tools_resp.tools:
-                schema = tool.inputSchema
-                assert "image" in (schema.get("properties") or {}), (
-                    f"tool {tool.name} missing `image` property: {schema}"
-                )
+                props = tool.inputSchema.get("properties") or {}
+                if tool.name in TOOLS_WITH_IMAGE_ARG:
+                    assert "image" in props, (
+                        f"tool {tool.name} missing `image` property: {props}"
+                    )
+                elif tool.name == "query_rows":
+                    assert "exec_id" in props, (
+                        f"query_rows missing `exec_id` property: {props}"
+                    )
+                    assert "filter_field" in props
+                    assert "filter_value" in props
+                    assert "limit" in props
+                    assert "offset" in props
+                else:
+                    pytest.fail(f"unexpected tool {tool.name}")
 
 
 @REQUIRES_E2E
@@ -135,3 +151,84 @@ async def test_mcp_server_vol3_image_info_round_trip(tmp_path: Path) -> None:
     assert len(rows) == 1
     assert rows[0]["tool"] == "vol3_image_info"
     assert rows[0]["exec_id"] == payload["exec_id"]
+
+
+@REQUIRES_E2E
+@pytest.mark.asyncio
+async def test_mcp_server_psscan_truncates_and_query_rows_drills_in(
+    tmp_path: Path,
+) -> None:
+    """End-to-end: vol3_psscan returns capped rows + query_rows finds one PID.
+
+    Reproduces the exact pattern v0 needed but couldn't perform: get a top-N
+    sample from a row-rich plugin, then drill into a specific PID.
+    """
+    audit_dir = tmp_path / "audit"
+    async with stdio_client(_server_params(audit_dir)) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+
+            # Step 1: vol3_psscan — should return ≤ 50 rows + truncation flags.
+            ps_result = await session.call_tool(
+                "vol3_psscan",
+                arguments={"image": str(ROCBA_IMG)},
+            )
+            assert ps_result.isError is False
+            payload = ps_result.structuredContent
+            if "result" in payload and isinstance(payload["result"], dict):
+                payload = payload["result"]
+
+            assert payload["count"] >= 50  # ROCBA has 2200+ procs
+            assert len(payload["processes"]) <= 50
+            assert payload.get("processes_truncated") is True
+            assert payload["processes_total"] == payload["count"]
+            ps_exec_id = payload["exec_id"]
+            assert ps_exec_id
+
+            # Step 2: query_rows for PID 4 (System) — must succeed.
+            q_result = await session.call_tool(
+                "query_rows",
+                arguments={
+                    "exec_id": ps_exec_id,
+                    "filter_field": "pid",
+                    "filter_value": "4",
+                    "limit": 5,
+                },
+            )
+            assert q_result.isError is False
+            qpayload = q_result.structuredContent
+            if "result" in qpayload and isinstance(qpayload["result"], dict):
+                qpayload = qpayload["result"]
+
+            assert qpayload["tool"] == "vol3_psscan"
+            assert qpayload["matched_rows"] == 1, (
+                f"expected exactly 1 PID 4 match; got {qpayload['matched_rows']}"
+            )
+            assert qpayload["rows"][0]["pid"] == 4
+            assert qpayload["rows"][0]["image"] == "System"
+
+            # Step 3: query_rows substring match on image="csrss" — at least 1.
+            q2 = await session.call_tool(
+                "query_rows",
+                arguments={
+                    "exec_id": ps_exec_id,
+                    "filter_field": "image",
+                    "filter_value": "csrss",
+                },
+            )
+            qp2 = q2.structuredContent
+            if "result" in qp2 and isinstance(qp2["result"], dict):
+                qp2 = qp2["result"]
+            assert qp2["matched_rows"] >= 1
+            assert all("csrss" in r["image"].lower() for r in qp2["rows"])
+
+            # Step 4: query_rows for nonexistent exec_id — should error cleanly.
+            qbad = await session.call_tool(
+                "query_rows",
+                arguments={
+                    "exec_id": "01H0000000000000000000000000",
+                    "filter_field": "pid",
+                    "filter_value": "1",
+                },
+            )
+            assert qbad.isError is True

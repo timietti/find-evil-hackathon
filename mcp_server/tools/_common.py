@@ -207,3 +207,44 @@ class SvcScanArgs(_ImageOnlyArgs):
 
 class UserAssistArgs(_ImageOnlyArgs):
     pass
+
+
+class QueryRowsArgs(_StrictModel):
+    """Input schema for the `query_rows` follow-up tool.
+
+    Lets the agent drill into the full row list of a previously-completed
+    Vol3 plugin call, by exec_id, with optional filtering and pagination.
+    Solves the v0 "tool result overflow" problem: the agent gets the
+    summary + top 50 rows from the original call; if it needs to find a
+    specific row (e.g. PID 29440 in psscan, or all files matching
+    `StarFury` in filescan), it issues a query_rows call.
+    """
+
+    exec_id: str = Field(
+        description="The `exec_id` of a previously-completed MCP tool call.",
+    )
+    filter_field: str | None = Field(
+        default=None,
+        description=(
+            "Field name to filter on (e.g. 'pid', 'image', 'name', "
+            "'foreign_addr'). Omit for no filter."
+        ),
+    )
+    filter_value: str | None = Field(
+        default=None,
+        description=(
+            "Value to match. For string fields: case-insensitive "
+            "substring match. For numeric fields: parsed and compared "
+            "as int. For booleans: 'true'/'false'."
+        ),
+    )
+    limit: int = Field(
+        default=50,
+        ge=1, le=500,
+        description="Maximum number of matching rows to return (1..500).",
+    )
+    offset: int = Field(
+        default=0,
+        ge=0,
+        description="Number of leading matching rows to skip.",
+    )

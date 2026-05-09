@@ -130,6 +130,29 @@ class AuditLogger:
             fh.write(json.dumps(row, default=str) + "\n")
         return row
 
+    def lookup_exec(self, exec_id: str) -> dict[str, Any] | None:
+        """Find an audit row by exec_id.
+
+        Linear scan of `exec_log.jsonl`; cheap because rows are small and
+        per-case run sizes are bounded (~tens to low-hundreds of rows). If
+        runs ever grow into the thousands we'll add an index, but profile
+        before optimising.
+        """
+        if not self.exec_log_path.exists():
+            return None
+        with self.exec_log_path.open() as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if row.get("exec_id") == exec_id:
+                    return row
+        return None
+
     @contextmanager
     def time_call(
         self, *, agent: str, tool: str, args: dict[str, Any]

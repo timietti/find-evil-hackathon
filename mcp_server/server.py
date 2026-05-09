@@ -35,6 +35,7 @@ from mcp.server.fastmcp import FastMCP
 
 from mcp_server.audit import AuditLogger
 from mcp_server.tools.memory import (
+    query_rows as _query_rows,
     vol3_cmdline as _cmdline,
     vol3_filescan as _filescan,
     vol3_image_info as _image_info,
@@ -162,6 +163,51 @@ def vol3_userassist(image: str) -> dict[str, Any]:
     per user hive. Strong indicator for hands-on-keyboard activity (programs
     launched via Explorer/Start menu)."""
     return _userassist({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def query_rows(
+    exec_id: str,
+    filter_field: str | None = None,
+    filter_value: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+) -> dict[str, Any]:
+    """Drill into a previous tool's full row list by exec_id.
+
+    Each `vol3_*` tool returns a summary + the first 50 rows of its
+    structured output. The full data is preserved on disk and reachable via
+    this tool. Use it to:
+
+    - find a specific PID across the 2000+ procs in psscan
+    - find files matching a substring in the 40K-row filescan output
+    - paginate through the full netscan connection list
+    - retrieve all rows of any prior call by its exec_id
+
+    Args:
+      exec_id: the exec_id from a previous vol3_* call.
+      filter_field: optional field name to filter on (e.g. 'pid', 'image',
+        'name', 'foreign_addr', 'process'). See the original tool's row
+        schema for available field names.
+      filter_value: optional value. For strings: case-insensitive substring
+        match. For numbers/booleans: exact match.
+      limit: max rows to return (default 50, max 500).
+      offset: skip the first N matching rows (for pagination).
+
+    Returns:
+      dict with `tool`, `total_rows`, `matched_rows`, `returned_rows`,
+      `rows`, plus echoes of `exec_id`, `filter`, `offset`, `limit`.
+    """
+    return _query_rows(
+        {
+            "exec_id": exec_id,
+            "filter_field": filter_field,
+            "filter_value": filter_value,
+            "limit": limit,
+            "offset": offset,
+        },
+        audit=_audit(),
+    )
 
 
 # ---------------------------------------------------------------------------

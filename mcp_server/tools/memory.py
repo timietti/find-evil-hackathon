@@ -157,6 +157,72 @@ def vol3_image_info(
 # ---------------------------------------------------------------------------
 
 
+# Maps tool name → key holding the bulky row list in the parser's output.
+# Used by `_truncate_rows()` and by `query_rows` for re-parse + filtering.
+_ROWS_KEY: dict[str, str] = {
+    "vol3_psscan":     "processes",
+    "vol3_pstree":     "nodes",
+    "vol3_cmdline":    "rows",
+    "vol3_netscan":    "connections",
+    "vol3_filescan":   "files",
+    "vol3_malfind":    "findings",
+    "vol3_svcscan":    "services",
+    "vol3_userassist": "entries",
+    # vol3_image_info has no row list — n/a
+}
+
+# Maps tool name → parser fn (used by query_rows to re-parse raw output).
+_PARSERS: dict[str, Any] = {}
+
+
+def _register_parsers() -> None:
+    """Populated lazily to avoid an import cycle in module-init order."""
+    if _PARSERS:
+        return
+    _PARSERS.update({
+        "vol3_image_info": parse_image_info,
+        "vol3_psscan":     parse_psscan,
+        "vol3_pstree":     parse_pstree,
+        "vol3_cmdline":    parse_cmdline,
+        "vol3_netscan":    parse_netscan,
+        "vol3_filescan":   parse_filescan,
+        "vol3_malfind":    parse_malfind,
+        "vol3_svcscan":    parse_svcscan,
+        "vol3_userassist": parse_userassist,
+    })
+
+
+# Default row cap returned to MCP callers per plugin invocation. Picked to
+# stay well under Claude Code's per-tool-result size cap (~330 KB observed
+# in v0 on the 18 GB Rocba image; we observed overflow on psscan at 2212
+# procs × ~150 B/row ≈ 330 KB). 50 rows × ~500 B = ~25 KB headroom.
+DEFAULT_ROW_LIMIT = 50
+
+
+def _truncate_rows(parsed: dict[str, Any], limit: int = DEFAULT_ROW_LIMIT) -> dict[str, Any]:
+    """Cap any embedded row list to `limit` items.
+
+    The full row list is preserved on disk at `raw_output_path` (re-parseable
+    via `query_rows`); only the on-the-wire MCP payload is truncated. This
+    closes the architectural bug v0 surfaced (large MCP results overflow
+    Claude Code's per-tool-result cap, agent can't rehydrate when Read is
+    denied).
+    """
+    out = dict(parsed)
+    for key in ("processes", "nodes", "rows", "connections", "files",
+                "findings", "services", "entries"):
+        if key in out and isinstance(out[key], list):
+            full = out[key]
+            if len(full) > limit:
+                out[key] = full[:limit]
+                out[f"{key}_truncated"] = True
+                out[f"{key}_total"] = len(full)
+            else:
+                out[f"{key}_truncated"] = False
+                out[f"{key}_total"] = len(full)
+    return out
+
+
 def _run_jsonl_plugin(
     *,
     image_path: Path,
@@ -231,7 +297,11 @@ def _run_jsonl_plugin(
         parsed_summary=parsed_summary_compact,
     )
 
-    return {"exec_id": exec_id, **parsed}
+    # Truncate the on-the-wire response so it stays under Claude Code's
+    # per-tool-result size cap. Full data is on disk at raw_output_path
+    # for the validator + query_rows tool.
+    truncated = _truncate_rows(parsed)
+    return {"exec_id": exec_id, **truncated}
 
 
 # ---------------------------------------------------------------------------
@@ -444,3 +514,97 @@ def vol3_userassist(
         agent=agent,
         timeout_s=timeout_s,
     )
+
+
+# ---------------------------------------------------------------------------
+# query_rows — drill into a previous tool call's full row list.
+# ---------------------------------------------------------------------------
+
+
+def _coerce_filter_value(field_value: Any, filter_value: str) -> bool:
+    """Match a filter_value (always str) against a field value of any type."""
+    if field_value is None:
+        return False
+    if isinstance(field_value, bool):
+        # Match before int — bool is a subclass of int.
+        return str(field_value).lower() == filter_value.strip().lower()
+    if isinstance(field_value, (int, float)):
+        try:
+            return field_value == type(field_value)(filter_value)
+        except (ValueError, TypeError):
+            return False
+    # String fields: case-insensitive substring match.
+    return filter_value.lower() in str(field_value).lower()
+
+
+def query_rows(
+    args: "QueryRowsArgs | dict",
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+) -> dict[str, Any]:
+    """Re-parse a previous tool's raw output, filter, return matching rows.
+
+    Look up `exec_id` in the audit log to find:
+      1. which `tool_name` produced it (so we know which parser to use)
+      2. where its `raw_output_path` is on disk
+
+    Re-parse the raw output, apply the optional `(filter_field, filter_value)`
+    filter, paginate via `(offset, limit)`. Returns the rows + counts.
+    """
+    from mcp_server.tools._common import QueryRowsArgs  # local: avoid cycle
+
+    if isinstance(args, dict):
+        args = QueryRowsArgs(**args)
+
+    _register_parsers()
+
+    row = audit.lookup_exec(args.exec_id)
+    if row is None:
+        raise ToolError(f"exec_id not found in audit log: {args.exec_id}")
+
+    tool_name = row.get("tool")
+    raw_path = row.get("raw_output_path")
+    if not tool_name or not raw_path:
+        raise ToolError(f"audit row malformed for exec_id {args.exec_id}: {row}")
+
+    rows_key = _ROWS_KEY.get(tool_name)
+    parser = _PARSERS.get(tool_name)
+    if rows_key is None or parser is None:
+        raise ToolError(
+            f"query_rows does not support tool_name={tool_name} "
+            f"(no rows key or parser registered)"
+        )
+
+    raw_path_obj = Path(raw_path)
+    if not raw_path_obj.exists():
+        raise ToolError(f"raw output missing on disk: {raw_path_obj}")
+
+    parsed = parser(raw_path_obj.read_text(errors="replace"))
+    full_rows = parsed.get(rows_key) or []
+
+    if args.filter_field and args.filter_value is not None:
+        matched = [
+            r for r in full_rows
+            if _coerce_filter_value(r.get(args.filter_field), args.filter_value)
+        ]
+    else:
+        matched = list(full_rows)
+
+    page = matched[args.offset:args.offset + args.limit]
+
+    return {
+        "exec_id":       args.exec_id,
+        "tool":          tool_name,
+        "rows_key":      rows_key,
+        "total_rows":    len(full_rows),
+        "matched_rows":  len(matched),
+        "returned_rows": len(page),
+        "offset":        args.offset,
+        "limit":         args.limit,
+        "filter":        (
+            {"field": args.filter_field, "value": args.filter_value}
+            if args.filter_field else None
+        ),
+        "rows":          page,
+    }

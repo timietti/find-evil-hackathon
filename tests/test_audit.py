@@ -93,3 +93,42 @@ def test_raw_output_text_and_bytes(audit: AuditLogger) -> None:
     assert p_bin.suffix == ".bin"
     assert p_text.read_text() == "hello\nworld\n"
     assert p_bin.read_bytes() == b"\x00\x01\x02"
+
+
+def test_lookup_exec_finds_recorded_row(audit: AuditLogger) -> None:
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="a", tool="vol3_psscan",
+        args={"image": "/x"}, raw_output_path=None,
+        exit_code=0, wall_ms=10, summary="ok",
+    )
+    found = audit.lookup_exec(eid)
+    assert found is not None
+    assert found["exec_id"] == eid
+    assert found["tool"] == "vol3_psscan"
+
+
+def test_lookup_exec_returns_none_for_unknown(audit: AuditLogger) -> None:
+    # Empty log
+    assert audit.lookup_exec("nope") is None
+    # Log with one row but different id
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="a", tool="t", args={},
+        raw_output_path=None, exit_code=0, wall_ms=1, summary="",
+    )
+    assert audit.lookup_exec("does-not-exist") is None
+
+
+def test_lookup_exec_skips_blank_and_invalid_lines(audit: AuditLogger) -> None:
+    """Robust against partially-corrupted audit logs (e.g. a crash mid-write)."""
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="a", tool="t", args={},
+        raw_output_path=None, exit_code=0, wall_ms=1, summary="",
+    )
+    # Append junk after the legit row
+    with audit.exec_log_path.open("a") as fh:
+        fh.write("\n   \n{not-json}\n")
+    # Lookup must still succeed
+    assert audit.lookup_exec(eid) is not None
