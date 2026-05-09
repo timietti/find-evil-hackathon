@@ -7,14 +7,14 @@
     "hypothesis_count": 1,
     "gap_count": 17,
     "other_count": 0,
-    "verified": 5,
+    "verified": 7,
     "partial": 15,
-    "failed": 2,
+    "failed": 0,
     "unverifiable": 2,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.208
+    "confirmation_score": 0.292
   },
   "verdicts": [
     {
@@ -27,18 +27,21 @@
       },
       "status": "partial",
       "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
       "tokens": {
         "pids": [
-          "27304",
-          "556"
+          "556",
+          "27304"
         ],
         "ips": [],
         "timestamps": [
           "2012-03-20T17:58:12Z"
         ],
         "filenames": [
-          "usboesrv.exe",
-          "services.exe"
+          "services.exe",
+          "usboesrv.exe"
         ],
         "paths": [
           "\\Windows\\system32\\usboesrv.exe`"
@@ -50,23 +53,25 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "usboesrv.exe",
           "services.exe",
+          "usboesrv.exe",
           "C:\\Windows\\system32\\usboesrv.exe"
         ]
       },
       "matched": [
-        "27304",
         "556",
+        "27304",
         "2012-03-20T17:58:12Z",
-        "usboesrv.exe",
-        "services.exe"
+        "services.exe",
+        "usboesrv.exe"
       ],
       "missing": [
         "\\Windows\\system32\\usboesrv.exe`",
         "C:\\Windows\\system32\\usboesrv.exe`",
         "C:\\Windows\\system32\\usboesrv.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -79,11 +84,15 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
-          "96.255.98.154",
-          "10.3.58.4"
+          "10.3.58.4",
+          "96.255.98.154"
         ],
         "timestamps": [],
         "filenames": [
@@ -99,11 +108,13 @@
         ]
       },
       "matched": [
-        "96.255.98.154",
         "10.3.58.4",
+        "96.255.98.154",
         "usboesrv.exe"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -116,6 +127,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_svcscan",
+      "tool_names": [
+        "vol3_svcscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -133,11 +147,11 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "SERVICE_DEMAND_START",
+          "\\Driver\\usboeloaderdrv",
           "\\Driver\\usboebusdrv",
-          "C:\\Windows\\system32\\usboesrv.exe",
+          "SERVICE_DEMAND_START",
           "SERVICE_AUTO_START",
-          "\\Driver\\usboeloaderdrv"
+          "C:\\Windows\\system32\\usboesrv.exe"
         ]
       },
       "matched": [
@@ -148,10 +162,12 @@
       "missing": [
         "\\Windows\\system32\\usboesrv.exe`",
         "C:\\Windows\\system32\\usboesrv.exe`",
+        "\\Driver\\usboeloaderdrv",
         "\\Driver\\usboebusdrv",
-        "C:\\Windows\\system32\\usboesrv.exe",
-        "\\Driver\\usboeloaderdrv"
+        "C:\\Windows\\system32\\usboesrv.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -164,6 +180,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -189,6 +208,8 @@
         "\\Windows\\System32\\usboesrv.exe`",
         "\\Windows\\System32\\usboesrv.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -200,7 +221,8 @@
         "line_no": 113
       },
       "status": "unverifiable",
-      "tool_name": "vol3_userassist",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -215,6 +237,8 @@
       },
       "matched": [],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)"
     },
     {
@@ -227,6 +251,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
@@ -234,19 +261,19 @@
         ],
         "timestamps": [
           "2012-03-20T18:54:16Z",
-          "2012-03-20T17:57:33Z",
+          "2012-04-05T22:23:04Z",
           "2012-03-20T17:56:42Z",
-          "2012-04-05T22:23:04Z"
+          "2012-03-20T17:57:33Z"
         ],
         "filenames": [
+          "usboesrv.exe",
           "Tcpview.exe",
-          "setup.exe",
+          "hMailAdmin.exe",
           "usboe.exe",
-          "Temp1_usb-over-ethernet.zip",
           "sdelete.exe",
           "powershell.exe",
-          "usboesrv.exe",
-          "hMailAdmin.exe"
+          "Temp1_usb-over-ethernet.zip",
+          "setup.exe"
         ],
         "paths": [
           "\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`"
@@ -261,30 +288,30 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
-          "rsydow",
-          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
           "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
           "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
+          "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
+          "C:\\Tools\\SysInternals\\sdelete.exe",
+          "rsydow",
           "C:\\Tools\\SysInternals\\Tcpview.exe",
           "Microsoft.Windows.RemoteDesktop",
-          "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-          "C:\\Tools\\SysInternals\\sdelete.exe"
+          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
         ]
       },
       "matched": [
         "4.0.0.3",
         "2012-03-20T18:54:16Z",
-        "2012-03-20T17:57:33Z",
-        "2012-03-20T17:56:42Z",
         "2012-04-05T22:23:04Z",
+        "2012-03-20T17:56:42Z",
+        "2012-03-20T17:57:33Z",
         "Tcpview.exe",
-        "setup.exe",
+        "hMailAdmin.exe",
         "usboe.exe",
-        "Temp1_usb-over-ethernet.zip",
         "sdelete.exe",
         "powershell.exe",
-        "hMailAdmin.exe",
+        "Temp1_usb-over-ethernet.zip",
+        "setup.exe",
         "rsydow",
         "Microsoft.Windows.RemoteDesktop"
       ],
@@ -295,14 +322,16 @@
         "C:\\Tools\\SysInternals\\Tcpview.exe`",
         "C:\\Tools\\SysInternals\\sdelete.exe`",
         "P:\\Security",
-        "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
-        "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
         "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+        "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
         "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
-        "C:\\Tools\\SysInternals\\Tcpview.exe",
         "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-        "C:\\Tools\\SysInternals\\sdelete.exe"
+        "C:\\Tools\\SysInternals\\sdelete.exe",
+        "C:\\Tools\\SysInternals\\Tcpview.exe",
+        "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -315,28 +344,31 @@
       },
       "status": "verified",
       "tool_name": "vol3_pstree",
+      "tool_names": [
+        "vol3_pstree"
+      ],
       "tokens": {
         "pids": [
-          "137496",
           "138320",
+          "151132",
+          "137496",
           "148904",
           "8512",
-          "139776",
-          "151132"
+          "139776"
         ],
         "ips": [],
         "timestamps": [
           "2012-04-04T18:55:57Z"
         ],
         "filenames": [
-          "cmd.exe",
-          "taskmgr.exe",
-          "VMwareUser.exe",
           "winlogon.exe",
-          "rdpclip.exe",
-          "explorer.exe",
           "femc.exe",
-          "VMwareTray.exe"
+          "VMwareUser.exe",
+          "rdpclip.exe",
+          "VMwareTray.exe",
+          "explorer.exe",
+          "cmd.exe",
+          "taskmgr.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -344,34 +376,36 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "cmd.exe",
-          "taskmgr.exe",
-          "VMwareUser.exe",
           "winlogon.exe",
-          "rdpclip.exe",
-          "explorer.exe",
           "femc.exe",
-          "VMwareTray.exe"
+          "VMwareUser.exe",
+          "rdpclip.exe",
+          "VMwareTray.exe",
+          "explorer.exe",
+          "cmd.exe",
+          "taskmgr.exe"
         ]
       },
       "matched": [
-        "137496",
         "138320",
+        "151132",
+        "137496",
         "148904",
         "8512",
         "139776",
-        "151132",
         "2012-04-04T18:55:57Z",
-        "cmd.exe",
-        "taskmgr.exe",
-        "VMwareUser.exe",
         "winlogon.exe",
-        "rdpclip.exe",
-        "explorer.exe",
         "femc.exe",
-        "VMwareTray.exe"
+        "VMwareUser.exe",
+        "rdpclip.exe",
+        "VMwareTray.exe",
+        "explorer.exe",
+        "cmd.exe",
+        "taskmgr.exe"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -384,6 +418,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
@@ -408,6 +445,8 @@
       "missing": [
         "10.3.58.4:3389 \u2190 10.3.16.5:46758"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -420,19 +459,22 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [
-          "4",
-          "564"
+          "564",
+          "4"
         ],
         "ips": [
-          "10.3.58.5",
-          "40.167.16.32",
           "56.171.18.32",
-          "10.3.58.9",
-          "56.91.239.31",
+          "173.173.88.154",
           "10.3.58.4",
-          "173.173.88.154"
+          "56.91.239.31",
+          "40.167.16.32",
+          "10.3.58.9",
+          "10.3.58.5"
         ],
         "timestamps": [],
         "filenames": [
@@ -445,32 +487,35 @@
         "hex_offsets": [],
         "quoted": [
           "56.171.18.32",
-          "lsass.exe (pid=564)",
           "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
-          "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)",
           "56.91.239.31",
           "40.167.16.32",
-          "lsass.exe \u2192 10.3.58.5:49236 CLOSED"
+          "lsass.exe \u2192 10.3.58.5:49236 CLOSED",
+          "lsass.exe (pid=564)",
+          "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)"
         ]
       },
       "matched": [
-        "4",
         "564",
-        "10.3.58.5",
-        "40.167.16.32",
         "56.171.18.32",
-        "10.3.58.9",
         "56.91.239.31",
-        "10.3.58.4",
-        "173.173.88.154",
+        "40.167.16.32",
+        "10.3.58.9",
+        "10.3.58.5",
         "lsass.exe"
       ],
       "missing": [
-        "lsass.exe (pid=564)",
         "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
-        "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)",
-        "lsass.exe \u2192 10.3.58.5:49236 CLOSED"
+        "lsass.exe \u2192 10.3.58.5:49236 CLOSED",
+        "lsass.exe (pid=564)",
+        "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)"
       ],
+      "negation_violations": [
+        "4",
+        "173.173.88.154",
+        "10.3.58.4"
+      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -483,6 +528,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
       "tokens": {
         "pids": [
           "152840"
@@ -510,6 +558,8 @@
       "missing": [
         "tlntsvr.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -522,28 +572,31 @@
       },
       "status": "partial",
       "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
       "tokens": {
         "pids": [
           "1720",
-          "3732",
+          "152840",
           "3928",
           "153192",
-          "152840"
+          "3732"
         ],
         "ips": [
           "40.167.16.32"
         ],
         "timestamps": [
-          "2012-04-06T23:24:05Z",
-          "2012-04-06T23:29:40Z"
+          "2012-04-06T23:29:40Z",
+          "2012-04-06T23:24:05Z"
         ],
         "filenames": [
-          "tomcat5.exe",
-          "Apache.exe",
-          "WmiPrvSE.exe",
-          "hMailServer.exe",
           "tlntsvr.exe",
-          "w3wp.exe"
+          "WmiPrvSE.exe",
+          "w3wp.exe",
+          "hMailServer.exe",
+          "Apache.exe",
+          "tomcat5.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -551,33 +604,35 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "tomcat5.exe",
-          "40.167.16.32",
-          "Apache.exe",
-          "hMailServer.exe",
-          "WmiPrvSE.exe",
           "tlntsvr.exe",
-          "w3wp.exe"
+          "WmiPrvSE.exe",
+          "40.167.16.32",
+          "w3wp.exe",
+          "hMailServer.exe",
+          "Apache.exe",
+          "tomcat5.exe"
         ]
       },
       "matched": [
         "1720",
-        "3732",
+        "152840",
         "3928",
         "153192",
-        "152840",
-        "2012-04-06T23:24:05Z",
+        "3732",
         "2012-04-06T23:29:40Z",
-        "tomcat5.exe",
-        "Apache.exe",
-        "WmiPrvSE.exe",
+        "2012-04-06T23:24:05Z",
         "tlntsvr.exe",
-        "w3wp.exe"
+        "WmiPrvSE.exe",
+        "w3wp.exe",
+        "Apache.exe",
+        "tomcat5.exe"
       ],
       "missing": [
         "40.167.16.32",
         "hMailServer.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -590,11 +645,14 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
-          "10.3.58.5",
-          "10.3.58.9"
+          "10.3.58.9",
+          "10.3.58.5"
         ],
         "timestamps": [],
         "filenames": [
@@ -608,11 +666,13 @@
         "quoted": []
       },
       "matched": [
-        "10.3.58.5",
         "10.3.58.9",
+        "10.3.58.5",
         "lsass.exe"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -623,16 +683,19 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e26-7d45-7302-bef8-73e3e9b33f30]",
         "line_no": 193
       },
-      "status": "failed",
+      "status": "verified",
       "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "spinlock.exe",
           "pe.exe",
-          "UdaterUI.exe"
+          "UdaterUI.exe",
+          "spinlock.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -642,10 +705,12 @@
         "quoted": []
       },
       "matched": [],
-      "missing": [
-        "spinlock.exe",
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
         "pe.exe",
-        "UdaterUI.exe"
+        "UdaterUI.exe",
+        "spinlock.exe"
       ],
       "notes": ""
     },
@@ -659,6 +724,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [
           "552"
@@ -666,8 +734,8 @@
         "ips": [
           "10.3.58.6",
           "56.251.168.26",
-          "10.3.58.4",
-          "10.3.16.5"
+          "10.3.16.5",
+          "10.3.58.4"
         ],
         "timestamps": [],
         "filenames": [
@@ -681,23 +749,25 @@
         "quoted": [
           "56.251.168.26",
           "lsass.exe (pid=552)",
-          "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED",
-          "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED"
+          "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
+          "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED"
         ]
       },
       "matched": [
         "552",
         "10.3.58.6",
         "56.251.168.26",
-        "10.3.58.4",
         "10.3.16.5",
+        "10.3.58.4",
         "lsass.exe"
       ],
       "missing": [
         "lsass.exe (pid=552)",
-        "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED",
-        "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED"
+        "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
+        "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -709,7 +779,8 @@
         "line_no": 221
       },
       "status": "unverifiable",
-      "tool_name": "vol3_psscan",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -724,6 +795,8 @@
       },
       "matched": [],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)"
     },
     {
@@ -736,10 +809,13 @@
       },
       "status": "verified",
       "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
       "tokens": {
         "pids": [
-          "3092",
-          "2920"
+          "2920",
+          "3092"
         ],
         "ips": [],
         "timestamps": [
@@ -755,20 +831,22 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "FrameworkServic",
           "McTray.exe",
-          "UdaterUI.exe"
+          "UdaterUI.exe",
+          "FrameworkServic"
         ]
       },
       "matched": [
-        "3092",
         "2920",
+        "3092",
         "2012-04-06T19:07:04Z",
         "McTray.exe",
         "UdaterUI.exe",
         "FrameworkServic"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -781,12 +859,15 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
-          "2012-04-04T18:31Z",
-          "2012-04-05T17:16Z"
+          "2012-04-05T17:16Z",
+          "2012-04-04T18:31Z"
         ],
         "filenames": [
           "spinlock.exe"
@@ -804,9 +885,11 @@
         "spinlock.exe"
       ],
       "missing": [
-        "2012-04-04T18:31Z",
-        "2012-04-05T17:16Z"
+        "2012-04-05T17:16Z",
+        "2012-04-04T18:31Z"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -819,11 +902,14 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
-          "10.3.58.5",
-          "10.3.58.9"
+          "10.3.58.9",
+          "10.3.58.5"
         ],
         "timestamps": [],
         "filenames": [],
@@ -835,10 +921,12 @@
         "quoted": []
       },
       "matched": [
-        "10.3.58.5",
-        "10.3.58.9"
+        "10.3.58.9",
+        "10.3.58.5"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -849,8 +937,11 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e27-d3ef-7011-9311-bdf8ffcac48e]",
         "line_no": 298
       },
-      "status": "failed",
+      "status": "verified",
       "tool_name": "vol3_svcscan",
+      "tool_names": [
+        "vol3_svcscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -864,12 +955,14 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "spinlock.exe",
-          "spinlock"
+          "spinlock",
+          "spinlock.exe"
         ]
       },
       "matched": [],
-      "missing": [
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
         "spinlock.exe",
         "spinlock"
       ],
@@ -885,6 +978,10 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_cmdline"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
@@ -911,6 +1008,8 @@
       "missing": [
         "96.255.98.154:29932"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -923,6 +1022,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
@@ -945,6 +1047,8 @@
       "missing": [
         "173.173.88.154:18682"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -957,13 +1061,16 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "spinlock.exe",
-          "sdelete.exe"
+          "sdelete.exe",
+          "spinlock.exe"
         ],
         "paths": [],
         "drive_refs": [
@@ -973,18 +1080,21 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "spinlock.exe",
-          "C:\\Tools\\SysInternals\\sdelete.exe"
+          "C:\\Tools\\SysInternals\\sdelete.exe",
+          "spinlock.exe"
         ]
       },
       "matched": [
-        "spinlock.exe",
         "sdelete.exe"
       ],
       "missing": [
         "C:\\Tools\\SysInternals\\sdelete.exe`",
         "C:\\Tools\\SysInternals\\sdelete.exe"
       ],
+      "negation_violations": [
+        "spinlock.exe"
+      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -997,13 +1107,16 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "spinlock.exe",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "spinlock.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1011,18 +1124,20 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "vibranium",
-          "rsydow"
+          "rsydow",
+          "vibranium"
         ]
       },
       "matched": [
         "spinlock.exe",
-        "vibranium",
-        "rsydow"
+        "rsydow",
+        "vibranium"
       ],
       "missing": [
         "usboesrv.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1035,19 +1150,22 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
-          "10.3.58.5",
           "56.171.18.32",
-          "56.91.239.31",
           "56.251.168.26",
-          "40.167.16.32"
+          "56.91.239.31",
+          "40.167.16.32",
+          "10.3.58.5"
         ],
         "timestamps": [],
         "filenames": [
-          "tlntsvr.exe",
-          "lsass.exe"
+          "lsass.exe",
+          "tlntsvr.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1055,25 +1173,28 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "40.167.16.32",
-          "56.171.18.32",
           "lsass.exe",
-          "56.91.239.31",
+          "tlntsvr.exe",
+          "56.171.18.32",
           "56.251.168.26",
-          "tlntsvr.exe"
+          "56.91.239.31",
+          "40.167.16.32"
         ]
       },
       "matched": [
         "10.3.58.5",
-        "56.171.18.32",
-        "56.91.239.31",
-        "40.167.16.32",
-        "tlntsvr.exe",
-        "lsass.exe"
+        "tlntsvr.exe"
       ],
       "missing": [
         "56.251.168.26"
       ],
+      "negation_violations": [
+        "56.171.18.32",
+        "56.91.239.31",
+        "40.167.16.32",
+        "lsass.exe"
+      ],
+      "verified_absences": [],
       "notes": ""
     }
   ]

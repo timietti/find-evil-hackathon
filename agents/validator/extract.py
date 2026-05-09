@@ -16,6 +16,97 @@ from typing import Iterable
 
 
 # ---------------------------------------------------------------------------
+# Sentence segmentation + negation detection.
+#
+# Used by the validator to distinguish positive claims ("X was observed")
+# from negative claims ("no X found"). A token sitting inside a negated
+# sentence flips the verification logic — the token's *absence* from the
+# cited tool's data is what counts as confirmation.
+# ---------------------------------------------------------------------------
+
+# Sentence/clause boundary. Splits on:
+#   - period / ? / ! followed by whitespace
+#   - newline
+#   - colon followed by whitespace (`Foo: bar baz` → ["Foo", "bar baz"]).
+#     Important: does NOT split `C:\path\to\file` because there's no
+#     whitespace after the colon.
+#   - semicolon followed by whitespace.
+#
+# We treat the colon-joined clauses as separate "sentences" for negation
+# scoping. This stops "No malware: Foo, Bar in Foo.exe" from tagging
+# Foo.exe as negated — Foo.exe is in the second clause where no negation
+# applies.
+_RE_SENTENCE_BOUNDARY = re.compile(r"(?:(?<=[.?!])\s+|\n+|:\s+|;\s+)")
+
+# Negation cues. Looked up case-insensitively in the sentence containing
+# each extracted token. Conservative — over-counting negation produces
+# false positives on the validator's side, which we'd rather avoid.
+_NEGATION_CUES = (
+    r"\bno\b",
+    r"\bnot\b",
+    r"n['']t\b",        # contractions: doesn't / didn't / wasn't / hasn't (no \b prefix —
+                        # inside-word position; trailing \b stops at apostrophe)
+    r"\bnever\b",
+    r"\babsent\b",
+    r"\bmissing\b",
+    r"\bnone\b",
+    r"\bdid\s+not\b",
+    r"\bdoes\s+not\b",
+    r"\bwithout\b",
+    r"\bnowhere\b",
+)
+_RE_NEGATION = re.compile("|".join(_NEGATION_CUES), re.IGNORECASE)
+
+
+# Strip markdown emphasis markers (`**bold**`, `*italic*`, `_under_`) and
+# inline-code backticks before sentence segmentation. They confuse the
+# clause-boundary regex (e.g. `**No malware:**` puts `**` between the colon
+# and the space, defeating `:\s+`), but they carry no semantic load for
+# negation detection.
+_RE_MD_EMPHASIS = re.compile(r"[*_`]+")
+
+
+def split_sentences(text: str) -> list[str]:
+    """Cheap sentence segmentation suitable for paragraph-level claims.
+
+    Markdown emphasis (`**bold**`, `*italic*`, backticks) is stripped before
+    segmentation so that constructs like `**No spinlock:**` produce the
+    expected clause split.
+    """
+    if not text:
+        return []
+    cleaned = _RE_MD_EMPHASIS.sub("", text)
+    parts = _RE_SENTENCE_BOUNDARY.split(cleaned)
+    return [p.strip() for p in parts if p.strip()]
+
+
+def is_negated_sentence(sentence: str) -> bool:
+    """True if the sentence contains a negation cue.
+
+    Trade-off: simple lexical detection. Misses ironic / double-negation
+    constructions, but those are vanishingly rare in DFIR reports. Catches
+    the common patterns: "no spinlock service", "X was not found",
+    "absent from filesystem", "never executed".
+    """
+    return bool(_RE_NEGATION.search(sentence or ""))
+
+
+def token_is_negated_in(claim_text: str, token: str) -> bool:
+    """True if `token` appears in any negated sentence of `claim_text`.
+
+    If the token appears in BOTH a positive and a negative sentence in
+    the same claim, we treat it as negated (the conservative choice
+    raises the bar for "verified": we'd rather flag something for human
+    review than let a hallucination slip).
+    """
+    tlow = token.lower()
+    for sent in split_sentences(claim_text):
+        if tlow in sent.lower() and is_negated_sentence(sent):
+            return True
+    return False
+
+
+# ---------------------------------------------------------------------------
 # Regex patterns. Tuned against the v1 final_response.md on ROCBA-001 and
 # the baseline run's report — they cover real-world claim phrasing without
 # overshooting (no false-positive captures of generic prose).

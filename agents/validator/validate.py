@@ -38,7 +38,11 @@ from typing import Any
 import typer
 from rich.console import Console
 
-from agents.validator.extract import ExtractedTokens, extract_tokens
+from agents.validator.extract import (
+    ExtractedTokens,
+    extract_tokens,
+    token_is_negated_in,
+)
 from mcp_server.audit import AuditLogger
 from mcp_server.tools.memory import _PARSERS, _ROWS_KEY, _register_parsers
 
@@ -55,11 +59,14 @@ console = Console()
 # ---------------------------------------------------------------------------
 
 _RE_TAG = re.compile(
-    r"\[(CONFIRMED|INFERRED|HYPOTHESIS|GAP|FAILED)\s*"
-    r"(?:[—\-:]\s*exec_id\s*([0-9a-fA-F\-]+))?"
-    r"[^\]]*\]",
+    r"\[(CONFIRMED|INFERRED|HYPOTHESIS|GAP|FAILED)"
+    r"([^\]]*)"      # capture the full tag body so we can find ALL exec_ids
+    r"\]",
     re.IGNORECASE,
 )
+# UUIDv7 (or any reasonable hex-and-dash ID) extractor for the tag body.
+# Restricted to >=8 hex chars to avoid catching 4-digit room numbers etc.
+_RE_EXEC_ID = re.compile(r"\b([0-9a-fA-F]{8,}(?:-[0-9a-fA-F]+)*)\b")
 
 
 @dataclass
@@ -67,10 +74,11 @@ class Claim:
     """A single tagged claim pulled from a final report."""
 
     tag: str                  # CONFIRMED / INFERRED / HYPOTHESIS / GAP / FAILED
-    exec_id: str | None       # exec_id cited (if any)
-    text: str                 # the claim's surrounding paragraph
-    raw_match: str            # the literal `[CONFIRMED — exec_id ...]` text
-    line_no: int              # 1-based line number where the tag appears
+    exec_id: str | None       # primary (first-cited) exec_id; None if not cited
+    exec_ids: list[str] = field(default_factory=list)  # ALL cited exec_ids
+    text: str = ""            # the claim's surrounding paragraph
+    raw_match: str = ""       # the literal `[CONFIRMED — ...]` text
+    line_no: int = 0          # 1-based line number where the tag appears
 
 
 def parse_claims(report_text: str) -> list[Claim]:
@@ -101,12 +109,14 @@ def parse_claims(report_text: str) -> list[Claim]:
     for para, start in paragraphs:
         for m in _RE_TAG.finditer(para):
             tag = m.group(1).upper()
-            exec_id = m.group(2) or None
-            # Compute line of the tag inside the paragraph
+            body = m.group(2) or ""
+            exec_ids = _RE_EXEC_ID.findall(body)
+            primary = exec_ids[0] if exec_ids else None
             offset_lines = para[: m.start()].count("\n")
             claims.append(Claim(
                 tag=tag,
-                exec_id=exec_id,
+                exec_id=primary,
+                exec_ids=exec_ids,
                 text=para,
                 raw_match=m.group(0),
                 line_no=start + offset_lines,
@@ -125,10 +135,13 @@ class ClaimVerdict:
     status: str                              # verified | partial | failed |
                                              # unverifiable | exec_id_not_found |
                                              # tool_not_supported | not_confirmed
-    tool_name: str | None = None
+    tool_name: str | None = None             # primary tool — kept for back-compat
+    tool_names: list[str] = field(default_factory=list)  # all cited tools
     tokens: ExtractedTokens = field(default_factory=ExtractedTokens)
     matched: list[str] = field(default_factory=list)
     missing: list[str] = field(default_factory=list)
+    negation_violations: list[str] = field(default_factory=list)
+    verified_absences: list[str] = field(default_factory=list)
     notes: str = ""
 
     def as_dict(self) -> dict[str, Any]:
@@ -156,46 +169,92 @@ def _flatten_to_searchable(parsed: dict[str, Any]) -> str:
 def verify_claim_against_parsed(
     claim: Claim,
     *,
-    parsed: dict[str, Any],
-    tool_name: str,
+    parsed: dict[str, Any] | None = None,
+    tool_name: str | None = None,
+    parsed_by_tool: list[tuple[str, dict[str, Any]]] | None = None,
 ) -> ClaimVerdict:
-    """Check `claim` against the parsed JSON of the tool that produced it."""
+    """Check `claim` against the parsed JSON of one or more cited tools.
+
+    Two call shapes:
+      - **single-citation**: pass `parsed=` + `tool_name=`. Token must
+        appear in that single tool's data.
+      - **multi-citation**: pass `parsed_by_tool=[(tool_name, parsed_dict), ...]`.
+        Token is "matched" if it appears in ANY cited tool's data; only
+        "missing" if NONE of them contain it. Mirrors the agent semantic
+        when it cites `[CONFIRMED — exec_id A, exec_id B]`.
+
+    Negation handling: tokens that appear inside a negated sentence flip
+    the check — their *absence* from the haystack counts as confirmation
+    (`verified_absences`), and their *presence* counts as a violation
+    (`negation_violations`).
+    """
     tokens = extract_tokens(claim.text)
     if tokens.is_empty():
         return ClaimVerdict(
             claim=claim,
             status="unverifiable",
             tool_name=tool_name,
+            tool_names=[tool_name] if tool_name else [],
             tokens=tokens,
             notes="claim has no extractable tokens (prose only)",
         )
 
-    haystack = _flatten_to_searchable(parsed)
+    if parsed_by_tool is None:
+        if parsed is None or tool_name is None:
+            raise ValueError(
+                "verify_claim_against_parsed needs either `parsed_by_tool` "
+                "or both `parsed` and `tool_name`."
+            )
+        parsed_by_tool = [(tool_name, parsed)]
+
+    haystacks = [(t, _flatten_to_searchable(p)) for t, p in parsed_by_tool]
+
     matched: list[str] = []
     missing: list[str] = []
+    negation_violations: list[str] = []
+    verified_absences: list[str] = []
 
     for tok in tokens.all():
-        # Tokens from prose can include trailing punctuation already stripped
-        # by the extractor; lower-case substring is the right relation here.
-        if tok.lower() in haystack:
-            matched.append(tok)
-        else:
-            missing.append(tok)
+        tlow = tok.lower()
+        present_in_any = any(tlow in h for _, h in haystacks)
+        is_negated = token_is_negated_in(claim.text, tok)
 
-    if not missing:
+        if is_negated:
+            # The claim says this token is NOT in the data.
+            if present_in_any:
+                negation_violations.append(tok)
+            else:
+                verified_absences.append(tok)
+        else:
+            if present_in_any:
+                matched.append(tok)
+            else:
+                missing.append(tok)
+
+    # Status logic.
+    failures = missing + negation_violations
+    successes = matched + verified_absences
+    if not failures and successes:
         status = "verified"
-    elif matched:
+    elif successes and failures:
         status = "partial"
-    else:
+    elif not successes and failures:
         status = "failed"
+    else:
+        # Shouldn't happen — `tokens.is_empty()` already short-circuited
+        # the no-token case.
+        status = "unverifiable"
 
     return ClaimVerdict(
         claim=claim,
         status=status,
-        tool_name=tool_name,
+        tool_name=parsed_by_tool[0][0] if parsed_by_tool else tool_name,
+        tool_names=[t for t, _ in parsed_by_tool],
         tokens=tokens,
         matched=matched,
         missing=missing,
+        negation_violations=negation_violations,
+        verified_absences=verified_absences,
     )
 
 
@@ -244,7 +303,7 @@ def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
     for claim in claims:
         if claim.tag != "CONFIRMED":
             continue  # we only mechanically verify CONFIRMED claims
-        if not claim.exec_id:
+        if not claim.exec_ids:
             verdicts.append(ClaimVerdict(
                 claim=claim,
                 status="not_confirmed",
@@ -252,40 +311,57 @@ def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
             ))
             continue
 
-        row = audit.lookup_exec(claim.exec_id)
-        if row is None:
-            verdicts.append(ClaimVerdict(
-                claim=claim,
-                status="exec_id_not_found",
-                notes=f"exec_id {claim.exec_id} not in audit log",
-            ))
+        # Gather (tool_name, parsed_dict) for every cited exec_id. If ANY
+        # citation fails to resolve we still try the others; the verdict
+        # records the partial coverage in `notes`.
+        parsed_by_tool: list[tuple[str, dict[str, Any]]] = []
+        unresolved: list[str] = []
+        unsupported_tools: set[str] = set()
+
+        for eid in claim.exec_ids:
+            row = audit.lookup_exec(eid)
+            if row is None:
+                unresolved.append(eid)
+                continue
+            tname = row.get("tool")
+            parser = _PARSERS.get(tname)
+            if not parser:
+                unsupported_tools.add(tname or "?")
+                continue
+            raw_path = Path(row.get("raw_output_path") or "")
+            if not raw_path.exists():
+                unresolved.append(f"{eid} (raw missing)")
+                continue
+            parsed_by_tool.append(
+                (tname, parser(raw_path.read_text(errors="replace")))
+            )
+
+        if not parsed_by_tool:
+            # All citations failed to resolve — bubble up the most
+            # informative status. Order: tool_not_supported > exec_id_not_found.
+            if unsupported_tools:
+                verdicts.append(ClaimVerdict(
+                    claim=claim,
+                    status="tool_not_supported",
+                    notes=f"no parser for cited tool(s): {sorted(unsupported_tools)}",
+                ))
+            else:
+                verdicts.append(ClaimVerdict(
+                    claim=claim,
+                    status="exec_id_not_found",
+                    notes=f"unresolved exec_ids: {unresolved}",
+                ))
             continue
 
-        tool_name = row.get("tool")
-        parser = _PARSERS.get(tool_name)
-        if not parser:
-            verdicts.append(ClaimVerdict(
-                claim=claim,
-                status="tool_not_supported",
-                tool_name=tool_name,
-                notes=f"no parser registered for tool_name={tool_name}",
-            ))
-            continue
-
-        raw_path = Path(row.get("raw_output_path") or "")
-        if not raw_path.exists():
-            verdicts.append(ClaimVerdict(
-                claim=claim,
-                status="failed",
-                tool_name=tool_name,
-                notes=f"raw output missing on disk: {raw_path}",
-            ))
-            continue
-
-        parsed = parser(raw_path.read_text(errors="replace"))
-        verdicts.append(verify_claim_against_parsed(
-            claim, parsed=parsed, tool_name=tool_name,
-        ))
+        v = verify_claim_against_parsed(claim, parsed_by_tool=parsed_by_tool)
+        if unresolved or unsupported_tools:
+            extra = []
+            if unresolved:
+                extra.append(f"unresolved exec_ids: {unresolved}")
+            if unsupported_tools:
+                extra.append(f"unsupported tools: {sorted(unsupported_tools)}")
+            v.notes = (v.notes + "; " if v.notes else "") + "; ".join(extra)
+        verdicts.append(v)
 
     # Aggregate
     rv = RunVerdict(run_dir=str(run_dir))
@@ -369,16 +445,31 @@ def write_validator_report(
         if len(snippet) > 200:
             snippet = snippet[:200] + "…"
         lines.append(f"### {icon} {v.status} {line_marker}")
-        if v.tool_name:
+        if v.tool_names:
+            lines.append(f"- tools: {', '.join(f'`{t}`' for t in v.tool_names)}")
+        elif v.tool_name:
             lines.append(f"- tool: `{v.tool_name}`")
-        if v.claim.exec_id:
-            lines.append(f"- exec_id: `{v.claim.exec_id[-12:]}`")
+        if v.claim.exec_ids:
+            lines.append(
+                f"- exec_ids: "
+                + ", ".join(f"`{e[-12:]}`" for e in v.claim.exec_ids[:4])
+                + (f" (+{len(v.claim.exec_ids)-4} more)"
+                   if len(v.claim.exec_ids) > 4 else "")
+            )
         if v.matched:
-            lines.append(f"- matched tokens: {', '.join(f'`{t}`' for t in v.matched[:8])}"
+            lines.append(f"- matched: {', '.join(f'`{t}`' for t in v.matched[:8])}"
                           + (f" (+{len(v.matched)-8} more)" if len(v.matched) > 8 else ""))
+        if v.verified_absences:
+            lines.append(f"- ✅ verified absences (negated): "
+                          + ', '.join(f'`{t}`' for t in v.verified_absences[:6])
+                          + (f" (+{len(v.verified_absences)-6} more)"
+                             if len(v.verified_absences) > 6 else ""))
         if v.missing:
-            lines.append(f"- **missing tokens**: {', '.join(f'`{t}`' for t in v.missing[:8])}"
+            lines.append(f"- **missing**: {', '.join(f'`{t}`' for t in v.missing[:8])}"
                           + (f" (+{len(v.missing)-8} more)" if len(v.missing) > 8 else ""))
+        if v.negation_violations:
+            lines.append(f"- 🚨 negation violations (claimed absent but found): "
+                          + ', '.join(f'`{t}`' for t in v.negation_violations[:6]))
         if v.notes:
             lines.append(f"- note: {v.notes}")
         lines.append(f"- claim: > {snippet}")

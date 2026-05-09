@@ -27,12 +27,15 @@
       },
       "status": "partial",
       "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
-          "2020-11-13T22:00Z",
-          "2020-11-16T02:32:38Z"
+          "2020-11-16T02:32:38Z",
+          "2020-11-13T22:00Z"
         ],
         "filenames": [],
         "paths": [],
@@ -41,9 +44,9 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
+          "/cases/find-evil-test/Rocba-Memory.raw",
           "2020-11-16T02:32:38Z",
-          "2020-11-13T22:00Z",
-          "/cases/find-evil-test/Rocba-Memory.raw"
+          "2020-11-13T22:00Z"
         ]
       },
       "matched": [
@@ -53,6 +56,8 @@
         "2020-11-13T22:00Z",
         "/cases/find-evil-test/Rocba-Memory.raw"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -64,7 +69,8 @@
         "line_no": 63
       },
       "status": "unverifiable",
-      "tool_name": "vol3_filescan",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -79,6 +85,8 @@
       },
       "matched": [],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)"
     },
     {
@@ -91,15 +99,18 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Findoreria_Solved.xlsx",
-          "Firedam.xls",
-          "Spreadsheet.xls",
           "NETFLIX.xlsx",
+          "Spreadsheet.xls",
+          "Firedam.xls",
+          "Findoreria_Solved.xlsx",
           "Research.docx"
         ],
         "paths": [],
@@ -108,23 +119,25 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "Findoreria_Solved.xlsx",
-          "TIVO Research.docx",
-          "Firedam.xls",
           "NETFLIX.xlsx",
-          "WACC Calc Spreadsheet.xls"
+          "WACC Calc Spreadsheet.xls",
+          "TIVO Research.docx",
+          "Findoreria_Solved.xlsx",
+          "Firedam.xls"
         ]
       },
       "matched": [
-        "Findoreria_Solved.xlsx",
-        "Firedam.xls",
-        "Spreadsheet.xls",
         "NETFLIX.xlsx",
+        "Spreadsheet.xls",
+        "Firedam.xls",
+        "Findoreria_Solved.xlsx",
         "Research.docx",
-        "TIVO Research.docx",
-        "WACC Calc Spreadsheet.xls"
+        "WACC Calc Spreadsheet.xls",
+        "TIVO Research.docx"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -137,13 +150,16 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "StarFury.zip",
-          "StarFury.lnk"
+          "StarFury.lnk",
+          "StarFury.zip"
         ],
         "paths": [
           "\\Users\\fredr\\OneDrive\\StarFury.zip`"
@@ -153,20 +169,22 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "starfury (2).lnk",
           "StarFury.lnk",
+          "starfury (2).lnk",
           "\\Users\\fredr\\OneDrive\\StarFury.zip"
         ]
       },
       "matched": [
-        "StarFury.zip",
         "StarFury.lnk",
+        "StarFury.zip",
         "starfury (2).lnk"
       ],
       "missing": [
         "\\Users\\fredr\\OneDrive\\StarFury.zip`",
         "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -179,14 +197,17 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "backup.pst",
+          "IDNBREY.pst",
           "Exported-PST.lnk",
-          "IDNBREY.pst"
+          "backup.pst"
         ],
         "paths": [
           "\\Users\\fredr\\OneDrive\\Documents\\Outlook"
@@ -196,23 +217,25 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
-          "Exported-PST.lnk",
           "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst",
-          "srl-h"
+          "Exported-PST.lnk",
+          "srl-h",
+          "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst"
         ]
       },
       "matched": [
-        "backup.pst",
-        "Exported-PST.lnk",
         "IDNBREY.pst",
+        "Exported-PST.lnk",
+        "backup.pst",
         "srl-h"
       ],
       "missing": [
         "\\Users\\fredr\\OneDrive\\Documents\\Outlook",
-        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
-        "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst"
+        "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst",
+        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -225,6 +248,9 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -247,6 +273,8 @@
         "France DGSE Intel Analysis Adamantium .pptx"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -259,15 +287,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Death_Blossom_attack.png",
-          "Death_Blossom_test_visualization.png",
           "Data.docx",
           "Specs.xlsx",
+          "Death_Blossom_test_visualization.png",
+          "Death_Blossom_attack.png",
           "Particles...pdf"
         ],
         "paths": [],
@@ -277,17 +308,17 @@
         "hex_offsets": [],
         "quoted": [
           "FTL Comms/Quantum Particles...pdf",
-          "Death_Blossom_attack.png",
           "GunStar Upgrade Specs.xlsx",
+          "GunStar Death Blossom Data.docx",
           "Death_Blossom_test_visualization.png",
-          "GunStar Death Blossom Data.docx"
+          "Death_Blossom_attack.png"
         ]
       },
       "matched": [
-        "Death_Blossom_attack.png",
-        "Death_Blossom_test_visualization.png",
         "Data.docx",
         "Specs.xlsx",
+        "Death_Blossom_test_visualization.png",
+        "Death_Blossom_attack.png",
         "GunStar Upgrade Specs.xlsx",
         "GunStar Death Blossom Data.docx"
       ],
@@ -295,6 +326,8 @@
         "Particles...pdf",
         "FTL Comms/Quantum Particles...pdf"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -307,18 +340,21 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Background.lnk",
+          "KITT-older-version.lnk",
+          "KITT.pptx",
           "Hydrogen_Hybrid_Tech.docx",
           "KITT.lnk",
           "German-KITT-Specs.docx",
-          "KITT-older-version.lnk",
-          "Background.lnk",
-          "Background.docx",
-          "KITT.pptx"
+          "Background.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -326,30 +362,32 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "The Future of KITT.pptx",
-          "The Future of KITT.lnk",
-          "Hydrogen_Hybrid_Tech.docx",
-          "German-KITT-Specs.docx",
           "Future of KITT - Technical Background.lnk",
+          "Future of KITT - Technical Background.docx",
+          "Hydrogen_Hybrid_Tech.docx",
           "The Future of KITT-older-version.lnk",
-          "Future of KITT - Technical Background.docx"
+          "German-KITT-Specs.docx",
+          "The Future of KITT.lnk",
+          "The Future of KITT.pptx"
         ]
       },
       "matched": [
+        "Background.lnk",
+        "KITT-older-version.lnk",
+        "KITT.pptx",
         "Hydrogen_Hybrid_Tech.docx",
         "KITT.lnk",
         "German-KITT-Specs.docx",
-        "KITT-older-version.lnk",
-        "Background.lnk",
         "Background.docx",
-        "KITT.pptx",
-        "The Future of KITT.pptx",
-        "The Future of KITT.lnk",
         "Future of KITT - Technical Background.lnk",
+        "Future of KITT - Technical Background.docx",
         "The Future of KITT-older-version.lnk",
-        "Future of KITT - Technical Background.docx"
+        "The Future of KITT.lnk",
+        "The Future of KITT.pptx"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -362,16 +400,19 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "airwolf_blueprints.gif",
+          "Wolves_Lair_Tech_Specs.pptx",
           "Airwolf-ARL.lnk",
           "airwolf_blueprint.jpg",
-          "airwolf_blueprints.gif",
-          "Airwolf_schematics.png",
-          "Wolves_Lair_Tech_Specs.pptx"
+          "Airwolf_schematics.png"
         ],
         "paths": [],
         "drive_refs": [],
@@ -379,21 +420,23 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
+          "airwolf_blueprints.gif",
+          "Wolves_Lair_Tech_Specs.pptx",
           "Airwolf-ARL.lnk",
           "airwolf_blueprint.jpg",
-          "airwolf_blueprints.gif",
-          "Airwolf_schematics.png",
-          "Wolves_Lair_Tech_Specs.pptx"
+          "Airwolf_schematics.png"
         ]
       },
       "matched": [
+        "airwolf_blueprints.gif",
+        "Wolves_Lair_Tech_Specs.pptx",
         "Airwolf-ARL.lnk",
         "airwolf_blueprint.jpg",
-        "airwolf_blueprints.gif",
-        "Airwolf_schematics.png",
-        "Wolves_Lair_Tech_Specs.pptx"
+        "Airwolf_schematics.png"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -406,13 +449,16 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SRL.docx",
-          "RareEarthDeposits_Confidential.jpg"
+          "RareEarthDeposits_Confidential.jpg",
+          "SRL.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -420,16 +466,18 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "Vibrainium - SRL.docx",
-          "RareEarthDeposits_Confidential.jpg"
+          "RareEarthDeposits_Confidential.jpg",
+          "Vibrainium - SRL.docx"
         ]
       },
       "matched": [
-        "SRL.docx",
         "RareEarthDeposits_Confidential.jpg",
+        "SRL.docx",
         "Vibrainium - SRL.docx"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -442,6 +490,9 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -466,6 +517,8 @@
         "fred.rocba@outlook.com Firefox Recovery Key.lnk"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -478,15 +531,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Encryption.lnk",
           "C42458BB-...lnk",
-          "1694D560-...lnk",
           "26F77152-...lnk",
-          "Encryption.lnk"
+          "1694D560-...lnk"
         ],
         "paths": [],
         "drive_refs": [],
@@ -495,8 +551,8 @@
         "hex_offsets": [],
         "quoted": [
           "BitLocker Recovery Key 1694D560-...lnk",
-          "BitLocker Recovery Key C42458BB-...lnk",
           "BitLocker Recovery Key 26F77152-...lnk",
+          "BitLocker Recovery Key C42458BB-...lnk",
           "BitLocker Drive Encryption.lnk"
         ]
       },
@@ -506,12 +562,14 @@
       ],
       "missing": [
         "C42458BB-...lnk",
-        "1694D560-...lnk",
         "26F77152-...lnk",
+        "1694D560-...lnk",
         "BitLocker Recovery Key 1694D560-...lnk",
-        "BitLocker Recovery Key C42458BB-...lnk",
-        "BitLocker Recovery Key 26F77152-...lnk"
+        "BitLocker Recovery Key 26F77152-...lnk",
+        "BitLocker Recovery Key C42458BB-...lnk"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -524,6 +582,9 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -545,6 +606,8 @@
         "Files from SRL system.lnk"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -557,6 +620,9 @@
       },
       "status": "verified",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -571,19 +637,21 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "Megaforce on starkresearchlabs.sharepoint.com.url",
+          "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url",
           "WorkingFiles on starkresearchlabs-my.sharepoint.com.url",
-          "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url"
+          "Megaforce on starkresearchlabs.sharepoint.com.url"
         ]
       },
       "matched": [
         "starkresearchlabs-my.sharepoint.com.url",
         "starkresearchlabs.sharepoint.com.url",
-        "Megaforce on starkresearchlabs.sharepoint.com.url",
+        "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url",
         "WorkingFiles on starkresearchlabs-my.sharepoint.com.url",
-        "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url"
+        "Megaforce on starkresearchlabs.sharepoint.com.url"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -596,6 +664,10 @@
       },
       "status": "partial",
       "tool_name": "vol3_cmdline",
+      "tool_names": [
+        "vol3_cmdline",
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [
           "9648",
@@ -604,8 +676,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "backup.pst",
-          "StarFury.zip"
+          "StarFury.zip",
+          "backup.pst"
         ],
         "paths": [
           "\\Users\\fredr\\OneDrive\\Documents\\Outlook",
@@ -616,24 +688,26 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "backup.pst",
-          "StarFury.zip",
+          "\\Users\\fredr\\OneDrive\\",
           "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\",
-          "\\Users\\fredr\\OneDrive\\"
+          "StarFury.zip",
+          "backup.pst"
         ]
       },
       "matched": [
         "9648",
-        "6188"
+        "6188",
+        "StarFury.zip",
+        "backup.pst"
       ],
       "missing": [
-        "backup.pst",
-        "StarFury.zip",
         "\\Users\\fredr\\OneDrive\\Documents\\Outlook",
         "\\Users\\fredr\\OneDrive\\`",
-        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\",
-        "\\Users\\fredr\\OneDrive\\"
+        "\\Users\\fredr\\OneDrive\\",
+        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -646,6 +720,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -659,8 +736,8 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "\\Users\\srl-h\\AppData\\Local\\Microsoft\\OneDrive\\"
+          "\\Users\\srl-h\\AppData\\Local\\Microsoft\\OneDrive\\",
+          "srl-h"
         ]
       },
       "matched": [
@@ -670,6 +747,8 @@
         "\\Users\\srl-h\\AppData\\Local\\Microsoft\\OneDrive\\`",
         "\\Users\\srl-h\\AppData\\Local\\Microsoft\\OneDrive\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -682,13 +761,16 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ],
         "timestamps": [],
         "filenames": [],
@@ -699,18 +781,20 @@
         "hex_offsets": [],
         "quoted": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ]
       },
       "matched": [
         "201.193.188.114",
-        "213.202.233.104",
+        "81.30.144.115",
         "81.19.209.101",
-        "81.30.144.115"
+        "213.202.233.104"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -723,13 +807,16 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ],
         "timestamps": [],
         "filenames": [],
@@ -740,18 +827,20 @@
         "hex_offsets": [],
         "quoted": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ]
       },
       "matched": [
         "201.193.188.114",
-        "213.202.233.104",
+        "81.30.144.115",
         "81.19.209.101",
-        "81.30.144.115"
+        "213.202.233.104"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -764,13 +853,16 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ],
         "timestamps": [],
         "filenames": [],
@@ -781,18 +873,20 @@
         "hex_offsets": [],
         "quoted": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ]
       },
       "matched": [
         "201.193.188.114",
-        "213.202.233.104",
+        "81.30.144.115",
         "81.19.209.101",
-        "81.30.144.115"
+        "213.202.233.104"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -805,13 +899,16 @@
       },
       "status": "verified",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ],
         "timestamps": [],
         "filenames": [],
@@ -822,18 +919,20 @@
         "hex_offsets": [],
         "quoted": [
           "201.193.188.114",
-          "213.202.233.104",
+          "81.30.144.115",
           "81.19.209.101",
-          "81.30.144.115"
+          "213.202.233.104"
         ]
       },
       "matched": [
         "201.193.188.114",
-        "213.202.233.104",
+        "81.30.144.115",
         "81.19.209.101",
-        "81.30.144.115"
+        "213.202.233.104"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -846,6 +945,10 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan",
+        "vol3_cmdline"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -873,6 +976,8 @@
         "D:\\Tools\\MRC.exe`",
         "D:\\Tools\\MRC.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -885,22 +990,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -911,34 +1019,37 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
-        "SystemPropertiesProtection.exe",
         "BitLockerWizard.exe",
-        "DropboxUninstaller.exe",
-        "SystemPropertiesAdvanced.exe"
+        "SystemPropertiesAdvanced.exe",
+        "SystemPropertiesProtection.exe",
+        "DropboxUninstaller.exe"
       ],
       "missing": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mstsc.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "sdelete64.exe",
+        "\\Users\\srl-h\\Downloads\\",
         "srl-h",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -952,22 +1063,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -978,34 +1092,37 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
-        "SystemPropertiesProtection.exe",
         "BitLockerWizard.exe",
-        "DropboxUninstaller.exe",
-        "SystemPropertiesAdvanced.exe"
+        "SystemPropertiesAdvanced.exe",
+        "SystemPropertiesProtection.exe",
+        "DropboxUninstaller.exe"
       ],
       "missing": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mstsc.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "sdelete64.exe",
+        "\\Users\\srl-h\\Downloads\\",
         "srl-h",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1019,22 +1136,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1045,34 +1165,37 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
-        "SystemPropertiesProtection.exe",
         "BitLockerWizard.exe",
-        "DropboxUninstaller.exe",
-        "SystemPropertiesAdvanced.exe"
+        "SystemPropertiesAdvanced.exe",
+        "SystemPropertiesProtection.exe",
+        "DropboxUninstaller.exe"
       ],
       "missing": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mstsc.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "sdelete64.exe",
+        "\\Users\\srl-h\\Downloads\\",
         "srl-h",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1086,22 +1209,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1112,34 +1238,37 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
-        "SystemPropertiesProtection.exe",
         "BitLockerWizard.exe",
-        "DropboxUninstaller.exe",
-        "SystemPropertiesAdvanced.exe"
+        "SystemPropertiesAdvanced.exe",
+        "SystemPropertiesProtection.exe",
+        "DropboxUninstaller.exe"
       ],
       "missing": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mstsc.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "sdelete64.exe",
+        "\\Users\\srl-h\\Downloads\\",
         "srl-h",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1153,22 +1282,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1179,34 +1311,37 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
-        "SystemPropertiesProtection.exe",
         "BitLockerWizard.exe",
-        "DropboxUninstaller.exe",
-        "SystemPropertiesAdvanced.exe"
+        "SystemPropertiesAdvanced.exe",
+        "SystemPropertiesProtection.exe",
+        "DropboxUninstaller.exe"
       ],
       "missing": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mstsc.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "sdelete64.exe",
+        "\\Users\\srl-h\\Downloads\\",
         "srl-h",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1220,22 +1355,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1246,34 +1384,37 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
-        "SystemPropertiesProtection.exe",
         "BitLockerWizard.exe",
-        "DropboxUninstaller.exe",
-        "SystemPropertiesAdvanced.exe"
+        "SystemPropertiesAdvanced.exe",
+        "SystemPropertiesProtection.exe",
+        "DropboxUninstaller.exe"
       ],
       "missing": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mstsc.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "sdelete64.exe",
+        "\\Users\\srl-h\\Downloads\\",
         "srl-h",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1287,22 +1428,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1313,34 +1457,38 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
-        "SystemPropertiesProtection.exe",
-        "BitLockerWizard.exe",
         "mstsc.exe",
+        "BitLockerWizard.exe",
         "SystemPropertiesAdvanced.exe",
-        "srl-h"
+        "SystemPropertiesProtection.exe"
       ],
       "missing": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
         "DropboxUninstaller.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [
+        "sdelete64.exe",
+        "srl-h"
+      ],
+      "verified_absences": [
+        "\\Users\\srl-h\\Downloads\\",
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1354,22 +1502,25 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [
+          "2020-11-14T04:39:15Z",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T04:39:15Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
           "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "SystemPropertiesProtection.exe",
-          "BitLockerWizard.exe",
-          "DropboxUninstaller.exe",
           "mstsc.exe",
-          "SystemPropertiesAdvanced.exe"
+          "BitLockerWizard.exe",
+          "SystemPropertiesAdvanced.exe",
+          "SystemPropertiesProtection.exe",
+          "sdelete64.exe",
+          "DropboxUninstaller.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1380,34 +1531,38 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "srl-h",
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
           "\\Users\\srl-h\\Downloads\\",
-          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z",
+          "2020-11-14T04:39:15Z",
+          "srl-h",
           "2020-11-14T05:05:33Z",
-          "2020-11-14T04:39:15Z"
+          "sdelete64.exe",
+          "DropboxUninstaller.exe",
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
-        "SystemPropertiesProtection.exe",
-        "BitLockerWizard.exe",
         "mstsc.exe",
+        "BitLockerWizard.exe",
         "SystemPropertiesAdvanced.exe",
-        "srl-h"
+        "SystemPropertiesProtection.exe"
       ],
       "missing": [
+        "2020-11-14T04:39:15Z",
         "2020-11-14T05:05:33Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T04:39:15Z",
         "DropboxUninstaller.exe",
         "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,",
-        "\\Users\\srl-h\\",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\`,"
+      ],
+      "negation_violations": [
+        "sdelete64.exe",
+        "srl-h"
+      ],
+      "verified_absences": [
+        "\\Users\\srl-h\\Downloads\\",
+        "\\Users\\srl-h\\"
       ],
       "notes": ""
     },
@@ -1421,6 +1576,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -1428,13 +1586,13 @@
           "2020-11-14T12:43:01Z"
         ],
         "filenames": [
+          "sdelete.exe",
+          "SDelete.zip",
+          "SDelete.lnk",
           "sdelete64.exe",
           "Exported-PST.lnk",
-          "SDelete.lnk",
-          "SDelete.zip",
           "backup.pst",
-          "StarFury.zip",
-          "sdelete.exe"
+          "StarFury.zip"
         ],
         "paths": [
           "\\Users\\fredr\\Downloads\\SDelete\\`."
@@ -1444,30 +1602,32 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\fredr\\Downloads\\SDelete\\",
+          "sdelete.exe",
+          "SDelete.zip",
+          "SDelete.lnk",
           "sdelete64.exe",
           "Exported-PST.lnk",
-          "SDelete.lnk",
-          "SDelete.zip",
-          "2020-11-14T12:43:01Z",
+          "\\Users\\fredr\\Downloads\\SDelete\\",
           "backup.pst",
-          "sdelete.exe"
+          "2020-11-14T12:43:01Z"
         ]
       },
       "matched": [
+        "sdelete.exe",
+        "SDelete.zip",
+        "SDelete.lnk",
         "sdelete64.exe",
         "Exported-PST.lnk",
-        "SDelete.lnk",
-        "SDelete.zip",
         "backup.pst",
-        "StarFury.zip",
-        "sdelete.exe"
+        "StarFury.zip"
       ],
       "missing": [
         "2020-11-14T12:43:01Z",
         "\\Users\\fredr\\Downloads\\SDelete\\`.",
         "\\Users\\fredr\\Downloads\\SDelete\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1480,6 +1640,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -1487,13 +1650,13 @@
           "2020-11-14T12:43:01Z"
         ],
         "filenames": [
+          "sdelete.exe",
+          "SDelete.zip",
+          "SDelete.lnk",
           "sdelete64.exe",
           "Exported-PST.lnk",
-          "SDelete.lnk",
-          "SDelete.zip",
           "backup.pst",
-          "StarFury.zip",
-          "sdelete.exe"
+          "StarFury.zip"
         ],
         "paths": [
           "\\Users\\fredr\\Downloads\\SDelete\\`."
@@ -1503,30 +1666,32 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\fredr\\Downloads\\SDelete\\",
+          "sdelete.exe",
+          "SDelete.zip",
+          "SDelete.lnk",
           "sdelete64.exe",
           "Exported-PST.lnk",
-          "SDelete.lnk",
-          "SDelete.zip",
-          "2020-11-14T12:43:01Z",
+          "\\Users\\fredr\\Downloads\\SDelete\\",
           "backup.pst",
-          "sdelete.exe"
+          "2020-11-14T12:43:01Z"
         ]
       },
       "matched": [
+        "sdelete.exe",
+        "SDelete.zip",
+        "SDelete.lnk",
         "sdelete64.exe",
         "Exported-PST.lnk",
-        "SDelete.lnk",
-        "SDelete.zip",
         "backup.pst",
-        "StarFury.zip",
-        "sdelete.exe"
+        "StarFury.zip"
       ],
       "missing": [
         "2020-11-14T12:43:01Z",
         "\\Users\\fredr\\Downloads\\SDelete\\`.",
         "\\Users\\fredr\\Downloads\\SDelete\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1539,6 +1704,9 @@
       },
       "status": "partial",
       "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -1546,13 +1714,13 @@
           "2020-11-14T12:43:01Z"
         ],
         "filenames": [
+          "sdelete.exe",
+          "SDelete.zip",
+          "SDelete.lnk",
           "sdelete64.exe",
           "Exported-PST.lnk",
-          "SDelete.lnk",
-          "SDelete.zip",
           "backup.pst",
-          "StarFury.zip",
-          "sdelete.exe"
+          "StarFury.zip"
         ],
         "paths": [
           "\\Users\\fredr\\Downloads\\SDelete\\`."
@@ -1562,14 +1730,14 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\fredr\\Downloads\\SDelete\\",
+          "sdelete.exe",
+          "SDelete.zip",
+          "SDelete.lnk",
           "sdelete64.exe",
           "Exported-PST.lnk",
-          "SDelete.lnk",
-          "SDelete.zip",
-          "2020-11-14T12:43:01Z",
+          "\\Users\\fredr\\Downloads\\SDelete\\",
           "backup.pst",
-          "sdelete.exe"
+          "2020-11-14T12:43:01Z"
         ]
       },
       "matched": [
@@ -1577,15 +1745,17 @@
         "sdelete.exe"
       ],
       "missing": [
+        "SDelete.zip",
+        "SDelete.lnk",
         "sdelete64.exe",
         "Exported-PST.lnk",
-        "SDelete.lnk",
-        "SDelete.zip",
         "backup.pst",
         "StarFury.zip",
         "\\Users\\fredr\\Downloads\\SDelete\\`.",
         "\\Users\\fredr\\Downloads\\SDelete\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1598,14 +1768,19 @@
       },
       "status": "partial",
       "tool_name": "vol3_pstree",
+      "tool_names": [
+        "vol3_pstree",
+        "vol3_cmdline",
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [
           "29440",
           "1248"
         ],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115"
+          "81.30.144.115",
+          "213.202.233.104"
         ],
         "timestamps": [
           "2020-11-16T02:31:15Z"
@@ -1624,9 +1799,9 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "MRC179.tmp",
+          "D:\\Tools\\MRC.exe",
           "2020-11-16T02:31:15Z",
-          "D:\\Tools\\MRC.exe"
+          "MRC179.tmp"
         ]
       },
       "matched": [
@@ -1634,16 +1809,18 @@
         "1248",
         "2020-11-16T02:31:15Z",
         "svchost.exe",
-        "MRC.exe"
+        "MRC.exe",
+        "MRC179.tmp"
       ],
       "missing": [
-        "213.202.233.104",
         "81.30.144.115",
-        "MRC179.tmp",
+        "213.202.233.104",
         "D:\\Tools\\MRC.exe`",
         "D:\\Tools\\)",
         "D:\\Tools\\MRC.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1656,14 +1833,17 @@
       },
       "status": "partial",
       "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
       "tokens": {
         "pids": [
           "29440",
           "1248"
         ],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115"
+          "81.30.144.115",
+          "213.202.233.104"
         ],
         "timestamps": [
           "2020-11-16T02:31:15Z"
@@ -1682,15 +1862,15 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "MRC179.tmp",
+          "D:\\Tools\\MRC.exe",
           "2020-11-16T02:31:15Z",
-          "D:\\Tools\\MRC.exe"
+          "MRC179.tmp"
         ]
       },
       "matched": [
         "1248",
-        "213.202.233.104",
         "81.30.144.115",
+        "213.202.233.104",
         "svchost.exe"
       ],
       "missing": [
@@ -1702,6 +1882,8 @@
         "D:\\Tools\\)",
         "D:\\Tools\\MRC.exe"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1714,14 +1896,17 @@
       },
       "status": "verified",
       "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SearchApp.exe",
           "MsMpEng.exe",
-          "Teams.exe"
+          "Teams.exe",
+          "SearchApp.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1731,11 +1916,13 @@
         "quoted": []
       },
       "matched": [
-        "SearchApp.exe",
         "MsMpEng.exe",
-        "Teams.exe"
+        "Teams.exe",
+        "SearchApp.exe"
       ],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1748,15 +1935,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "sdelete64.exe",
           "powershell.exe",
           "RemoteFXvGPUDisablement.exe",
-          "mmc.exe",
-          "sdelete64.exe"
+          "mmc.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -1766,25 +1956,27 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\srl-h\\",
           "powershell.exe.log",
-          "mmc.exe.log",
-          "RemoteFXvGPUDisablement.exe.log"
+          "RemoteFXvGPUDisablement.exe.log",
+          "\\Users\\srl-h\\",
+          "mmc.exe.log"
         ]
       },
       "matched": [
+        "sdelete64.exe",
         "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
         "mmc.exe",
-        "sdelete64.exe",
         "powershell.exe.log",
-        "mmc.exe.log",
-        "RemoteFXvGPUDisablement.exe.log"
+        "RemoteFXvGPUDisablement.exe.log",
+        "mmc.exe.log"
       ],
       "missing": [
         "\\Users\\srl-h\\`",
         "\\Users\\srl-h\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1797,15 +1989,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "sdelete64.exe",
           "powershell.exe",
           "RemoteFXvGPUDisablement.exe",
-          "mmc.exe",
-          "sdelete64.exe"
+          "mmc.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -1815,25 +2010,27 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\srl-h\\",
           "powershell.exe.log",
-          "mmc.exe.log",
-          "RemoteFXvGPUDisablement.exe.log"
+          "RemoteFXvGPUDisablement.exe.log",
+          "\\Users\\srl-h\\",
+          "mmc.exe.log"
         ]
       },
       "matched": [
+        "sdelete64.exe",
         "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
         "mmc.exe",
-        "sdelete64.exe",
         "powershell.exe.log",
-        "mmc.exe.log",
-        "RemoteFXvGPUDisablement.exe.log"
+        "RemoteFXvGPUDisablement.exe.log",
+        "mmc.exe.log"
       ],
       "missing": [
         "\\Users\\srl-h\\`",
         "\\Users\\srl-h\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1846,15 +2043,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "sdelete64.exe",
           "powershell.exe",
           "RemoteFXvGPUDisablement.exe",
-          "mmc.exe",
-          "sdelete64.exe"
+          "mmc.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -1864,25 +2064,27 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\srl-h\\",
           "powershell.exe.log",
-          "mmc.exe.log",
-          "RemoteFXvGPUDisablement.exe.log"
+          "RemoteFXvGPUDisablement.exe.log",
+          "\\Users\\srl-h\\",
+          "mmc.exe.log"
         ]
       },
       "matched": [
+        "sdelete64.exe",
         "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
         "mmc.exe",
-        "sdelete64.exe",
         "powershell.exe.log",
-        "mmc.exe.log",
-        "RemoteFXvGPUDisablement.exe.log"
+        "RemoteFXvGPUDisablement.exe.log",
+        "mmc.exe.log"
       ],
       "missing": [
         "\\Users\\srl-h\\`",
         "\\Users\\srl-h\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1895,15 +2097,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "sdelete64.exe",
           "powershell.exe",
           "RemoteFXvGPUDisablement.exe",
-          "mmc.exe",
-          "sdelete64.exe"
+          "mmc.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -1913,25 +2118,27 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\srl-h\\",
           "powershell.exe.log",
-          "mmc.exe.log",
-          "RemoteFXvGPUDisablement.exe.log"
+          "RemoteFXvGPUDisablement.exe.log",
+          "\\Users\\srl-h\\",
+          "mmc.exe.log"
         ]
       },
       "matched": [
+        "sdelete64.exe",
         "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
         "mmc.exe",
-        "sdelete64.exe",
         "powershell.exe.log",
-        "mmc.exe.log",
-        "RemoteFXvGPUDisablement.exe.log"
+        "RemoteFXvGPUDisablement.exe.log",
+        "mmc.exe.log"
       ],
       "missing": [
         "\\Users\\srl-h\\`",
         "\\Users\\srl-h\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1944,15 +2151,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "sdelete64.exe",
           "powershell.exe",
           "RemoteFXvGPUDisablement.exe",
-          "mmc.exe",
-          "sdelete64.exe"
+          "mmc.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -1962,25 +2172,27 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\srl-h\\",
           "powershell.exe.log",
-          "mmc.exe.log",
-          "RemoteFXvGPUDisablement.exe.log"
+          "RemoteFXvGPUDisablement.exe.log",
+          "\\Users\\srl-h\\",
+          "mmc.exe.log"
         ]
       },
       "matched": [
+        "sdelete64.exe",
         "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
         "mmc.exe",
-        "sdelete64.exe",
         "powershell.exe.log",
-        "mmc.exe.log",
-        "RemoteFXvGPUDisablement.exe.log"
+        "RemoteFXvGPUDisablement.exe.log",
+        "mmc.exe.log"
       ],
       "missing": [
         "\\Users\\srl-h\\`",
         "\\Users\\srl-h\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -1993,15 +2205,18 @@
       },
       "status": "partial",
       "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
       "tokens": {
         "pids": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "sdelete64.exe",
           "powershell.exe",
           "RemoteFXvGPUDisablement.exe",
-          "mmc.exe",
-          "sdelete64.exe"
+          "mmc.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -2011,25 +2226,27 @@
         "emails": [],
         "hex_offsets": [],
         "quoted": [
-          "\\Users\\srl-h\\",
           "powershell.exe.log",
-          "mmc.exe.log",
-          "RemoteFXvGPUDisablement.exe.log"
+          "RemoteFXvGPUDisablement.exe.log",
+          "\\Users\\srl-h\\",
+          "mmc.exe.log"
         ]
       },
       "matched": [
+        "sdelete64.exe",
         "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
         "mmc.exe",
-        "sdelete64.exe",
         "powershell.exe.log",
-        "mmc.exe.log",
-        "RemoteFXvGPUDisablement.exe.log"
+        "RemoteFXvGPUDisablement.exe.log",
+        "mmc.exe.log"
       ],
       "missing": [
         "\\Users\\srl-h\\`",
         "\\Users\\srl-h\\"
       ],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -2041,7 +2258,8 @@
         "line_no": 241
       },
       "status": "unverifiable",
-      "tool_name": "vol3_netscan",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "ips": [],
@@ -2056,6 +2274,8 @@
       },
       "matched": [],
       "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)"
     }
   ]

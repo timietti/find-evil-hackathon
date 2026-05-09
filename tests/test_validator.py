@@ -7,7 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from agents.validator.extract import extract_tokens
+from agents.validator.extract import (
+    extract_tokens,
+    is_negated_sentence,
+    split_sentences,
+    token_is_negated_in,
+)
 from agents.validator.validate import (
     Claim,
     parse_claims,
@@ -193,6 +198,142 @@ def test_verify_claim_against_parsed_unverifiable() -> None:
     )
     v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="vol3_psscan")
     assert v.status == "unverifiable"
+
+
+# ---- v1: negation detection -----------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "sentence,expected",
+    [
+        ("No spinlock service was found on DC.",   True),
+        ("spinlock.exe was not found in filescan.", True),
+        ("The binary is absent from the filesystem.", True),
+        ("The agent never connected to the C2.",  True),
+        ("This account doesn't exist in psscan.", True),
+        # genuine positives shouldn't be flagged
+        ("STUN.exe at PID 1912 was found in psscan.", False),
+        ("usboesrv.exe is the C2 implant.",       False),
+    ],
+)
+def test_is_negated_sentence(sentence: str, expected: bool) -> None:
+    assert is_negated_sentence(sentence) is expected
+
+
+def test_split_sentences() -> None:
+    text = "First fact. Second fact!\nThird fact?"
+    sents = split_sentences(text)
+    assert len(sents) == 3
+
+
+def test_token_is_negated_in_negated_sentence() -> None:
+    text = "PID 1912 is the smoking gun. No spinlock.exe found in services."
+    assert token_is_negated_in(text, "spinlock.exe") is True
+    assert token_is_negated_in(text, "1912") is False  # in the positive sentence
+
+
+def test_verify_claim_negative_assertion_when_token_absent() -> None:
+    """Claim says 'no spinlock', token NOT in haystack → verified."""
+    parsed = {"services": [{"name": "RpcEptMapper"}, {"name": "Spooler"}]}
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text="No spinlock.exe service was found on DC. [CONFIRMED — exec_id 01x]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="vol3_svcscan")
+    assert v.status == "verified"
+    assert "spinlock.exe" in v.verified_absences
+    assert v.negation_violations == []
+
+
+def test_verify_claim_negation_violation_when_token_present() -> None:
+    """Claim says 'no spinlock.exe', but spinlock.exe IS in haystack → failed."""
+    parsed = {"services": [{"name": "spinlock.exe", "binary": "C:\\spinlock.exe"}]}
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text="No spinlock.exe service was found. [CONFIRMED — exec_id 01x]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="vol3_svcscan")
+    assert v.status == "failed"
+    assert "spinlock.exe" in v.negation_violations
+
+
+# ---- v1: multi-citation parsing -------------------------------------------
+
+
+def test_parse_claims_extracts_multiple_exec_ids() -> None:
+    md = (
+        "PID 29440 connected to 81.30.144.115.\n"
+        "[CONFIRMED — exec_id 019eaaaa-1111, exec_id 019ebbbb-2222]\n"
+    )
+    claims = parse_claims(md)
+    assert len(claims) == 1
+    c = claims[0]
+    assert c.exec_id == "019eaaaa-1111"  # primary kept for back-compat
+    assert c.exec_ids == ["019eaaaa-1111", "019ebbbb-2222"]
+
+
+def test_parse_claims_extracts_semicolon_separated_exec_ids() -> None:
+    md = "x. [CONFIRMED — exec_id 019eaaaa-1111; exec_id 019ebbbb-2222]"
+    c = parse_claims(md)[0]
+    assert c.exec_ids == ["019eaaaa-1111", "019ebbbb-2222"]
+
+
+def test_parse_claims_extracts_three_exec_ids() -> None:
+    md = (
+        "x. [CONFIRMED — "
+        "exec_id 019eaaaa-1111, "
+        "exec_id 019ebbbb-2222, "
+        "exec_id 019ecccc-3333]"
+    )
+    c = parse_claims(md)[0]
+    assert len(c.exec_ids) == 3
+
+
+def test_verify_claim_multi_citation_token_in_second_tool() -> None:
+    """Multi-cite: token only in tool B; should still be verified."""
+    parsed_psscan = {"processes": [{"pid": 29440, "image": "MRC.exe"}]}
+    parsed_netscan = {"connections": [{"foreign_addr": "81.30.144.115"}]}
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01a",
+        exec_ids=["01a", "01b"],
+        text=(
+            "MRC.exe at PID 29440 connected to 81.30.144.115. "
+            "[CONFIRMED — exec_id 01a, exec_id 01b]"
+        ),
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(
+        claim,
+        parsed_by_tool=[
+            ("vol3_psscan", parsed_psscan),
+            ("vol3_netscan", parsed_netscan),
+        ],
+    )
+    assert v.status == "verified"
+    assert "29440" in v.matched
+    assert "MRC.exe" in v.matched
+    assert "81.30.144.115" in v.matched
+
+
+def test_verify_claim_multi_citation_token_in_neither_tool() -> None:
+    """Multi-cite: token in neither cited tool → missing."""
+    parsed_a = {"processes": [{"pid": 4, "image": "System"}]}
+    parsed_b = {"connections": [{"foreign_addr": "1.2.3.4"}]}
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01a", exec_ids=["01a", "01b"],
+        text="MRC.exe at PID 29440 to 81.30.144.115 [CONFIRMED — exec_id 01a, exec_id 01b]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(
+        claim,
+        parsed_by_tool=[("vol3_psscan", parsed_a), ("vol3_netscan", parsed_b)],
+    )
+    assert v.status == "failed"
+    assert "29440" in v.missing
+    assert "MRC.exe" in v.missing
+    assert "81.30.144.115" in v.missing
 
 
 # ---- end-to-end against committed ROCBA-001 v1 run ------------------------
