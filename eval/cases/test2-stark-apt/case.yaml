@@ -1,0 +1,111 @@
+# Machine-readable case context loaded by SIFT-OWL.
+# Human-readable narrative lives in case.md alongside this file.
+
+case_id: STARK-APT-001
+case_name: "SANS FOR508 — Stark Research Labs Data Breach Intrusion (legacy / pre-Crimson Osprey)"
+client: Stark Research Labs
+victim:
+  organisation: Stark Research Labs
+  scope: enterprise compromise (4 hosts: DC + 2 Win7 + 1 XP)
+
+# Multi-host case — each system has its own paired disk + memory image.
+# Acquisition timestamps (per FTK Imager .E01.txt sidecars) are 2012-04-06 to 2012-04-09.
+hosts:
+  - id: dc
+    role: Domain Controller
+    hostname: win2008R2-controller        # to be confirmed from registry
+    ip: 10.3.58.4
+    os_family: Windows Server 2008 R2
+    arch: x64
+    evidence_dir: /cases/find-evil-test2/win2008R2-controller-c-drive
+    memory_dir:   /cases/find-evil-test2/win2008R2-controller-memory
+    disk_image:   /cases/find-evil-test2/win2008R2-controller-c-drive/win2008R2-controller-c-drive.E01
+    memory_image: /cases/find-evil-test2/win2008R2-controller-memory/win2008R2-controller-memory-raw.001
+  - id: nromanoff
+    role: workstation
+    user: nromanoff                        # Natasha Romanoff (Black Widow)
+    hostname: null                         # to be confirmed from registry
+    ip: 10.3.58.5
+    os_family: Windows 7
+    arch: x86
+    evidence_dir: /cases/find-evil-test2/win7-32-nromanoff-c-drive
+    memory_dir:   /cases/find-evil-test2/win7-32-nromanoff-memory
+    disk_image:   /cases/find-evil-test2/win7-32-nromanoff-c-drive/win7-32-nromanoff-c-drive.E01
+    memory_image: /cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.001
+  - id: nfury
+    role: workstation
+    user: nfury                            # Nick Fury
+    hostname: null                         # to be confirmed
+    os_family: Windows 7
+    arch: x64
+    evidence_dir: /cases/find-evil-test2/win7-64-nfury-c-drive
+    memory_dir:   /cases/find-evil-test2/win7-64-nfury-memory
+    disk_image:   /cases/find-evil-test2/win7-64-nfury-c-drive/win7-64-nfury-c-drive.E01
+    memory_image: /cases/find-evil-test2/win7-64-nfury-memory/win7-64-nfury-memory-raw.001
+  - id: tdungan
+    role: workstation
+    user: tdungan
+    hostname: null                         # to be confirmed
+    os_family: Windows XP
+    arch: x86
+    cpus: 1
+    system_time_utc: "2012-04-06T20:14:10Z"     # vol3_image_info confirmed
+    nt_build_lab: "2600.xpsp_sp3_gdr.111025-1629"
+    evidence_dir: /cases/find-evil-test2/xp-tdungan-c-drive
+    memory_dir:   /cases/find-evil-test2/xp-tdungan-memory
+    disk_image:   /cases/find-evil-test2/xp-tdungan-c-drive/xp-tdungan-c-drive.E01
+    memory_image: /cases/find-evil-test2/xp-tdungan-memory/xp-tdungan-memory-raw.001
+
+# SHA-256 hashes captured at intake (see intake/hashes/*.sha256).
+# FTK Imager already recorded MD5/SHA1 at acquisition time (2012) — those
+# live in the .E01.txt and .raw.001.txt sidecars.
+evidence_sha256:
+  win2008R2_controller_disk:    "389ea6b4969cc132ac9a3f28fa572ffc588442ca25ec04bea059b52fd6db4e7e"
+  win2008R2_controller_memory:  "0980b543e6f659091ff4645c2b92771ede45c664e56dc754d420beeeae770edd"
+  win7_32_nromanoff_disk:       "f92662135db8d1a5eb33de5b391186c1242b59641db1ba96b3e4ff52a5a1e5b6"
+  win7_32_nromanoff_memory:     "f40af394587fe1f6e6ed6b48e4840a4d4b5927c5d73d8e243d9d31225517d728"
+  win7_64_nfury_disk:           "a5df0b38ec699656e8c9925ffa515945288aaa32cd29c284fb519cf06d1589c7"
+  win7_64_nfury_memory:         "0b53c16973774007244b82d6e777f669ee17224e8aa8c5fc98954196a27c9f5b"
+  xp_tdungan_disk:              "117511847d05cf3a52397b6800015b98d77fa3c8a31088a2592709825e402eb0"
+  xp_tdungan_memory:            "bf5c4740cbc71fb10946596f55226240c0bd2553993eebf8e9d38f5c9b9775cc"
+
+# Acquisition-time hashes (from FTK Imager .txt sidecars at intake).
+# These are the chain-of-custody anchors — our SHA-256s are an independent
+# additional check.
+acquisition_hashes:
+  dc_disk:        { md5: "3a33c416f0853f2c148a173f90363104", sha1: "423e404adec31b1ccda65983efe380bc43c654f7" }
+  dc_memory:      { md5: "f7163c2b541ac772fa9643f104fb46d4", sha1: "3e5d65f102e0baa5b645e7fe958562170c1b5b39" }
+  nromanoff_mem:  { md5: "3ba069f7b10466ddda5097f36815d3fe", sha1: "8f4e47f57202d0f9e46e22d5b411cddef2da8b46" }
+
+# Bonus material shipped with the dataset — analyst-validated outputs.
+# Keep these AWAY from agent runs (using them as input is cheating). Used
+# only for ground-truth scoring after the agent completes.
+ground_truth_assets:
+  - /cases/find-evil-test2/win7-32-nromanoff-c-drive/precooked/    # Vol output, Plaso, Redline, VSS
+  - /cases/find-evil-test2/xp-tdungan-c-drive/precooked/           # Vol, Redline, bulk-extractor, hashes
+  - /cases/find-evil-test2/xp-tdungan-memory/baseline-memory/      # XP clean baseline for Memory Baseliner
+
+# Mandiant Redline .mans files — pre-existing memory analysis sessions.
+# Useful as ground truth for malicious-process identification.
+redline_sessions:
+  - /cases/find-evil-test2/win2008R2-controller-memory/win2008DC-Memory.mans
+  - /cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.mans   # to verify
+  - /cases/find-evil-test2/win7-64-nfury-memory/win7-nfury-memory.mans
+  - /cases/find-evil-test2/xp-tdungan-memory/xp_tdungan.mans
+
+# Investigation goals — generic for SANS FOR508 APT scenarios. To be sharpened
+# once we read the FOR508-Workbook_Commands/exercise_*.* prompts.
+goals:
+  - { id: G1, question: "Identify the initial compromise vector and host." }
+  - { id: G2, question: "Map lateral movement across the four hosts." }
+  - { id: G3, question: "Identify implants / persistence mechanisms (process, service, scheduled task, registry)." }
+  - { id: G4, question: "Identify exfiltration: what was staged, packaged, and where it went." }
+  - { id: G5, question: "Build the unified incident timeline (UTC) across all four hosts." }
+  - { id: G6, question: "Identify the credential-theft mechanism and which accounts were compromised." }
+
+# Where SIFT-OWL writes its outputs. NEVER inside the evidence dir.
+output:
+  analysis_dir: ./eval/results/test2-stark-apt/analysis
+  exports_dir:  ./eval/results/test2-stark-apt/exports
+  reports_dir:  ./eval/results/test2-stark-apt/reports
+  audit_dir:    ./eval/results/test2-stark-apt/audit
