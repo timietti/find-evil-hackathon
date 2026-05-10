@@ -55,6 +55,7 @@ from mcp_server.tools.disk import (
     tsk_partition_table as _tsk_partition_table,
 )
 from mcp_server.tools.ez_tools import (
+    ezt_amcache_parse as _ezt_amcache_parse,
     ezt_evtx_parse as _ezt_evtx_parse,
     ezt_mft_parse as _ezt_mft_parse,
     ezt_shimcache_parse as _ezt_shimcache_parse,
@@ -298,6 +299,30 @@ def ezt_evtx_parse(extract_exec_id: str) -> dict[str, Any]:
     4688 (process create), 4768/4769 (Kerberos), 4720 (account create),
     4732/4756 (group membership), 7045 (service install), 1102 (log clear)."""
     return _ezt_evtx_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_amcache_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`AmcacheParser -i --csv` on an extracted Amcache.hve — Win8.1+ program-execution
+    registry parser.
+
+    Pre-req: extract `Windows/AppCompat/Programs/Amcache.hve` via
+    `tsk_icat_extract`. Returns multiple Amcache sections, each with its
+    own row list. The richest sections for malware triage are:
+
+      * UnassociatedFileEntries (Win10) — every program executed, with
+        SHA-1 hash, FullPath, FileVersion, ProductName, Size, registry
+        key timestamps. Surviving evidence even after binary deletion.
+      * ProgramEntries — installed programs (publisher, install time).
+      * AssociatedFileEntries — legacy equivalent of UnassociatedFileEntries
+        on Win8.1 / pre-1803 Win10.
+
+    Other sections (DriverBinaries, DriverPackages, DeviceContainers,
+    DevicePnps, ShortCuts) are also parsed but lower-signal for malware.
+
+    Each section's rows are truncated to 50 on the wire; full entries
+    persisted to audit raw_output as JSON for offline review."""
+    return _ezt_amcache_parse(extract_exec_id, audit=_audit())
 
 
 @mcp.tool()

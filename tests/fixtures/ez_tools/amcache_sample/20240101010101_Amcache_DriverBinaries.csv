@@ -1,0 +1,2 @@
+KeyLastWriteTimestamp,DriverTimeStamp,DriverLastWriteTime,DriverName,DriverInBox,DriverIsKernelMode,DriverSigned,DriverCheckSum,DriverCompany,DriverId,DriverPackageStrongName,DriverType,DriverVersion,ImageSize,Inf,Product,ProductVersion,Service,WdfVersion
+2020-11-13 22:31:42,2019-04-01 11:11:11,2020-11-13 22:31:42,c:\windows\system32\drivers\bad.sys,False,True,True,12345,Acme Drivers,abc-driver-123,abc-package,Kernel,1.0.0.0,16384,bad.inf,BadProduct,1.0,bad,

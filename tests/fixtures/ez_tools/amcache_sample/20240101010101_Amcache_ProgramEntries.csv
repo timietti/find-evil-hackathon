@@ -1,0 +1,3 @@
+ProgramId,KeyLastWriteTimestamp,Name,Version,Publisher,InstallDate,InstallDateArpLastModified,Language,Source,Type,UninstallString,RootDirPath,HiddenArp,InboxModernApp,Manifest,RegistryKeyPath,MsiPackageCode,MsiProductCode
+0000ce4f0d9d8c1b91b7a3e0f9f43d234c8f0000ffff,2020-11-13 22:00:00,STUN Network Tool,1.0.0.0,Acme Networks,2020-11-13 22:00:00,,1033,Msi,Application,,c:\users\frocba\appdata\local\temp\,False,False,,HKLM\SOFTWARE\..., ,
+0000df5e1eaae9d2a2c8b4f1g0g54e345d9g1111ffff,2020-10-24 12:00:00,Microsoft Edge,90.0.864.59,Microsoft Corporation,2020-10-24 00:00:00,,1033,Bundled,Application,,c:\program files (x86)\microsoft\edge\,False,False,,HKLM\SOFTWARE\..., ,

@@ -8,14 +8,16 @@ Tools wrapped here:
   - MFTECmd       (--json)  — NTFS $MFT records
   - AppCompatCacheParser (--csv) — ShimCache program execution
   - EvtxECmd      (--json)  — Windows Event Logs
+  - AmcacheParser (--csv)   — Amcache.hve program-execution registry (Win8.1+)
 """
 
 from __future__ import annotations
 
 import csv
 import io
+import json
 import re
-from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from mcp_server.parsers.vol3 import parse_jsonl_rows, _normalise_dt
@@ -272,6 +274,181 @@ def summarise_evtx(parsed: dict[str, Any]) -> str:
     top_ids = list((parsed.get("by_event_id") or {}).items())[:3]
     top_str = ", ".join(f"EID {k}×{v}" for k, v in top_ids) if top_ids else ""
     return f"{n} events; top: {top_str}"
+
+
+# ---------------------------------------------------------------------------
+# AmcacheParser — Amcache.hve program-execution registry (Win8.1+).
+#
+# AmcacheParser writes one CSV per artifact category into the output
+# directory. Modern (Win10) Amcache emits ~6-8 files; legacy (Win8.1 / early
+# Win10) emits a slightly different set. We parse every CSV we find and
+# expose them as named sections with per-section row truncation.
+#
+# The most DFIR-relevant sections:
+#   - UnassociatedFileEntries (a.k.a. InventoryApplicationFile, Win10) —
+#     every program that ran, with SHA-1, FileName, FullPath, ProductName,
+#     Size, FileVersion, registry-key timestamps. The program-execution
+#     evidence backbone on modern Windows.
+#   - AssociatedFileEntries (legacy Win8.1 / pre-1803 Win10) — equivalent
+#     to UnassociatedFileEntries on older OSes.
+#   - ProgramEntries (InventoryApplication) — installed-program inventory.
+#   - ShortCuts — .lnk files referenced by Amcache.
+#   - DriverBinaries / DriverPackages / DeviceContainers / DevicePnps —
+#     hardware/driver enumeration; lower-signal for malware triage.
+# ---------------------------------------------------------------------------
+
+
+# Map AmcacheParser CSV filename suffix → semantic section key. The
+# filenames take the form `<timestamp>_Amcache_<Suffix>.csv`.
+_AMCACHE_SECTION_FROM_SUFFIX: dict[str, str] = {
+    "AssociatedFileEntries":   "associated_file_entries",
+    "UnassociatedFileEntries": "unassociated_file_entries",
+    "ProgramEntries":          "program_entries",
+    "ShortCuts":               "shortcuts",
+    "DriverBinaries":          "driver_binaries",
+    "DriverPackages":          "driver_packages",
+    "DeviceContainers":        "device_containers",
+    "DevicePnps":              "device_pnps",
+}
+
+# Sections considered "execution evidence" — surfaced in the one-line
+# summary string so the agent knows the high-signal counts at a glance.
+_AMCACHE_EXEC_SECTIONS = (
+    "associated_file_entries",
+    "unassociated_file_entries",
+    "program_entries",
+)
+
+
+def _amcache_section_for(csv_filename: str) -> str | None:
+    """Map a `*_Amcache_<Suffix>.csv` filename to its section key."""
+    m = re.search(r"_Amcache_([A-Za-z]+)\.csv$", csv_filename)
+    if not m:
+        return None
+    return _AMCACHE_SECTION_FROM_SUFFIX.get(m.group(1))
+
+
+def _amcache_normalise_row(section: str, row: dict[str, str]) -> dict[str, Any]:
+    """Light per-section field normalisation.
+
+    AmcacheParser column names vary by section and Win build. We keep all
+    fields the tool emits (lower-cased keys for consistency) and additionally
+    normalise the common timestamp columns to the 'YYYY-MM-DDTHH:MM:SSZ'
+    UTC form used elsewhere in the audit log.
+    """
+    out: dict[str, Any] = {}
+    for k, v in row.items():
+        if k is None:
+            continue
+        norm_key = k.replace(" ", "_").lower()
+        out[norm_key] = v
+    # Normalise common timestamp-bearing columns where present.
+    for ts_field in (
+        "key_last_write_timestamp",
+        "last_modified_store",
+        "last_modified",
+        "link_date",
+        "install_date",
+        "install_date_arp_last_modified",
+        "install_date_msi",
+        "install_date_from_link_file",
+        "binary_last_modified",
+        "binary_first_run",
+        "first_run",
+        "driver_signed",
+        "driver_last_write_time",
+    ):
+        if ts_field in out and out[ts_field]:
+            out[ts_field] = _normalise_dt(out[ts_field])
+    return out
+
+
+def parse_amcache_from_dir(out_dir: Path) -> dict[str, Any]:
+    """Scan an AmcacheParser output directory and build a structured dict.
+
+    Returns:
+        {
+            "total_count": int,
+            "section_counts": {section_key: int, ...},
+            "sections": {
+                section_key: {
+                    "count": int,
+                    "rows": [...],
+                },
+                ...
+            },
+            "unknown_files": [filename, ...],   # CSVs we couldn't classify
+        }
+    """
+    sections: dict[str, dict[str, Any]] = {}
+    unknown_files: list[str] = []
+    for csv_path in sorted(out_dir.glob("*_Amcache_*.csv")):
+        section = _amcache_section_for(csv_path.name)
+        if section is None:
+            unknown_files.append(csv_path.name)
+            continue
+        rows: list[dict[str, Any]] = []
+        try:
+            text = csv_path.read_text(errors="replace")
+        except OSError:
+            continue
+        if not text.strip():
+            sections[section] = {"count": 0, "rows": []}
+            continue
+        reader = csv.DictReader(io.StringIO(text))
+        for row in reader:
+            rows.append(_amcache_normalise_row(section, row))
+        sections[section] = {"count": len(rows), "rows": rows}
+
+    section_counts = {k: v["count"] for k, v in sections.items()}
+    return {
+        "total_count":    sum(section_counts.values()),
+        "section_counts": section_counts,
+        "sections":       sections,
+        "unknown_files":  unknown_files,
+    }
+
+
+def parse_amcache(text: str) -> dict[str, Any]:
+    """Re-hydrate a previously serialised parse_amcache_from_dir result.
+
+    The wrapper persists `parse_amcache_from_dir(out)` as JSON to the
+    audit log's raw_output. This parser exists so `query_rows` can re-read
+    the row lists. Just `json.loads`.
+    """
+    if not text.strip():
+        return {
+            "total_count": 0,
+            "section_counts": {},
+            "sections": {},
+            "unknown_files": [],
+        }
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return {
+            "total_count": 0,
+            "section_counts": {},
+            "sections": {},
+            "unknown_files": [],
+            "_parse_error": "raw_output is not valid JSON",
+        }
+
+
+def summarise_amcache(parsed: dict[str, Any]) -> str:
+    """Headline summary highlighting program-execution sections."""
+    section_counts = parsed.get("section_counts") or {}
+    if not section_counts:
+        return "no Amcache sections parsed"
+    exec_total = sum(section_counts.get(s, 0) for s in _AMCACHE_EXEC_SECTIONS)
+    bits = [f"{parsed.get('total_count', 0)} entries across {len(section_counts)} sections"]
+    if exec_total:
+        bits.append(f"{exec_total} program-exec records")
+    # Top 3 sections by count
+    top = sorted(section_counts.items(), key=lambda kv: -kv[1])[:3]
+    if top:
+        bits.append("top: " + ", ".join(f"{k}×{v}" for k, v in top))
+    return "; ".join(bits)
 
 
 # ---------------------------------------------------------------------------

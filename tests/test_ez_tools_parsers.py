@@ -7,9 +7,12 @@ from pathlib import Path
 import pytest
 
 from mcp_server.parsers.ez_tools import (
+    parse_amcache,
+    parse_amcache_from_dir,
     parse_evtx,
     parse_mft,
     parse_shimcache,
+    summarise_amcache,
     summarise_evtx,
     summarise_mft,
     summarise_shimcache,
@@ -145,3 +148,89 @@ def test_summarise_evtx_includes_top_event_ids() -> None:
     out = parse_evtx(_fixture("evtx_head.json"))
     s = summarise_evtx(out)
     assert "events" in s
+
+
+# ---- AmcacheParser ----------------------------------------------------------
+
+
+AMCACHE_FIXTURE_DIR = FIXTURES / "amcache_sample"
+
+
+def test_parse_amcache_from_dir_finds_all_sections() -> None:
+    if not AMCACHE_FIXTURE_DIR.exists():
+        pytest.skip("missing amcache fixture dir")
+    out = parse_amcache_from_dir(AMCACHE_FIXTURE_DIR)
+    # The synthetic fixture has 3 CSVs (Unassociated, Program, Driver).
+    assert "unassociated_file_entries" in out["section_counts"]
+    assert "program_entries" in out["section_counts"]
+    assert "driver_binaries" in out["section_counts"]
+    # Unknown files list should be empty for a clean fixture set.
+    assert out["unknown_files"] == []
+    # Total should equal sum of section counts.
+    assert out["total_count"] == sum(out["section_counts"].values())
+
+
+def test_parse_amcache_from_dir_normalises_columns_lowercase() -> None:
+    out = parse_amcache_from_dir(AMCACHE_FIXTURE_DIR)
+    rows = out["sections"]["unassociated_file_entries"]["rows"]
+    assert len(rows) >= 1
+    # Original column was 'FullPath' / 'SHA1' / 'FileKeyLastWriteTimestamp'
+    r = rows[0]
+    assert "fullpath" in r
+    assert "sha1" in r
+    assert "filekeylastwritetimestamp" in r
+    # The timestamp normaliser doesn't run on filekeylastwritetimestamp by name
+    # (we only normalise the keys listed in _amcache_normalise_row), but the
+    # raw value should be preserved.
+    assert r["fullpath"].endswith("stun.exe")
+
+
+def test_parse_amcache_from_dir_handles_empty_section_csv(tmp_path: Path) -> None:
+    """A header-only CSV (no data rows) parses to count=0 cleanly."""
+    f = tmp_path / "20240101010101_Amcache_ShortCuts.csv"
+    f.write_text("ProgramId,ShortCutPath\n")
+    out = parse_amcache_from_dir(tmp_path)
+    assert out["section_counts"]["shortcuts"] == 0
+    assert out["sections"]["shortcuts"]["rows"] == []
+
+
+def test_parse_amcache_from_dir_skips_unknown_csv(tmp_path: Path) -> None:
+    """A CSV with an unrecognised section suffix lands in unknown_files."""
+    f = tmp_path / "20240101010101_Amcache_FooBarBaz.csv"
+    f.write_text("a,b,c\n1,2,3\n")
+    out = parse_amcache_from_dir(tmp_path)
+    assert "FooBarBaz" in str(out["unknown_files"])
+    assert out["section_counts"] == {}
+
+
+def test_parse_amcache_from_text_round_trip() -> None:
+    """parse_amcache(json_text) re-hydrates the dict produced by parse_amcache_from_dir."""
+    import json
+    parsed = parse_amcache_from_dir(AMCACHE_FIXTURE_DIR)
+    text = json.dumps(parsed)
+    rehydrated = parse_amcache(text)
+    assert rehydrated["section_counts"] == parsed["section_counts"]
+    assert rehydrated["total_count"] == parsed["total_count"]
+
+
+def test_parse_amcache_from_text_handles_empty() -> None:
+    """parse_amcache('') returns an empty-but-shaped dict."""
+    out = parse_amcache("")
+    assert out["total_count"] == 0
+    assert out["section_counts"] == {}
+    assert out["sections"] == {}
+
+
+def test_parse_amcache_from_text_handles_garbage() -> None:
+    """parse_amcache('not json') returns empty + a parse_error marker."""
+    out = parse_amcache("not actually json")
+    assert out["total_count"] == 0
+    assert "_parse_error" in out
+
+
+def test_summarise_amcache_includes_program_exec_total() -> None:
+    parsed = parse_amcache_from_dir(AMCACHE_FIXTURE_DIR)
+    s = summarise_amcache(parsed)
+    # Should mention sections + program-exec record count
+    assert "sections" in s
+    assert "program-exec" in s

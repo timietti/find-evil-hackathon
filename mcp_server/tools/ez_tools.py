@@ -19,15 +19,17 @@ only ever read files that the agent already extracted via the typed
 `tsk_icat_extract` function. Architecturally clean: the agent has no way
 to point an EZ tool at an arbitrary file outside `audit/raw/extracts/`.
 
-Tool inventory (v0):
+Tool inventory:
 
   ezt_mft_parse(extract_exec_id)        — MFTECmd on extracted $MFT
   ezt_shimcache_parse(extract_exec_id)  — AppCompatCacheParser on extracted SYSTEM hive
   ezt_evtx_parse(extract_exec_id)       — EvtxECmd on extracted .evtx file
+  ezt_amcache_parse(extract_exec_id)    — AmcacheParser on extracted Amcache.hve
 """
 
 from __future__ import annotations
 
+import json
 import os
 import shutil
 from pathlib import Path
@@ -35,9 +37,11 @@ from typing import Any, Callable
 
 from mcp_server.audit import AuditLogger
 from mcp_server.parsers.ez_tools import (
+    parse_amcache_from_dir,
     parse_evtx,
     parse_mft,
     parse_shimcache,
+    summarise_amcache,
     summarise_evtx,
     summarise_mft,
     summarise_shimcache,
@@ -235,6 +239,123 @@ def ezt_shimcache_parse(
         summariser=summarise_shimcache,
         timeout_s=timeout_s,
     )
+
+
+# Default per-section row cap on the wire for amcache. Each Amcache section
+# is independent so we cap each at this limit; full rows remain on disk.
+_AMCACHE_SECTION_ROW_LIMIT = 50
+
+
+def _truncate_amcache(parsed: dict[str, Any], limit: int = _AMCACHE_SECTION_ROW_LIMIT) -> dict[str, Any]:
+    """Cap each Amcache section's row list independently.
+
+    Mirrors `_truncate_rows()` in tools.memory but per-section. Aggregates
+    (count, section_counts, total_count) are unaffected.
+    """
+    out = {k: v for k, v in parsed.items() if k != "sections"}
+    out_sections: dict[str, Any] = {}
+    for sec_key, sec in (parsed.get("sections") or {}).items():
+        rows = sec.get("rows") or []
+        truncated = len(rows) > limit
+        out_sections[sec_key] = {
+            "count":          sec.get("count", len(rows)),
+            "rows":           rows[:limit],
+            "rows_truncated": truncated,
+            "rows_total":     len(rows),
+        }
+    out["sections"] = out_sections
+    return out
+
+
+def ezt_amcache_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`AmcacheParser -f <Amcache.hve> -i --csv <out>` — Win8.1+ program-execution
+    registry parser.
+
+    Pre-req: extract `Windows/AppCompat/Programs/Amcache.hve` via
+    `tsk_icat_extract`. Returns multiple sections (UnassociatedFileEntries,
+    ProgramEntries, ShortCuts, DriverBinaries, DriverPackages, DeviceContainers,
+    DevicePnps, AssociatedFileEntries) with per-section rows. The `-i` flag
+    includes file entries on the legacy AssociatedFileEntries section.
+
+    Output layout:
+      {
+        "exec_id": "<uuid>",
+        "total_count": <int>,
+        "section_counts": {section_name: count, ...},
+        "sections": {
+          section_name: {"count", "rows", "rows_truncated", "rows_total"},
+          ...
+        },
+        "unknown_files": [...],
+      }
+
+    Each section's rows are truncated to 50 entries on the wire; full rows
+    persisted to audit raw_output as JSON, drillable via `query_rows`.
+    """
+    extract_path = _resolve_extract(audit, extract_exec_id)
+    exec_id = audit.new_exec_id()
+    out_subdir = audit.raw_output_dir / "ez_tools" / exec_id
+    out_subdir.mkdir(parents=True, exist_ok=True)
+    sub_dir = audit.raw_output_dir / "subprocess"
+
+    dll = _check_dll("AmcacheParser.dll")
+    argv = [
+        _check_dotnet(), str(dll),
+        "-f", str(extract_path),
+        "-i",                      # include legacy AssociatedFileEntries detail
+        "--csv", str(out_subdir),
+    ]
+
+    rr = run_subprocess(argv, output_dir=sub_dir, name=exec_id, timeout_s=timeout_s)
+
+    if not rr.ok:
+        raw_capture = audit.write_raw(
+            exec_id, f"FAILED ({rr.error}). stderr: {rr.stderr_path}\n",
+        )
+        audit.record(
+            exec_id=exec_id, agent=agent, tool="ezt_amcache_parse",
+            args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+            raw_output_path=raw_capture,
+            exit_code=rr.exit_code, wall_ms=rr.wall_ms,
+            summary=f"FAILED: {rr.error or 'non-zero exit'}",
+            error=rr.error or f"exit {rr.exit_code}",
+        )
+        raise ToolError(
+            f"ezt_amcache_parse failed (exit {rr.exit_code}, "
+            f"timed_out={rr.timed_out}): {rr.error}. "
+            f"stderr at {rr.stderr_path}"
+        )
+
+    parsed = parse_amcache_from_dir(out_subdir)
+
+    # Persist as JSON to raw_output so query_rows can re-read it later.
+    raw_text = json.dumps(parsed, default=str)
+    raw_path = audit.write_raw(exec_id, raw_text)
+    summary = summarise_amcache(parsed)
+
+    parsed_summary_compact = {
+        "total_count":    parsed.get("total_count"),
+        "section_counts": parsed.get("section_counts"),
+        "unknown_files":  parsed.get("unknown_files"),
+    }
+
+    audit.record(
+        exec_id=exec_id, agent=agent, tool="ezt_amcache_parse",
+        args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+        raw_output_path=raw_path,
+        exit_code=0, wall_ms=rr.wall_ms,
+        summary=summary,
+        parsed_summary=parsed_summary_compact,
+    )
+
+    truncated = _truncate_amcache(parsed)
+    return {"exec_id": exec_id, **truncated}
 
 
 def ezt_evtx_parse(

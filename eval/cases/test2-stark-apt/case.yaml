@@ -8,6 +8,39 @@ victim:
   organisation: Stark Research Labs
   scope: "enterprise compromise (4 hosts: DC + 2 Win7 + 1 XP)"
 
+# Top-level evidence-dir is the parent of all per-host dirs. The Protocol
+# SIFT baseline harness invokes `claude` with this as cwd.
+evidence_dir: /cases/find-evil-test2
+
+# Flat list of every E01 + memory image for chain-of-custody hash checks.
+# Each entry mirrors evidence_sha256 below; this list is the canonical input
+# to the baseline harness's pre/post hash verification.
+evidence:
+  - path: /cases/find-evil-test2/win2008R2-controller-c-drive/win2008R2-controller-c-drive.E01
+    kind: disk_image
+    sha256: 389ea6b4969cc132ac9a3f28fa572ffc588442ca25ec04bea059b52fd6db4e7e
+  - path: /cases/find-evil-test2/win2008R2-controller-memory/win2008R2-controller-memory-raw.001
+    kind: memory_image
+    sha256: 0980b543e6f659091ff4645c2b92771ede45c664e56dc754d420beeeae770edd
+  - path: /cases/find-evil-test2/win7-32-nromanoff-c-drive/win7-32-nromanoff-c-drive.E01
+    kind: disk_image
+    sha256: f92662135db8d1a5eb33de5b391186c1242b59641db1ba96b3e4ff52a5a1e5b6
+  - path: /cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.001
+    kind: memory_image
+    sha256: f40af394587fe1f6e6ed6b48e4840a4d4b5927c5d73d8e243d9d31225517d728
+  - path: /cases/find-evil-test2/win7-64-nfury-c-drive/win7-64-nfury-c-drive.E01
+    kind: disk_image
+    sha256: a5df0b38ec699656e8c9925ffa515945288aaa32cd29c284fb519cf06d1589c7
+  - path: /cases/find-evil-test2/win7-64-nfury-memory/win7-64-nfury-memory-raw.001
+    kind: memory_image
+    sha256: 0b53c16973774007244b82d6e777f669ee17224e8aa8c5fc98954196a27c9f5b
+  - path: /cases/find-evil-test2/xp-tdungan-c-drive/xp-tdungan-c-drive.E01
+    kind: disk_image
+    sha256: 117511847d05cf3a52397b6800015b98d77fa3c8a31088a2592709825e402eb0
+  - path: /cases/find-evil-test2/xp-tdungan-memory/xp-tdungan-memory-raw.001
+    kind: memory_image
+    sha256: bf5c4740cbc71fb10946596f55226240c0bd2553993eebf8e9d38f5c9b9775cc
+
 # Multi-host case — each system has its own paired disk + memory image.
 # Acquisition timestamps (per FTK Imager .E01.txt sidecars) are 2012-04-06 to 2012-04-09.
 hosts:

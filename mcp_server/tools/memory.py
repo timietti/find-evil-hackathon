@@ -216,12 +216,13 @@ def _register_parsers() -> None:
     })
     # EZ Tools parsers (extract-then-parse flow).
     from mcp_server.parsers.ez_tools import (
-        parse_evtx, parse_mft, parse_shimcache,
+        parse_amcache, parse_evtx, parse_mft, parse_shimcache,
     )
     _PARSERS.update({
         "ezt_mft_parse":       parse_mft,
         "ezt_shimcache_parse": parse_shimcache,
         "ezt_evtx_parse":      parse_evtx,
+        "ezt_amcache_parse":   parse_amcache,
     })
 
 

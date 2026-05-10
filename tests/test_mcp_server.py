@@ -58,6 +58,7 @@ EXPECTED_TOOLS = {
     "ezt_mft_parse",
     "ezt_shimcache_parse",
     "ezt_evtx_parse",
+    "ezt_amcache_parse",
     # query helper
     "query_rows",
 }
@@ -69,11 +70,13 @@ TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {
     "ezt_mft_parse",
     "ezt_shimcache_parse",
     "ezt_evtx_parse",
+    "ezt_amcache_parse",
 }
 TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_mft_parse",
     "ezt_shimcache_parse",
     "ezt_evtx_parse",
+    "ezt_amcache_parse",
 }
 
 

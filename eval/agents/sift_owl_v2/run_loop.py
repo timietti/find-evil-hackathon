@@ -87,6 +87,7 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__ezt_mft_parse",
     "mcp__sift-owl__ezt_shimcache_parse",
     "mcp__sift-owl__ezt_evtx_parse",
+    "mcp__sift-owl__ezt_amcache_parse",
     # drill helper
     "mcp__sift-owl__query_rows",
 ])
