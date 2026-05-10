@@ -47,20 +47,34 @@ EXPECTED_TOOLS = {
     "vol3_malfind",
     "vol3_svcscan",
     "vol3_userassist",
-    # disk
+    # disk (TSK + EWF)
     "ewf_verify",
     "ewf_info",
     "tsk_partition_table",
     "tsk_fs_stat",
     "tsk_fls_list",
     "tsk_icat_extract",
+    # EZ Tools (extract-then-parse)
+    "ezt_mft_parse",
+    "ezt_shimcache_parse",
+    "ezt_evtx_parse",
     # query helper
     "query_rows",
 }
 
-# Tools whose first/required arg is `image: str`. Excludes query_rows whose
-# required arg is `exec_id: str` instead.
-TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {"query_rows"}
+# Tools whose first/required arg is `image: str`. Excludes query_rows
+# (`exec_id`), and the EZ Tools (which take `extract_exec_id`).
+TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {
+    "query_rows",
+    "ezt_mft_parse",
+    "ezt_shimcache_parse",
+    "ezt_evtx_parse",
+}
+TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
+    "ezt_mft_parse",
+    "ezt_shimcache_parse",
+    "ezt_evtx_parse",
+}
 
 
 def _server_params(audit_dir: Path) -> StdioServerParameters:
@@ -100,6 +114,10 @@ async def test_mcp_server_tool_schemas(tmp_path: Path) -> None:
                 if tool.name in TOOLS_WITH_IMAGE_ARG:
                     assert "image" in props, (
                         f"tool {tool.name} missing `image` property: {props}"
+                    )
+                elif tool.name in TOOLS_WITH_EXTRACT_EXEC_ID_ARG:
+                    assert "extract_exec_id" in props, (
+                        f"tool {tool.name} missing `extract_exec_id`: {props}"
                     )
                 elif tool.name == "query_rows":
                     assert "exec_id" in props, (

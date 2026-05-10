@@ -170,6 +170,9 @@ _ROWS_KEY: dict[str, str] = {
     "vol3_userassist":     "entries",
     "tsk_partition_table": "partitions",
     "tsk_fls_list":        "files",
+    "ezt_mft_parse":       "rows",
+    "ezt_shimcache_parse": "entries",
+    "ezt_evtx_parse":      "events",
     # ewf_info / ewf_verify / tsk_fs_stat have no row list — n/a
     # tsk_icat_extract has no parsed-text output — n/a
 }
@@ -210,6 +213,15 @@ def _register_parsers() -> None:
         "tsk_fls_list":        parse_fls,
         # tsk_icat_extract has no parsed-text output; it writes raw bytes.
         # Excluded from query_rows by omission.
+    })
+    # EZ Tools parsers (extract-then-parse flow).
+    from mcp_server.parsers.ez_tools import (
+        parse_evtx, parse_mft, parse_shimcache,
+    )
+    _PARSERS.update({
+        "ezt_mft_parse":       parse_mft,
+        "ezt_shimcache_parse": parse_shimcache,
+        "ezt_evtx_parse":      parse_evtx,
     })
 
 

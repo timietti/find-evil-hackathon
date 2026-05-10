@@ -54,6 +54,11 @@ from mcp_server.tools.disk import (
     tsk_icat_extract as _tsk_icat_extract,
     tsk_partition_table as _tsk_partition_table,
 )
+from mcp_server.tools.ez_tools import (
+    ezt_evtx_parse as _ezt_evtx_parse,
+    ezt_mft_parse as _ezt_mft_parse,
+    ezt_shimcache_parse as _ezt_shimcache_parse,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -238,6 +243,61 @@ def tsk_icat_extract(
         image, inode=inode, offset=offset,
         audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
     )
+
+
+# ---------------------------------------------------------------------------
+# EZ Tools — extract-then-parse Windows artifacts.
+# All take an extract_exec_id (from a prior tsk_icat_extract) so the agent
+# never specifies a filesystem path directly. Architectural enforcement
+# of the no-arbitrary-paths trust boundary.
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool()
+def ezt_mft_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`MFTECmd --json` on an extracted $MFT — full NTFS file timeline.
+
+    Pre-req: call `tsk_icat_extract` first with `inode=0` (the $MFT is
+    always inode 0 on NTFS) to get an extract_exec_id, then pass it here.
+    Returns per-entry timestamps (Created / Modified / Accessed / Recorded),
+    MFT-anti-tamper flags (Timestomped / uSecZeros / Copied), file_name,
+    parent_path, file_size — plus aggregates count / deleted /
+    timestomped_count / by_extension / by_parent_path.
+
+    Truncated to the first 50 entries; drill via `query_rows` filtered
+    on `file_name`, `parent_path`, or `extension`."""
+    return _ezt_mft_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_shimcache_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`AppCompatCacheParser --csv` on an extracted SYSTEM hive — ShimCache.
+
+    Pre-req: extract `Windows/System32/config/SYSTEM` (or
+    `WINDOWS/system32/config/system` on XP) via `tsk_icat_extract`.
+    Returns per-entry: ControlSet, Path, LastModifiedTimeUTC, Executed
+    flag, Duplicate flag. ShimCache is high-signal for program-execution
+    evidence — it captures binary path + last-modified time **even for
+    binaries that have been deleted**, so it survives sdelete cleanup."""
+    return _ezt_shimcache_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_evtx_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`EvtxECmd --json` on an extracted .evtx — Windows Event Log parser.
+
+    Pre-req: extract a single .evtx file (Security.evtx, System.evtx,
+    Application.evtx, etc. from `Windows/System32/winevt/Logs/`) via
+    `tsk_icat_extract`. Returns per-event: EventId, TimeCreated, Channel,
+    Provider, Computer, Level, Process/Thread IDs, UserName, RemoteHost,
+    MapDescription (high-level summary), PayloadData1..5 (extracted from
+    raw event data). Aggregates by_event_id / by_channel / by_computer /
+    by_provider.
+
+    Critical event IDs for IR work: 4624 (logon), 4625 (failed logon),
+    4688 (process create), 4768/4769 (Kerberos), 4720 (account create),
+    4732/4756 (group membership), 7045 (service install), 1102 (log clear)."""
+    return _ezt_evtx_parse(extract_exec_id, audit=_audit())
 
 
 @mcp.tool()
