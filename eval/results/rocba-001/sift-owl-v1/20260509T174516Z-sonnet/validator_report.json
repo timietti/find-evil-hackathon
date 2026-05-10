@@ -9,18 +9,18 @@
     "other_count": 0,
     "verified": 24,
     "partial": 12,
-    "failed": 1,
-    "unverifiable": 5,
+    "failed": 2,
+    "unverifiable": 4,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
     "confirmation_score": 0.571,
     "llm_checked": 5,
     "llm_verified": 0,
-    "llm_unsupported": 0,
-    "llm_unrelated": 4,
+    "llm_unsupported": 1,
+    "llm_unrelated": 3,
     "llm_uncertain": 1,
-    "llm_total_cost_usd": 0.0046
+    "llm_total_cost_usd": 0.0047
   },
   "verdicts": [
     {
@@ -53,8 +53,8 @@
         "hex_hashes": [],
         "quoted": [
           "2020-11-13T22:00Z",
-          "2020-11-16T02:32:38Z",
-          "/cases/find-evil-test/Rocba-Memory.raw"
+          "/cases/find-evil-test/Rocba-Memory.raw",
+          "2020-11-16T02:32:38Z"
         ]
       },
       "matched": [
@@ -102,8 +102,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only an execution ID without any specific factual assertion about file system contents or forensic findings that could be verified against the parsed filescan data.",
-      "llm_cost_usd": 0.000675
+      "llm_reason": "The claim is a metadata label with an execution ID but contains no specific factual assertion about file paths, counts, or other forensic artifacts that could be verified against the vol3_filescan file count data.",
+      "llm_cost_usd": 0.00073
     },
     {
       "claim": {
@@ -124,11 +124,11 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Findoreria_Solved.xlsx",
           "NETFLIX.xlsx",
+          "Findoreria_Solved.xlsx",
+          "Firedam.xls",
           "Research.docx",
-          "Spreadsheet.xls",
-          "Firedam.xls"
+          "Spreadsheet.xls"
         ],
         "paths": [],
         "drive_refs": [],
@@ -137,19 +137,19 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "NETFLIX.xlsx",
           "Findoreria_Solved.xlsx",
           "WACC Calc Spreadsheet.xls",
-          "NETFLIX.xlsx",
-          "TIVO Research.docx",
-          "Firedam.xls"
+          "Firedam.xls",
+          "TIVO Research.docx"
         ]
       },
       "matched": [
-        "Findoreria_Solved.xlsx",
         "NETFLIX.xlsx",
+        "Findoreria_Solved.xlsx",
+        "Firedam.xls",
         "Research.docx",
         "Spreadsheet.xls",
-        "Firedam.xls",
         "WACC Calc Spreadsheet.xls",
         "TIVO Research.docx"
       ],
@@ -192,16 +192,16 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "\\Users\\fredr\\OneDrive\\StarFury.zip",
           "StarFury.lnk",
-          "starfury (2).lnk",
-          "\\Users\\fredr\\OneDrive\\StarFury.zip"
+          "starfury (2).lnk"
         ]
       },
       "matched": [
         "StarFury.zip",
         "StarFury.lnk",
-        "starfury (2).lnk",
-        "\\Users\\fredr\\OneDrive\\StarFury.zip"
+        "\\Users\\fredr\\OneDrive\\StarFury.zip",
+        "starfury (2).lnk"
       ],
       "missing": [
         "\\Users\\fredr\\OneDrive\\StarFury.zip`"
@@ -245,10 +245,10 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "srl-h",
           "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
-          "Exported-PST.lnk",
-          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst"
+          "srl-h",
+          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst",
+          "Exported-PST.lnk"
         ]
       },
       "matched": [
@@ -256,8 +256,8 @@
         "IDNBREY.pst",
         "backup.pst",
         "\\Users\\fredr\\OneDrive\\Documents\\Outlook",
-        "srl-h",
         "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
+        "srl-h",
         "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst"
       ],
       "missing": [],
@@ -331,11 +331,11 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Data.docx",
-          "Death_Blossom_test_visualization.png",
+          "Death_Blossom_attack.png",
           "Particles...pdf",
           "Specs.xlsx",
-          "Death_Blossom_attack.png"
+          "Death_Blossom_test_visualization.png",
+          "Data.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -344,18 +344,18 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "Death_Blossom_attack.png",
           "GunStar Upgrade Specs.xlsx",
-          "Death_Blossom_test_visualization.png",
-          "GunStar Death Blossom Data.docx",
           "FTL Comms/Quantum Particles...pdf",
-          "Death_Blossom_attack.png"
+          "Death_Blossom_test_visualization.png",
+          "GunStar Death Blossom Data.docx"
         ]
       },
       "matched": [
-        "Data.docx",
-        "Death_Blossom_test_visualization.png",
-        "Specs.xlsx",
         "Death_Blossom_attack.png",
+        "Specs.xlsx",
+        "Death_Blossom_test_visualization.png",
+        "Data.docx",
         "GunStar Upgrade Specs.xlsx",
         "GunStar Death Blossom Data.docx"
       ],
@@ -390,12 +390,12 @@
         "timestamps": [],
         "filenames": [
           "Background.docx",
-          "German-KITT-Specs.docx",
           "KITT.lnk",
-          "KITT.pptx",
-          "KITT-older-version.lnk",
           "Background.lnk",
-          "Hydrogen_Hybrid_Tech.docx"
+          "Hydrogen_Hybrid_Tech.docx",
+          "KITT.pptx",
+          "German-KITT-Specs.docx",
+          "KITT-older-version.lnk"
         ],
         "paths": [],
         "drive_refs": [],
@@ -404,28 +404,28 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "The Future of KITT-older-version.lnk",
-          "German-KITT-Specs.docx",
+          "Future of KITT - Technical Background.lnk",
           "The Future of KITT.pptx",
           "The Future of KITT.lnk",
-          "Future of KITT - Technical Background.docx",
           "Hydrogen_Hybrid_Tech.docx",
-          "Future of KITT - Technical Background.lnk"
+          "Future of KITT - Technical Background.docx",
+          "The Future of KITT-older-version.lnk",
+          "German-KITT-Specs.docx"
         ]
       },
       "matched": [
         "Background.docx",
-        "German-KITT-Specs.docx",
         "KITT.lnk",
-        "KITT.pptx",
-        "KITT-older-version.lnk",
         "Background.lnk",
         "Hydrogen_Hybrid_Tech.docx",
-        "The Future of KITT-older-version.lnk",
+        "KITT.pptx",
+        "German-KITT-Specs.docx",
+        "KITT-older-version.lnk",
+        "Future of KITT - Technical Background.lnk",
         "The Future of KITT.pptx",
         "The Future of KITT.lnk",
         "Future of KITT - Technical Background.docx",
-        "Future of KITT - Technical Background.lnk"
+        "The Future of KITT-older-version.lnk"
       ],
       "missing": [],
       "negation_violations": [],
@@ -454,10 +454,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Airwolf-ARL.lnk",
+          "Airwolf_schematics.png",
           "Wolves_Lair_Tech_Specs.pptx",
           "airwolf_blueprint.jpg",
-          "Airwolf_schematics.png",
-          "Airwolf-ARL.lnk",
           "airwolf_blueprints.gif"
         ],
         "paths": [],
@@ -467,18 +467,18 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "Airwolf-ARL.lnk",
+          "Airwolf_schematics.png",
           "Wolves_Lair_Tech_Specs.pptx",
           "airwolf_blueprint.jpg",
-          "Airwolf_schematics.png",
-          "Airwolf-ARL.lnk",
           "airwolf_blueprints.gif"
         ]
       },
       "matched": [
+        "Airwolf-ARL.lnk",
+        "Airwolf_schematics.png",
         "Wolves_Lair_Tech_Specs.pptx",
         "airwolf_blueprint.jpg",
-        "Airwolf_schematics.png",
-        "Airwolf-ARL.lnk",
         "airwolf_blueprints.gif"
       ],
       "missing": [],
@@ -508,8 +508,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SRL.docx",
-          "RareEarthDeposits_Confidential.jpg"
+          "RareEarthDeposits_Confidential.jpg",
+          "SRL.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -523,8 +523,8 @@
         ]
       },
       "matched": [
-        "SRL.docx",
         "RareEarthDeposits_Confidential.jpg",
+        "SRL.docx",
         "Vibrainium - SRL.docx"
       ],
       "missing": [],
@@ -601,9 +601,9 @@
         "timestamps": [],
         "filenames": [
           "1694D560-...lnk",
-          "C42458BB-...lnk",
           "Encryption.lnk",
-          "26F77152-...lnk"
+          "26F77152-...lnk",
+          "C42458BB-...lnk"
         ],
         "paths": [],
         "drive_refs": [],
@@ -612,9 +612,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "BitLocker Recovery Key 1694D560-...lnk",
           "BitLocker Recovery Key 26F77152-...lnk",
           "BitLocker Recovery Key C42458BB-...lnk",
-          "BitLocker Recovery Key 1694D560-...lnk",
           "BitLocker Drive Encryption.lnk"
         ]
       },
@@ -624,11 +624,11 @@
       ],
       "missing": [
         "1694D560-...lnk",
-        "C42458BB-...lnk",
         "26F77152-...lnk",
+        "C42458BB-...lnk",
+        "BitLocker Recovery Key 1694D560-...lnk",
         "BitLocker Recovery Key 26F77152-...lnk",
-        "BitLocker Recovery Key C42458BB-...lnk",
-        "BitLocker Recovery Key 1694D560-...lnk"
+        "BitLocker Recovery Key C42458BB-...lnk"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -699,8 +699,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "starkresearchlabs.sharepoint.com.url",
-          "starkresearchlabs-my.sharepoint.com.url"
+          "starkresearchlabs-my.sharepoint.com.url",
+          "starkresearchlabs.sharepoint.com.url"
         ],
         "paths": [],
         "drive_refs": [],
@@ -709,16 +709,16 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url",
           "WorkingFiles on starkresearchlabs-my.sharepoint.com.url",
+          "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url",
           "Megaforce on starkresearchlabs.sharepoint.com.url"
         ]
       },
       "matched": [
-        "starkresearchlabs.sharepoint.com.url",
         "starkresearchlabs-my.sharepoint.com.url",
-        "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url",
+        "starkresearchlabs.sharepoint.com.url",
         "WorkingFiles on starkresearchlabs-my.sharepoint.com.url",
+        "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url",
         "Megaforce on starkresearchlabs.sharepoint.com.url"
       ],
       "missing": [],
@@ -745,8 +745,8 @@
       ],
       "tokens": {
         "pids": [
-          "9648",
-          "6188"
+          "6188",
+          "9648"
         ],
         "inodes": [],
         "ips": [],
@@ -765,20 +765,20 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\",
-          "StarFury.zip",
           "\\Users\\fredr\\OneDrive\\",
+          "StarFury.zip",
+          "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\",
           "backup.pst"
         ]
       },
       "matched": [
-        "9648",
         "6188",
+        "9648",
         "StarFury.zip",
         "backup.pst",
         "\\Users\\fredr\\OneDrive\\Documents\\Outlook",
-        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\",
-        "\\Users\\fredr\\OneDrive\\"
+        "\\Users\\fredr\\OneDrive\\",
+        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\"
       ],
       "missing": [
         "\\Users\\fredr\\OneDrive\\`"
@@ -1035,14 +1035,14 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "D:\\Tools\\MRC.exe",
-          "\\Tools\\"
+          "\\Tools\\",
+          "D:\\Tools\\MRC.exe"
         ]
       },
       "matched": [
         "MRC.exe",
-        "D:\\Tools\\MRC.exe",
-        "\\Tools\\"
+        "\\Tools\\",
+        "D:\\Tools\\MRC.exe"
       ],
       "missing": [
         "D:\\Tools\\MRC.exe`"
@@ -1161,8 +1161,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe"
+          "SystemPropertiesProtection.exe",
+          "SystemPropertiesAdvanced.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1173,8 +1173,8 @@
         "quoted": []
       },
       "matched": [
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe"
+        "SystemPropertiesProtection.exe",
+        "SystemPropertiesAdvanced.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1255,8 +1255,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "UserAssist data provides only aggregate counts of executed programs per hive; it contains no timestamps, application names, execution sequences, or detailed activity records needed to verify the specific claim about Office applications opened in rapid succession during a particular time window (04:2",
-      "llm_cost_usd": 0.0008960000000000001
+      "llm_reason": "The userassist data provides only aggregate execution counts (120 total, 112 real, 8 sessions) from a single hive without timestamps, application names, or execution sequence details needed to verify the rapid succession claim or the specific time window (04:23\u201304:49Z).",
+      "llm_cost_usd": 0.000916
     },
     {
       "claim": {
@@ -1335,10 +1335,10 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
+          "\\Users\\srl-h\\",
           "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "\\Users\\srl-h\\"
+          "sdelete64.exe",
+          "\\Users\\srl-h\\Downloads\\"
         ]
       },
       "matched": [],
@@ -1348,9 +1348,9 @@
       ],
       "negation_violations": [
         "sdelete64.exe",
+        "\\Users\\srl-h\\",
         "srl-h",
-        "\\Users\\srl-h\\Downloads\\",
-        "\\Users\\srl-h\\"
+        "\\Users\\srl-h\\Downloads\\"
       ],
       "verified_absences": [],
       "notes": "",
@@ -1462,10 +1462,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "sdelete.exe",
           "SDelete.zip",
-          "SDelete.lnk",
-          "sdelete64.exe"
+          "sdelete.exe",
+          "sdelete64.exe",
+          "SDelete.lnk"
         ],
         "paths": [
           "\\Users\\fredr\\Downloads\\SDelete\\`."
@@ -1477,17 +1477,17 @@
         "hex_hashes": [],
         "quoted": [
           "sdelete.exe",
-          "\\Users\\fredr\\Downloads\\SDelete\\",
+          "SDelete.lnk",
           "SDelete.zip",
           "sdelete64.exe",
-          "SDelete.lnk"
+          "\\Users\\fredr\\Downloads\\SDelete\\"
         ]
       },
       "matched": [
-        "sdelete.exe",
         "SDelete.zip",
-        "SDelete.lnk",
+        "sdelete.exe",
         "sdelete64.exe",
+        "SDelete.lnk",
         "\\Users\\fredr\\Downloads\\SDelete\\"
       ],
       "missing": [
@@ -1580,9 +1580,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "2020-11-16T02:31:15Z",
           "D:\\Tools\\MRC.exe",
-          "MRC179.tmp",
-          "2020-11-16T02:31:15Z"
+          "MRC179.tmp"
         ]
       },
       "matched": [
@@ -1673,9 +1673,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Teams.exe",
           "SearchApp.exe",
-          "MsMpEng.exe"
+          "MsMpEng.exe",
+          "Teams.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1686,9 +1686,9 @@
         "quoted": []
       },
       "matched": [
-        "Teams.exe",
         "SearchApp.exe",
-        "MsMpEng.exe"
+        "MsMpEng.exe",
+        "Teams.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1905,8 +1905,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "The vol3_filescan output provides only a file count (42798) with no specific file paths, OneDrive-related artifacts, cloud sync configurations, or account details necessary to verify the claim about OneDrive installation or attacker-controlled account association.",
-      "llm_cost_usd": 0.000807
+      "llm_reason": "The vol3_filescan data provides only a file count (42,798) with no structural details about OneDrive installation, file paths, cloud sync configuration, or any attacker-controlled account evidence that would support the claim's specific factual assertions.",
+      "llm_cost_usd": 0.000802
     },
     {
       "claim": {
@@ -1916,7 +1916,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 226
       },
-      "status": "unverifiable",
+      "status": "failed",
       "tool_name": null,
       "tool_names": [],
       "tokens": {
@@ -1938,9 +1938,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNRELATED",
-      "llm_reason": "The vol3_filescan tool provides only a count of files (42798) without file names, paths, deletion status, or SID/RID information necessary to verify claims about specific PST file deletion to Recycle Bin.",
-      "llm_cost_usd": 0.000761
+      "llm_verdict": "UNSUPPORTED",
+      "llm_reason": "The parsed vol3_filescan data contains only a file count (42798) with no structure showing deleted files, Recycle Bin entries, file paths, SIDs, RIDs, or PST file references needed to verify this claim.",
+      "llm_cost_usd": 0.0008110000000000001
     },
     {
       "claim": {
@@ -1973,8 +1973,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "The claim contains only an execution ID with a 'CONFIRMED' status marker but makes no specific factual assertion about network connections, IP addresses, or other forensic artifacts that the netscan tool's parsed data could verify or contradict.",
-      "llm_cost_usd": 0.001412
+      "llm_reason": "The claim contains only an execution ID reference with no specific factual assertion about network data; the netscan tool data shows foreign IP connection counts but contains no exec_id field or related metadata to validate the claim's identifier.",
+      "llm_cost_usd": 0.001392
     }
   ]
 }

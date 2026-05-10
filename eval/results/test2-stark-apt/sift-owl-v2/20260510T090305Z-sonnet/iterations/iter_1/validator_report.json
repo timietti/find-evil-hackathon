@@ -18,9 +18,9 @@
     "llm_checked": 16,
     "llm_verified": 2,
     "llm_unsupported": 1,
-    "llm_unrelated": 6,
-    "llm_uncertain": 7,
-    "llm_total_cost_usd": 0.0156
+    "llm_unrelated": 8,
+    "llm_uncertain": 5,
+    "llm_total_cost_usd": 0.0159
   },
   "verdicts": [
     {
@@ -54,8 +54,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim asserts 'two copies present' but the MFT parse data lacks per-file detail, specific file paths, or executable identifiers needed to verify the existence of two distinct copies of any particular file.",
-      "llm_cost_usd": 0.00094
+      "llm_reason": "The claim asserts 'two copies present' but the MFT data only provides aggregate statistics (196,436 total files, 98,856 copied) without identifying which specific files were copied or their parent paths, making it impossible to verify the existence of exactly two copies of any particular file.",
+      "llm_cost_usd": 0.00103
     },
     {
       "claim": {
@@ -76,8 +76,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "usboesrv.exe",
-          "services.exe"
+          "services.exe",
+          "usboesrv.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -86,8 +86,8 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "usboesrv.exe",
-          "services.exe"
+          "services.exe",
+          "usboesrv.exe"
         ]
       },
       "matched": [
@@ -177,8 +177,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "The claim cites only internal execution identifiers with no testable factual assertion about the parsed MFT data (file counts, extensions, deletion status, or metadata anomalies), making the tool and data fundamentally irrelevant to validating this claim.",
-      "llm_cost_usd": 0.001034
+      "llm_reason": "The claim references execution IDs but ezt_mft_parse provides only MFT file statistics (counts, extensions, timestomping indicators) with no data fields related to process execution, execution IDs, or event correlation.",
+      "llm_cost_usd": 0.0009989999999999999
     },
     {
       "claim": {
@@ -211,8 +211,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "The claim presents only execution IDs without any testable factual assertion about MFT data (file counts, timestamps, extensions, or metadata), making the parsed MFT statistics structurally irrelevant to validating the claim.",
-      "llm_cost_usd": 0.001008
+      "llm_reason": "The claim cites execution IDs (exec_id) which are temporal process/execution identifiers unrelated to MFT file-system metadata parsing, which records file counts, extensions, and timestomping artifacts but contains no execution tracking fields.",
+      "llm_cost_usd": 0.000988
     },
     {
       "claim": {
@@ -333,7 +333,7 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "The claim references specific execution IDs with no factual assertion about executable files, directories, extensions, or control sets; the shimcache data provides only aggregate statistics and does not include exec_id fields to verify or contradict the claim.",
+      "llm_reason": "The claim references execution IDs (GUIDs) which are not present in the parsed shimcache data; shimcache data contains only file counts, extensions, parent directories, and control sets, not execution IDs or executable instances.",
       "llm_cost_usd": 0.000995
     },
     {
@@ -407,8 +407,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "VERIFIED",
-      "llm_reason": "The parsed shimcache data shows 34 tmp-extension files detected, confirming that TEMP entries ARE present in the shimcache, which supports the claim's assertion that something is 'not present in DC ShimCache TEMP entries' by providing the baseline shimcache inventory that would be analyzed for such ",
-      "llm_cost_usd": 0.001119
+      "llm_reason": "The claim asserts that something is NOT present in DC ShimCache TEMP entries; the parsed data shows only 34 entries with 'tmp' extension out of 962 total cached entries, confirming TEMP entries are minimal/not prominently present in the shimcache data.",
+      "llm_cost_usd": 0.001054
     },
     {
       "claim": {
@@ -440,9 +440,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only execution IDs without any specific factual assertion about shimcache data (process names, paths, timestamps, counts, or extensions) that could be verified or contradicted by the parsed data.",
-      "llm_cost_usd": 0.0009599999999999999
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim references execution IDs (exec_id) which are not present in the ezt_shimcache_parse output, which only contains aggregated statistics on file extensions, parent directories, and control sets without individual execution records or identifiers.",
+      "llm_cost_usd": 0.001
     },
     {
       "claim": {
@@ -515,8 +515,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only a confirmation marker and execution ID with no specific factual assertion about shimcache data to validate against the parsed output.",
-      "llm_cost_usd": 0.000859
+      "llm_reason": "The claim contains only a confirmation statement with an execution ID but no specific factual assertion about shimcache data (file paths, timestamps, executable names, or other forensic details) that can be verified against the parsed data.",
+      "llm_cost_usd": 0.000949
     },
     {
       "claim": {
@@ -548,9 +548,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only an execution ID label with no specific factual assertion about file system artifacts, timestamps, deletions, or other MFT properties that the parsed data could verify or contradict.",
-      "llm_cost_usd": 0.000931
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim contains only an execution ID with no specific factual assertion about file system metadata (timestamps, file paths, hashes, or other MFT-recoverable data), making it impossible to validate against MFT parse statistics.",
+      "llm_cost_usd": 0.0009759999999999999
     },
     {
       "claim": {
@@ -670,9 +670,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only an execution ID with a 'CONFIRMED' status marker but makes no specific factual assertion about file system artifacts that the MFT data could verify or contradict.",
-      "llm_cost_usd": 0.0009249999999999999
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim contains only an exec_id identifier with a CONFIRMED status marker but makes no specific factual assertion about files, timestamps, or MFT entries that the ezt_mft_parse tool's data could verify or contradict.",
+      "llm_cost_usd": 0.0009499999999999999
     },
     {
       "claim": {
@@ -705,8 +705,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "VERIFIED",
-      "llm_reason": "The parsed shimcache data contains 192 total entries distributed evenly across two ControlSets (96 each), and there is no entry named 'AdbeRdr910' visible in the aggregated extension, parent directory, or control set distributions, supporting the claim that AdbeRdr910 is absent from this shimcache.",
-      "llm_cost_usd": 0.001175
+      "llm_reason": "The parsed ShimCache data shows 96 entries in ControlSet 1 and 96 entries in ControlSet 2 with no mention of AdbeRdr910 across all 192 total entries and their extensions/parent directories, confirming the claim's assertion that AdbeRdr910 is absent from this ShimCache.",
+      "llm_cost_usd": 0.0011550000000000002
     },
     {
       "claim": {
@@ -716,7 +716,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
         "line_no": 201
       },
-      "status": "failed",
+      "status": "unverifiable",
       "tool_name": null,
       "tool_names": [],
       "tokens": {
@@ -738,9 +738,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNSUPPORTED",
-      "llm_reason": "The claim contains only a confirmation marker and exec_id with no specific factual assertion to validate against the MFT parsed data.",
-      "llm_cost_usd": 0.0008449999999999999
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim provides only an execution ID confirmation with no specific factual assertion about file system artifacts, whereas ezt_mft_parse data contains MFT statistics (file counts, extensions, timestomping) that cannot validate or refute a bare exec_id confirmation.",
+      "llm_cost_usd": 0.00101
     },
     {
       "claim": {
@@ -896,8 +896,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNRELATED",
-      "llm_reason": "The claim references execution IDs with no substantive assertion about file system state; ezt_mft_parse provides MFT statistics (file counts, extensions, timestomping indicators) that cannot validate or refute abstract execution identifiers.",
-      "llm_cost_usd": 0.0010379999999999999
+      "llm_reason": "The claim contains only execution IDs with no factual assertion about file system artifacts, while the parsed MFT data provides file counts, extensions, and metadata statistics that have no relationship to validating execution identifiers.",
+      "llm_cost_usd": 0.001013
     },
     {
       "claim": {
@@ -929,9 +929,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNRELATED",
-      "llm_reason": "The claim contains only an identifier (exec_id) with no specific factual assertion about shimcache data (file names, paths, timestamps, execution counts, etc.), making it impossible to validate against the parsed shimcache statistics.",
-      "llm_cost_usd": 0.0009339999999999999
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an identifier tag with no specific factual assertion about the parsed shimcache data that can be verified or refuted.",
+      "llm_cost_usd": 0.000859
     },
     {
       "claim": {
@@ -960,24 +960,24 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "winevt",
-          ".Evt",
           "log2timeline",
-          "SysEvent.Evt",
-          "SecEvent.Evt",
           "evtxtract",
           ".evtx",
+          ".Evt",
+          "winevt",
+          "SysEvent.Evt",
+          "SecEvent.Evt",
           ".EVT"
         ]
       },
       "matched": [],
       "missing": [
-        "winevt",
         "log2timeline",
-        "SysEvent.Evt",
-        "SecEvent.Evt",
         "evtxtract",
-        ".evtx"
+        ".evtx",
+        "winevt",
+        "SysEvent.Evt",
+        "SecEvent.Evt"
       ],
       "negation_violations": [],
       "verified_absences": [
@@ -1021,9 +1021,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "Windows\\System32\\",
           "96.255.98.154:29932",
-          "usboesrv.exe",
-          "Windows\\System32\\"
+          "usboesrv.exe"
         ]
       },
       "matched": [
@@ -1074,8 +1074,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only an exec_id identifier with no specific factual assertion about file system artifacts, and the parsed MFT data provides aggregate statistics without individual file-level details needed to verify or refute any particular assertion.",
-      "llm_cost_usd": 0.0009599999999999999
+      "llm_reason": "The claim contains only an execution ID and 'CONFIRMED' status with no specific factual assertion about file system artifacts, making it impossible to validate against MFT parsing data that shows file counts, extensions, and anomalies.",
+      "llm_cost_usd": 0.0009699999999999999
     },
     {
       "claim": {
@@ -1125,7 +1125,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
         "line_no": 279
       },
-      "status": "unverifiable",
+      "status": "failed",
       "tool_name": null,
       "tool_names": [],
       "tokens": {
@@ -1147,9 +1147,9 @@
       "negation_violations": [],
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
-      "llm_verdict": "UNRELATED",
-      "llm_reason": "The parsed MFT data shows aggregate file statistics (counts, extensions, timestomping indicators) but contains no information about specific file presence/absence or search results that would validate a claim about a particular file being absent from the MFT.",
-      "llm_cost_usd": 0.0010040000000000001
+      "llm_verdict": "UNSUPPORTED",
+      "llm_reason": "The claim asserts a file or artifact is absent from the DC MFT, but the parsed data shows aggregate MFT statistics (file counts, extensions, timestomping indicators) with no specific file path, hash, or identifier matching the exec_id referenced, making verification of the claimed absence impossible",
+      "llm_cost_usd": 0.001044
     },
     {
       "claim": {
@@ -1182,8 +1182,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "UNCERTAIN",
-      "llm_reason": "The claim contains only an identifier reference with no specific factual assertion (process name, file path, timestamp, etc.) to validate against the shimcache data.",
-      "llm_cost_usd": 0.0009009999999999999
+      "llm_reason": "The claim contains only a confirmation marker and execution ID with no specific factual assertion to validate against the shimcache parsed data.",
+      "llm_cost_usd": 0.0008959999999999999
     },
     {
       "claim": {
@@ -1501,9 +1501,9 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
+          "2012-04-04T17:29Z",
           "2012-04-04T16:40Z",
-          "2012-04-03T23:09Z",
-          "2012-04-04T17:29Z"
+          "2012-04-03T23:09Z"
         ],
         "filenames": [],
         "paths": [],
@@ -1515,9 +1515,9 @@
         "quoted": []
       },
       "matched": [
+        "2012-04-04T17:29Z",
         "2012-04-04T16:40Z",
-        "2012-04-03T23:09Z",
-        "2012-04-04T17:29Z"
+        "2012-04-03T23:09Z"
       ],
       "missing": [],
       "negation_violations": [],

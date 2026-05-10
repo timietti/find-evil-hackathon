@@ -23,7 +23,7 @@
 
 ## LLM-based prose check (v4)
 
-- LLM verdicts collected: **1** (cost: $0.0013)
+- LLM verdicts collected: **1** (cost: $0.0012)
   - ✅ VERIFIED:    1 (rule-unverifiable → upgraded to verified)
   - ❌ UNSUPPORTED: 0 (downgraded to failed)
   - ❓ UNRELATED:   0 (cited tool not relevant — kept unverifiable)
@@ -40,7 +40,7 @@
 ### ✅ verified _(line 22)_
 - exec_ids: `5688d0d7063f`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **VERIFIED** — The parsed data explicitly confirms all specific factual elements: OS is Windows 10/11 (matching Windows 10), build is 19041, architecture is x64, and product_type is NtProductWinNt.
+- LLM check: **VERIFIED** — The parsed data structurally confirms all specific factual elements of the claim: OS is Windows 10, build is 19041, architecture is x64, and product_type is NtProductWinNt.
 - claim: > **OS:** Windows 10 build 19041 x64, NtProductWinNt [CONFIRMED — exec_id 019e10cb-61a0-72b1-943d-5688d0d7063f]
 
 ### ⚠ partial _(line 24)_
@@ -53,19 +53,19 @@
 ### ✅ verified _(line 32)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `Specs.xlsx`, `Death_Blossom_attack.png`, `Data.xlsx`, `Data.docx`, `\Users\fredr\Stark`
+- matched: `Data.xlsx`, `Data.docx`, `Specs.xlsx`, `Death_Blossom_attack.png`, `\Users\fredr\Stark`
 - claim: > The Gunstar project \Users\fredr\Stark Research Labs\SRL-Projects - Gunstar contained GunStar Death Blossom Data.docx, GunStar Upgrade Specs.xlsx, Gunstar Test Harness Data.xlsx, and Death_Blossom_att…
 
 ### ✅ verified _(line 34)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `Hydrogen_Hybrid_Tech.docx`, `KITT.pptx`, `German-KITT-Specs.docx`, `Background.docx`, `\Users\fredr\Stark`
+- matched: `Background.docx`, `German-KITT-Specs.docx`, `KITT.pptx`, `Hydrogen_Hybrid_Tech.docx`, `\Users\fredr\Stark`
 - claim: > The KITT project \Users\fredr\Stark Research Labs\Maria Hill - KITT contained The Future of KITT.pptx, Future of KITT - Technical Background.docx, and Hydrogen_Hybrid_Tech.docx; \Users\fredr\Stark Res…
 
 ### ✅ verified _(line 36)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `airwolf_blueprints.gif`, `Airwolf_schematics.png`, `Wolves_Lair_Tech_Specs.pptx`, `\Users\fredr\Stark`
+- matched: `airwolf_blueprints.gif`, `Wolves_Lair_Tech_Specs.pptx`, `Airwolf_schematics.png`, `\Users\fredr\Stark`
 - claim: > The Airwolf project \Users\fredr\Stark Research Labs\SRL-Projects - Airwolf contained Wolves_Lair_Tech_Specs.pptx, Airwolf_schematics.png, and airwolf_blueprints.gif [CONFIRMED — exec_id 019e10d1-a143…
 
 ### ✅ verified _(line 38)_
@@ -107,19 +107,19 @@
 ### ✅ verified _(line 60)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `Specs.xlsx`, `Data.xlsx`, `Data.docx`, `\Users\fredr\Stark`
+- matched: `Data.xlsx`, `Data.docx`, `Specs.xlsx`, `\Users\fredr\Stark`
 - claim: > GunStar Death Blossom Data.docx, GunStar Upgrade Specs.xlsx, and Gunstar Test Harness Data.xlsx under \Users\fredr\Stark Research Labs\SRL-Projects - Gunstar\ were present as file objects [CONFIRMED —…
 
 ### ✅ verified _(line 62)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `Hydrogen_Hybrid_Tech.docx`, `KITT.pptx`, `Background.docx`, `\Users\fredr\Stark`
+- matched: `Background.docx`, `KITT.pptx`, `Hydrogen_Hybrid_Tech.docx`, `\Users\fredr\Stark`
 - claim: > The Future of KITT.pptx, Future of KITT - Technical Background.docx, and Hydrogen_Hybrid_Tech.docx under \Users\fredr\Stark Research Labs\Maria Hill - KITT\ were present as file objects [CONFIRMED — e…
 
 ### ✅ verified _(line 64)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `Airwolf_schematics.png`, `Wolves_Lair_Tech_Specs.pptx`, `\Users\fredr\Stark`
+- matched: `Wolves_Lair_Tech_Specs.pptx`, `Airwolf_schematics.png`, `\Users\fredr\Stark`
 - claim: > Wolves_Lair_Tech_Specs.pptx and Airwolf_schematics.png under \Users\fredr\Stark Research Labs\SRL-Projects - Airwolf\ were present as file objects [CONFIRMED — exec_id 019e10d1-a143-7173-8c13-bbc7f674…
 
 ### ✅ verified _(line 66)_
@@ -137,7 +137,7 @@
 ### ⚠ partial _(line 72)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `SDelete.lnk`, `sdelete.exe`, `SDelete.zip`, `\Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\SDelete.lnk`
+- matched: `sdelete.exe`, `SDelete.lnk`, `SDelete.zip`, `\Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\SDelete.lnk`
 - **missing**: `\Users\fredr\Downloads\SDelete\sdelete.exe,`, `\Users\fredr\Downloads\SDelete.zip,`
 - claim: > \Users\fredr\Downloads\SDelete\sdelete.exe, \Users\fredr\Downloads\SDelete.zip, and \Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\SDelete.lnk were present in pool memory; the SDelete.lnk artif…
 
@@ -174,13 +174,13 @@
 ### ✅ verified _(line 86)_
 - tools: `vol3_netscan`
 - exec_ids: `729ae8949921`
-- matched: `1248`, `81.30.144.115`, `2020-11-16T02:34:45Z`, `2020-11-16T02:34:58Z`, `2020-11-16T02:31:26Z`, `svchost.exe`
+- matched: `1248`, `81.30.144.115`, `2020-11-16T02:34:45Z`, `2020-11-16T02:31:26Z`, `2020-11-16T02:34:58Z`, `svchost.exe`
 - claim: > svchost.exe (pid 1248) received 59 inbound RDP connections from 81.30.144.115 to local port 3389; pool-memory structures show port 51048 ESTABLISHED created 2020-11-16T02:34:58Z and port 5067 ESTABLIS…
 
 ### ✅ verified _(line 88)_
 - tools: `vol3_netscan`
 - exec_ids: `729ae8949921`
-- matched: `1248`, `213.202.233.104`, `2020-11-16T02:31:18Z`, `2020-11-16T02:34:58Z`, `2020-11-16T02:35:53Z`, `svchost.exe`
+- matched: `1248`, `213.202.233.104`, `2020-11-16T02:35:53Z`, `2020-11-16T02:34:58Z`, `2020-11-16T02:31:18Z`, `svchost.exe`
 - claim: > svchost.exe (pid 1248) received 54 inbound RDP connections from 213.202.233.104 to local port 3389; pool-memory structures show port 45753 ESTABLISHED created 2020-11-16T02:34:58Z and port 40876 ESTAB…
 
 ### ✅ verified _(line 90)_
@@ -240,7 +240,7 @@
 ### ✅ verified _(line 126)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `StarFury.lnk`, `StarFury.zip`, `\Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\StarFury.lnk`, `\Users\fredr\OneDrive\StarFury.zip`
+- matched: `StarFury.zip`, `StarFury.lnk`, `\Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\StarFury.lnk`, `\Users\fredr\OneDrive\StarFury.zip`
 - claim: > \Users\fredr\OneDrive\StarFury.zip was placed in the personal OneDrive sync root; \Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\StarFury.lnk confirms Explorer navigation to the StarFury direct…
 
 ### ✅ verified _(line 130)_
@@ -252,7 +252,7 @@
 ### ⚠ partial _(line 132)_
 - tools: `vol3_filescan`
 - exec_ids: `bbc7f674a3cc`
-- matched: `SDelete.lnk`, `sdelete.exe`, `SDelete.zip`, `\Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\SDelete.lnk`
+- matched: `sdelete.exe`, `SDelete.lnk`, `SDelete.zip`, `\Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\SDelete.lnk`
 - **missing**: `\Users\fredr\Downloads\SDelete\sdelete.exe,`, `\Users\fredr\Downloads\SDelete.zip,`
 - claim: > \Users\fredr\Downloads\SDelete\sdelete.exe, \Users\fredr\Downloads\SDelete.zip, and \Users\fredr\AppData\Roaming\Microsoft\Windows\Recent\SDelete.lnk confirm SDelete was downloaded and executed to wip…
 
@@ -266,13 +266,13 @@
 ### ✅ verified _(line 138)_
 - tools: `vol3_userassist`
 - exec_ids: `50abd5d244d6`
-- matched: `2020-11-16T02:31:13Z`, `MRC.exe`, `ntuser.dat`, `\C:\Users\fredr\ntuser.dat`, `C:\Users\fredr\ntuser.dat`, `D:\Tools\MRC.exe`
+- matched: `2020-11-16T02:31:13Z`, `ntuser.dat`, `MRC.exe`, `\C:\Users\fredr\ntuser.dat`, `C:\Users\fredr\ntuser.dat`, `D:\Tools\MRC.exe`
 - claim: > D:\Tools\MRC.exe was recorded in UserAssist with last_updated 2020-11-16T02:31:13Z, count 1, focus_count 1, hive_name \??\C:\Users\fredr\ntuser.dat [CONFIRMED — exec_id 019e10cb-6414-7711-b668-50abd5d…
 
 ### ✅ verified _(line 140)_
 - tools: `vol3_pstree`
 - exec_ids: `60452ae865e1`
-- matched: `29440`, `7464`, `2020-11-11T08:13:41Z`, `2020-11-16T02:31:15Z`, `MRC.exe`, `explorer.exe`
+- matched: `7464`, `29440`, `2020-11-11T08:13:41Z`, `2020-11-16T02:31:15Z`, `explorer.exe`, `MRC.exe`
 - claim: > MRC.exe (pid 29440, ppid 7464, threads 20, wow64 true, create_time 2020-11-16T02:31:15Z) was spawned from explorer.exe (pid 7464, ppid 7404, create_time 2020-11-11T08:13:41Z, session_id 1) [CONFIRMED …
 
 ### ⚠ partial _(line 142)_
@@ -285,7 +285,7 @@
 ### ✅ verified _(line 146)_
 - tools: `vol3_malfind`
 - exec_ids: `4444ba069b56`
-- matched: `SearchApp.exe`, `Teams.exe`, `MsMpEng.exe`, `dllhost.exe`, `LockApp.exe`
+- matched: `dllhost.exe`, `LockApp.exe`, `MsMpEng.exe`, `SearchApp.exe`, `Teams.exe`
 - claim: > vol3_malfind returned 16 findings with by_process counts: MsMpEng.exe (5), SearchApp.exe (6), dllhost.exe (1), LockApp.exe (1), RuntimeBroker. (1), Teams.exe (1), smartscreen.ex (1) — all attributable…
 
 ### ✅ verified _(line 148)_
@@ -351,7 +351,7 @@
 ### ✅ verified _(line 190)_
 - tools: `vol3_pstree`
 - exec_ids: `60452ae865e1`
-- matched: `29440`, `2020-11-16T02:31:15Z`, `MRC.exe`, `explorer.exe`
+- matched: `29440`, `2020-11-16T02:31:15Z`, `explorer.exe`, `MRC.exe`
 - claim: > 2020-11-16T02:31:15Z  MRC.exe created (pid 29440, ppid 7464/explorer.exe, wow64 true, threads 20)                        [CONFIRMED — exec_id 019e10cb-6b0d-74e0-bec2-60452ae865e1]
 
 ### ✅ verified _(line 194)_

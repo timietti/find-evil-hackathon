@@ -20,7 +20,7 @@
     "llm_unsupported": 0,
     "llm_unrelated": 0,
     "llm_uncertain": 0,
-    "llm_total_cost_usd": 0.0013
+    "llm_total_cost_usd": 0.0012
   },
   "verdicts": [
     {
@@ -94,8 +94,8 @@
       "verified_absences": [],
       "notes": "claim has no extractable tokens (prose only)",
       "llm_verdict": "VERIFIED",
-      "llm_reason": "The parsed data explicitly confirms all specific factual elements: OS is Windows 10/11 (matching Windows 10), build is 19041, architecture is x64, and product_type is NtProductWinNt.",
-      "llm_cost_usd": 0.00126
+      "llm_reason": "The parsed data structurally confirms all specific factual elements of the claim: OS is Windows 10, build is 19041, architecture is x64, and product_type is NtProductWinNt.",
+      "llm_cost_usd": 0.001245
     },
     {
       "claim": {
@@ -163,10 +163,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Specs.xlsx",
-          "Death_Blossom_attack.png",
           "Data.xlsx",
-          "Data.docx"
+          "Data.docx",
+          "Specs.xlsx",
+          "Death_Blossom_attack.png"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -179,10 +179,10 @@
         "quoted": []
       },
       "matched": [
-        "Specs.xlsx",
-        "Death_Blossom_attack.png",
         "Data.xlsx",
         "Data.docx",
+        "Specs.xlsx",
+        "Death_Blossom_attack.png",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -212,10 +212,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Hydrogen_Hybrid_Tech.docx",
-          "KITT.pptx",
+          "Background.docx",
           "German-KITT-Specs.docx",
-          "Background.docx"
+          "KITT.pptx",
+          "Hydrogen_Hybrid_Tech.docx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -228,10 +228,10 @@
         "quoted": []
       },
       "matched": [
-        "Hydrogen_Hybrid_Tech.docx",
-        "KITT.pptx",
-        "German-KITT-Specs.docx",
         "Background.docx",
+        "German-KITT-Specs.docx",
+        "KITT.pptx",
+        "Hydrogen_Hybrid_Tech.docx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -262,8 +262,8 @@
         "timestamps": [],
         "filenames": [
           "airwolf_blueprints.gif",
-          "Airwolf_schematics.png",
-          "Wolves_Lair_Tech_Specs.pptx"
+          "Wolves_Lair_Tech_Specs.pptx",
+          "Airwolf_schematics.png"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -277,8 +277,8 @@
       },
       "matched": [
         "airwolf_blueprints.gif",
-        "Airwolf_schematics.png",
         "Wolves_Lair_Tech_Specs.pptx",
+        "Airwolf_schematics.png",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -570,9 +570,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Specs.xlsx",
           "Data.xlsx",
-          "Data.docx"
+          "Data.docx",
+          "Specs.xlsx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -585,9 +585,9 @@
         "quoted": []
       },
       "matched": [
-        "Specs.xlsx",
         "Data.xlsx",
         "Data.docx",
+        "Specs.xlsx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -617,9 +617,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Hydrogen_Hybrid_Tech.docx",
+          "Background.docx",
           "KITT.pptx",
-          "Background.docx"
+          "Hydrogen_Hybrid_Tech.docx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -632,9 +632,9 @@
         "quoted": []
       },
       "matched": [
-        "Hydrogen_Hybrid_Tech.docx",
-        "KITT.pptx",
         "Background.docx",
+        "KITT.pptx",
+        "Hydrogen_Hybrid_Tech.docx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -664,8 +664,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Airwolf_schematics.png",
-          "Wolves_Lair_Tech_Specs.pptx"
+          "Wolves_Lair_Tech_Specs.pptx",
+          "Airwolf_schematics.png"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -678,8 +678,8 @@
         "quoted": []
       },
       "matched": [
-        "Airwolf_schematics.png",
         "Wolves_Lair_Tech_Specs.pptx",
+        "Airwolf_schematics.png",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -798,8 +798,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SDelete.lnk",
           "sdelete.exe",
+          "SDelete.lnk",
           "SDelete.zip"
         ],
         "paths": [
@@ -815,8 +815,8 @@
         "quoted": []
       },
       "matched": [
-        "SDelete.lnk",
         "sdelete.exe",
+        "SDelete.lnk",
         "SDelete.zip",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk"
       ],
@@ -1081,8 +1081,8 @@
         ],
         "timestamps": [
           "2020-11-16T02:34:45Z",
-          "2020-11-16T02:34:58Z",
-          "2020-11-16T02:31:26Z"
+          "2020-11-16T02:31:26Z",
+          "2020-11-16T02:34:58Z"
         ],
         "filenames": [
           "svchost.exe"
@@ -1099,8 +1099,8 @@
         "1248",
         "81.30.144.115",
         "2020-11-16T02:34:45Z",
-        "2020-11-16T02:34:58Z",
         "2020-11-16T02:31:26Z",
+        "2020-11-16T02:34:58Z",
         "svchost.exe"
       ],
       "missing": [],
@@ -1133,9 +1133,9 @@
           "213.202.233.104"
         ],
         "timestamps": [
-          "2020-11-16T02:31:18Z",
+          "2020-11-16T02:35:53Z",
           "2020-11-16T02:34:58Z",
-          "2020-11-16T02:35:53Z"
+          "2020-11-16T02:31:18Z"
         ],
         "filenames": [
           "svchost.exe"
@@ -1151,9 +1151,9 @@
       "matched": [
         "1248",
         "213.202.233.104",
-        "2020-11-16T02:31:18Z",
-        "2020-11-16T02:34:58Z",
         "2020-11-16T02:35:53Z",
+        "2020-11-16T02:34:58Z",
+        "2020-11-16T02:31:18Z",
         "svchost.exe"
       ],
       "missing": [],
@@ -1577,8 +1577,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "StarFury.lnk",
-          "StarFury.zip"
+          "StarFury.zip",
+          "StarFury.lnk"
         ],
         "paths": [
           "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk",
@@ -1592,8 +1592,8 @@
         "quoted": []
       },
       "matched": [
-        "StarFury.lnk",
         "StarFury.zip",
+        "StarFury.lnk",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk",
         "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
@@ -1667,8 +1667,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SDelete.lnk",
           "sdelete.exe",
+          "SDelete.lnk",
           "SDelete.zip"
         ],
         "paths": [
@@ -1684,8 +1684,8 @@
         "quoted": []
       },
       "matched": [
-        "SDelete.lnk",
         "sdelete.exe",
+        "SDelete.lnk",
         "SDelete.zip",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk"
       ],
@@ -1725,8 +1725,8 @@
           "2020-11-16T02:30:05Z"
         ],
         "filenames": [
-          "MRC.exe",
-          "svchost.exe"
+          "svchost.exe",
+          "MRC.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1773,8 +1773,8 @@
           "2020-11-16T02:31:13Z"
         ],
         "filenames": [
-          "MRC.exe",
-          "ntuser.dat"
+          "ntuser.dat",
+          "MRC.exe"
         ],
         "paths": [
           "\\C:\\Users\\fredr\\ntuser.dat"
@@ -1791,8 +1791,8 @@
       },
       "matched": [
         "2020-11-16T02:31:13Z",
-        "MRC.exe",
         "ntuser.dat",
+        "MRC.exe",
         "\\C:\\Users\\fredr\\ntuser.dat",
         "C:\\Users\\fredr\\ntuser.dat",
         "D:\\Tools\\MRC.exe"
@@ -1820,8 +1820,8 @@
       ],
       "tokens": {
         "pids": [
-          "29440",
-          "7464"
+          "7464",
+          "29440"
         ],
         "inodes": [],
         "ips": [],
@@ -1830,8 +1830,8 @@
           "2020-11-16T02:31:15Z"
         ],
         "filenames": [
-          "MRC.exe",
-          "explorer.exe"
+          "explorer.exe",
+          "MRC.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1842,12 +1842,12 @@
         "quoted": []
       },
       "matched": [
-        "29440",
         "7464",
+        "29440",
         "2020-11-11T08:13:41Z",
         "2020-11-16T02:31:15Z",
-        "MRC.exe",
-        "explorer.exe"
+        "explorer.exe",
+        "MRC.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1922,11 +1922,11 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "SearchApp.exe",
-          "Teams.exe",
-          "MsMpEng.exe",
           "dllhost.exe",
-          "LockApp.exe"
+          "LockApp.exe",
+          "MsMpEng.exe",
+          "SearchApp.exe",
+          "Teams.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1937,11 +1937,11 @@
         "quoted": []
       },
       "matched": [
-        "SearchApp.exe",
-        "Teams.exe",
-        "MsMpEng.exe",
         "dllhost.exe",
-        "LockApp.exe"
+        "LockApp.exe",
+        "MsMpEng.exe",
+        "SearchApp.exe",
+        "Teams.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -2407,8 +2407,8 @@
           "2020-11-16T02:31:15Z"
         ],
         "filenames": [
-          "MRC.exe",
-          "explorer.exe"
+          "explorer.exe",
+          "MRC.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -2421,8 +2421,8 @@
       "matched": [
         "29440",
         "2020-11-16T02:31:15Z",
-        "MRC.exe",
-        "explorer.exe"
+        "explorer.exe",
+        "MRC.exe"
       ],
       "missing": [],
       "negation_violations": [],

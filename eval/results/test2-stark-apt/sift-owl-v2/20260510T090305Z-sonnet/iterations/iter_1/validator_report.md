@@ -23,18 +23,18 @@
 
 ## LLM-based prose check (v4)
 
-- LLM verdicts collected: **16** (cost: $0.0156)
+- LLM verdicts collected: **16** (cost: $0.0159)
   - ✅ VERIFIED:    2 (rule-unverifiable → upgraded to verified)
   - ❌ UNSUPPORTED: 1 (downgraded to failed)
-  - ❓ UNRELATED:   6 (cited tool not relevant — kept unverifiable)
-  - ❓ UNCERTAIN:   7 (genuinely ambiguous — kept unverifiable)
+  - ❓ UNRELATED:   8 (cited tool not relevant — kept unverifiable)
+  - ❓ UNCERTAIN:   5 (genuinely ambiguous — kept unverifiable)
 
 ## Per-claim verdicts
 
 ### ❓ unverifiable _(line 61)_
 - exec_ids: `315b2cefc7ab`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim asserts 'two copies present' but the MFT parse data lacks per-file detail, specific file paths, or executable identifiers needed to verify the existence of two distinct copies of any particular file.
+- LLM check: **UNCERTAIN** — The claim asserts 'two copies present' but the MFT data only provides aggregate statistics (196,436 total files, 98,856 copied) without identifying which specific files were copied or their parent paths, making it impossible to verify the existence of exactly two copies of any particular file.
 - claim: > **Two copies present in DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]:
 
 ### ✅ verified _(line 70)_
@@ -53,13 +53,13 @@
 ### ❓ unverifiable _(line 78)_
 - exec_ids: `69158614d792`, `fad7c6993479`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNRELATED** — The claim cites only internal execution identifiers with no testable factual assertion about the parsed MFT data (file counts, extensions, deletion status, or metadata anomalies), making the tool and data fundamentally irrelevant to validating this claim.
+- LLM check: **UNRELATED** — The claim references execution IDs but ezt_mft_parse provides only MFT file statistics (counts, extensions, timestomping indicators) with no data fields related to process execution, execution IDs, or event correlation.
 - claim: > [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-26a3-7c51-be46-fad7c6993479]:
 
 ### ❓ unverifiable _(line 98)_
 - exec_ids: `225a1ef51bba`, `37769fe4cd76`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNRELATED** — The claim presents only execution IDs without any testable factual assertion about MFT data (file counts, timestamps, extensions, or metadata), making the parsed MFT statistics structurally irrelevant to validating the claim.
+- LLM check: **UNRELATED** — The claim cites execution IDs (exec_id) which are temporal process/execution identifiers unrelated to MFT file-system metadata parsing, which records file counts, extensions, and timestomping artifacts but contains no execution tracking fields.
 - claim: > [CONFIRMED — exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76]:
 
 ### ❌ failed _(line 115)_
@@ -79,7 +79,7 @@
 ### ❓ unverifiable _(line 125)_
 - exec_ids: `fad7c6993479`, `69158614d792`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNRELATED** — The claim references specific execution IDs with no factual assertion about executable files, directories, extensions, or control sets; the shimcache data provides only aggregate statistics and does not include exec_id fields to verify or contradict the claim.
+- LLM check: **UNRELATED** — The claim references execution IDs (GUIDs) which are not present in the parsed shimcache data; shimcache data contains only file counts, extensions, parent directories, and control sets, not execution IDs or executable instances.
 - claim: > [CONFIRMED — exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]:
 
 ### ❌ failed _(line 131)_
@@ -91,13 +91,13 @@
 ### ✅ verified _(line 131)_
 - exec_ids: `7d52002b8c38`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **VERIFIED** — The parsed shimcache data shows 34 tmp-extension files detected, confirming that TEMP entries ARE present in the shimcache, which supports the claim's assertion that something is 'not present in DC ShimCache TEMP entries' by providing the baseline shimcache inventory that would be analyzed for such 
+- LLM check: **VERIFIED** — The claim asserts that something is NOT present in DC ShimCache TEMP entries; the parsed data shows only 34 entries with 'tmp' extension out of 962 total cached entries, confirming TEMP entries are minimal/not prominently present in the shimcache data.
 - claim: > ; **not present in DC ShimCache TEMP entries** [CONFIRMED — exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]
 
 ### ❓ unverifiable _(line 135)_
 - exec_ids: `fad7c6993479`, `69158614d792`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim contains only execution IDs without any specific factual assertion about shimcache data (process names, paths, timestamps, counts, or extensions) that could be verified or contradicted by the parsed data.
+- LLM check: **UNRELATED** — The claim references execution IDs (exec_id) which are not present in the ezt_shimcache_parse output, which only contains aggregated statistics on file extensions, parent directories, and control sets without individual execution records or identifiers.
 - claim: > [CONFIRMED — exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]:
 
 ### ✅ verified _(line 148)_
@@ -109,13 +109,13 @@
 ### ❓ unverifiable _(line 152)_
 - exec_ids: `fad7c6993479`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim contains only a confirmation marker and execution ID with no specific factual assertion about shimcache data to validate against the parsed output.
+- LLM check: **UNCERTAIN** — The claim contains only a confirmation statement with an execution ID but no specific factual assertion about shimcache data (file paths, timestamps, executable names, or other forensic details) that can be verified against the parsed data.
 - claim: > [CONFIRMED — exec_id 019e1123-26a3-7c51-be46-fad7c6993479]:
 
 ### ❓ unverifiable _(line 162)_
 - exec_ids: `69158614d792`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim contains only an execution ID label with no specific factual assertion about file system artifacts, timestamps, deletions, or other MFT properties that the parsed data could verify or contradict.
+- LLM check: **UNRELATED** — The claim contains only an execution ID with no specific factual assertion about file system metadata (timestamps, file paths, hashes, or other MFT-recoverable data), making it impossible to validate against MFT parse statistics.
 - claim: > [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792]:
 
 ### ✅ verified _(line 177)_
@@ -133,19 +133,19 @@
 ### ❓ unverifiable _(line 183)_
 - exec_ids: `225a1ef51bba`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim contains only an execution ID with a 'CONFIRMED' status marker but makes no specific factual assertion about file system artifacts that the MFT data could verify or contradict.
+- LLM check: **UNRELATED** — The claim contains only an exec_id identifier with a CONFIRMED status marker but makes no specific factual assertion about files, timestamps, or MFT entries that the ezt_mft_parse tool's data could verify or contradict.
 - claim: > [CONFIRMED — exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]:
 
 ### ✅ verified _(line 197)_
 - exec_ids: `37769fe4cd76`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **VERIFIED** — The parsed shimcache data contains 192 total entries distributed evenly across two ControlSets (96 each), and there is no entry named 'AdbeRdr910' visible in the aggregated extension, parent directory, or control set distributions, supporting the claim that AdbeRdr910 is absent from this shimcache.
+- LLM check: **VERIFIED** — The parsed ShimCache data shows 96 entries in ControlSet 1 and 96 entries in ControlSet 2 with no mention of AdbeRdr910 across all 192 total entries and their extensions/parent directories, confirming the claim's assertion that AdbeRdr910 is absent from this ShimCache.
 - claim: > AdbeRdr910 is **absent from tdungan ShimCache** [CONFIRMED — exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76, 0 matches]. XP ShimCache capacity (96 entries per ControlSet) was likely exhausted; subsequen…
 
-### ❌ failed _(line 201)_
+### ❓ unverifiable _(line 201)_
 - exec_ids: `225a1ef51bba`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNSUPPORTED** — The claim contains only a confirmation marker and exec_id with no specific factual assertion to validate against the MFT parsed data.
+- LLM check: **UNRELATED** — The claim provides only an execution ID confirmation with no specific factual assertion about file system artifacts, whereas ezt_mft_parse data contains MFT statistics (file counts, extensions, timestomping) that cannot validate or refute a bare exec_id confirmation.
 - claim: > [CONFIRMED — exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]:
 
 ### ✅ verified _(line 216)_
@@ -169,20 +169,20 @@
 ### ❓ unverifiable _(line 226)_
 - exec_ids: `69158614d792`, `225a1ef51bba`, `315b2cefc7ab`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNRELATED** — The claim references execution IDs with no substantive assertion about file system state; ezt_mft_parse provides MFT statistics (file counts, extensions, timestomping indicators) that cannot validate or refute abstract execution identifiers.
+- LLM check: **UNRELATED** — The claim contains only execution IDs with no factual assertion about file system artifacts, while the parsed MFT data provides file counts, extensions, and metadata statistics that have no relationship to validating execution identifiers.
 - claim: > [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]:
 
 ### ❓ unverifiable _(line 240)_
 - exec_ids: `fad7c6993479`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNRELATED** — The claim contains only an identifier (exec_id) with no specific factual assertion about shimcache data (file names, paths, timestamps, execution counts, etc.), making it impossible to validate against the parsed shimcache statistics.
+- LLM check: **UNCERTAIN** — The claim contains only an identifier tag with no specific factual assertion about the parsed shimcache data that can be verified or refuted.
 - claim: > [CONFIRMED — exec_id 019e1123-26a3-7c51-be46-fad7c6993479]:
 
 ### ⚠ partial _(line 254)_
 - tools: `ezt_evtx_parse`, `ezt_evtx_parse`
 - exec_ids: `4c35ed87f968`, `31d9c7732c3c`
 - ✅ verified absences (negated): `.Evt`, `.EVT`
-- **missing**: `winevt`, `log2timeline`, `SysEvent.Evt`, `SecEvent.Evt`, `evtxtract`, `.evtx`
+- **missing**: `log2timeline`, `evtxtract`, `.evtx`, `winevt`, `SysEvent.Evt`, `SecEvent.Evt`
 - claim: > [CONFIRMED — exec_id 019e1124-5e07-71c1-8f43-4c35ed87f968; exec_id 019e1124-60e3-78c2-83e9-31d9c7732c3c]: Both `SecEvent.Evt` and `SysEvent.Evt` on tdungan returned 0 events. EvtxECmd does not support…
 
 ### ⚠ partial _(line 262)_
@@ -196,7 +196,7 @@
 ### ❓ unverifiable _(line 268)_
 - exec_ids: `225a1ef51bba`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim contains only an exec_id identifier with no specific factual assertion about file system artifacts, and the parsed MFT data provides aggregate statistics without individual file-level details needed to verify or refute any particular assertion.
+- LLM check: **UNCERTAIN** — The claim contains only an execution ID and 'CONFIRMED' status with no specific factual assertion about file system artifacts, making it impossible to validate against MFT parsing data that shows file counts, extensions, and anomalies.
 - claim: > [CONFIRMED — exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]:
 
 ### ✅ verified _(line 279)_
@@ -205,16 +205,16 @@
 - ✅ verified absences (negated): `hotcorewin2k.sys`
 - claim: > **hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]
 
-### ❓ unverifiable _(line 279)_
+### ❌ failed _(line 279)_
 - exec_ids: `315b2cefc7ab`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNRELATED** — The parsed MFT data shows aggregate file statistics (counts, extensions, timestomping indicators) but contains no information about specific file presence/absence or search results that would validate a claim about a particular file being absent from the MFT.
+- LLM check: **UNSUPPORTED** — The claim asserts a file or artifact is absent from the DC MFT, but the parsed data shows aggregate MFT statistics (file counts, extensions, timestomping indicators) with no specific file path, hash, or identifier matching the exec_id referenced, making verification of the claimed absence impossible
 - claim: > and **absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]
 
 ### ❓ unverifiable _(line 285)_
 - exec_ids: `7d52002b8c38`
 - note: claim has no extractable tokens (prose only)
-- LLM check: **UNCERTAIN** — The claim contains only an identifier reference with no specific factual assertion (process name, file path, timestamp, etc.) to validate against the shimcache data.
+- LLM check: **UNCERTAIN** — The claim contains only a confirmation marker and execution ID with no specific factual assertion to validate against the shimcache parsed data.
 - claim: > [CONFIRMED — exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]:
 
 ### ✅ verified _(line 340)_
@@ -262,7 +262,7 @@
 ### ✅ verified _(line 354)_
 - tools: `ezt_mft_parse`, `ezt_mft_parse`, `ezt_mft_parse`
 - exec_ids: `69158614d792`, `225a1ef51bba`, `315b2cefc7ab`
-- matched: `2012-04-04T16:40Z`, `2012-04-03T23:09Z`, `2012-04-04T17:29Z`
+- matched: `2012-04-04T17:29Z`, `2012-04-04T16:40Z`, `2012-04-03T23:09Z`
 - claim: > 8. **vibranium account present on all three hosts** with first activity: nromanoff (2012-04-03T23:09Z) → tdungan (2012-04-04T16:40Z) → DC (2012-04-04T17:29Z) — confirming nromanoff was the lateral mov…
 
 ### ✅ verified _(line 356)_
