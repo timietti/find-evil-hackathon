@@ -1,0 +1,1619 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v2/20260510T081103Z-sonnet/iterations/iter_3",
+    "total_claims": 47,
+    "confirmed_count": 36,
+    "inferred_count": 4,
+    "hypothesis_count": 0,
+    "gap_count": 7,
+    "other_count": 0,
+    "verified": 31,
+    "partial": 0,
+    "failed": 0,
+    "unverifiable": 5,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 0,
+    "confirmation_score": 0.861
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f1-fc74-7ba1-9cd4-56eb712b06e2",
+        "text": "[CONFIRMED \u2014 exec_id 019e10f1-fc74-7ba1-9cd4-56eb712b06e2, exec_id 019e10f1-ff4f-7d71-b106-2e25aa9a719c, exec_id 019e10f2-00de-71c3-9c71-2c0f865472a5, exec_id 019e10f2-02bb-7842-a5dd-efacda3f01c5]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f1-fc74-7ba1-9cd4-56eb712b06e2, exec_id 019e10f1-ff4f-7d71-b106-2e25aa9a719c, exec_id 019e10f2-00de-71c3-9c71-2c0f865472a5, exec_id 019e10f2-02bb-7842-a5dd-efacda3f01c5]",
+        "line_no": 49
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-80ec-7560-baf3-59dc487be0a4",
+        "text": "`adberdr813.exe` (Adobe Reader 8.1.3 trojanized installer) present at `Users/nromanoff/Downloads/adberdr813.exe` with NTFS Alternate Data Stream `:Zone.Identifier` confirming internet browser download. Windows Error Reporting crash report at `ProgramData/Microsoft/Windows/WER/ReportArchive/AppCrash_adberdr813.exe_4e6f6a6fc187a212f1b1b22f543c633f36ebbe_0cd92e4e/Report.wer` confirms the installer caused a crash-after-execution, characteristic of shellcode returning to a broken heap. [CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "line_no": 57
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "adberdr813.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          ":Zone.Identifier",
+          "adberdr813.exe",
+          "Users/nromanoff/Downloads/adberdr813.exe"
+        ]
+      },
+      "matched": [
+        "adberdr813.exe",
+        ":Zone.Identifier",
+        "Users/nromanoff/Downloads/adberdr813.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "`AdbeRdr910_en_US.exe` (Adobe Reader 9.1.0 trojanized installer) was delivered via Dropbox and logged in the Dropbox cache: `Documents and Settings/tdungan/My Documents/Dropbox/.dropbox.cache/2012-04-02/AdbeRdr910_en_US (deleted 4f799e4f-1980380-08f01636).exe`. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 61
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "AdbeRdr910_en_US.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "AdbeRdr910_en_US.exe"
+        ]
+      },
+      "matched": [
+        "AdbeRdr910_en_US.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "Prefetch `WINDOWS/Prefetch/ADBERDR910_EN_US.EXE-2CFF2AE5.pf` confirms execution of the trojanized installer. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 63
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "-2CFF2AE5.pf",
+          "ADBERDR910_EN_US.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "WINDOWS/Prefetch/ADBERDR910_EN_US.EXE-2CFF2AE5.pf"
+        ]
+      },
+      "matched": [
+        "-2CFF2AE5.pf",
+        "ADBERDR910_EN_US.EXE",
+        "WINDOWS/Prefetch/ADBERDR910_EN_US.EXE-2CFF2AE5.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "The `vibranium` domain account (SID: `S-1-5-21-2036804247-3058324640-2116585241-1673`) had an active RDP session on the DC at capture time (established from prior memory run). Disk confirms the vibranium profile exists on DC: `Users/vibranium/NTUSER.DAT` (inode 74541). [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "line_no": 75
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "74541"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "NTUSER.DAT"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "vibranium",
+          "S-1-5-21-2036804247-3058324640-2116585241-1673",
+          "Users/vibranium/NTUSER.DAT"
+        ]
+      },
+      "matched": [
+        "74541",
+        "NTUSER.DAT",
+        "vibranium",
+        "S-1-5-21-2036804247-3058324640-2116585241-1673",
+        "Users/vibranium/NTUSER.DAT"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f5-2af6-75c1-88ce-4cf3be7f7746",
+        "text": "`spinlock.exe` (SHA256: `6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead`, 2,271,885 bytes) deployed identically to **nromanoff** at `Windows/System32/spinlock.exe` (inode 60927) and to **tdungan** at `WINDOWS/system32/spinlock.exe` (inode 7793). PyInstaller-bundled binary confirmed by `_MEI` temp extraction directories containing `spinlock.exe.manifest` files on both hosts. [CONFIRMED \u2014 exec_id 019e10f5-2af6-75c1-88ce-4cf3be7f7746, exec_id 019e10f5-2dfb-7e52-906f-78b9e9842308, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f5-2af6-75c1-88ce-4cf3be7f7746, exec_id 019e10f5-2dfb-7e52-906f-78b9e9842308, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 79
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_icat_extract",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "7793",
+          "60927"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
+        ],
+        "quoted": [
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
+          "_MEI",
+          "spinlock.exe",
+          "WINDOWS/system32/spinlock.exe",
+          "Windows/System32/spinlock.exe",
+          "spinlock.exe.manifest"
+        ]
+      },
+      "matched": [
+        "7793",
+        "60927",
+        "spinlock.exe",
+        "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
+        "_MEI",
+        "WINDOWS/system32/spinlock.exe",
+        "Windows/System32/spinlock.exe",
+        "spinlock.exe.manifest"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f4-d113-7653-96a9-dcdae4929196",
+        "text": "`hydrakatz.exe` (SHA256: `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975`, 548,848 bytes) deployed identically to **nromanoff** at `Windows/System32/hydrakatz.exe` (inode 60958) and to **tdungan** at `WINDOWS/system32/hydrakatz.exe` (inode 4736). [CONFIRMED \u2014 exec_id 019e10f4-d113-7653-96a9-dcdae4929196, exec_id 019e10f4-d415-74b1-be65-c60439c821bf, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f4-d113-7653-96a9-dcdae4929196, exec_id 019e10f4-d415-74b1-be65-c60439c821bf, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 81
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_icat_extract",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "60958",
+          "4736"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "hydrakatz.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
+        ],
+        "quoted": [
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+          "WINDOWS/system32/hydrakatz.exe",
+          "Windows/System32/hydrakatz.exe",
+          "hydrakatz.exe"
+        ]
+      },
+      "matched": [
+        "60958",
+        "4736",
+        "hydrakatz.exe",
+        "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+        "WINDOWS/system32/hydrakatz.exe",
+        "Windows/System32/hydrakatz.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-80ec-7560-baf3-59dc487be0a4",
+        "text": "`Windows/Prefetch/PSEXESVC.EXE-51BA46F2.pf` on nromanoff confirms the PSExec service binary was executed on this host. [CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "line_no": 85
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "PSEXESVC.EXE",
+          "-51BA46F2.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Windows/Prefetch/PSEXESVC.EXE-51BA46F2.pf"
+        ]
+      },
+      "matched": [
+        "PSEXESVC.EXE",
+        "-51BA46F2.pf",
+        "Windows/Prefetch/PSEXESVC.EXE-51BA46F2.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-80ec-7560-baf3-59dc487be0a4",
+        "text": "The vibranium domain account's `Temp` directory contains `a.exe` on both **nromanoff** (`Users/vibranium/AppData/Local/Temp/a.exe`) and **tdungan** (`Documents and Settings/vibranium/Local Settings/Temp/a.exe`), confirming hands-on attacker sessions under this account on both workstations. [CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 91
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Temp",
+          "a.exe",
+          "Documents and Settings/vibranium/Local Settings/Temp/a.exe",
+          "Users/vibranium/AppData/Local/Temp/a.exe"
+        ]
+      },
+      "matched": [
+        "a.exe",
+        "Temp",
+        "Documents and Settings/vibranium/Local Settings/Temp/a.exe",
+        "Users/vibranium/AppData/Local/Temp/a.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-80ec-7560-baf3-59dc487be0a4",
+        "text": "Profiles present on nromanoff: `nromanoff`, `rsydow`, `SRL-Helpdesk`, `Tdungan`, `vibranium` \u2014 all as interactive logins. This breadth indicates successful credential harvest and reuse across the domain. [CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "line_no": 95
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Tdungan",
+          "rsydow",
+          "nromanoff",
+          "SRL-Helpdesk",
+          "vibranium"
+        ]
+      },
+      "matched": [
+        "Tdungan",
+        "rsydow",
+        "nromanoff",
+        "SRL-Helpdesk",
+        "vibranium"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "`Users/tdungan/NTUSER.DAT` (inode 58544) is present on the DC disk, proving tdungan authenticated to the Domain Controller post-compromise. [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "line_no": 99
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "58544"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "NTUSER.DAT"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/tdungan/NTUSER.DAT"
+        ]
+      },
+      "matched": [
+        "58544",
+        "NTUSER.DAT",
+        "Users/tdungan/NTUSER.DAT"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-00de-71c3-9c71-2c0f865472a5",
+        "text": "No attack tools, no vibranium profile, no suspicious binaries found on nfury. [CONFIRMED \u2014 exec_id 019e10f2-00de-71c3-9c71-2c0f865472a5 (negative finding)]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-00de-71c3-9c71-2c0f865472a5 (negative finding)]",
+        "line_no": 103
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]",
+        "line_no": 115
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10fa-e7bf-7e33-8377-aff5c2a65f83",
+        "text": "The System32 copy is the live C2 implant. DC netscan confirms three simultaneous ESTABLISHED TCPv4 connections from `usboesrv.exe` (PID 27304) to foreign address `96.255.98.154`, foreign port `29932` (local ports 58495, 58496, and 58497). [CONFIRMED \u2014 exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83, exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83, exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]",
+        "line_no": 117
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "tsk_fls_list",
+        "tsk_icat_extract"
+      ],
+      "tokens": {
+        "pids": [
+          "27304"
+        ],
+        "inodes": [],
+        "ips": [
+          "96.255.98.154"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "96.255.98.154",
+          "29932",
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "27304",
+        "96.255.98.154",
+        "usboesrv.exe",
+        "29932"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "Installer chain: `SharedFolders/Public/Security Tools/usb-over-ethernet.zip` \u2192 extracted by `rsydow` to `Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/` \u2192 `setup.exe` from the zip installed `usboesrv.exe` into System32 as a service. [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]",
+        "line_no": 119
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list",
+        "tsk_icat_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usb-over-ethernet.zip",
+          "setup.exe",
+          "Temp1_usb-over-ethernet.zip",
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
+          "usboesrv.exe",
+          "rsydow",
+          "setup.exe",
+          "SharedFolders/Public/Security Tools/usb-over-ethernet.zip"
+        ]
+      },
+      "matched": [
+        "usb-over-ethernet.zip",
+        "setup.exe",
+        "Temp1_usb-over-ethernet.zip",
+        "usboesrv.exe",
+        "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
+        "rsydow",
+        "SharedFolders/Public/Security Tools/usb-over-ethernet.zip"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f5-2af6-75c1-88ce-4cf3be7f7746",
+        "text": "`Windows/System32/spinlock.exe` (inode 60927) on nromanoff and `WINDOWS/system32/spinlock.exe` (inode 7793) on tdungan are present on disk. PyInstaller-bundled binary confirmed by `_MEI` temp extraction directories containing `spinlock.exe.manifest` files on both hosts. [CONFIRMED \u2014 exec_id 019e10f5-2af6-75c1-88ce-4cf3be7f7746, exec_id 019e10f5-2dfb-7e52-906f-78b9e9842308, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f5-2af6-75c1-88ce-4cf3be7f7746, exec_id 019e10f5-2dfb-7e52-906f-78b9e9842308, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 123
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_icat_extract",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "7793",
+          "60927"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "WINDOWS/system32/spinlock.exe",
+          "_MEI",
+          "spinlock.exe.manifest",
+          "Windows/System32/spinlock.exe"
+        ]
+      },
+      "matched": [
+        "7793",
+        "60927",
+        "spinlock.exe",
+        "WINDOWS/system32/spinlock.exe",
+        "_MEI",
+        "spinlock.exe.manifest",
+        "Windows/System32/spinlock.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "On DC, spinlock.exe was sdeleted. WER crash artifacts survive at `ProgramData/Microsoft/Windows/WER/ReportQueue/NonCritical_spinlock.exe_f55bbffa8ebc6a99e6cbf535420484d134edcb1_cab_436b9004/Report.wer`, confirming prior execution on DC. [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "line_no": 125
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "spinlock.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f4-d113-7653-96a9-dcdae4929196",
+        "text": "Deployed to `Windows/System32/hydrakatz.exe` on nromanoff (inode 60958) and `WINDOWS/system32/hydrakatz.exe` on tdungan (inode 4736). Identical SHA256 `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975` across both hosts. Prefetch `HYDRAKATZ.EXE-A0DADA85.pf` (nromanoff) and `HYDRAKATZ.EXE-27B49502.pf` (tdungan) confirm execution on both. [CONFIRMED \u2014 exec_id 019e10f4-d113-7653-96a9-dcdae4929196, exec_id 019e10f4-d415-74b1-be65-c60439c821bf, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f4-d113-7653-96a9-dcdae4929196, exec_id 019e10f4-d415-74b1-be65-c60439c821bf, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 129
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_icat_extract",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "60958",
+          "4736"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "-27B49502.pf",
+          "-A0DADA85.pf",
+          "HYDRAKATZ.EXE",
+          "hydrakatz.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
+        ],
+        "quoted": [
+          "WINDOWS/system32/hydrakatz.exe",
+          "HYDRAKATZ.EXE-A0DADA85.pf",
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+          "Windows/System32/hydrakatz.exe",
+          "HYDRAKATZ.EXE-27B49502.pf"
+        ]
+      },
+      "matched": [
+        "60958",
+        "4736",
+        "-27B49502.pf",
+        "-A0DADA85.pf",
+        "HYDRAKATZ.EXE",
+        "hydrakatz.exe",
+        "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+        "WINDOWS/system32/hydrakatz.exe",
+        "HYDRAKATZ.EXE-A0DADA85.pf",
+        "Windows/System32/hydrakatz.exe",
+        "HYDRAKATZ.EXE-27B49502.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f4-d725-7d91-a681-577d551822de",
+        "text": "`Windows/TopLZAGU.exe` (inode 9628) on nromanoff is located in the Windows root directory, outside the standard System32 location used by legitimate OS components. SHA256: `0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9`, 15,872 bytes. Prefetch `TOPLZAGU.EXE-4EFD8FD3.pf` confirms execution. [CONFIRMED \u2014 exec_id 019e10f4-d725-7d91-a681-577d551822de, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f4-d725-7d91-a681-577d551822de, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "line_no": 133
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "9628"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "TOPLZAGU.EXE",
+          "-4EFD8FD3.pf",
+          "TopLZAGU.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9"
+        ],
+        "quoted": [
+          "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9",
+          "Windows/TopLZAGU.exe",
+          "TOPLZAGU.EXE-4EFD8FD3.pf"
+        ]
+      },
+      "matched": [
+        "9628",
+        "TOPLZAGU.EXE",
+        "-4EFD8FD3.pf",
+        "TopLZAGU.exe",
+        "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9",
+        "Windows/TopLZAGU.exe",
+        "TOPLZAGU.EXE-4EFD8FD3.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f6-54bc-7c13-b6ad-b986e0ebbf12",
+        "text": "`WINDOWS/system32/hyvy.exe` (inode 5237) on tdungan has a Zone.Identifier ADS confirming it was downloaded from the internet. SHA256: `5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232`, 2,277,805 bytes (similar size to spinlock.exe, suggesting another PyInstaller bundle). Prefetch `HYVY.EXE-2A94EF14.pf` confirms execution. [CONFIRMED \u2014 exec_id 019e10f6-54bc-7c13-b6ad-b986e0ebbf12, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f6-54bc-7c13-b6ad-b986e0ebbf12, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 137
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "5237"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe",
+          "HYVY.EXE",
+          "hyvy.exe",
+          "-2A94EF14.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232"
+        ],
+        "quoted": [
+          "WINDOWS/system32/hyvy.exe",
+          "HYVY.EXE-2A94EF14.pf",
+          "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232"
+        ]
+      },
+      "matched": [
+        "5237",
+        "spinlock.exe",
+        "HYVY.EXE",
+        "hyvy.exe",
+        "-2A94EF14.pf",
+        "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232",
+        "WINDOWS/system32/hyvy.exe",
+        "HYVY.EXE-2A94EF14.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f6-514c-7050-ab00-4aad78c0091c",
+        "text": "On tdungan, `a.exe` (9,216 bytes, SHA256: `598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec`) executed under four user accounts: RSydow, SRL-Helpdesk, tdungan, and vibranium (each has an instance in their Temp directory). Multiple Prefetch entries confirm repeated execution. On nromanoff, `a.exe` present in `Users/vibranium/AppData/Local/Temp/`. [CONFIRMED \u2014 exec_id 019e10f6-514c-7050-ab00-4aad78c0091c, exec_id 019e10f2-bedf-7473-9710-d40d5706591a, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f6-514c-7050-ab00-4aad78c0091c, exec_id 019e10f2-bedf-7473-9710-d40d5706591a, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4]",
+        "line_no": 141
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec"
+        ],
+        "quoted": [
+          "Users/vibranium/AppData/Local/Temp/",
+          "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
+          "a.exe"
+        ]
+      },
+      "matched": [
+        "a.exe",
+        "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
+        "Users/vibranium/AppData/Local/Temp/"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "`Documents and Settings/tdungan/Local Settings/Temp/pkxezy1tji98.exe` (inode 3019). Random alphanumeric filename is a classic malware staging pattern. Prefetch confirms execution. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 145
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "3019"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "pkxezy1tji98.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Documents and Settings/tdungan/Local Settings/Temp/pkxezy1tji98.exe"
+        ]
+      },
+      "matched": [
+        "3019",
+        "pkxezy1tji98.exe",
+        "Documents and Settings/tdungan/Local Settings/Temp/pkxezy1tji98.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "`SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe` present on DC shared network location, available to all domain hosts. This tool accounts for sdeleted spinlock.exe and other cleaned artifacts. [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "line_no": 149
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe",
+          "bcwipe5.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe"
+        ]
+      },
+      "matched": [
+        "spinlock.exe",
+        "bcwipe5.exe",
+        "SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "No attacker binaries found in user Startup folders on DC, nromanoff, or tdungan. Persistence for `usboesrv.exe` was via service registration (confirmed in prior memory run via svcscan). [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b (negative finding)]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b (negative finding)]",
+        "line_no": 153
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "usboesrv.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 173
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "`Documents and Settings/tdungan/My Documents/Backstopped Accounts - R&D Costs Alloy Research/Credit-Card-Numbers-For-Research.xls` and `CC-Backstopped-Accounts.xlsx` are present on tdungan's disk. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 177
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "CC-Backstopped-Accounts.xlsx",
+          "Credit-Card-Numbers-For-Research.xls"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          " and "
+        ]
+      },
+      "matched": [
+        "CC-Backstopped-Accounts.xlsx",
+        "Credit-Card-Numbers-For-Research.xls",
+        " and "
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "`Credit-Card-Numbers-For-Research.xlsx` is additionally present at `Documents and Settings/tdungan/Local Settings/Temporary Internet Files/Content.Outlook/CNGZG4QC/`, the standard Office email attachment cache path. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 179
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Credit-Card-Numbers-For-Research.xlsx"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Credit-Card-Numbers-For-Research.xlsx"
+        ]
+      },
+      "matched": [
+        "Credit-Card-Numbers-For-Research.xlsx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "Dropbox installed at `Documents and Settings/tdungan/Application Data/Dropbox/`. The attacker staged `Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx` in the Dropbox sync folder for cloud exfiltration. `CCleaner.exe` was also delivered via Dropbox (anti-forensics). `DROPBOX.EXE-126FAE33.pf` confirms repeated Dropbox execution. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 185
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "CCleaner.exe",
+          "Labs.docx",
+          "DROPBOX.EXE",
+          "-126FAE33.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "CCleaner.exe",
+          "Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx",
+          "Documents and Settings/tdungan/Application Data/Dropbox/",
+          "DROPBOX.EXE-126FAE33.pf"
+        ]
+      },
+      "matched": [
+        "CCleaner.exe",
+        "Labs.docx",
+        "DROPBOX.EXE",
+        "-126FAE33.pf",
+        "Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx",
+        "Documents and Settings/tdungan/Application Data/Dropbox/",
+        "DROPBOX.EXE-126FAE33.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "`WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf` on tdungan \u2014 file archiver executed (binary sdeleted, Prefetch survives). `WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf` on tdungan \u2014 Windows native FTP client executed, consistent with direct transfer to attacker infrastructure. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 189
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "-0FFFB5A3.pf",
+          "ZIPPER.EXE",
+          "-2C9C69B1.pf",
+          "FTP.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf",
+          "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf"
+        ]
+      },
+      "matched": [
+        "-0FFFB5A3.pf",
+        "ZIPPER.EXE",
+        "-2C9C69B1.pf",
+        "FTP.EXE",
+        "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf",
+        "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10fa-e7bf-7e33-8377-aff5c2a65f83",
+        "text": "`usboesrv.exe` on DC maintained three simultaneous persistent TCP connections to foreign address `96.255.98.154`, foreign port `29932` (ESTABLISHED at capture time, PID 27304, local ports 58495, 58496, 58497). [CONFIRMED \u2014 exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83]",
+        "line_no": 193
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "27304"
+        ],
+        "inodes": [],
+        "ips": [
+          "96.255.98.154"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "96.255.98.154",
+          "29932",
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "27304",
+        "96.255.98.154",
+        "usboesrv.exe",
+        "29932"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a, exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a, exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83]",
+        "line_no": 212
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "SID `S-1-5-21-2036804247-3058324640-2116585241-1673`. DPAPI Protect keys on DC and on tdungan at `Documents and Settings/vibranium/Application Data/Microsoft/Protect/`. Interactive sessions confirmed on DC (RDP), nromanoff (`a.exe` in Temp), and tdungan (Office documents accessed, Recent LNKs). [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 220
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "a.exe",
+          "S-1-5-21-2036804247-3058324640-2116585241-1673",
+          "Documents and Settings/vibranium/Application Data/Microsoft/Protect/"
+        ]
+      },
+      "matched": [
+        "a.exe",
+        "S-1-5-21-2036804247-3058324640-2116585241-1673",
+        "Documents and Settings/vibranium/Application Data/Microsoft/Protect/"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f4-d113-7653-96a9-dcdae4929196",
+        "text": "`Windows/System32/hydrakatz.exe` on nromanoff (inode 60958) and `WINDOWS/system32/hydrakatz.exe` on tdungan (inode 4736), identical SHA256 `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975`. Credentials harvested from these workstations would include domain credentials cached in LSASS across both hosts. [CONFIRMED \u2014 exec_id 019e10f4-d113-7653-96a9-dcdae4929196, exec_id 019e10f4-d415-74b1-be65-c60439c821bf, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f4-d113-7653-96a9-dcdae4929196, exec_id 019e10f4-d415-74b1-be65-c60439c821bf, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 224
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_icat_extract",
+        "tsk_fls_list",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "60958",
+          "4736"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "hydrakatz.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
+        ],
+        "quoted": [
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+          "WINDOWS/system32/hydrakatz.exe",
+          "Windows/System32/hydrakatz.exe"
+        ]
+      },
+      "matched": [
+        "60958",
+        "4736",
+        "hydrakatz.exe",
+        "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+        "WINDOWS/system32/hydrakatz.exe",
+        "Windows/System32/hydrakatz.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "rsydow has a credentials cache on DC at `Users/rsydow/AppData/Local/Microsoft/Credentials/2438F9B04D7CF823C0B0BAB39930CD27` (inode confirmed in DC fls). [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "line_no": 228
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "2438F9B04D7CF823C0B0BAB39930CD27"
+        ],
+        "quoted": []
+      },
+      "matched": [
+        "2438F9B04D7CF823C0B0BAB39930CD27"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-232c-7363-b17c-e9e4fe2b1f8b",
+        "text": "An RDP bitmap cache exists on DC at `Users/rsydow/AppData/Local/Microsoft/Terminal Server Client/Cache/bcache22.bmc` (inode 73939), indicating RDP connections were made from the DC under rsydow's account. [CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b]",
+        "line_no": 230
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "73939"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/rsydow/AppData/Local/Microsoft/Terminal Server Client/Cache/bcache22.bmc"
+        ]
+      },
+      "matched": [
+        "73939",
+        "Users/rsydow/AppData/Local/Microsoft/Terminal Server Client/Cache/bcache22.bmc"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10f2-bedf-7473-9710-d40d5706591a",
+        "text": "Both accounts have `a.exe` in their Temp directories on the tdungan machine, confirming the attacker executed tools under those account contexts. [CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e10f2-bedf-7473-9710-d40d5706591a]",
+        "line_no": 234
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "a.exe"
+        ]
+      },
+      "matched": [
+        "a.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    }
+  ]
+}
