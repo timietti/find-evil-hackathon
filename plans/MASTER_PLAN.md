@@ -1,10 +1,26 @@
 # FIND EVIL! — Master Plan
 
 **Hackathon:** FIND EVIL! (SANS / Devpost)
-**Deadline:** 2026-06-15 23:45 EDT (≈ 5.5 weeks from 2026-05-08)
+**Deadline:** 2026-06-15 23:45 EDT
 **Prize pool:** $22,000 ($10K first)
-**Repo:** `/home/sansforensics/Tools/find-evil-hackathon` (public, MIT/Apache-2.0 required)
+**Repo:** `/home/sansforensics/Tools/find-evil-hackathon` (public, MIT)
 **Author:** miettinen.timo@gmail.com
+
+---
+
+## 0. Status snapshot (2026-05-10)
+
+| Track | Status |
+|---|---|
+| MCP server | **20 typed read-only tools** (9 vol3 + 6 disk + 4 EZ Tools + query_rows). 173 unit tests green. |
+| Agents | v0 / v1 single-pass + **v2 self-correction loop** all shipped under `eval/agents/`. |
+| Validator | v0..v4 shipped. v4 adds LLM-based prose check (Haiku 4.5; opt-in via `--llm-check`). |
+| Datasets | ROCBA-001 + STARK-APT-001 in active dev. **SHIELDBASE held out** for the final eval. |
+| Headline accuracy | ROCBA v2 loop iter 3 = **91.7% strict-verified** (v4 validator). STARK-APT v2 loop iter 3 = 86.1%. |
+| Baselines | Protocol SIFT baselines: ROCBA done (31% verified). STARK-APT *in progress 2026-05-10*. SHIELDBASE runs in held-out session. |
+| Architecturally enforced | TB1-TB5 architectural; TB6/TB7 hybrid (rule-based + LLM). See `docs/ARCHITECTURE.md`. |
+
+**Remaining work:** AmcacheParser shipped (W3-15). Next: SHIELDBASE final eval → aggregate accuracy report → architecture SVG → Devpost submission → demo video.
 
 ---
 
@@ -230,24 +246,28 @@ What W2 explicitly deferred to W2.5 / W3:
 - `vol3_handles` / `vol3_dlllist` / per-PID-filtered variants of psscan/cmdline.
 - Spoliation pytest that exercises a full agent run end-to-end (deferred until orchestrator lands).
 
-### Week 3 (May 22 – May 28) — Multi-Agent Orchestrator
-- Pick framework: **LangGraph** (best fit — explicit state machine, easy termination conditions, plays well with MCP). Fallback: hand-rolled async loop.
-- Implement orchestrator + 3 specialist agents (memory, disk, timeline). Defer Windows-arts agent and network agent to W4 if timing slips.
-- A2A message log: `audit/agent_msgs.jsonl` — `{ts, from, to, type, content_hash, tokens_in, tokens_out}`.
-- Hard caps: max iterations per agent (8), max wall-clock per case (15 min for v1), max tokens per agent (200K).
+### Week 3 (May 22 – May 28) — Self-correction + disk side ✅ done early (May 9-10)
 
-### Week 4 (May 29 – June 4) — Self-Correction & Cross-Source Correlation
-- **Hallucination detector:** post-hoc validator that scans every "confirmed" finding in the report and verifies the cited `execution_id` exists *and* its parsed output supports the claim (regex or structured-field check). Failures get demoted to "inference" or rejected.
-- **Cross-source correlator:** dedicated pass — for each suspicious process found in memory, check disk artifacts (prefetch / amcache / MFT) for corroboration; flag mismatches.
-- **Persistent learning loop:** orchestrator reads previous iteration's `audit/iteration_N.json`, identifies gaps (e.g. "prefetch checked but no amcache cross-ref"), and rewrites its plan for iteration N+1. Cap: 3 iterations.
-- Begin accuracy benchmarking on synthetic ground-truth case.
+**Pivoted from LangGraph to direct Claude Code subprocess.** A self-correction loop with direct subprocess invocation, validator feedback, and shared audit dir across iterations proved simpler and at least as capable as a LangGraph state machine. Shipped:
 
-### Week 5 (June 5 – June 11) — Hardening & Benchmarking
-- Run full pipeline on 3 cases: known-truth synthetic, public CTF, primary Protocol-SIFT case.
-- Compute metrics: precision, recall, hallucination rate (vs. baseline Protocol SIFT).
-- Spoliation test must pass on all 3 cases.
-- Write `ACCURACY_REPORT.md` with numbers, FPs, misses, and a "what happens when guardrails fail" section.
-- `README.md` + `INSTALL.md` polished.
+- 6 disk-side MCP fns (TSK + EWF) — `tsk_partition_table`, `tsk_fs_stat`, `tsk_fls_list`, `tsk_icat_extract`, `ewf_info`, `ewf_verify`.
+- 4 EZ Tools wrappers — `ezt_mft_parse`, `ezt_shimcache_parse`, `ezt_evtx_parse`, `ezt_amcache_parse`. All take `extract_exec_id` (not paths) — TB4.
+- Validator v0..v4. v4 ships LLM-based prose check (Haiku 4.5) for unverifiable claims; opt-in via `--llm-check`, ~$0.01 per validator pass.
+- `eval/agents/sift_owl_v2/run_loop.py` — N-iteration self-correction loop with budget split and validator-flagged-claims feedback.
+- Two cases run through the full v2 loop with measurable convergence: ROCBA-001 (3.8% → 48.3% → 90.0% → **91.7%** across v0→v4), STARK-APT-001 (86.1% with 0 partial, 0 failed).
+
+A2A specialist messaging deferred: single agent per iteration was sufficient.
+
+### Week 4 (May 29 – June 4) — Held-out final eval + polish (in progress)
+- Run SIFT-OWL v2 loop on **SHIELDBASE** (held-out, single shot, ~$25-50 budget).
+- Aggregate accuracy report (`docs/ACCURACY_REPORT.md`).
+- Architecture diagram SVG.
+- Devpost submission text.
+
+### Week 5 (June 5 – June 11) — Demo + final polish
+- Record 5-min screencast around the **91.7% ROCBA v2 loop** result + an iter-3 surgical-fix moment.
+- Final dry-run of INSTALL.md / README.md from a clean shell.
+- Submission upload to Devpost.
 
 ### Polish (June 12 – June 14)
 - Record demo video. Plan the 5 minutes:

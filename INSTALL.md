@@ -6,12 +6,12 @@
 
 | Requirement | Notes |
 |---|---|
-| SANS SIFT Workstation | Volatility 3, Sleuth Kit, EZ Tools, Plaso, YARA, bulk_extractor pre-installed at SIFT-default paths |
+| SANS SIFT Workstation | Volatility 3, Sleuth Kit, EWF tools, EZ Tools, Plaso, YARA, bulk_extractor pre-installed at SIFT-default paths |
 | Python 3.12+ | `python3 --version` |
-| Anthropic API key | `export ANTHROPIC_API_KEY=...` |
-| Disk space | ≥ 5 GB free in `./analysis/` for one full run on a typical SRL-sized case |
-
-If you have not already installed Protocol SIFT (baseline), this submission is independent — install it only if you want to run the baseline for comparison.
+| Claude Code CLI | `claude --version` — the agent harness invokes `claude -p ...` |
+| .NET 6 runtime | `dotnet --info` — EZ Tools require it |
+| Anthropic API key | `export ANTHROPIC_API_KEY=...` (only needed for the validator's `--llm-check` mode) |
+| Disk space | ≥ 5 GB free under `audit/` for one full multi-host run |
 
 ## Install
 
@@ -20,49 +20,68 @@ git clone https://github.com/timietti/find-evil-hackathon.git
 cd find-evil-hackathon
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
+
+# Sanity-check the install
+sift-mcp inspect           # prints the 20-tool MCP inventory
+pytest -x --deselect tests/test_disk_e2e.py \
+          --deselect tests/test_vol3_memory_e2e.py \
+          --deselect tests/test_ez_tools_e2e.py
 ```
+
+The slow E2E tests under the `--deselect` flags require real evidence images. Skip them on first install; run the full suite once you have a case dir.
 
 ## Run on a case
 
-The agent expects a case directory containing one or more E01 disk images and/or one memory image. It writes all output under `./<case>/analysis/`, `./<case>/exports/`, and `./<case>/reports/` — never to evidence files.
+SIFT-OWL ships three evaluation harnesses; the canonical one is the **v2 self-correction loop** under `eval/agents/sift_owl_v2/`. It expects a case definition in `eval/cases/<case_id>/case.yaml` describing evidence paths and SHA-256 hashes.
 
 ```bash
-export ANTHROPIC_API_KEY=...
+export ANTHROPIC_API_KEY=...   # required only if you want --llm-check
 
-# 1. Verify image integrity (MUST pass before agent starts)
-ewfverify /cases/<CASENAME>/*.E01
+# Run a 3-iteration self-correction loop on the bundled ROCBA case
+python -m eval.agents.sift_owl_v2.run_loop \
+    --case rocba-001 \
+    --prompt-file prompt.md \
+    --model sonnet \
+    --max-budget-usd 5 \
+    --max-iterations 3
 
-# 2. Launch the agent (default: 3 iterations, 15-min wall-clock cap)
-sift-owl --case /cases/<CASENAME>
-
-# 3. Inspect the audit trail
-cat /cases/<CASENAME>/audit/exec_log.jsonl   | jq .
-cat /cases/<CASENAME>/audit/agent_msgs.jsonl | jq .
-
-# 4. Final report
-ls /cases/<CASENAME>/reports/
+# Output:
+#   eval/results/rocba-001/sift-owl-v2/<run_id>/
+#     iterations/iter_{1,2,3}/
+#       final_response.md         ← agent's report this iteration
+#       transcript.jsonl          ← raw stream-json (gitignored)
+#       validator_report.{md,json}← per-claim verdicts + score
+#     audit/
+#       exec_log.jsonl            ← shared across all iterations
+#       raw/                      ← raw per-call outputs
 ```
 
-## Verify evidence was not modified
+Available case IDs (under `eval/cases/`):
+
+- `rocba-001` — single Win10 host, 18 GB memory image (Fred Rocba IP theft scenario)
+- `test2-stark-apt` — 4-host APT case, 58 GB (DC + 2 Win7 + XP)
+- `test3-shieldbase` — 15-host CRIMSON OSPREY (held out for final eval)
+
+## Validate any prior run
+
+The validator is a standalone CLI (`sift-validate`) that reads an audit dir + `final_response.md` and emits per-claim verdicts:
 
 ```bash
-# Original hashes (recorded at session start)
-cat /cases/<CASENAME>/audit/evidence_hashes.json
+sift-validate --run-dir eval/results/rocba-001/sift-owl-v2/<run_id>/iterations/iter_3
 
-# Re-hash and diff
-sift-owl verify-spoliation --case /cases/<CASENAME>
+# Add LLM prose-check for unverifiable claims (~$0.01/run)
+sift-validate --llm-check --llm-max-calls 30 \
+    --run-dir eval/results/rocba-001/sift-owl-v2/<run_id>/iterations/iter_3
 ```
 
-If the agent ever produces a non-empty diff, that is a critical finding — open an issue.
+## Architectural enforcement
 
-## Architectural enforcement (what the MCP server prevents)
+The `sift-mcp` server exposes typed read-only forensic functions only. The agent on the other end of the wire has no shell. This means an LLM cannot:
 
-The `sift-mcp` server exposes typed read-only forensic functions only. The orchestrator and sub-agents have no shell access. This means an LLM cannot:
-
-- delete, overwrite, or rename evidence files,
-- mount evidence read-write (all mounts are forced `ro,noatime,noexec` by the server),
-- exfiltrate evidence (no network egress tools exposed),
-- run arbitrary binaries.
+- delete, overwrite, or rename evidence files
+- read/write arbitrary filesystem paths (only `extract_exec_id` references are accepted by EZ Tools)
+- exfiltrate evidence (no network egress tools exposed)
+- run arbitrary binaries (subprocess invocations are argv-list, never `shell=True`)
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full trust-boundary table.
 
@@ -70,7 +89,9 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full trust-boundary t
 
 | Symptom | Fix |
 |---|---|
-| `volatility3 symbols not found` | First run downloads Microsoft PDB symbols; ensure outbound HTTPS to `downloads.volatilityfoundation.org`, or pre-populate `/opt/volatility3-2.20.0/volatility3/symbols/windows/` |
-| `dotnet: command not found` | EZ Tools require `dotnet` runtime v6 — `apt install dotnet-runtime-6.0` |
-| `permission denied` mounting EWF | The MCP server uses `sudo` for mount operations; ensure the running user is in `sudoers` for `mount`, `umount`, `ewfmount` |
-| Long wall-clock on large memory images | Default cap is 15 min; bump with `--wall-clock-min 30` |
+| `volatility3 symbols not found` | First run downloads Microsoft PDB symbols; ensure outbound HTTPS to `downloads.volatilityfoundation.org`, or pre-populate `~/.cache/volatility3/`. Win7-x86 PAE PDBs are NOT auto-downloadable — the agent flags `[GAP]` for those memory images and proceeds with disk-side analysis. |
+| `dotnet: command not found` | EZ Tools require `dotnet` runtime v6 — `apt install dotnet-runtime-6.0`. |
+| `vol not on PATH` | The wrapper looks up `vol` via `$PATH`. Override with `SIFT_OWL_VOL3_BIN=/path/to/vol`. |
+| `MCP tool result overflow` | Each row-emitting tool truncates to 50 rows at the wire; use `query_rows(<exec_id>, filter_field, filter_value, limit, offset)` to drill into the full row list (preserved on disk). |
+| Long wall-clock on large memory images | Default `--max-turns-per-iter 120`; bump for cases with many hosts. |
+| `ANTHROPIC_API_KEY` not set | Required only for the validator's `--llm-check` flag and v4 prose check. Without it, the validator runs purely rule-based. |

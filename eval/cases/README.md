@@ -60,8 +60,12 @@ eval/results/<case_id>/<harness>/<run_id>/
     └── raw/           ← raw subprocess outputs (gitignored — bulky)
 ```
 
-Three harnesses live under `eval/baselines/` and `eval/agents/`:
+Four harnesses live under `eval/baselines/` and `eval/agents/`:
 
 - `baselines/protocol_sift/` — vanilla Claude Code with Bash unrestricted
-- `agents/sift_owl_v0/` — MCP-only with no rehydration
-- `agents/sift_owl_v1/` — MCP-only with truncate + query_rows drill
+- `agents/sift_owl_v0/` — MCP-only single pass, no rehydration (early v0)
+- `agents/sift_owl_v1/` — MCP-only single pass with truncate + query_rows drill
+- `agents/sift_owl_v2/` — **Self-correction loop**: MCP + validator feedback in
+  the next iteration's prompt. Shared audit dir across iterations so iter N+1
+  can `query_rows` on iter N's exec_ids. Canonical harness for the SHIELDBASE
+  final eval.

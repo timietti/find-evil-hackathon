@@ -6,27 +6,51 @@
 
 ## Status
 
-🚧 Under active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the full strategy and weekly milestones.
+Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the strategy and weekly milestones.
 
-### What's working today
+### What ships today
 
-- **`sift-mcp`** — FastMCP stdio server with 9 typed read-only memory-forensics functions (`vol3_image_info`, `vol3_psscan`, `vol3_pstree`, `vol3_cmdline`, `vol3_netscan`, `vol3_filescan`, `vol3_malfind`, `vol3_svcscan`, `vol3_userassist`). Any MCP client (Claude Code, custom agent, test harness) can connect and discover the inventory via `sift-mcp inspect`.
-- **Architectural trust boundaries** — agent-side has no shell. Path validation rejects anything outside `/cases/` (or `$SIFT_OWL_EVIDENCE_ROOT`). Subprocess invocations are argv-list, never `shell=True`.
-- **Per-call audit trail** — every MCP call writes one JSONL row to `audit/exec_log.jsonl` with `exec_id`, args, input/output sha256, parsed_summary, wall_ms. Every "confirmed" claim in a final report cites an `exec_id` for traceability.
-- **55 tests green** (parsers + path validation + subprocess + 6-plugin E2E + 3 MCP wire-protocol round-trip).
+- **20 typed read-only MCP tools** over a FastMCP stdio server (`sift-mcp`). The agent connected to it has **no shell, no filesystem, no network** — it can only call the registered forensic functions.
+- **Self-correcting agent loop** (`eval/agents/sift_owl_v2/run_loop.py`). The agent generates a report; a validator scores every claim against parsed tool output; the loop replans for the next iteration with the flagged claims spelled out. Terminates on convergence, no-improvement, or max-iter cap.
+- **Validator v4** — rule-based extraction (PIDs, IPs, paths, timestamps, hashes, inodes) with paren-aware negation handling, timestamp prefix matching, and an opt-in LLM prose-check pass (Haiku 4.5) for unverifiable prose claims.
+- **Per-call audit trail** — `audit/exec_log.jsonl` records every MCP call with `exec_id`, args, sha256 of inputs and raw output, `parsed_summary`, `wall_ms`. Every "confirmed" claim in a final report cites an `exec_id` that the validator can resolve.
+- **173 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
+
+### MCP tool inventory
+
+| Domain | Tools |
+|---|---|
+| **Memory (Vol3)** — 9 | `vol3_image_info`, `vol3_psscan`, `vol3_pstree`, `vol3_cmdline`, `vol3_netscan`, `vol3_filescan`, `vol3_malfind`, `vol3_svcscan`, `vol3_userassist` |
+| **Disk (Sleuth Kit + EWF)** — 6 | `ewf_info`, `ewf_verify`, `tsk_partition_table`, `tsk_fs_stat`, `tsk_fls_list`, `tsk_icat_extract` |
+| **Windows artifacts (EZ Tools)** — 4 | `ezt_mft_parse`, `ezt_shimcache_parse`, `ezt_evtx_parse`, `ezt_amcache_parse` |
+| **Drill helper** — 1 | `query_rows` (re-parse + filter any prior call's full row list by `exec_id`) |
+
+`sift-mcp inspect` prints the inventory. EZ Tools take an `extract_exec_id` (output of a prior `tsk_icat_extract`) instead of a filesystem path — the agent has no way to point a parser at an arbitrary file.
+
+### Headline result (development cases)
+
+| Case | Validator | Strict-verified score | Notes |
+|---|---|---|---|
+| ROCBA-001 single-pass v1 | v4 | 57.1% | First end-to-end run, memory-only |
+| **ROCBA-001 v2 loop (iter 3)** | **v4** | **91.7%** | Convergence; rule-based + LLM prose check |
+| STARK-APT-001 v1 disk+memory | v4 | 43.5% | First multi-host shakedown |
+| **STARK-APT-001 v2 loop (iter 3)** | **v4** | **86.1%** | Full convergence: 0 partial, 0 failed |
+| STARK-APT-001 v2 EZT iter 1 | v4 | 52.5% | Single-pass with EZ Tools wave |
+
+SHIELDBASE (held-out 15-host case) is reserved for the final eval that produces the submission accuracy numbers.
 
 ## What this is
 
-An autonomous, agentic AI forensics investigator that runs on the SANS SIFT Workstation and processes raw case data (disk images, memory captures, log archives) end-to-end without human checkpoints. It improves on the baseline [Protocol SIFT](https://github.com/teamdfir/protocol-sift) configuration along every judging axis:
+An autonomous, agentic AI forensics investigator that runs on the SANS SIFT Workstation and processes raw case data (disk images, memory captures) end-to-end without human checkpoints. It improves on the baseline [Protocol SIFT](https://github.com/teamdfir/protocol-sift) configuration along every judging axis:
 
 | Concern | Protocol SIFT (baseline) | SIFT-OWL |
 |---|---|---|
 | Tool surface | `Bash(*)` allow-list with narrow deny-list | Custom MCP server exposing only typed read-only forensic functions |
-| Evidence integrity | Prompt-based ("Never modify `/cases/`") | Architectural — RO bind mount + immutable bit + path allow-list |
-| Audit trail | Single `$CONVERSATION_SUMMARY` line per session | Per-call JSONL with `exec_id`, hashes, parsed summary |
-| Hallucinations | Caught only by humans | Validator agent — every "confirmed" claim must cite an `exec_id` |
-| Context bloat | Single agent reads all raw output | Specialist sub-agents per domain; orchestrator sees structured summaries only |
-| Self-correction | None | Persistent learning loop with cross-source correlation pass |
+| Evidence integrity | Prompt-based ("Never modify `/cases/`") | Architectural — path allow-list at MCP boundary; no shell to bypass |
+| Audit trail | Single `$CONVERSATION_SUMMARY` line per session | Per-call JSONL with `exec_id`, hashes, parsed_summary |
+| Hallucinations | Caught only by humans | Validator agent — every "confirmed" claim must cite an `exec_id` whose parsed output supports it |
+| Context bloat | Single agent reads all raw output | MCP server parses + truncates at the wire; full rows on disk, drillable via `query_rows` |
+| Self-correction | None | Persistent learning loop with validator feedback in the next iteration's prompt |
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the system design and trust boundaries.
 
@@ -41,11 +65,8 @@ pip install -e ".[dev]"
 # Inspect the MCP tool inventory (no Vol3 / evidence required)
 sift-mcp inspect
 
-# Run the MCP server (stdio transport — for an MCP client to connect)
-sift-mcp --audit-dir ./audit --evidence-root /cases
-
-# Once the orchestrator lands (W3), point it at a case:
-# sift-owl --case /cases/<CASENAME> --max-iterations 3
+# Validate the test suite passes on your machine
+pytest -x --deselect tests/test_disk_e2e.py --deselect tests/test_vol3_memory_e2e.py --deselect tests/test_ez_tools_e2e.py
 ```
 
 Full installation / setup: [`INSTALL.md`](INSTALL.md).
@@ -54,24 +75,23 @@ Full installation / setup: [`INSTALL.md`](INSTALL.md).
 
 ```
 find-evil-hackathon/
-├── plans/MASTER_PLAN.md     # strategy + weekly plan
-├── docs/ARCHITECTURE.md     # system design + trust boundaries
-├── mcp_server/              # custom MCP server (typed forensic functions)
-│   ├── server.py
-│   ├── tools/               # one module per typed function
-│   ├── parsers/             # raw tool output → structured JSON
-│   └── audit.py             # per-call JSONL writer
-├── agents/                  # LangGraph orchestrator + specialists
-│   ├── orchestrator.py
-│   ├── memory_agent.py
-│   ├── disk_agent.py
-│   ├── timeline_agent.py
-│   ├── correlator.py        # cross-source correlation pass
-│   └── validator.py         # hallucination detector
-├── audit/                   # per-run logs (gitignored except samples/)
-├── tests/                   # pytest — incl. spoliation tests
-├── eval/                    # ground truth + scoring harness
-└── scripts/                 # one-off helpers
+├── plans/MASTER_PLAN.md            # strategy + weekly plan
+├── docs/ARCHITECTURE.md            # system design + trust boundaries
+├── mcp_server/                     # custom MCP server (typed forensic functions)
+│   ├── server.py                   # FastMCP stdio server
+│   ├── tools/                      # memory.py, disk.py, ez_tools.py
+│   ├── parsers/                    # raw tool output → structured JSON
+│   └── audit.py                    # per-call JSONL writer
+├── agents/
+│   └── validator/                  # rule-based + LLM hallucination detector
+├── eval/
+│   ├── cases/                      # case.yaml + case.md per dataset
+│   ├── baselines/protocol_sift/    # vanilla Claude Code baseline harness
+│   ├── agents/sift_owl_v0..v2/     # SIFT-OWL eval harnesses (single-pass → loop)
+│   └── results/                    # per-run validator reports + REPORT.md
+├── audit/                          # default per-run audit dir (gitignored)
+├── tests/                          # 173 unit tests + slow E2E
+└── scripts/                        # one-off helpers
 ```
 
 ## License

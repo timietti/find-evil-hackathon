@@ -17,13 +17,23 @@ Drives **vanilla** Claude Code (Protocol SIFT global config + skill files instal
 
 Hashes every evidence file in `case.yaml` before and after the run. If post-run hashes
 differ → spoliation. Skip with `--skip-post-hash` (saves ~5 min per 18 GB image).
+Use `--skip-pre-hash` too on multi-host cases (~58 GB+) where intake hashes are
+already canonical.
 
 ## Usage
 
 ```bash
 source .venv/bin/activate
+
+# Single-host (ROCBA) — default prompt is ROCBA-tuned
 python -m eval.baselines.protocol_sift.run --case rocba-001 --model sonnet \\
     --max-budget-usd 5 --max-turns 80
+
+# Multi-host (STARK-APT) — point at the per-case prompt and skip the slow hashes
+python -m eval.baselines.protocol_sift.run --case test2-stark-apt --model sonnet \\
+    --prompt-file eval/baselines/protocol_sift/prompt_stark_apt.md \\
+    --max-budget-usd 8 --max-turns 150 \\
+    --skip-pre-hash --skip-post-hash
 ```
 
 Add `--dry-run` to print the planned invocation without spending credits.

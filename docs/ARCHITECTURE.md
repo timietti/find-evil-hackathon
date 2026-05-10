@@ -1,11 +1,11 @@
 # SIFT-OWL — Architecture
 
-**Status:** v0.1 (2026-05-08). Living document — revise as the implementation forces decisions.
+**Status:** v0.4 (2026-05-10) — describes the system as implemented. Sections marked *deferred* are documented choices we explicitly did not build.
 
 ## Goals
 
-1. **Architecturally enforce evidence integrity.** The agent must be unable to modify evidence even if the model misbehaves.
-2. **Audit every finding back to a tool execution.** Every claim in the final report cites an `exec_id`.
+1. **Architecturally enforce evidence integrity.** The agent must be unable to modify or read-side-channel evidence even if the model misbehaves — enforced by the MCP boundary, not by prompts.
+2. **Audit every finding back to a tool execution.** Every claim in the final report cites an `exec_id` resolvable from `audit/exec_log.jsonl`.
 3. **Beat Protocol SIFT's accuracy and hallucination rate** on the same case data.
 4. **Self-correct without human intervention** within a hard iteration cap.
 5. **Stay reproducible** — another practitioner can clone, install, point at a case, and get the same kind of report.
@@ -14,236 +14,210 @@
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                       SIFT-OWL Orchestrator                              │
-│  Claude Opus 4.7 · LangGraph state machine · plans, sequences,           │
-│  evaluates, decides termination                                          │
-└────────────┬───────────────────────────────────────────────┬─────────────┘
-             │ A2A messages (logged: ts, from, to, tokens)   │
-   ┌─────────┴───────┬────────────────┬────────────────┬─────┴────────┐
-   │ Memory Agent    │ Disk Agent     │ Timeline Agent │ Win-Arts Agent│
-   │ Sonnet 4.6      │ Sonnet 4.6     │ Sonnet 4.6     │ Sonnet 4.6    │
-   │ (Vol3 +         │ (TSK + EWF     │ (Plaso super-  │ (EZ Tools +   │
-   │  Baseliner)     │  + carving)    │  timeline)     │  EVTX/Reg)    │
-   └─────────┬───────┴───────┬────────┴───────┬────────┴────────┬─────┘
-             │               │                │                 │
-             └───────────────┴───────┬────────┴─────────────────┘
-                                     │
-                  ┌──────────────────┴──────────────────┐
-                  │    SIFT-MCP server (stdio MCP)      │
-                  │  Typed read-only functions only.    │
-                  │  No shell, no network, no writes    │
-                  │  outside ./analysis|exports|reports.│
-                  │  Per-call exec_log.jsonl row.       │
-                  └──────────────────┬──────────────────┘
-                                     │  subprocess (caps dropped)
-                                     ▼
-   ┌────────────────────────────────────────────────────────────────┐
-   │  SIFT tools  ·  Vol3, TSK, EZ Tools, Plaso, YARA, bulk_extr.   │
-   └─────────────────────────┬──────────────────────────────────────┘
-                             │  ro,noatime,noexec mount
+│                       SIFT-OWL self-correction loop                      │
+│   eval/agents/sift_owl_v2/run_loop.py — orchestrates N iterations:       │
+│   plan → execute → validate → replan-with-flagged-claims → repeat        │
+└────────────────┬─────────────────────────────────────────────────────────┘
+                 │ each iteration spawns:
+                 ▼
+   ┌───────────────────────────────────────────────────────────────────┐
+   │ Investigator subprocess: `claude -p <prompt> --mcp-config ...`    │
+   │ Sonnet 4.6 — sees ONLY: the prompt + the registered MCP tools.    │
+   │ Built-in Bash / Read / Edit / Write / Agent / WebFetch DENIED.    │
+   └───────────────────────────────────┬───────────────────────────────┘
+                                       │  MCP stdio (JSON-RPC)
+                                       ▼
+   ┌───────────────────────────────────────────────────────────────────┐
+   │  sift-mcp — FastMCP stdio server (mcp_server/server.py)           │
+   │  20 typed read-only functions. No shell. No filesystem-by-path.   │
+   │  Per-call audit row written to exec_log.jsonl before return.      │
+   │  MCP-wire payload truncated to 50 rows; full data on disk.        │
+   └───────────────────────────────────┬───────────────────────────────┘
+                                       │  subprocess (argv list, never shell=True)
+                                       ▼
+   ┌───────────────────────────────────────────────────────────────────┐
+   │  SIFT tools  ·  vol3, fls, icat, ewfinfo, MFTECmd, EvtxECmd,      │
+   │                 AppCompatCacheParser, AmcacheParser                │
+   └─────────────────────────┬─────────────────────────────────────────┘
+                             │  read-only access; paths validated against allow-list
                              ▼
-   ┌────────────────────────────────────────────────────────────────┐
-   │ Evidence:  /cases/<CASE>/    ← chattr +i set on session start  │
-   │ Outputs:   ./analysis/  ./exports/  ./reports/                 │
-   │ Audit:     ./audit/{exec_log,agent_msgs,iter_N,evidence_hashes}│
-   └────────────────────────────────────────────────────────────────┘
+   ┌───────────────────────────────────────────────────────────────────┐
+   │ Evidence:  /cases/<CASE>/    (read-only by convention; path       │
+   │                              validation rejects writes/non-roots) │
+   │ Audit:     audit/exec_log.jsonl + audit/raw/                      │
+   │            audit/raw/extracts/<exec_id>.bin  ← tsk_icat_extract   │
+   │            audit/raw/ez_tools/<exec_id>/    ← per-call subtree    │
+   └───────────────────────────────────────────────────────────────────┘
 
-After each iteration, two non-LLM passes run before the report is emitted:
-  ┌────────────────────────────┐    ┌────────────────────────────────┐
-  │ Cross-source correlator    │ ─► │ Hallucination validator        │
-  │ disk ↔ memory ↔ EVTX       │    │ every "confirmed" claim must   │
-  │ flag mismatches            │    │ cite an exec_id whose parsed   │
-  │                            │    │ output structurally supports it│
-  └────────────────────────────┘    └────────────────────────────────┘
+After each iteration, a non-LLM validator pass runs:
+  ┌────────────────────────────────────────────────────────────────────┐
+  │ Validator (agents/validator/validate.py)                           │
+  │   1. Segment final_response.md into per-tag claims (CONFIRMED /    │
+  │      INFERRED / HYPOTHESIS / GAP)                                  │
+  │   2. Resolve cited exec_id(s) → read parsed_summary from audit log │
+  │   3. Extract structured tokens (PIDs, IPs, paths, timestamps, ...) │
+  │   4. Verify each token is structurally present in the parsed data  │
+  │   5. (Optional) `--llm-check` for unverifiable prose claims via    │
+  │      Haiku 4.5 → VERIFIED / UNSUPPORTED / UNRELATED / UNCERTAIN    │
+  │   6. Emit validator_report.{md,json} with per-claim verdicts       │
+  └────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Trust boundaries
 
 | # | Boundary | Enforcement | Type | Test |
 |---|---|---|---|---|
-| TB1 | Agents → tool execution | MCP function whitelist; no `Bash` exposed to any agent | **Architectural** | `tests/test_no_shell_exposed.py` — assert `Bash` is not in any agent's tool list |
-| TB2 | MCP server → mount syscalls | All `mount` calls hardcode `ro,noatime,noexec`; rw-mount path is unreachable | **Architectural** | `tests/test_mount_flags.py` — fuzz inputs, assert flags |
-| TB3 | Tool subprocess → evidence files | `chattr +i` on every E01/img file at session start; subprocess `setrlimit` + dropped caps | **Architectural** | `tests/test_spoliation.py` — full agent run, then `find /cases -newer <session-start>` must be empty |
-| TB4 | Tool subprocess → output dir | Subprocess CWD pinned to `<case>/analysis/`; absolute paths starting with `/cases/`, `/mnt/`, `/media/` rejected at MCP boundary | **Architectural** | `tests/test_output_paths.py` |
-| TB5 | Agents → network | MCP server exposes no HTTP/curl/wget; subprocess `unshare -n` for tool invocations that don't need network (everything except Vol3 first-run symbol fetch) | **Architectural** | `tests/test_no_network_egress.py` — run with iptables drop-all, must still complete cached cases |
-| TB6 | Finding → claim | Validator agent checks every "confirmed" claim cites an `exec_id` whose parsed output structurally supports the claim; demote to "inference" otherwise | **Hybrid** (prompt + validator) | `tests/test_validator.py` with synthetic claim/evidence pairs |
-| TB7 | Inference vs. confirmation | Agents instructed to tag every claim `confirmed` / `inferred` / `hypothesis`; validator cross-checks confirmed claims | **Prompt + post-hoc** | Documented failure mode in `ACCURACY_REPORT.md` |
+| TB1 | Agent → tool execution | MCP function whitelist; built-in `Bash` / `Read` / `Edit` / `Write` / `WebFetch` / `Agent` denied via `--disallowed-tools`; only `mcp__sift-owl__*` allow-listed | **Architectural** | `tests/test_mcp_server.py::test_mcp_server_lists_all_tools` asserts the 20-tool inventory; agent harness wires `DISALLOWED_BUILTINS` |
+| TB2 | MCP server → arbitrary paths | `validate_evidence_path()` rejects paths outside the allow-list (`SIFT_OWL_EVIDENCE_ROOT`, default `/cases`); resolves symlinks; raises `PathValidationError` | **Architectural** | `tests/test_vol3_image_info.py` — path-traversal + outside-root cases |
+| TB3 | Tool subprocess → shell injection | All invocations are `subprocess.run(argv_list, ...)`; **`shell=True` is never used**; argv built only from validated typed inputs | **Architectural** | grep-asserted: `grep -r "shell=True" mcp_server/` returns nothing |
+| TB4 | EZ Tools → arbitrary input file | EZ Tools accept only `extract_exec_id`; `_resolve_extract()` requires the row's `tool == "tsk_icat_extract"` and the on-disk file to exist under `audit/raw/extracts/` | **Architectural** | `tests/test_ez_tools_parsers.py` + e2e tests pass only when the extract chain is honored |
+| TB5 | Agent → network egress | No tool exposes HTTP/curl/wget; Vol3 PDB downloads are the only outbound traffic, handled by the subprocess at first-run | **Architectural** | Implicit — MCP inventory contains no networking primitives |
+| TB6 | Claim → cited evidence | Validator parses every CONFIRMED/INFERRED claim into structured tokens; verifies each token is in the cited tool's `parsed_summary` (or LLM prose-checks the rest) | **Hybrid** (rule-based + LLM) | `tests/test_validator.py` — 54 tests including paren-aware negation, timestamp prefix matching, mocked LLM prose check |
+| TB7 | Inference vs. confirmation | Agent prompts require explicit `[CONFIRMED]` / `[INFERRED]` / `[HYPOTHESIS]` / `[GAP]` tag per claim; validator demotes mismatches | **Prompt + post-hoc** | `tests/test_validator.py::test_parse_claims_*` |
 
-TB6 and TB7 are the only hybrid boundaries. The accuracy report explicitly documents what happens when the model ignores them — judging criterion 4 requires this.
+**Not enforced architecturally (documented limits):**
 
-## MCP server function inventory (W2 target)
+- `chattr +i` on evidence files is not currently set; we rely on path-validation + lack of write tools in the MCP inventory. Adding `chattr +i` and `ro,noatime,noexec` bind-mounts is a future enhancement (the original v0.1 design called for this; deferred because v0.4's path-validation + tool inventory provides equivalent protection at the API boundary).
+- `unshare -n` per-subprocess is not used; we rely on the MCP inventory containing no network tools.
 
-Every function returns:
+## MCP server function inventory (implemented)
+
+The MCP server exposes **20 typed functions**. Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
+
 ```jsonc
-{
-  "exec_id": "01H...ULID",
-  "tool": "vol3_pslist",
-  "args": { "image": "...", "..." },
+{ "exec_id": "01H...UUIDv7",
+  "ts": "2026-05-10T18:00:00Z",
+  "agent": "memory_agent",
+  "tool": "vol3_psscan",
+  "args": { "image": "/cases/find-evil-test2/.../mem.001" },
+  "input_hash": "sha256:...",
+  "output_hash": "sha256:...",
+  "raw_output_path": "audit/raw/01H...",
   "exit_code": 0,
-  "started_ts": "2026-05-08T19:22:01Z",
-  "finished_ts": "2026-05-08T19:22:09Z",
-  "input_hash": "sha256:...",        // hash of input args + evidence hashes
-  "output_hash": "sha256:...",       // hash of raw tool output
-  "raw_output_path": "./analysis/raw/01H....txt",
-  "parsed": { /* structured JSON parsed from raw output */ },
-  "summary": "1 hidden process; 12 unsigned services"   // short LLM-suitable string
-}
+  "wall_ms": 7820,
+  "summary": "112 procs; 0 hidden",
+  "parsed_summary": { /* compact summary minus the bulky row list */ } }
 ```
 
-The agent only ever sees `exec_id` + `summary` + a slice of `parsed`. Raw output stays on disk.
+The agent sees `exec_id + summary + first 50 rows`. The full row list stays on disk and is reachable via `query_rows(exec_id, filter_field, filter_value, limit, offset)`.
 
-### Memory (wraps Vol3 + Memory Baseliner)
+### Memory (Volatility 3) — 9
 
-| Function | Wraps | Returns |
+| Function | Wraps | Notes |
 |---|---|---|
-| `vol3_image_info(image)` | `windows.info` | OS build, profile, capture timestamp |
-| `vol3_pslist(image)` | `windows.pslist` | Linked-list processes |
-| `vol3_psscan(image)` | `windows.psscan` | Pool-scanned processes (incl. hidden/exited) |
+| `vol3_image_info(image)` | `windows.info` | OS / build / arch / CPU / capture timestamp |
+| `vol3_psscan(image)` | `windows.psscan` | Pool-scanned procs (incl. hidden + exited) |
 | `vol3_pstree(image)` | `windows.pstree` | Parent/child tree |
-| `vol3_cmdline(image, pid?)` | `windows.cmdline` | Command lines |
-| `vol3_netscan(image)` | `windows.netscan` | Network connections |
-| `vol3_malfind(image, pid?)` | `windows.malfind` | RWX/PE-headed VAD regions |
-| `vol3_svcscan(image)` | `windows.svcscan` | Services |
-| `vol3_handles(image, pid)` | `windows.handles --pid` | Open handles |
-| `vol3_modules(image)` + `vol3_modscan(image)` | both kernel module enumerators | Combined diff returned |
-| `baseliner_proc_diff(image, baseline)` | `baseline.py -proc --loadbaseline` | Non-baseline processes |
+| `vol3_cmdline(image)` | `windows.cmdline` | Per-process command lines |
+| `vol3_netscan(image)` | `windows.netscan` | TCP/UDP endpoints + foreign-IP frequency |
+| `vol3_filescan(image)` | `windows.filescan` | Cached file objects |
+| `vol3_malfind(image)` | `windows.malfind` | RWX / MZ-headed VAD regions |
+| `vol3_svcscan(image)` | `windows.svcscan` | Service Control Manager |
+| `vol3_userassist(image)` | `windows.registry.userassist` | Per-user Explorer-driven program execution |
 
-### Disk (wraps Sleuth Kit + EWF)
-
-| Function | Wraps |
-|---|---|
-| `ewf_verify(e01)` | `ewfverify` |
-| `ewf_info(e01)` | `ewfinfo` |
-| `mount_e01_ro(e01)` | `ewfmount` + loop mount with hardcoded `ro,noatime,noexec` |
-| `unmount(mountpoint)` | `umount` |
-| `tsk_partition_table(raw)` | `mmls` |
-| `tsk_fs_stat(raw, offset)` | `fsstat` |
-| `tsk_fls_recursive(raw, offset)` | `fls -r -p` |
-| `tsk_bodyfile(raw, offset)` | `fls -r -m /` |
-| `tsk_icat(raw, offset, inode, dest)` | `icat` to `./exports/` |
-| `tsk_recover(raw, offset, dest)` | `tsk_recover` |
-| `mactime_timeline(bodyfile)` | `mactime -y -z UTC` |
-
-### Windows artifacts (wraps EZ Tools)
+### Disk (Sleuth Kit + EWF) — 6
 
 | Function | Wraps |
 |---|---|
-| `extract_mft(image_or_mount)` | `MFTECmd` → CSV |
-| `parse_evtx(logs_dir)` | `EvtxECmd --maps` → CSV |
-| `parse_registry(config_dir)` | `RECmd --bn <plugin>` → CSV |
-| `extract_amcache(amcache_hve)` | `AmcacheParser` |
-| `extract_shimcache(system_hive)` | `AppCompatCacheParser` |
-| `extract_prefetch(prefetch_dir)` | `PECmd` |
-| `extract_srum(srudb_dat)` | `SrumECmd` |
+| `ewf_info(image)` | `ewfinfo` (case metadata, MD5/SHA1 anchors) |
+| `ewf_verify(image)` | `ewfverify` (re-reads every byte) |
+| `tsk_partition_table(image)` | `mmls -i ewf` |
+| `tsk_fs_stat(image, offset?)` | `fsstat -i ewf` |
+| `tsk_fls_list(image, offset?)` | `fls -i ewf -r -p -F` (recursive, including deleted) |
+| `tsk_icat_extract(image, inode, offset?)` | `icat` — writes to `audit/raw/extracts/<exec_id>.bin`; returns size + sha256 of extracted bytes |
 
-### Threat hunting
+`tsk_icat_extract` is **the only path into EZ Tools** — they take the resulting `exec_id`, never a filesystem path. This is TB4.
 
-| Function | Wraps |
+### Windows artifacts (EZ Tools) — 4
+
+| Function | Wraps | Pre-req |
+|---|---|---|
+| `ezt_mft_parse(extract_exec_id)` | `MFTECmd --json` | `tsk_icat_extract(image, inode=0)` |
+| `ezt_shimcache_parse(extract_exec_id)` | `AppCompatCacheParser --csv` | extract `Windows\System32\config\SYSTEM` |
+| `ezt_evtx_parse(extract_exec_id)` | `EvtxECmd --json` | extract a single `.evtx` file |
+| `ezt_amcache_parse(extract_exec_id)` | `AmcacheParser -i --csv` | extract `Windows\AppCompat\Programs\Amcache.hve` |
+
+### Drill helper — 1
+
+| Function | Purpose |
 |---|---|
-| `yara_scan(target_path, rules)` | `yara -r` |
-| `bulk_extractor_carve(image, dest)` | `bulk_extractor -j 4` |
-| `vol3_vadyarascan(image, rules, pid?)` | `windows.vadyarascan` |
+| `query_rows(exec_id, filter_field?, filter_value?, limit?, offset?)` | Re-parse a prior call's full row list, filter, paginate. Substring match on strings; exact on numbers/bools. |
 
-### Timeline
+### Deferred from the original v0.1 plan
 
-| Function | Wraps |
-|---|---|
-| `plaso_extract(source, dest)` | `log2timeline.py` |
-| `plaso_filter(plaso_db, time_range, filters)` | `psort.py` |
-| `plaso_info(plaso_db)` | `pinfo.py` |
-
-**Total: ~35 typed functions.** Wide enough for depth, narrow enough that we can build, test, and harden every one in 5 weeks.
+`vol3_handles`, `vol3_dlllist`, `vol3_modscan`, `baseliner_proc_diff`, `mount_e01_ro`, `tsk_recover`, `mactime_timeline`, `parse_registry`, `extract_prefetch`, `extract_srum`, `yara_scan`, `bulk_extractor_carve`, `vol3_vadyarascan`, `plaso_extract`, `plaso_filter`, `plaso_info` — none are implemented. The 20 shipped tools cover memory + disk + the highest-signal Windows-artifact parsers; additional wrappers can be added as the SHIELDBASE eval reveals gaps.
 
 ## Audit log schemas
 
-### `audit/exec_log.jsonl` — one row per MCP function call
+### `audit/exec_log.jsonl` — one row per MCP call
 
-```jsonc
-{ "exec_id":"01H...", "ts":"2026-05-08T19:22:01Z", "agent":"memory_agent",
-  "tool":"vol3_psscan", "args":{"image":"/cases/.../mem.img"},
-  "input_hash":"sha256:...", "output_hash":"sha256:...",
-  "raw_output_path":"./analysis/raw/01H....txt", "exit_code":0,
-  "wall_ms":7820, "summary":"42 procs; 1 hidden (PID 1912)" }
-```
+Schema as shown above. UUIDv7 `exec_id`s, content-addressed `raw_output_path`, parsed_summary preserves aggregates but strips bulky row lists.
 
-### `audit/agent_msgs.jsonl` — one row per inter-agent message
-
-```jsonc
-{ "ts":"2026-05-08T19:22:09Z", "from":"orchestrator", "to":"memory_agent",
-  "type":"task", "iteration":1, "content_hash":"sha256:...",
-  "tokens_in":1234, "tokens_out":0, "model":"claude-opus-4-7" }
-```
-
-### `audit/iteration_N.json` — per-iteration plan + outcome
-
-```jsonc
-{ "iteration":1, "plan":["psscan","pstree","malfind","cmdline"],
-  "exec_ids":["01H...","01H..."], "findings":[...],
-  "validator_demotions":[ {"claim":"...", "reason":"..."} ],
-  "next_plan_diff":["+amcache lookup for STUN.exe MFT entry"] }
-```
-
-### `audit/evidence_hashes.json` — recorded at session start, re-checked at end
-
-```jsonc
-{ "session_start_ts":"...", "files":[
-  { "path":"/cases/.../disk.E01", "size":..., "sha256":"...", "mtime":"..." },
-  ...
-] }
-```
-
-## Self-correction loop
+### `audit/raw/` — per-call output captures
 
 ```
-plan → execute (specialists) → correlate → validate → score
-   ↑                                                    │
-   └── if score < threshold AND iter < cap, replan ─────┘
+audit/raw/<exec_id>                  ← parser-friendly text output
+audit/raw/extracts/<exec_id>.bin     ← tsk_icat_extract bytes
+audit/raw/ez_tools/<exec_id>/        ← per-call EZ Tools output dir
+audit/raw/subprocess/                ← stderr captures from failed invocations
+```
+
+### `audit/` shared across loop iterations
+
+The v2 self-correction loop uses **one shared audit dir** across all iterations of a single case run. This is intentional: iteration 2 can call `query_rows(<exec_id from iter 1>)` to re-read a prior call's full output instead of re-running the tool. This is the cross-iteration memory.
+
+## Self-correction loop (`eval/agents/sift_owl_v2/run_loop.py`)
+
+```
+iter 1: agent runs base prompt → final_response.md → validator scores
+iter 2: build follow-up prompt with flagged claims + the iter-1 audit log
+        agent re-investigates → new final_response.md → validator scores
+iter 3: same, with iter-1 and iter-2 history visible via the shared audit log
 ```
 
 **Termination conditions** (any one fires):
-- `iteration >= 3`
-- wall-clock ≥ `--wall-clock-min` (default 15)
-- total tokens ≥ `--max-tokens` (default 1.5M)
-- validator demotion rate < 5% AND no new findings in this iteration (converged)
 
-**Replan signal** — the orchestrator reads `iteration_N.json` and is prompted to:
-1. List demoted claims and what evidence would be needed to confirm.
-2. List specialist tasks that returned no findings — were they the wrong tool, or genuinely empty?
-3. List cross-source mismatches surfaced by the correlator.
-4. Emit a new plan as a JSON list of `{specialist, task, expected_evidence}`.
+- `iteration >= --max-iterations` (default 3)
+- cumulative cost ≥ `--max-budget-usd` (default $10)
+- validator score has not improved AND no new findings → "no improvement"
+- validator score = 100% strict-verified → "converged"
 
-## Cross-source correlator
+**Replan signal** — between iterations the harness reads `validator_report.json`, picks all `failed` and `partial` verdicts, and renders them into the next prompt as:
 
-A non-LLM pass between specialists and validator. For a known set of correlation rules, e.g.:
+```
+Iteration N validator flagged these claims:
+  [FAILED] "STUN.exe (PID 1912) connecting to 81.30.144.115" — PID 1912 not in psscan
+  [PARTIAL] "Mimikatz residue at lsass" — no malfind exec_id cited
+Resolve each flagged claim in iteration N+1 by either:
+  (a) collecting the missing evidence and re-asserting with correct citation, or
+  (b) demoting from CONFIRMED to INFERRED/HYPOTHESIS/GAP.
+```
 
-- For every suspicious process from memory: look up its image path in MFT, AmCache, ShimCache, Prefetch.
-- For every "first execution" timestamp: compare across AmCache, Prefetch, EVTX 4688, NTFS `$STANDARD_INFORMATION`.
-- For every external IP from `netscan`: scan disk strings + browser history + DNS cache.
-- For every service in `svcscan`: cross-check against registry `Services` key from disk.
+This pattern produced **emergent self-correction** on STARK-APT-001: by iteration 3 the agent had inferred the validator's tokenization rules and was structuring claims to be machine-checkable.
 
-Mismatches are surfaced as `correlator_findings` with severity. The orchestrator gets the summary; the validator demotes any "confirmed" claim that the correlator contradicts.
+## Validator versions
 
-## Hallucination validator
+The validator has shipped across four iterations; each version is preserved as live code:
 
-Per "confirmed" claim, the validator:
+| Version | What it added | Trigger |
+|---|---|---|
+| v0 (rule-based) | Per-claim segmentation, exec_id resolution, structured-token extraction (PIDs, IPs, paths, timestamps) | Initial baseline |
+| v1 | Negation detection (`not in netscan`) | ROCBA v0 had 2 "failed" claims that were correct *negative* assertions |
+| v2 | Backslash normalisation (`\Users` vs `\\Users` in JSON), subject-clause negation heuristic, markdown strip pre-segmentation | Multiple false positives in ROCBA + STARK-APT v1 runs |
+| v3 | Per-tag claim segmentation (hybrid: single-tag = whole paragraph; multi-tag = per-tag slice), paren-aware negation, timestamp prefix matching | STARK-APT v2 EZT run surfaced multi-tag paragraphs the v2 splitter mangled |
+| **v4** | LLM-based prose check (Haiku 4.5) for unverifiable claims; opt-in via `--llm-check`; promotes/demotes based on structural support in cited tool's parsed data | Push past rule-based ceiling for prose-only claims |
 
-1. Parses the claim for testable assertions (PID, file path, IP, timestamp, hash).
-2. Looks up the cited `exec_id`'s `parsed` structure.
-3. Verifies the assertion is structurally present (regex / JSONPath).
-4. If not present → demote to `inferred` and log reason.
-5. If the validator itself isn't sure → demote conservatively + flag for human review.
-
-The validator is itself a small Claude call with no tool access — it sees only the claim text and the parsed JSON for the cited `exec_id`. It cannot run tools or hallucinate new evidence.
+All versions ship in `agents/validator/`. Tests in `tests/test_validator.py` cover every regression that drove a version bump.
 
 ## Termination & safety
 
-- Hard caps on iterations, wall-clock, tokens, sub-agent recursion depth.
-- The orchestrator can request `STOP` early if confidence is high enough (validator demotion rate < 5%, no cross-source mismatches).
-- Every cap hit logs the partial state to `audit/` and emits the best-so-far report.
+- Hard caps on iterations, wall-clock-per-iter, and total budget. Each is enforced by the harness before the next iteration spawns.
+- Every cap hit writes the partial state to `audit/` and emits the best-so-far report.
+- All Anthropic API calls (validator v4 prose check only) require `ANTHROPIC_API_KEY` env var; the validator falls back to rule-based with a stderr warning if absent.
 
-## Open questions (resolve before W3)
+## Resolved open questions
 
-1. Does LangGraph's checkpointer give us free iteration replay for free? (If yes, simplify our state machine.)
-2. Should specialist agents call MCP server directly, or only via the orchestrator? (Direct is faster + better isolation; via-orchestrator is easier to audit. Lean direct.)
-3. Validator: rule-based, LLM-based, or hybrid? (Lean hybrid: rule-based for structured claims, LLM-based for prose claims, fail-closed.)
-4. Do we ship a default YARA ruleset or require the user to bring one? (Bundle a curated minimal set + document how to add.)
+1. ~~LangGraph?~~ **No.** Direct Claude Code subprocess (`claude -p`) is simpler, gives free MCP wire-protocol implementation, and lets us use the existing `--allowed-tools` / `--disallowed-tools` / `--mcp-config` switches as architectural enforcement points.
+2. ~~Specialists call MCP directly or via the orchestrator?~~ **Single agent per iteration.** Multi-agent specialist setup was deferred; the single-agent + self-correction-loop pattern produced 91.7% strict-verified on ROCBA and 86.1% on STARK-APT with simple iteration replay.
+3. ~~Validator: rule-based / LLM / hybrid?~~ **Hybrid.** Rule-based for structured tokens (cheap, deterministic); LLM-based opt-in for prose claims (Haiku 4.5; $0.05 per 6-run batch).
+4. ~~Bundle YARA rules?~~ **Deferred** — no YARA function shipped yet.
