@@ -47,31 +47,55 @@ apt_install yara
 # Ubuntu's `volatility` package ships v2.6 with Python 2 baked in.
 apt_install volatility
 
-# ---- 2. Eric Zimmerman EZ Tools (PECmd, SrumECmd) --------------------------
+# ---- 2. Eric Zimmerman EZ Tools (PECmd, SrumECmd via Get-ZimmermanTools) ---
 #
-# These are .NET 6 builds. The official download is at
-# https://ericzimmerman.github.io/ — concretely `Get-ZimmermanTools` from the
-# linked PowerShell script. We skip the PS and just curl the latest release
-# zip from the publisher's CDN. If you cannot reach the URL, drop the .dll
-# into $EZ_DIR by hand instead.
+# The official installer is a PowerShell script at
+# https://github.com/EricZimmerman/Get-ZimmermanTools — it discovers the
+# current download URLs from https://ericzimmerman.github.io and downloads
+# the chosen .NET version. SIFT 24.x ships pwsh by default; the existing
+# /opt/zimmermantools dlls target net9.0.
 
-install_ez_dll() {
-    local tool="$1"           # e.g. "PECmd"
-    local target="$EZ_DIR/${tool}.dll"
-    if [[ -f "$target" ]]; then
-        log "$tool already at $target"
-        return
+EZT_PS="https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1"
+
+needs_ezt_install=0
+for tool in PECmd SrumECmd; do
+    if [[ ! -f "$EZ_DIR/${tool}.dll" ]]; then
+        needs_ezt_install=1
+        log "$tool: missing → will download"
+    else
+        log "$tool: already at $EZ_DIR/${tool}.dll"
     fi
-    warn "$tool missing — please download $tool.zip from"
-    warn "    https://ericzimmerman.github.io/  (look for the 'net6' bundle)"
-    warn "and unzip into $EZ_DIR/."
-    warn "(the bootstrap script does not auto-download because the upstream"
-    warn " CDN does not allow direct CLI access)"
-}
+done
 
-sudo mkdir -p "$EZ_DIR"
-install_ez_dll PECmd
-install_ez_dll SrumECmd
+if [[ "$needs_ezt_install" -eq 1 ]]; then
+    if ! command -v pwsh >/dev/null; then
+        warn "pwsh not on PATH — install PowerShell, then re-run this script."
+        warn "  apt install -y powershell"
+        exit 1
+    fi
+    sudo mkdir -p "$EZ_DIR"
+    tmpdir="$(mktemp -d)"
+    log "downloading Get-ZimmermanTools.ps1 → $tmpdir"
+    python3 -c "
+import urllib.request, sys
+with urllib.request.urlopen('$EZT_PS', timeout=30) as r:
+    sys.stdout.buffer.write(r.read())" > "$tmpdir/Get-ZimmermanTools.ps1"
+    log "running official installer (-NetVersion 9, all tools) ..."
+    pwsh -File "$tmpdir/Get-ZimmermanTools.ps1" -Dest "$tmpdir/tools" -NetVersion 9
+    # Copy the tools we want (with their deps + .runtimeconfig.json + subdirs)
+    for tool in PECmd SrumECmd; do
+        src="$tmpdir/tools/net9/${tool}"
+        if [[ -d "$src" ]]; then
+            log "copying $tool from $src → $EZ_DIR/"
+            sudo cp -r "$src"/* "$EZ_DIR/"
+        else
+            warn "$tool not found at $src — Get-ZimmermanTools layout may have changed."
+            warn "  layout under $tmpdir/tools:"
+            find "$tmpdir/tools" -maxdepth 3 -name "${tool}*" 2>/dev/null | sed 's/^/    /' || true
+        fi
+    done
+    rm -rf "$tmpdir"
+fi
 
 # ---- 3. Memory Baseliner ---------------------------------------------------
 

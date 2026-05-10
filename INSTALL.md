@@ -9,7 +9,7 @@
 | SANS SIFT Workstation | Volatility 3, Sleuth Kit, EWF tools, EZ Tools, Plaso, YARA, bulk_extractor pre-installed at SIFT-default paths |
 | Python 3.12+ | `python3 --version` |
 | Claude Code CLI | `claude --version` — the agent harness invokes `claude -p ...` |
-| .NET 6 runtime | `dotnet --info` — EZ Tools require it |
+| .NET 9 runtime | `dotnet --info` — EZ Tools target `net9.0` |
 | Anthropic API key | `export ANTHROPIC_API_KEY=...` (only needed for the validator's `--llm-check` mode) |
 | Disk space | ≥ 5 GB free under `audit/` for one full multi-host run |
 
@@ -95,7 +95,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full trust-boundary t
 | Symptom | Fix |
 |---|---|
 | `volatility3 symbols not found` | First run downloads Microsoft PDB symbols; ensure outbound HTTPS to `downloads.volatilityfoundation.org`, or pre-populate `~/.cache/volatility3/`. Win7-x86 PAE PDBs are NOT auto-downloadable — the agent flags `[GAP]` for those memory images and proceeds with disk-side analysis. |
-| `dotnet: command not found` | EZ Tools require `dotnet` runtime v6 — `apt install dotnet-runtime-6.0`. |
+| `dotnet: command not found` | EZ Tools require `dotnet` runtime v9 — `apt install dotnet-runtime-9.0` (current EZ Tool builds target `net9.0`). |
 | `vol not on PATH` | The wrapper looks up `vol` via `$PATH`. Override with `SIFT_OWL_VOL3_BIN=/path/to/vol`. |
 | `MCP tool result overflow` | Each row-emitting tool truncates to 50 rows at the wire; use `query_rows(<exec_id>, filter_field, filter_value, limit, offset)` to drill into the full row list (preserved on disk). |
 | Long wall-clock on large memory images | Default `--max-turns-per-iter 120`; bump for cases with many hosts. |
