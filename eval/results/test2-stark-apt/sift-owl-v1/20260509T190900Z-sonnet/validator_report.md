@@ -21,25 +21,33 @@
 
 **Confirmation score: 33.3%** (8 verified / 24 confirmed)
 
+## LLM-based prose check (v4)
+
+- LLM verdicts collected: **7** (cost: $0.0102)
+  - ✅ VERIFIED:    0 (rule-unverifiable → upgraded to verified)
+  - ❌ UNSUPPORTED: 0 (downgraded to failed)
+  - ❓ UNRELATED:   3 (cited tool not relevant — kept unverifiable)
+  - ❓ UNCERTAIN:   4 (genuinely ambiguous — kept unverifiable)
+
 ## Per-claim verdicts
 
 ### ⚠ partial _(line 77)_
 - tools: `vol3_psscan`
 - exec_ids: `3e25052c1a74`
-- matched: `27304`, `556`, `2012-03-20T17:58:12Z`, `services.exe`, `usboesrv.exe`
+- matched: `556`, `27304`, `2012-03-20T17:58:12Z`, `usboesrv.exe`, `services.exe`
 - **missing**: `\Windows\system32\usboesrv.exe``, `C:\Windows\system32\usboesrv.exe``, `C:\Windows\system32\usboesrv.exe`
 - claim: > **`usboesrv.exe` (PID 27304)** — PRIMARY IMPLANT   [CONFIRMED — exec_id 019e0e26-3e83-7ca0-beb7-3e25052c1a74]   - Spawned by `services.exe` (PID 556), created **2012-03-20T17:58:12Z** - Binary: `C:\Wi…
 
 ### ✅ verified _(line 84)_
 - tools: `vol3_netscan`, `vol3_netscan`
 - exec_ids: `84774dc8a202`, `d21e2d675bc4`
-- matched: `96.255.98.154`, `10.3.58.4`, `usboesrv.exe`
+- matched: `10.3.58.4`, `96.255.98.154`, `usboesrv.exe`
 - claim: > **`usboesrv.exe` — C2 Connections**   [CONFIRMED — exec_id 019e0e26-d010-76a2-a909-84774dc8a202, query 019e0e27-13e6-7543-ba8f-d21e2d675bc4]   Three ESTABLISHED TCP connections from DC to **96.255.98.…
 
 ### ⚠ partial _(line 95)_
 - tools: `vol3_svcscan`
 - exec_ids: `bdf8ffcac48e`
-- matched: `usboesrv.exe`, `SERVICE_DEMAND_START`, `\Driver\usboebusdrv`, `\Driver\usboeloaderdrv`, `SERVICE_AUTO_START`, `C:\Windows\system32\usboesrv.exe`
+- matched: `usboesrv.exe`, `SERVICE_DEMAND_START`, `C:\Windows\system32\usboesrv.exe`, `\Driver\usboebusdrv`, `\Driver\usboeloaderdrv`, `SERVICE_AUTO_START`
 - **missing**: `\Windows\system32\usboesrv.exe``, `C:\Windows\system32\usboesrv.exe``
 - claim: > [CONFIRMED — exec_id 019e0e27-d3ef-7011-9311-bdf8ffcac48e]   Service registration: - **usboesrv**: `SERVICE_AUTO_START`, binary `C:\Windows\system32\usboesrv.exe` - **usboebusdrv**: kernel driver, `SE…
 
@@ -53,36 +61,39 @@
 ### ❓ unverifiable _(line 113)_
 - exec_ids: `628d876de324`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only a confirmation ID with no specific factual assertion about UserAssist data (execution artifacts, programs run, timestamps, or user activity) to validate against the parsed summary statistics.
 - claim: > [CONFIRMED — exec_id 019e0e2a-8fd2-79d3-b454-628d876de324]
 
 ### ⚠ partial _(line 126)_
 - tools: `vol3_userassist`
 - exec_ids: `628d876de324`
-- matched: `4.0.0.3`, `2012-04-05T22:23:04Z`, `2012-03-20T18:54:16Z`, `2012-03-20T17:57:33Z`, `2012-03-20T17:56:42Z`, `usboe.exe`, `hMailAdmin.exe`, `Tcpview.exe` (+12 more)
+- matched: `4.0.0.3`, `2012-04-05T22:23:04Z`, `2012-03-20T18:54:16Z`, `2012-03-20T17:56:42Z`, `2012-03-20T17:57:33Z`, `sdelete.exe`, `Temp1_usb-over-ethernet.zip`, `powershell.exe` (+12 more)
 - **missing**: `usboesrv.exe`, `\Users\rsydow\AppData\Local\Temp\2\Temp1_usb-over-ethernet.zip\setup.exe``, `C:\Users\rsydow\AppData\Local\Temp\2\Temp1_usb-over-ethernet.zip\setup.exe``, `C:\Tools\SysInternals\Tcpview.exe``, `C:\Tools\SysInternals\sdelete.exe``, `{6D809377-…}\USB over Ethernet\usboe.exe`, `P:\Security Tools\F-ResponseEnterprise-4.0.0.3-EN\...exe`
 - claim: > **User `rsydow` (DC sysadmin, possibly compromised):** - `C:\Users\rsydow\AppData\Local\Temp\2\Temp1_usb-over-ethernet.zip\setup.exe` — ran at **2012-03-20T17:57:33Z** — this is the installation event…
 
 ### ✅ verified _(line 136)_
 - tools: `vol3_pstree`
 - exec_ids: `4b9683991279`
-- matched: `137496`, `8512`, `151132`, `138320`, `148904`, `139776`, `2012-04-04T18:55:57Z`, `explorer.exe` (+7 more)
+- matched: `138320`, `148904`, `137496`, `139776`, `151132`, `8512`, `2012-04-04T18:55:57Z`, `taskmgr.exe` (+7 more)
 - claim: > [CONFIRMED — exec_id 019e0e27-d07f-7d71-8d44-4b9683991279]   **Session 3 (vibranium — attacker):** `winlogon.exe` (PID 138320), `explorer.exe` (PID 139776), `cmd.exe` (PID 137496, created 2012-04-04T1…
 
 ### ⚠ partial _(line 140)_
 - tools: `vol3_netscan`
 - exec_ids: `84774dc8a202`
-- matched: `10.3.16.5`, `10.3.58.4`
+- matched: `10.3.58.4`, `10.3.16.5`
 - **missing**: `10.3.58.4:3389 ← 10.3.16.5:46758`
 - claim: > [CONFIRMED — exec_id 019e0e26-d010-76a2-a909-84774dc8a202]   External RDP connection: `10.3.58.4:3389 ← 10.3.16.5:46758` ESTABLISHED — examiner's workstation connected to DC at time of capture.
 
 ### ❓ unverifiable _(line 145)_
 - exec_ids: `84774dc8a202`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim references an exec_id identifier with no substantive assertion, while the netscan data contains only foreign IP connection counts with no exec_id or execution-related fields.
 - claim: > [CONFIRMED — exec_id 019e0e26-d010-76a2-a909-84774dc8a202]
 
 ### ❓ unverifiable _(line 153)_
 - exec_ids: `7892e62ee8a6`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only a confirmation marker with an execution ID but makes no specific factual assertion about the malfind data that can be verified or refuted.
 - claim: > [CONFIRMED — exec_id 019e0e28-c41b-7f12-86b8-7892e62ee8a6]
 
 ### ✅ verified _(line 160)_
@@ -94,7 +105,7 @@
 ### ✅ verified _(line 176)_
 - tools: `vol3_netscan`
 - exec_ids: `84774dc8a202`
-- matched: `10.3.58.5`, `10.3.58.9`, `lsass.exe`
+- matched: `10.3.58.9`, `10.3.58.5`, `lsass.exe`
 - claim: > **Indirect evidence from DC:** [CONFIRMED — exec_id 019e0e26-d010-76a2-a909-84774dc8a202]   - DC (10.3.58.9:445) → nromanoff (10.3.58.5:49805) ESTABLISHED at capture time — DC SMB to nromanoff live - …
 
 ### ✅ verified _(line 193)_
@@ -106,11 +117,13 @@
 ### ❓ unverifiable _(line 204)_
 - exec_ids: `d21e2d675bc4`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an execution identifier with no specific factual assertion about network connections, foreign IPs, or other forensic data that could be verified against the netscan output.
 - claim: > [CONFIRMED — exec_id 019e0e27-13e6-7543-ba8f-d21e2d675bc4]
 
 ### ❓ unverifiable _(line 221)_
 - exec_ids: `d6cfa0d5ff3f`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an execution ID identifier with no specific factual assertion about process names, timestamps, file paths, or other forensic artifacts that can be verified against the vol3_psscan parsed data.
 - claim: > [CONFIRMED — exec_id 019e0e26-b5a6-7602-9d54-d6cfa0d5ff3f]
 
 ### ✅ verified _(line 245)_
@@ -129,6 +142,7 @@
 ### ❓ unverifiable _(line 281)_
 - exec_ids: `84774dc8a202`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim cites an exec_id identifier with no specific factual assertion about network connections, while vol3_netscan data contains only foreign IP addresses and connection counts with no exec_id field or matching identifiers.
 - claim: > [CONFIRMED — exec_id 019e0e26-d010-76a2-a909-84774dc8a202]
 
 ### ✅ verified _(line 298)_
@@ -168,4 +182,5 @@
 ### ❓ unverifiable _(line 366)_
 - exec_ids: `84774dc8a202`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim asserts credential theft mechanisms with a specific exec_id, but vol3_netscan parsed data contains only network connection statistics (IP counts) with no fields related to credential theft, process execution IDs, or forensic indicators of credential compromise.
 - claim: > **Credential theft mechanisms observed:** [CONFIRMED — exec_id 019e0e26-d010-76a2-a909-84774dc8a202]

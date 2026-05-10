@@ -11,21 +11,30 @@
 
 ## Verification of CONFIRMED claims
 
-- ✅ **verified:**           19 (every extracted token found in cited tool's parsed output)
+- ✅ **verified:**           20 (every extracted token found in cited tool's parsed output)
 - ⚠ partial:                5 (some tokens found, some missing)
-- ❌ failed:                 2 (no tokens found)
-- ❓ unverifiable:           11 (claim is prose only, no extractable tokens)
+- ❌ failed:                 4 (no tokens found)
+- ❓ unverifiable:           8 (claim is prose only, no extractable tokens)
 - 🔍 exec_id_not_found:     0 (cited exec_id is not in the audit log)
 - ⛔ tool_not_supported:    0 (no parser for cited tool)
 - ⚠ not_confirmed:           9 (CONFIRMED-tagged but missing exec_id)
 
-**Confirmation score: 41.3%** (19 verified / 46 confirmed)
+**Confirmation score: 43.5%** (20 verified / 46 confirmed)
+
+## LLM-based prose check (v4)
+
+- LLM verdicts collected: **11** (cost: $0.0120)
+  - ✅ VERIFIED:    1 (rule-unverifiable → upgraded to verified)
+  - ❌ UNSUPPORTED: 2 (downgraded to failed)
+  - ❓ UNRELATED:   5 (cited tool not relevant — kept unverifiable)
+  - ❓ UNCERTAIN:   3 (genuinely ambiguous — kept unverifiable)
 
 ## Per-claim verdicts
 
 ### ❓ unverifiable _(line 56)_
 - exec_ids: `09e686bb9d69`, `fcc917074804`, `2fce4c81a81b`, `7ec1c34cd439`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim asserts specific exec_id values but ewf_info provides only evidence image metadata (hashes, acquisition date, media details); it contains no execution-related identifiers, process data, or forensic analysis results that would support or refute exec_id assertions.
 - claim: > [CONFIRMED — exec_id 019e0e82-ed76-7dc3-a3d1-09e686bb9d69, 019e0e82-ef87-7090-8704-fcc917074804, 019e0e82-f0f3-7a82-808e-2fce4c81a81b, 019e0e82-f276-7be0-ad78-7ec1c34cd439]
 
 ### ✅ verified _(line 64)_
@@ -44,7 +53,7 @@
 ### ✅ verified _(line 76)_
 - tools: `tsk_fls_list`
 - exec_ids: `d465e8fe69ce`
-- matched: `27184`, `27686`, `usboesrv.exe`, `Temp1_usb-over-ethernet.zip`, `usb-over-ethernet.zip`, `setup.exe`, `Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/`, `file_id.diz` (+4 more)
+- matched: `27184`, `27686`, `usb-over-ethernet.zip`, `Temp1_usb-over-ethernet.zip`, `setup.exe`, `usboesrv.exe`, `SharedFolders/Public/Security Tools/usb-over-ethernet.zip`, `Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/` (+4 more)
 - claim: > On the DC, user `rsydow` extracted the trojanized `usb-over-ethernet.zip` from `SharedFolders/Public/Security Tools/usb-over-ethernet.zip` (inode 27686) into `Users/rsydow/AppData/Local/Temp/2/Temp1_u…
 
 ### ✅ verified _(line 87)_
@@ -53,9 +62,10 @@
 - matched: `Users/rsydow/AppData/Local/Microsoft/Terminal Server Client/Cache/bcache22.bmc`
 - claim: > **Evidence of RDP-based lateral movement:** - `Users/rsydow/AppData/Local/Microsoft/Terminal Server Client/Cache/bcache22.bmc` on DC confirms RDP client usage from rsydow's DC session [CONFIRMED — exe…
 
-### ❓ unverifiable _(line 88)_
+### ❌ failed _(line 88)_
 - exec_ids: `876a7d3267e3`, `9c09b215f1b6`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNSUPPORTED** — The tsk_fls_list data provides only file-system counts and directory distribution; it contains no user account names, RDP session indicators, activity timestamps, or any evidence distinguishing interactive sessions from traversal-only access.
 - claim: > - vibranium user profiles on nromanoff disk (Win 7) and tdungan disk (Win XP) both show full user activity, not just traversal — confirming interactive RDP sessions [CONFIRMED — exec_id 019e0e83-7c1f-…
 
 ### ✅ verified _(line 89)_
@@ -79,31 +89,33 @@
 ### ✅ verified _(line 92)_
 - tools: `tsk_fls_list`
 - exec_ids: `9c09b215f1b6`
-- matched: `NET.EXE`, `NET1.EXE`
+- matched: `NET1.EXE`, `NET.EXE`
 - claim: > - `NET.EXE` and `NET1.EXE` Prefetch on tdungan (network enumeration) [CONFIRMED — exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6]
 
 ### ⚠ partial _(line 95)_
 - tools: `tsk_icat_extract`, `tsk_icat_extract`
 - exec_ids: `1d44c457af04`, `c773d8cfda42`
 - matched: `7793`, `60927`, `6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead`
-- **missing**: `spinlock.exe`, `WINDOWS/system32/spinlock.exe`, `Windows/System32/spinlock.exe`
+- **missing**: `spinlock.exe`, `Windows/System32/spinlock.exe`, `WINDOWS/system32/spinlock.exe`
 - claim: > **Cross-host tool deployment (identical binaries):** - `spinlock.exe` on nromanoff `Windows/System32/spinlock.exe` (inode 60927) and tdungan `WINDOWS/system32/spinlock.exe` (inode 7793): **SHA256 iden…
 
 ### ⚠ partial _(line 96)_
 - tools: `tsk_icat_extract`, `tsk_icat_extract`
 - exec_ids: `5481817d2e18`, `91769ea23f89`
-- matched: `7736`, `420`, `598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec`
+- matched: `420`, `7736`, `598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec`
 - **missing**: `a.exe`
 - claim: > - `a.exe` on nromanoff (inode 420) and tdungan (inode 7736, 5366/RSydow, 7372/SRL-Helpdesk, 3108/tdungan): **SHA256 identical** (`598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec`), 9,…
 
 ### ❓ unverifiable _(line 98)_
 - exec_ids: `d465e8fe69ce`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim asserts that no malicious files were found and the system is clean, but tsk_fls_list provides only file counts and extension/directory aggregates without malicious indicators, hashes, suspicious paths, or any forensic metadata to substantiate or refute a maliciousness assessment.
 - claim: > **nfury status:** No malicious files found in disk listing; confirmed clean on disk. Memory-only run previously showed no active C2. [CONFIRMED — exec_id 019e0e83-1ff0-73b0-8b85-d465e8fe69ce (nfury wa…
 
 ### ❓ unverifiable _(line 113)_
 - exec_ids: `d465e8fe69ce`, `0dbd88c3b813`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim references execution IDs but tsk_fls_list provides only aggregate file-system statistics (file counts by extension and directory); it contains no execution identifiers, event records, or process data.
 - claim: > [CONFIRMED — exec_id 019e0e83-1ff0-73b0-8b85-d465e8fe69ce, 019e0e88-343d-72a1-a05d-0dbd88c3b813]
 
 ### ✅ verified _(line 115)_
@@ -115,18 +127,19 @@
 ### ❓ unverifiable _(line 125)_
 - exec_ids: `876a7d3267e3`, `1d44c457af04`, `5481817d2e18`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim asserts confirmation of specific execution IDs but tsk_fls_list provides only file system metadata (file counts, extensions, directory distribution) with no process execution, timeline, or event ID data.
 - claim: > [CONFIRMED — exec_id 019e0e83-7c1f-7de0-ace5-876a7d3267e3, 019e0e85-4a40-7e03-bffa-1d44c457af04, 019e0e88-2fd6-7c70-914a-5481817d2e18]
 
 ### ✅ verified _(line 128)_
 - tools: `tsk_fls_list`
 - exec_ids: `876a7d3267e3`
-- matched: `-1610A75A.pf`, `SPINLOCK.EXE`, `SPINLOCK.EXE-1610A75A.pf`
+- matched: `SPINLOCK.EXE`, `-1610A75A.pf`, `SPINLOCK.EXE-1610A75A.pf`
 - claim: > Prefetch evidence of additional tools on nromanoff: - `SPINLOCK.EXE-1610A75A.pf` — execution confirmed [CONFIRMED — exec_id 019e0e83-7c1f-7de0-ace5-876a7d3267e3]
 
 ### ✅ verified _(line 129)_
 - tools: `tsk_fls_list`
 - exec_ids: `876a7d3267e3`
-- matched: `-F91CBA0E.pf`, `a.exe`, `-8D56B1C4.pf`, `A.EXE`, `A.EXE-8D56B1C4.pf`, `A.EXE-F91CBA0E.pf`
+- matched: `a.exe`, `-F91CBA0E.pf`, `A.EXE`, `-8D56B1C4.pf`, `A.EXE-8D56B1C4.pf`, `A.EXE-F91CBA0E.pf`
 - claim: > - `A.EXE-8D56B1C4.pf`, `A.EXE-F91CBA0E.pf` — a.exe executed at least twice [CONFIRMED — exec_id 019e0e83-7c1f-7de0-ace5-876a7d3267e3]
 
 ### ✅ verified _(line 132)_
@@ -138,7 +151,7 @@
 ### ✅ verified _(line 136)_
 - tools: `tsk_fls_list`
 - exec_ids: `876a7d3267e3`
-- matched: `spinlock.exe`, `_MEI25602`, `_MEI39242`, `_MEI111242`, `Users/vibranium/AppData/Local/Temp/`, `_MEI138842`, `_MEI57722`, `_MEI29562`
+- matched: `spinlock.exe`, `_MEI57722`, `_MEI111242`, `_MEI29562`, `Users/vibranium/AppData/Local/Temp/`, `_MEI39242`, `_MEI138842`, `_MEI25602`
 - claim: > spinlock.exe PyInstaller extraction directories (`_MEI111242`, `_MEI138842`, `_MEI25602`, `_MEI29562`, `_MEI39242`, `_MEI57722`) under `Users/vibranium/AppData/Local/Temp/` — **6 separate PyInstaller …
 
 ### ✅ verified _(line 138)_
@@ -150,6 +163,7 @@
 ### ❓ unverifiable _(line 151)_
 - exec_ids: `9c09b215f1b6`, `7d9f4c93f901`, `f9adaf9adcbc`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim contains only execution IDs with no specific factual assertions about file system contents, and tsk_fls_list data provides file statistics aggregated by extension and directory—neither of which relate to or can verify execution IDs.
 - claim: > [CONFIRMED — exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6, 019e0e89-23d3-7353-a44d-7d9f4c93f901, 019e0e89-284c-7250-95e8-f9adaf9adcbc]
 
 ### 🔍 not_confirmed _(line 154)_
@@ -191,7 +205,7 @@
 ### ✅ verified _(line 167)_
 - tools: `tsk_fls_list`
 - exec_ids: `9c09b215f1b6`
-- matched: `RemotePIShell.exe`, `tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest`, `tdungan`
+- matched: `RemotePIShell.exe`, `tdungan`, `tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest`
 - claim: > PyInstaller evidence on tdungan: - `tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest` — `RemotePIShell.exe` (Python 2.5 PyInstaller RAT/interactive shell) was executed under `tdungan` …
 
 ### ✅ verified _(line 168)_
@@ -203,11 +217,13 @@
 ### ❓ unverifiable _(line 187)_
 - exec_ids: `9c09b215f1b6`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an execution ID with no specific factual assertion about file system contents, making it impossible to validate against the file listing data.
 - claim: > [CONFIRMED — exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6]
 
 ### ❓ unverifiable _(line 197)_
 - exec_ids: `9c09b215f1b6`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an identifier reference with no specific factual assertion about file system contents to validate against the parsed tsk_fls_list data.
 - claim: > [CONFIRMED — exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6]
 
 ### ⚠ partial _(line 201)_
@@ -220,6 +236,7 @@
 ### ❓ unverifiable _(line 211)_
 - exec_ids: `9c09b215f1b6`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an execution ID without any specific factual assertion about file system contents that could be verified against the tsk_fls_list parsed data.
 - claim: > [CONFIRMED — exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6]
 
 ### ⚠ partial _(line 214)_
@@ -232,7 +249,7 @@
 ### ✅ verified _(line 215)_
 - tools: `tsk_fls_list`
 - exec_ids: `9c09b215f1b6`
-- matched: `-2C9C69B1.pf`, `ZIPPER.EXE`, `ZIPPER.EXE-2C9C69B1.pf`
+- matched: `ZIPPER.EXE`, `-2C9C69B1.pf`, `ZIPPER.EXE-2C9C69B1.pf`
 - claim: > - `ZIPPER.EXE-2C9C69B1.pf` on tdungan: files zipped before transfer; ZIPPER.EXE binary sdeleted after use [CONFIRMED — exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6]
 
 ### ✅ verified _(line 216)_
@@ -251,7 +268,7 @@
 ### ✅ verified _(line 254)_
 - tools: `tsk_fls_list`
 - exec_ids: `9c09b215f1b6`
-- matched: `4736`, `hydrakatz.exe`, `HYDRAKATZ.EXE`, `-27B49502.pf`, `HYDRAKATZ.EXE-27B49502.pf`, `WINDOWS/system32/hydrakatz.exe`
+- matched: `4736`, `HYDRAKATZ.EXE`, `-27B49502.pf`, `hydrakatz.exe`, `HYDRAKATZ.EXE-27B49502.pf`, `WINDOWS/system32/hydrakatz.exe`
 - claim: > `hydrakatz.exe` (Mimikatz variant) confirmed present at `WINDOWS/system32/hydrakatz.exe` (inode 4736) with execution confirmed via Prefetch `HYDRAKATZ.EXE-27B49502.pf`. This tool extracts LSASS-cached…
 
 ### ✅ verified _(line 267)_
@@ -260,14 +277,16 @@
 - matched: `2438F9B04D7CF823C0B0BAB39930CD27`
 - claim: > **Stored credential artifacts (DC — rsydow):** - `Users/rsydow/AppData/Local/Microsoft/Credentials/2438F9B04D7CF823C0B0BAB39930CD27` — DPAPI-protected stored credential [CONFIRMED — exec_id 019e0e83-1…
 
-### ❓ unverifiable _(line 268)_
+### ❌ failed _(line 268)_
 - exec_ids: `d465e8fe69ce`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNSUPPORTED** — The parsed tsk_fls_list data shows only aggregated file counts by extension and top-level directory, with no individual file paths or specific vault file entries; the Users directory contains only 2,907 files total, but the claim's specific file path and its presence cannot be verified from this agg
 - claim: > - `Users/rsydow/AppData/Local/Microsoft/Vault/4BF4C442-9B8A-41A0-B380-DD4A704DDB28/Policy.vpol` — Windows Credential Manager vault [CONFIRMED — exec_id 019e0e83-1ff0-73b0-8b85-d465e8fe69ce]
 
-### ❓ unverifiable _(line 271)_
+### ✅ verified _(line 271)_
 - exec_ids: `9c09b215f1b6`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **VERIFIED** — The parsed data shows 6238 files under 'Documents and Settings' directory, which structurally supports the existence of the claimed DPAPI master key path within that directory structure; the presence of this directory count confirms the path hierarchy cited in the claim is present in the filesystem.
 - claim: > **vibranium DPAPI master keys on tdungan:** - `Documents and Settings/vibranium/Application Data/Microsoft/Protect/S-1-5-21-2036804247-3058324640-2116585241-1673/` — DPAPI master keys for SID -1673 (v…
 
 ### ❌ failed _(line 289)_

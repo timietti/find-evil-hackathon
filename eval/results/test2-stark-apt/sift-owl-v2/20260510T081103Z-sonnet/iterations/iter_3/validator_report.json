@@ -14,7 +14,13 @@
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.861
+    "confirmation_score": 0.861,
+    "llm_checked": 5,
+    "llm_verified": 0,
+    "llm_unsupported": 0,
+    "llm_unrelated": 3,
+    "llm_uncertain": 2,
+    "llm_total_cost_usd": 0.0063
   },
   "verdicts": [
     {
@@ -46,7 +52,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim references execution IDs (exec_id) which are not present in ewf_info parsed data; ewf_info contains only evidence acquisition metadata (hashes, acquisition date, media details) and has no fields related to process execution or activity tracking.",
+      "llm_cost_usd": 0.001725
     },
     {
       "claim": {
@@ -77,8 +86,8 @@
         "hex_hashes": [],
         "quoted": [
           ":Zone.Identifier",
-          "Users/nromanoff/Downloads/adberdr813.exe",
-          "adberdr813.exe"
+          "adberdr813.exe",
+          "Users/nromanoff/Downloads/adberdr813.exe"
         ]
       },
       "matched": [
@@ -89,7 +98,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -128,7 +140,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -170,7 +185,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -202,22 +220,25 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Users/vibranium/NTUSER.DAT",
+          "vibranium",
           "S-1-5-21-2036804247-3058324640-2116585241-1673",
-          "vibranium"
+          "Users/vibranium/NTUSER.DAT"
         ]
       },
       "matched": [
         "74541",
         "NTUSER.DAT",
-        "Users/vibranium/NTUSER.DAT",
+        "vibranium",
         "S-1-5-21-2036804247-3058324640-2116585241-1673",
-        "vibranium"
+        "Users/vibranium/NTUSER.DAT"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -238,8 +259,8 @@
       "tokens": {
         "pids": [],
         "inodes": [
-          "7793",
-          "60927"
+          "60927",
+          "7793"
         ],
         "ips": [],
         "timestamps": [],
@@ -255,28 +276,31 @@
           "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
         ],
         "quoted": [
+          "spinlock.exe",
+          "Windows/System32/spinlock.exe",
+          "_MEI",
           "WINDOWS/system32/spinlock.exe",
           "spinlock.exe.manifest",
-          "_MEI",
-          "spinlock.exe",
-          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
-          "Windows/System32/spinlock.exe"
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
         ]
       },
       "matched": [
-        "7793",
         "60927",
+        "7793",
         "spinlock.exe",
         "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
-        "WINDOWS/system32/spinlock.exe",
-        "spinlock.exe.manifest",
+        "Windows/System32/spinlock.exe",
         "_MEI",
-        "Windows/System32/spinlock.exe"
+        "WINDOWS/system32/spinlock.exe",
+        "spinlock.exe.manifest"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -315,8 +339,8 @@
         ],
         "quoted": [
           "WINDOWS/system32/hydrakatz.exe",
-          "hydrakatz.exe",
           "Windows/System32/hydrakatz.exe",
+          "hydrakatz.exe",
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ]
       },
@@ -331,7 +355,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -373,7 +400,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -404,22 +434,25 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Users/vibranium/AppData/Local/Temp/a.exe",
+          "a.exe",
           "Temp",
           "Documents and Settings/vibranium/Local Settings/Temp/a.exe",
-          "a.exe"
+          "Users/vibranium/AppData/Local/Temp/a.exe"
         ]
       },
       "matched": [
         "a.exe",
-        "Users/vibranium/AppData/Local/Temp/a.exe",
         "Temp",
-        "Documents and Settings/vibranium/Local Settings/Temp/a.exe"
+        "Documents and Settings/vibranium/Local Settings/Temp/a.exe",
+        "Users/vibranium/AppData/Local/Temp/a.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -447,24 +480,27 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "vibranium",
           "rsydow",
           "nromanoff",
-          "SRL-Helpdesk",
           "Tdungan",
-          "vibranium"
+          "SRL-Helpdesk"
         ]
       },
       "matched": [
+        "vibranium",
         "rsydow",
         "nromanoff",
-        "SRL-Helpdesk",
         "Tdungan",
-        "vibranium"
+        "SRL-Helpdesk"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -507,7 +543,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -538,7 +577,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "ewf_info provides only image metadata (acquisition date, hash, media type, compression details) and cannot verify claims about attack tools, profiles, or binaries present on the system.",
+      "llm_cost_usd": 0.001584
     },
     {
       "claim": {
@@ -569,7 +611,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only execution IDs with no specific factual assertion about file system artifacts, making it impossible to verify against tsk_fls_list's file enumeration data.",
+      "llm_cost_usd": 0.000964
     },
     {
       "claim": {
@@ -605,9 +650,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "96.255.98.154",
           "usboesrv.exe",
-          "29932"
+          "29932",
+          "96.255.98.154"
         ]
       },
       "matched": [
@@ -619,7 +664,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -641,10 +689,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Temp1_usb-over-ethernet.zip",
-          "setup.exe",
           "usboesrv.exe",
-          "usb-over-ethernet.zip"
+          "setup.exe",
+          "usb-over-ethernet.zip",
+          "Temp1_usb-over-ethernet.zip"
         ],
         "paths": [],
         "drive_refs": [],
@@ -653,18 +701,18 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "setup.exe",
           "rsydow",
+          "usboesrv.exe",
           "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
-          "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
-          "usboesrv.exe"
+          "setup.exe",
+          "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/"
         ]
       },
       "matched": [
-        "Temp1_usb-over-ethernet.zip",
-        "setup.exe",
         "usboesrv.exe",
+        "setup.exe",
         "usb-over-ethernet.zip",
+        "Temp1_usb-over-ethernet.zip",
         "rsydow",
         "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
         "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/"
@@ -672,7 +720,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -693,8 +744,8 @@
       "tokens": {
         "pids": [],
         "inodes": [
-          "7793",
-          "60927"
+          "60927",
+          "7793"
         ],
         "ips": [],
         "timestamps": [],
@@ -708,25 +759,28 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "_MEI",
           "Windows/System32/spinlock.exe",
           "WINDOWS/system32/spinlock.exe",
-          "spinlock.exe.manifest"
+          "spinlock.exe.manifest",
+          "_MEI"
         ]
       },
       "matched": [
-        "7793",
         "60927",
+        "7793",
         "spinlock.exe",
-        "_MEI",
         "Windows/System32/spinlock.exe",
         "WINDOWS/system32/spinlock.exe",
-        "spinlock.exe.manifest"
+        "spinlock.exe.manifest",
+        "_MEI"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -763,7 +817,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -790,10 +847,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "hydrakatz.exe",
-          "-27B49502.pf",
           "HYDRAKATZ.EXE",
-          "-A0DADA85.pf"
+          "-27B49502.pf",
+          "-A0DADA85.pf",
+          "hydrakatz.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -804,30 +861,33 @@
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ],
         "quoted": [
-          "HYDRAKATZ.EXE-27B49502.pf",
-          "WINDOWS/system32/hydrakatz.exe",
           "HYDRAKATZ.EXE-A0DADA85.pf",
           "Windows/System32/hydrakatz.exe",
+          "WINDOWS/system32/hydrakatz.exe",
+          "HYDRAKATZ.EXE-27B49502.pf",
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ]
       },
       "matched": [
         "60958",
         "4736",
-        "hydrakatz.exe",
-        "-27B49502.pf",
         "HYDRAKATZ.EXE",
+        "-27B49502.pf",
         "-A0DADA85.pf",
+        "hydrakatz.exe",
         "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
-        "HYDRAKATZ.EXE-27B49502.pf",
-        "WINDOWS/system32/hydrakatz.exe",
         "HYDRAKATZ.EXE-A0DADA85.pf",
-        "Windows/System32/hydrakatz.exe"
+        "Windows/System32/hydrakatz.exe",
+        "WINDOWS/system32/hydrakatz.exe",
+        "HYDRAKATZ.EXE-27B49502.pf"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -851,9 +911,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "TOPLZAGU.EXE",
           "TopLZAGU.exe",
-          "-4EFD8FD3.pf",
-          "TOPLZAGU.EXE"
+          "-4EFD8FD3.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -864,16 +924,16 @@
           "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9"
         ],
         "quoted": [
-          "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9",
           "TOPLZAGU.EXE-4EFD8FD3.pf",
-          "Windows/TopLZAGU.exe"
+          "Windows/TopLZAGU.exe",
+          "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9"
         ]
       },
       "matched": [
         "9628",
+        "TOPLZAGU.EXE",
         "TopLZAGU.exe",
         "-4EFD8FD3.pf",
-        "TOPLZAGU.EXE",
         "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9",
         "TOPLZAGU.EXE-4EFD8FD3.pf",
         "Windows/TopLZAGU.exe"
@@ -881,7 +941,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -905,10 +968,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "HYVY.EXE",
           "hyvy.exe",
-          "-2A94EF14.pf",
           "spinlock.exe",
-          "HYVY.EXE"
+          "-2A94EF14.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -919,17 +982,17 @@
           "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232"
         ],
         "quoted": [
-          "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232",
           "HYVY.EXE-2A94EF14.pf",
+          "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232",
           "WINDOWS/system32/hyvy.exe"
         ]
       },
       "matched": [
         "5237",
-        "hyvy.exe",
-        "-2A94EF14.pf",
-        "spinlock.exe",
         "HYVY.EXE",
+        "hyvy.exe",
+        "spinlock.exe",
+        "-2A94EF14.pf",
         "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232",
         "HYVY.EXE-2A94EF14.pf",
         "WINDOWS/system32/hyvy.exe"
@@ -937,7 +1000,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -971,9 +1037,9 @@
           "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec"
         ],
         "quoted": [
-          "Users/vibranium/AppData/Local/Temp/",
+          "a.exe",
           "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
-          "a.exe"
+          "Users/vibranium/AppData/Local/Temp/"
         ]
       },
       "matched": [
@@ -984,7 +1050,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1027,7 +1096,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1048,8 +1120,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "spinlock.exe",
-          "bcwipe5.exe"
+          "bcwipe5.exe",
+          "spinlock.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1062,14 +1134,17 @@
         ]
       },
       "matched": [
-        "spinlock.exe",
         "bcwipe5.exe",
+        "spinlock.exe",
         "SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1108,7 +1183,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1139,7 +1217,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an execution ID with a 'CONFIRMED' label but makes no specific factual assertion about file system contents that can be verified against the tsk_fls_list data.",
+      "llm_cost_usd": 0.0009220000000000001
     },
     {
       "claim": {
@@ -1160,8 +1241,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Credit-Card-Numbers-For-Research.xls",
-          "CC-Backstopped-Accounts.xlsx"
+          "CC-Backstopped-Accounts.xlsx",
+          "Credit-Card-Numbers-For-Research.xls"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1174,14 +1255,17 @@
         ]
       },
       "matched": [
-        "Credit-Card-Numbers-For-Research.xls",
         "CC-Backstopped-Accounts.xlsx",
+        "Credit-Card-Numbers-For-Research.xls",
         " and "
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1220,7 +1304,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1241,9 +1328,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "-126FAE33.pf",
           "Labs.docx",
           "DROPBOX.EXE",
+          "-126FAE33.pf",
           "CCleaner.exe"
         ],
         "paths": [],
@@ -1254,24 +1341,27 @@
         "hex_hashes": [],
         "quoted": [
           "CCleaner.exe",
-          "DROPBOX.EXE-126FAE33.pf",
           "Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx",
-          "Documents and Settings/tdungan/Application Data/Dropbox/"
+          "Documents and Settings/tdungan/Application Data/Dropbox/",
+          "DROPBOX.EXE-126FAE33.pf"
         ]
       },
       "matched": [
-        "-126FAE33.pf",
         "Labs.docx",
         "DROPBOX.EXE",
+        "-126FAE33.pf",
         "CCleaner.exe",
-        "DROPBOX.EXE-126FAE33.pf",
         "Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx",
-        "Documents and Settings/tdungan/Application Data/Dropbox/"
+        "Documents and Settings/tdungan/Application Data/Dropbox/",
+        "DROPBOX.EXE-126FAE33.pf"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1292,10 +1382,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "-2C9C69B1.pf",
-          "ZIPPER.EXE",
+          "FTP.EXE",
           "-0FFFB5A3.pf",
-          "FTP.EXE"
+          "ZIPPER.EXE",
+          "-2C9C69B1.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1304,22 +1394,25 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf",
-          "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf"
+          "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf",
+          "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf"
         ]
       },
       "matched": [
-        "-2C9C69B1.pf",
-        "ZIPPER.EXE",
-        "-0FFFB5A3.pf",
         "FTP.EXE",
-        "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf",
-        "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf"
+        "-0FFFB5A3.pf",
+        "ZIPPER.EXE",
+        "-2C9C69B1.pf",
+        "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf",
+        "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1353,9 +1446,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "96.255.98.154",
           "usboesrv.exe",
-          "29932"
+          "29932",
+          "96.255.98.154"
         ]
       },
       "matched": [
@@ -1367,7 +1460,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1398,7 +1494,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim consists only of execution IDs with no specific factual assertion, while the parsed tsk_fls_list data contains file system metadata (file counts, extensions, directory distributions) that cannot verify or refute execution ID identifiers.",
+      "llm_cost_usd": 0.00112
     },
     {
       "claim": {
@@ -1443,7 +1542,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1481,9 +1583,9 @@
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ],
         "quoted": [
-          "WINDOWS/system32/hydrakatz.exe",
           "Windows/System32/hydrakatz.exe",
-          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+          "WINDOWS/system32/hydrakatz.exe"
         ]
       },
       "matched": [
@@ -1491,13 +1593,16 @@
         "4736",
         "hydrakatz.exe",
         "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
-        "WINDOWS/system32/hydrakatz.exe",
-        "Windows/System32/hydrakatz.exe"
+        "Windows/System32/hydrakatz.exe",
+        "WINDOWS/system32/hydrakatz.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1534,7 +1639,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1574,7 +1682,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1613,7 +1724,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     }
   ]
 }

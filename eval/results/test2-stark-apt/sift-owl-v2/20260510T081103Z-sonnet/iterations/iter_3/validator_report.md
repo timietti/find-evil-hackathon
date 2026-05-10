@@ -21,11 +21,20 @@
 
 **Confirmation score: 86.1%** (31 verified / 36 confirmed)
 
+## LLM-based prose check (v4)
+
+- LLM verdicts collected: **5** (cost: $0.0063)
+  - ✅ VERIFIED:    0 (rule-unverifiable → upgraded to verified)
+  - ❌ UNSUPPORTED: 0 (downgraded to failed)
+  - ❓ UNRELATED:   3 (cited tool not relevant — kept unverifiable)
+  - ❓ UNCERTAIN:   2 (genuinely ambiguous — kept unverifiable)
+
 ## Per-claim verdicts
 
 ### ❓ unverifiable _(line 49)_
 - exec_ids: `56eb712b06e2`, `2e25aa9a719c`, `2c0f865472a5`, `efacda3f01c5`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim references execution IDs (exec_id) which are not present in ewf_info parsed data; ewf_info contains only evidence acquisition metadata (hashes, acquisition date, media details) and has no fields related to process execution or activity tracking.
 - claim: > [CONFIRMED — exec_id 019e10f1-fc74-7ba1-9cd4-56eb712b06e2, exec_id 019e10f1-ff4f-7d71-b106-2e25aa9a719c, exec_id 019e10f2-00de-71c3-9c71-2c0f865472a5, exec_id 019e10f2-02bb-7842-a5dd-efacda3f01c5]
 
 ### ✅ verified _(line 57)_
@@ -49,13 +58,13 @@
 ### ✅ verified _(line 75)_
 - tools: `tsk_fls_list`
 - exec_ids: `e9e4fe2b1f8b`
-- matched: `74541`, `NTUSER.DAT`, `Users/vibranium/NTUSER.DAT`, `S-1-5-21-2036804247-3058324640-2116585241-1673`, `vibranium`
+- matched: `74541`, `NTUSER.DAT`, `vibranium`, `S-1-5-21-2036804247-3058324640-2116585241-1673`, `Users/vibranium/NTUSER.DAT`
 - claim: > The `vibranium` domain account (SID: `S-1-5-21-2036804247-3058324640-2116585241-1673`) had an active RDP session on the DC at capture time (established from prior memory run). Disk confirms the vibran…
 
 ### ✅ verified _(line 79)_
 - tools: `tsk_icat_extract`, `tsk_icat_extract`, `tsk_fls_list`, `tsk_fls_list`
 - exec_ids: `4cf3be7f7746`, `78b9e9842308`, `59dc487be0a4`, `d40d5706591a`
-- matched: `7793`, `60927`, `spinlock.exe`, `6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead`, `WINDOWS/system32/spinlock.exe`, `spinlock.exe.manifest`, `_MEI`, `Windows/System32/spinlock.exe`
+- matched: `60927`, `7793`, `spinlock.exe`, `6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead`, `Windows/System32/spinlock.exe`, `_MEI`, `WINDOWS/system32/spinlock.exe`, `spinlock.exe.manifest`
 - claim: > `spinlock.exe` (SHA256: `6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead`, 2,271,885 bytes) deployed identically to **nromanoff** at `Windows/System32/spinlock.exe` (inode 60927) and …
 
 ### ✅ verified _(line 81)_
@@ -73,13 +82,13 @@
 ### ✅ verified _(line 91)_
 - tools: `tsk_fls_list`, `tsk_fls_list`
 - exec_ids: `59dc487be0a4`, `d40d5706591a`
-- matched: `a.exe`, `Users/vibranium/AppData/Local/Temp/a.exe`, `Temp`, `Documents and Settings/vibranium/Local Settings/Temp/a.exe`
+- matched: `a.exe`, `Temp`, `Documents and Settings/vibranium/Local Settings/Temp/a.exe`, `Users/vibranium/AppData/Local/Temp/a.exe`
 - claim: > The vibranium domain account's `Temp` directory contains `a.exe` on both **nromanoff** (`Users/vibranium/AppData/Local/Temp/a.exe`) and **tdungan** (`Documents and Settings/vibranium/Local Settings/Te…
 
 ### ✅ verified _(line 95)_
 - tools: `tsk_fls_list`
 - exec_ids: `59dc487be0a4`
-- matched: `rsydow`, `nromanoff`, `SRL-Helpdesk`, `Tdungan`, `vibranium`
+- matched: `vibranium`, `rsydow`, `nromanoff`, `Tdungan`, `SRL-Helpdesk`
 - claim: > Profiles present on nromanoff: `nromanoff`, `rsydow`, `SRL-Helpdesk`, `Tdungan`, `vibranium` — all as interactive logins. This breadth indicates successful credential harvest and reuse across the doma…
 
 ### ✅ verified _(line 99)_
@@ -91,11 +100,13 @@
 ### ❓ unverifiable _(line 103)_
 - exec_ids: `2c0f865472a5`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — ewf_info provides only image metadata (acquisition date, hash, media type, compression details) and cannot verify claims about attack tools, profiles, or binaries present on the system.
 - claim: > No attack tools, no vibranium profile, no suspicious binaries found on nfury. [CONFIRMED — exec_id 019e10f2-00de-71c3-9c71-2c0f865472a5 (negative finding)]
 
 ### ❓ unverifiable _(line 115)_
 - exec_ids: `e9e4fe2b1f8b`, `00e925f580bb`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only execution IDs with no specific factual assertion about file system artifacts, making it impossible to verify against tsk_fls_list's file enumeration data.
 - claim: > [CONFIRMED — exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f4-da1b-7770-b9d2-00e925f580bb]
 
 ### ✅ verified _(line 117)_
@@ -107,13 +118,13 @@
 ### ✅ verified _(line 119)_
 - tools: `tsk_fls_list`, `tsk_icat_extract`
 - exec_ids: `e9e4fe2b1f8b`, `00e925f580bb`
-- matched: `Temp1_usb-over-ethernet.zip`, `setup.exe`, `usboesrv.exe`, `usb-over-ethernet.zip`, `rsydow`, `SharedFolders/Public/Security Tools/usb-over-ethernet.zip`, `Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/`
+- matched: `usboesrv.exe`, `setup.exe`, `usb-over-ethernet.zip`, `Temp1_usb-over-ethernet.zip`, `rsydow`, `SharedFolders/Public/Security Tools/usb-over-ethernet.zip`, `Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/`
 - claim: > Installer chain: `SharedFolders/Public/Security Tools/usb-over-ethernet.zip` → extracted by `rsydow` to `Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/` → `setup.exe` from the zip inst…
 
 ### ✅ verified _(line 123)_
 - tools: `tsk_icat_extract`, `tsk_icat_extract`, `tsk_fls_list`, `tsk_fls_list`
 - exec_ids: `4cf3be7f7746`, `78b9e9842308`, `59dc487be0a4`, `d40d5706591a`
-- matched: `7793`, `60927`, `spinlock.exe`, `_MEI`, `Windows/System32/spinlock.exe`, `WINDOWS/system32/spinlock.exe`, `spinlock.exe.manifest`
+- matched: `60927`, `7793`, `spinlock.exe`, `Windows/System32/spinlock.exe`, `WINDOWS/system32/spinlock.exe`, `spinlock.exe.manifest`, `_MEI`
 - claim: > `Windows/System32/spinlock.exe` (inode 60927) on nromanoff and `WINDOWS/system32/spinlock.exe` (inode 7793) on tdungan are present on disk. PyInstaller-bundled binary confirmed by `_MEI` temp extracti…
 
 ### ✅ verified _(line 125)_
@@ -125,19 +136,19 @@
 ### ✅ verified _(line 129)_
 - tools: `tsk_icat_extract`, `tsk_icat_extract`, `tsk_fls_list`, `tsk_fls_list`
 - exec_ids: `dcdae4929196`, `c60439c821bf`, `59dc487be0a4`, `d40d5706591a`
-- matched: `60958`, `4736`, `hydrakatz.exe`, `-27B49502.pf`, `HYDRAKATZ.EXE`, `-A0DADA85.pf`, `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975`, `HYDRAKATZ.EXE-27B49502.pf` (+3 more)
+- matched: `60958`, `4736`, `HYDRAKATZ.EXE`, `-27B49502.pf`, `-A0DADA85.pf`, `hydrakatz.exe`, `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975`, `HYDRAKATZ.EXE-A0DADA85.pf` (+3 more)
 - claim: > Deployed to `Windows/System32/hydrakatz.exe` on nromanoff (inode 60958) and `WINDOWS/system32/hydrakatz.exe` on tdungan (inode 4736). Identical SHA256 `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d…
 
 ### ✅ verified _(line 133)_
 - tools: `tsk_icat_extract`, `tsk_fls_list`
 - exec_ids: `577d551822de`, `59dc487be0a4`
-- matched: `9628`, `TopLZAGU.exe`, `-4EFD8FD3.pf`, `TOPLZAGU.EXE`, `0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9`, `TOPLZAGU.EXE-4EFD8FD3.pf`, `Windows/TopLZAGU.exe`
+- matched: `9628`, `TOPLZAGU.EXE`, `TopLZAGU.exe`, `-4EFD8FD3.pf`, `0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9`, `TOPLZAGU.EXE-4EFD8FD3.pf`, `Windows/TopLZAGU.exe`
 - claim: > `Windows/TopLZAGU.exe` (inode 9628) on nromanoff is located in the Windows root directory, outside the standard System32 location used by legitimate OS components. SHA256: `0c8439344e9e2c8cbac86092ec9…
 
 ### ✅ verified _(line 137)_
 - tools: `tsk_icat_extract`, `tsk_fls_list`
 - exec_ids: `b986e0ebbf12`, `d40d5706591a`
-- matched: `5237`, `hyvy.exe`, `-2A94EF14.pf`, `spinlock.exe`, `HYVY.EXE`, `5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232`, `HYVY.EXE-2A94EF14.pf`, `WINDOWS/system32/hyvy.exe`
+- matched: `5237`, `HYVY.EXE`, `hyvy.exe`, `spinlock.exe`, `-2A94EF14.pf`, `5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232`, `HYVY.EXE-2A94EF14.pf`, `WINDOWS/system32/hyvy.exe`
 - claim: > `WINDOWS/system32/hyvy.exe` (inode 5237) on tdungan has a Zone.Identifier ADS confirming it was downloaded from the internet. SHA256: `5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232`…
 
 ### ✅ verified _(line 141)_
@@ -155,7 +166,7 @@
 ### ✅ verified _(line 149)_
 - tools: `tsk_fls_list`
 - exec_ids: `e9e4fe2b1f8b`
-- matched: `spinlock.exe`, `bcwipe5.exe`, `SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe`
+- matched: `bcwipe5.exe`, `spinlock.exe`, `SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe`
 - claim: > `SharedFolders/Public/Security Tools/BC Wipe/bcwipe5.exe` present on DC shared network location, available to all domain hosts. This tool accounts for sdeleted spinlock.exe and other cleaned artifacts…
 
 ### ✅ verified _(line 153)_
@@ -167,12 +178,13 @@
 ### ❓ unverifiable _(line 173)_
 - exec_ids: `d40d5706591a`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an execution ID with a 'CONFIRMED' label but makes no specific factual assertion about file system contents that can be verified against the tsk_fls_list data.
 - claim: > [CONFIRMED — exec_id 019e10f2-bedf-7473-9710-d40d5706591a]
 
 ### ✅ verified _(line 177)_
 - tools: `tsk_fls_list`
 - exec_ids: `d40d5706591a`
-- matched: `Credit-Card-Numbers-For-Research.xls`, `CC-Backstopped-Accounts.xlsx`, ` and `
+- matched: `CC-Backstopped-Accounts.xlsx`, `Credit-Card-Numbers-For-Research.xls`, ` and `
 - claim: > `Documents and Settings/tdungan/My Documents/Backstopped Accounts - R&D Costs Alloy Research/Credit-Card-Numbers-For-Research.xls` and `CC-Backstopped-Accounts.xlsx` are present on tdungan's disk. [CO…
 
 ### ✅ verified _(line 179)_
@@ -184,13 +196,13 @@
 ### ✅ verified _(line 185)_
 - tools: `tsk_fls_list`
 - exec_ids: `d40d5706591a`
-- matched: `-126FAE33.pf`, `Labs.docx`, `DROPBOX.EXE`, `CCleaner.exe`, `DROPBOX.EXE-126FAE33.pf`, `Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx`, `Documents and Settings/tdungan/Application Data/Dropbox/`
+- matched: `Labs.docx`, `DROPBOX.EXE`, `-126FAE33.pf`, `CCleaner.exe`, `Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx`, `Documents and Settings/tdungan/Application Data/Dropbox/`, `DROPBOX.EXE-126FAE33.pf`
 - claim: > Dropbox installed at `Documents and Settings/tdungan/Application Data/Dropbox/`. The attacker staged `Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx` in the Dropbox sync …
 
 ### ✅ verified _(line 189)_
 - tools: `tsk_fls_list`
 - exec_ids: `d40d5706591a`
-- matched: `-2C9C69B1.pf`, `ZIPPER.EXE`, `-0FFFB5A3.pf`, `FTP.EXE`, `WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf`, `WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf`
+- matched: `FTP.EXE`, `-0FFFB5A3.pf`, `ZIPPER.EXE`, `-2C9C69B1.pf`, `WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf`, `WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf`
 - claim: > `WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf` on tdungan — file archiver executed (binary sdeleted, Prefetch survives). `WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf` on tdungan — Windows native FTP client execut…
 
 ### ✅ verified _(line 193)_
@@ -202,6 +214,7 @@
 ### ❓ unverifiable _(line 212)_
 - exec_ids: `e9e4fe2b1f8b`, `59dc487be0a4`, `d40d5706591a`, `aff5c2a65f83`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim consists only of execution IDs with no specific factual assertion, while the parsed tsk_fls_list data contains file system metadata (file counts, extensions, directory distributions) that cannot verify or refute execution ID identifiers.
 - claim: > [CONFIRMED — exec_id 019e10f2-232c-7363-b17c-e9e4fe2b1f8b, exec_id 019e10f2-80ec-7560-baf3-59dc487be0a4, exec_id 019e10f2-bedf-7473-9710-d40d5706591a, exec_id 019e10fa-e7bf-7e33-8377-aff5c2a65f83]
 
 ### ✅ verified _(line 220)_
@@ -213,7 +226,7 @@
 ### ✅ verified _(line 224)_
 - tools: `tsk_icat_extract`, `tsk_icat_extract`, `tsk_fls_list`, `tsk_fls_list`
 - exec_ids: `dcdae4929196`, `c60439c821bf`, `59dc487be0a4`, `d40d5706591a`
-- matched: `60958`, `4736`, `hydrakatz.exe`, `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975`, `WINDOWS/system32/hydrakatz.exe`, `Windows/System32/hydrakatz.exe`
+- matched: `60958`, `4736`, `hydrakatz.exe`, `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975`, `Windows/System32/hydrakatz.exe`, `WINDOWS/system32/hydrakatz.exe`
 - claim: > `Windows/System32/hydrakatz.exe` on nromanoff (inode 60958) and `WINDOWS/system32/hydrakatz.exe` on tdungan (inode 4736), identical SHA256 `92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a…
 
 ### ✅ verified _(line 228)_

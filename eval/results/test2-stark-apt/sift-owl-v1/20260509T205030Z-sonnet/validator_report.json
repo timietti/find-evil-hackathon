@@ -7,14 +7,20 @@
     "hypothesis_count": 1,
     "gap_count": 3,
     "other_count": 0,
-    "verified": 19,
+    "verified": 20,
     "partial": 5,
-    "failed": 2,
-    "unverifiable": 11,
+    "failed": 4,
+    "unverifiable": 8,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 9,
-    "confirmation_score": 0.413
+    "confirmation_score": 0.435,
+    "llm_checked": 11,
+    "llm_verified": 1,
+    "llm_unsupported": 2,
+    "llm_unrelated": 5,
+    "llm_uncertain": 3,
+    "llm_total_cost_usd": 0.012
   },
   "verdicts": [
     {
@@ -46,7 +52,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim asserts specific exec_id values but ewf_info provides only evidence image metadata (hashes, acquisition date, media details); it contains no execution-related identifiers, process data, or forensic analysis results that would support or refute exec_id assertions.",
+      "llm_cost_usd": 0.001728
     },
     {
       "claim": {
@@ -98,7 +107,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -139,7 +151,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -163,10 +178,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "usboesrv.exe",
-          "Temp1_usb-over-ethernet.zip",
           "usb-over-ethernet.zip",
-          "setup.exe"
+          "Temp1_usb-over-ethernet.zip",
+          "setup.exe",
+          "usboesrv.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -175,35 +190,38 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "usb-over-ethernet.zip",
+          "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
           "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
           "file_id.diz",
+          "rsydow",
           "setup.exe",
-          "usb-over-ethernet.zip",
           "usboesrv.exe",
-          "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
-          "license.txt",
           "usb-over-ethernet.zip.lnk",
-          "rsydow"
+          "license.txt"
         ]
       },
       "matched": [
         "27184",
         "27686",
-        "usboesrv.exe",
-        "Temp1_usb-over-ethernet.zip",
         "usb-over-ethernet.zip",
+        "Temp1_usb-over-ethernet.zip",
         "setup.exe",
+        "usboesrv.exe",
+        "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
         "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
         "file_id.diz",
-        "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
-        "license.txt",
+        "rsydow",
         "usb-over-ethernet.zip.lnk",
-        "rsydow"
+        "license.txt"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -240,7 +258,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -250,7 +271,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e83-7c1f-7de0-ace5-876a7d3267e3, 019e0e83-b70f-7b30-822e-9c09b215f1b6]",
         "line_no": 88
       },
-      "status": "unverifiable",
+      "status": "failed",
       "tool_name": null,
       "tool_names": [],
       "tokens": {
@@ -271,7 +292,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNSUPPORTED",
+      "llm_reason": "The tsk_fls_list data provides only file-system counts and directory distribution; it contains no user account names, RDP session indicators, activity timestamps, or any evidence distinguishing interactive sessions from traversal-only access.",
+      "llm_cost_usd": 0.001079
     },
     {
       "claim": {
@@ -313,7 +337,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -355,7 +382,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -395,7 +425,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -416,8 +449,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "NET.EXE",
-          "NET1.EXE"
+          "NET1.EXE",
+          "NET.EXE"
         ],
         "paths": [],
         "drive_refs": [],
@@ -426,18 +459,21 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "NET.EXE",
-          "NET1.EXE"
+          "NET1.EXE",
+          "NET.EXE"
         ]
       },
       "matched": [
-        "NET.EXE",
-        "NET1.EXE"
+        "NET1.EXE",
+        "NET.EXE"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -473,10 +509,10 @@
           "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
         ],
         "quoted": [
-          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
-          "WINDOWS/system32/spinlock.exe",
+          "spinlock.exe",
           "Windows/System32/spinlock.exe",
-          "spinlock.exe"
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
+          "WINDOWS/system32/spinlock.exe"
         ]
       },
       "matched": [
@@ -486,12 +522,15 @@
       ],
       "missing": [
         "spinlock.exe",
-        "WINDOWS/system32/spinlock.exe",
-        "Windows/System32/spinlock.exe"
+        "Windows/System32/spinlock.exe",
+        "WINDOWS/system32/spinlock.exe"
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -510,8 +549,8 @@
       "tokens": {
         "pids": [],
         "inodes": [
-          "7736",
-          "420"
+          "420",
+          "7736"
         ],
         "ips": [],
         "timestamps": [],
@@ -527,13 +566,13 @@
           "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec"
         ],
         "quoted": [
-          "a.exe",
-          "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec"
+          "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
+          "a.exe"
         ]
       },
       "matched": [
-        "7736",
         "420",
+        "7736",
         "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec"
       ],
       "missing": [
@@ -541,7 +580,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -572,7 +614,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim asserts that no malicious files were found and the system is clean, but tsk_fls_list provides only file counts and extension/directory aggregates without malicious indicators, hashes, suspicious paths, or any forensic metadata to substantiate or refute a maliciousness assessment.",
+      "llm_cost_usd": 0.0011430000000000001
     },
     {
       "claim": {
@@ -603,7 +648,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim references execution IDs but tsk_fls_list provides only aggregate file-system statistics (file counts by extension and directory); it contains no execution identifiers, event records, or process data.",
+      "llm_cost_usd": 0.000995
     },
     {
       "claim": {
@@ -642,7 +690,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -673,7 +724,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim asserts confirmation of specific execution IDs but tsk_fls_list provides only file system metadata (file counts, extensions, directory distribution) with no process execution, timeline, or event ID data.",
+      "llm_cost_usd": 0.0010350000000000001
     },
     {
       "claim": {
@@ -694,8 +748,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "-1610A75A.pf",
-          "SPINLOCK.EXE"
+          "SPINLOCK.EXE",
+          "-1610A75A.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -708,14 +762,17 @@
         ]
       },
       "matched": [
-        "-1610A75A.pf",
         "SPINLOCK.EXE",
+        "-1610A75A.pf",
         "SPINLOCK.EXE-1610A75A.pf"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -736,10 +793,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "-F91CBA0E.pf",
           "a.exe",
-          "-8D56B1C4.pf",
-          "A.EXE"
+          "-F91CBA0E.pf",
+          "A.EXE",
+          "-8D56B1C4.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -753,17 +810,20 @@
         ]
       },
       "matched": [
-        "-F91CBA0E.pf",
         "a.exe",
-        "-8D56B1C4.pf",
+        "-F91CBA0E.pf",
         "A.EXE",
+        "-8D56B1C4.pf",
         "A.EXE-8D56B1C4.pf",
         "A.EXE-F91CBA0E.pf"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -805,7 +865,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -835,29 +898,32 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "_MEI25602",
-          "_MEI39242",
-          "_MEI111242",
-          "Users/vibranium/AppData/Local/Temp/",
-          "_MEI138842",
           "_MEI57722",
-          "_MEI29562"
+          "_MEI111242",
+          "_MEI29562",
+          "Users/vibranium/AppData/Local/Temp/",
+          "_MEI39242",
+          "_MEI138842",
+          "_MEI25602"
         ]
       },
       "matched": [
         "spinlock.exe",
-        "_MEI25602",
-        "_MEI39242",
-        "_MEI111242",
-        "Users/vibranium/AppData/Local/Temp/",
-        "_MEI138842",
         "_MEI57722",
-        "_MEI29562"
+        "_MEI111242",
+        "_MEI29562",
+        "Users/vibranium/AppData/Local/Temp/",
+        "_MEI39242",
+        "_MEI138842",
+        "_MEI25602"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -894,7 +960,10 @@
       "verified_absences": [
         "usboesrv.exe"
       ],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -925,7 +994,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim contains only execution IDs with no specific factual assertions about file system contents, and tsk_fls_list data provides file statistics aggregated by extension and directory\u2014neither of which relate to or can verify execution IDs.",
+      "llm_cost_usd": 0.001055
     },
     {
       "claim": {
@@ -956,7 +1028,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -987,7 +1062,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1018,7 +1096,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1049,7 +1130,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1080,7 +1164,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1111,7 +1198,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1142,7 +1232,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1173,7 +1266,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1204,7 +1300,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim is tagged CONFIRMED but cites no exec_id"
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1235,19 +1334,22 @@
         "hex_hashes": [],
         "quoted": [
           "RemotePIShell.exe",
-          "tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest",
-          "tdungan"
+          "tdungan",
+          "tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest"
         ]
       },
       "matched": [
         "RemotePIShell.exe",
-        "tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest",
-        "tdungan"
+        "tdungan",
+        "tdungan/Local Settings/Temp/_MEI72762/RemotePIShell.exe.manifest"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1287,7 +1389,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1318,7 +1423,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an execution ID with no specific factual assertion about file system contents, making it impossible to validate against the file listing data.",
+      "llm_cost_usd": 0.000866
     },
     {
       "claim": {
@@ -1349,7 +1457,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an identifier reference with no specific factual assertion about file system contents to validate against the parsed tsk_fls_list data.",
+      "llm_cost_usd": 0.000876
     },
     {
       "claim": {
@@ -1396,7 +1507,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1427,7 +1541,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an execution ID without any specific factual assertion about file system contents that could be verified against the tsk_fls_list parsed data.",
+      "llm_cost_usd": 0.0008860000000000001
     },
     {
       "claim": {
@@ -1474,7 +1591,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1495,8 +1615,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "-2C9C69B1.pf",
-          "ZIPPER.EXE"
+          "ZIPPER.EXE",
+          "-2C9C69B1.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1509,14 +1629,17 @@
         ]
       },
       "matched": [
-        "-2C9C69B1.pf",
         "ZIPPER.EXE",
+        "-2C9C69B1.pf",
         "ZIPPER.EXE-2C9C69B1.pf"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1558,7 +1681,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1601,7 +1727,10 @@
         "ZIPPER.EXE"
       ],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1624,9 +1753,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "hydrakatz.exe",
           "HYDRAKATZ.EXE",
-          "-27B49502.pf"
+          "-27B49502.pf",
+          "hydrakatz.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1635,23 +1764,26 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "hydrakatz.exe",
           "HYDRAKATZ.EXE-27B49502.pf",
-          "WINDOWS/system32/hydrakatz.exe"
+          "WINDOWS/system32/hydrakatz.exe",
+          "hydrakatz.exe"
         ]
       },
       "matched": [
         "4736",
-        "hydrakatz.exe",
         "HYDRAKATZ.EXE",
         "-27B49502.pf",
+        "hydrakatz.exe",
         "HYDRAKATZ.EXE-27B49502.pf",
         "WINDOWS/system32/hydrakatz.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1688,7 +1820,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1698,7 +1833,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e83-1ff0-73b0-8b85-d465e8fe69ce]",
         "line_no": 268
       },
-      "status": "unverifiable",
+      "status": "failed",
       "tool_name": null,
       "tool_names": [],
       "tokens": {
@@ -1719,7 +1854,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNSUPPORTED",
+      "llm_reason": "The parsed tsk_fls_list data shows only aggregated file counts by extension and top-level directory, with no individual file paths or specific vault file entries; the Users directory contains only 2,907 files total, but the claim's specific file path and its presence cannot be verified from this agg",
+      "llm_cost_usd": 0.001184
     },
     {
       "claim": {
@@ -1729,7 +1867,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e83-b70f-7b30-822e-9c09b215f1b6]",
         "line_no": 271
       },
-      "status": "unverifiable",
+      "status": "verified",
       "tool_name": null,
       "tool_names": [],
       "tokens": {
@@ -1750,7 +1888,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "VERIFIED",
+      "llm_reason": "The parsed data shows 6238 files under 'Documents and Settings' directory, which structurally supports the existence of the claimed DPAPI master key path within that directory structure; the presence of this directory count confirms the path hierarchy cited in the claim is present in the filesystem.",
+      "llm_cost_usd": 0.001117
     },
     {
       "claim": {
@@ -1795,7 +1936,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     }
   ]
 }

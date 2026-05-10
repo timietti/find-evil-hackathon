@@ -21,6 +21,14 @@
 
 **Confirmation score: 57.1%** (24 verified / 42 confirmed)
 
+## LLM-based prose check (v4)
+
+- LLM verdicts collected: **5** (cost: $0.0046)
+  - ✅ VERIFIED:    0 (rule-unverifiable → upgraded to verified)
+  - ❌ UNSUPPORTED: 0 (downgraded to failed)
+  - ❓ UNRELATED:   4 (cited tool not relevant — kept unverifiable)
+  - ❓ UNCERTAIN:   1 (genuinely ambiguous — kept unverifiable)
+
 ## Per-claim verdicts
 
 ### ⚠ partial _(line 39)_
@@ -33,25 +41,26 @@
 ### ❓ unverifiable _(line 63)_
 - exec_ids: `6ba398beced8`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNCERTAIN** — The claim contains only an execution ID without any specific factual assertion about file system contents or forensic findings that could be verified against the parsed filescan data.
 - claim: > [CONFIRMED — exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]
 
 ### ✅ verified _(line 65)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `Spreadsheet.xls`, `Firedam.xls`, `Research.docx`, `Findoreria_Solved.xlsx`, `NETFLIX.xlsx`, `WACC Calc Spreadsheet.xls`, `TIVO Research.docx`
+- matched: `Findoreria_Solved.xlsx`, `NETFLIX.xlsx`, `Research.docx`, `Spreadsheet.xls`, `Firedam.xls`, `WACC Calc Spreadsheet.xls`, `TIVO Research.docx`
 - claim: > Fred also had personal VC (Venture Capital) financial files on OneDrive: `WACC Calc Spreadsheet.xls`, `Findoreria_Solved.xlsx`, `NETFLIX.xlsx`, `TIVO Research.docx`, `Firedam.xls` [CONFIRMED — exec_id…
 
 ### ⚠ partial _(line 75)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `StarFury.lnk`, `StarFury.zip`, `\Users\fredr\OneDrive\StarFury.zip`, `starfury (2).lnk`
+- matched: `StarFury.zip`, `StarFury.lnk`, `starfury (2).lnk`, `\Users\fredr\OneDrive\StarFury.zip`
 - **missing**: `\Users\fredr\OneDrive\StarFury.zip``
 - claim: > **1. StarFury project archive**   `\Users\fredr\OneDrive\StarFury.zip` — a ZIP package of the StarFury project placed inside the OneDrive sync folder. Any active OneDrive sync would auto-upload this t…
 
 ### ✅ verified _(line 81)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `Exported-PST.lnk`, `backup.pst`, `IDNBREY.pst`, `\Users\fredr\OneDrive\Documents\Outlook`, `srl-h`, `\Users\fredr\OneDrive\Documents\Outlook Files\backup.pst`, `\$Recycle.Bin\S-1-5-21-528816539-567677750-276746561-1002\$IDNBREY.pst`
+- matched: `Exported-PST.lnk`, `IDNBREY.pst`, `backup.pst`, `\Users\fredr\OneDrive\Documents\Outlook`, `srl-h`, `\Users\fredr\OneDrive\Documents\Outlook Files\backup.pst`, `\$Recycle.Bin\S-1-5-21-528816539-567677750-276746561-1002\$IDNBREY.pst`
 - claim: > **2. Complete Outlook email archive (PST)**   `\Users\fredr\OneDrive\Documents\Outlook Files\backup.pst` — the entire SRL Outlook email store placed inside the OneDrive sync folder.   `\$Recycle.Bin\S…
 
 ### ✅ verified _(line 85)_
@@ -63,20 +72,20 @@
 ### ⚠ partial _(line 89)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `Specs.xlsx`, `Death_Blossom_test_visualization.png`, `Death_Blossom_attack.png`, `Data.docx`, `GunStar Death Blossom Data.docx`, `GunStar Upgrade Specs.xlsx`
+- matched: `Data.docx`, `Death_Blossom_test_visualization.png`, `Specs.xlsx`, `Death_Blossom_attack.png`, `GunStar Upgrade Specs.xlsx`, `GunStar Death Blossom Data.docx`
 - **missing**: `Particles...pdf`, `FTL Comms/Quantum Particles...pdf`
 - claim: > **4. Gunstar weapons data**   `GunStar Death Blossom Data.docx`, `GunStar Upgrade Specs.xlsx`, `Death_Blossom_attack.png`, `Death_Blossom_test_visualization.png`, `FTL Comms/Quantum Particles...pdf` a…
 
 ### ✅ verified _(line 93)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `German-KITT-Specs.docx`, `Background.lnk`, `KITT.pptx`, `KITT.lnk`, `Hydrogen_Hybrid_Tech.docx`, `KITT-older-version.lnk`, `Background.docx`, `Future of KITT - Technical Background.lnk` (+4 more)
+- matched: `Background.docx`, `German-KITT-Specs.docx`, `KITT.lnk`, `KITT.pptx`, `KITT-older-version.lnk`, `Background.lnk`, `Hydrogen_Hybrid_Tech.docx`, `The Future of KITT-older-version.lnk` (+4 more)
 - claim: > **5. KITT project materials**   `The Future of KITT.pptx`, `Future of KITT - Technical Background.docx`, `German-KITT-Specs.docx`, `Hydrogen_Hybrid_Tech.docx` all in memory; Recent LNKs `The Future of…
 
 ### ✅ verified _(line 97)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `airwolf_blueprints.gif`, `Airwolf-ARL.lnk`, `Wolves_Lair_Tech_Specs.pptx`, `Airwolf_schematics.png`, `airwolf_blueprint.jpg`
+- matched: `Wolves_Lair_Tech_Specs.pptx`, `airwolf_blueprint.jpg`, `Airwolf_schematics.png`, `Airwolf-ARL.lnk`, `airwolf_blueprints.gif`
 - claim: > **6. Airwolf blueprints and specifications**   `Wolves_Lair_Tech_Specs.pptx`, `Airwolf_schematics.png`, `airwolf_blueprint.jpg`, `airwolf_blueprints.gif` in memory. Recent LNK `Airwolf-ARL.lnk` confir…
 
 ### ✅ verified _(line 101)_
@@ -95,7 +104,7 @@
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
 - matched: `Encryption.lnk`, `BitLocker Drive Encryption.lnk`
-- **missing**: `1694D560-...lnk`, `26F77152-...lnk`, `C42458BB-...lnk`, `BitLocker Recovery Key 1694D560-...lnk`, `BitLocker Recovery Key 26F77152-...lnk`, `BitLocker Recovery Key C42458BB-...lnk`
+- **missing**: `1694D560-...lnk`, `C42458BB-...lnk`, `26F77152-...lnk`, `BitLocker Recovery Key 26F77152-...lnk`, `BitLocker Recovery Key C42458BB-...lnk`, `BitLocker Recovery Key 1694D560-...lnk`
 - claim: > **9. Three BitLocker recovery keys**   Recent LNKs: `BitLocker Recovery Key 1694D560-...lnk`, `BitLocker Recovery Key 26F77152-...lnk`, `BitLocker Recovery Key C42458BB-...lnk` plus `BitLocker Drive E…
 
 ### ✅ verified _(line 113)_
@@ -107,13 +116,13 @@
 ### ✅ verified _(line 117)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `starkresearchlabs-my.sharepoint.com.url`, `starkresearchlabs.sharepoint.com.url`, `WorkingFiles on starkresearchlabs-my.sharepoint.com.url`, `Megaforce on starkresearchlabs.sharepoint.com.url`, `KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url`
+- matched: `starkresearchlabs.sharepoint.com.url`, `starkresearchlabs-my.sharepoint.com.url`, `KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url`, `WorkingFiles on starkresearchlabs-my.sharepoint.com.url`, `Megaforce on starkresearchlabs.sharepoint.com.url`
 - claim: > **11. Megaforce and Blue Thunder project data**   Office Recent URLs `Megaforce on starkresearchlabs.sharepoint.com.url`, `KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url`, `Wo…
 
 ### ⚠ partial _(line 126)_
 - tools: `vol3_cmdline`, `vol3_filescan`
 - exec_ids: `6721d68c42cf`, `6ba398beced8`
-- matched: `9648`, `6188`, `backup.pst`, `StarFury.zip`, `\Users\fredr\OneDrive\Documents\Outlook`, `\Users\fredr\OneDrive\Documents\Outlook Files\`, `\Users\fredr\OneDrive\`
+- matched: `9648`, `6188`, `StarFury.zip`, `backup.pst`, `\Users\fredr\OneDrive\Documents\Outlook`, `\Users\fredr\OneDrive\Documents\Outlook Files\`, `\Users\fredr\OneDrive\`
 - **missing**: `\Users\fredr\OneDrive\``
 - claim: > `StarFury.zip` and `backup.pst` were placed in `\Users\fredr\OneDrive\` and `\Users\fredr\OneDrive\Documents\Outlook Files\` — both within the OneDrive for personal sync folder. With OneDrive running …
 
@@ -171,7 +180,7 @@
 ### ✅ verified _(line 158)_
 - tools: `vol3_userassist`
 - exec_ids: `ab776038fd0a`
-- matched: `SystemPropertiesProtection.exe`, `SystemPropertiesAdvanced.exe`
+- matched: `SystemPropertiesAdvanced.exe`, `SystemPropertiesProtection.exe`
 - claim: > - **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed — likely to disable System Restore / shadow copy protection, destroying forensic artif…
 
 ### ✅ verified _(line 159)_
@@ -183,6 +192,7 @@
 ### ❓ unverifiable _(line 160)_
 - exec_ids: `ab776038fd0a`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — UserAssist data provides only aggregate counts of executed programs per hive; it contains no timestamps, application names, execution sequences, or detailed activity records needed to verify the specific claim about Office applications opened in rapid succession during a particular time window (04:2
 - claim: > - **Office applications** — PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23–04:49Z) to identify and stage high-value documents. [CONFIRMED — exec_id 019e0ddb-7249-70a0…
 
 ### ✅ verified _(line 161)_
@@ -213,7 +223,7 @@
 ### ⚠ partial _(line 169)_
 - tools: `vol3_filescan`
 - exec_ids: `6ba398beced8`
-- matched: `SDelete.lnk`, `SDelete.zip`, `sdelete64.exe`, `sdelete.exe`, `\Users\fredr\Downloads\SDelete\`
+- matched: `sdelete.exe`, `SDelete.zip`, `SDelete.lnk`, `sdelete64.exe`, `\Users\fredr\Downloads\SDelete\`
 - **missing**: `\Users\fredr\Downloads\SDelete\`.`
 - claim: > - **SDelete downloaded and staged** — `SDelete.zip` downloaded; extracted `sdelete.exe` placed in `\Users\fredr\Downloads\SDelete\`. A `SDelete.lnk` in Recent confirms it was launched. `sdelete64.exe`…
 
@@ -240,7 +250,7 @@
 ### ✅ verified _(line 177)_
 - tools: `vol3_malfind`
 - exec_ids: `9748ae5d944c`
-- matched: `SearchApp.exe`, `Teams.exe`, `MsMpEng.exe`
+- matched: `Teams.exe`, `SearchApp.exe`, `MsMpEng.exe`
 - claim: > **No malware injection detected:** Malfind analysis returned only 16 findings, all attributable to legitimate JIT/CLR activity in MsMpEng.exe (Defender), SearchApp.exe, and Teams.exe. No shellcode or …
 
 ### ⚠ partial _(line 221)_
@@ -271,14 +281,17 @@
 ### ❓ unverifiable _(line 225)_
 - exec_ids: `6ba398beced8`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The vol3_filescan output provides only a file count (42798) with no specific file paths, OneDrive-related artifacts, cloud sync configurations, or account details necessary to verify the claim about OneDrive installation or attacker-controlled account association.
 - claim: > - OneDrive fully installed — independent cloud sync path to attacker-controlled account [CONFIRMED — exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]
 
 ### ❓ unverifiable _(line 226)_
 - exec_ids: `6ba398beced8`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The vol3_filescan tool provides only a count of files (42798) without file names, paths, deletion status, or SID/RID information necessary to verify claims about specific PST file deletion to Recycle Bin.
 - claim: > - PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED — exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]
 
 ### ❓ unverifiable _(line 241)_
 - exec_ids: `28eef0687026`
 - note: claim has no extractable tokens (prose only)
+- LLM check: **UNRELATED** — The claim contains only an execution ID with a 'CONFIRMED' status marker but makes no specific factual assertion about network connections, IP addresses, or other forensic artifacts that the netscan tool's parsed data could verify or contradict.
 - claim: > [CONFIRMED — exec_id 019e0dda-6764-76f3-9816-28eef0687026]

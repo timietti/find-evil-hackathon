@@ -14,7 +14,13 @@
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.333
+    "confirmation_score": 0.333,
+    "llm_checked": 7,
+    "llm_verified": 0,
+    "llm_unsupported": 0,
+    "llm_unrelated": 3,
+    "llm_uncertain": 4,
+    "llm_total_cost_usd": 0.0102
   },
   "verdicts": [
     {
@@ -32,8 +38,8 @@
       ],
       "tokens": {
         "pids": [
-          "27304",
-          "556"
+          "556",
+          "27304"
         ],
         "inodes": [],
         "ips": [],
@@ -41,8 +47,8 @@
           "2012-03-20T17:58:12Z"
         ],
         "filenames": [
-          "services.exe",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "services.exe"
         ],
         "paths": [
           "\\Windows\\system32\\usboesrv.exe`"
@@ -55,17 +61,17 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "usboesrv.exe",
           "C:\\Windows\\system32\\usboesrv.exe",
-          "services.exe",
-          "usboesrv.exe"
+          "services.exe"
         ]
       },
       "matched": [
-        "27304",
         "556",
+        "27304",
         "2012-03-20T17:58:12Z",
-        "services.exe",
-        "usboesrv.exe"
+        "usboesrv.exe",
+        "services.exe"
       ],
       "missing": [
         "\\Windows\\system32\\usboesrv.exe`",
@@ -74,7 +80,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -94,8 +103,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "96.255.98.154",
-          "10.3.58.4"
+          "10.3.58.4",
+          "96.255.98.154"
         ],
         "timestamps": [],
         "filenames": [
@@ -112,14 +121,17 @@
         ]
       },
       "matched": [
-        "96.255.98.154",
         "10.3.58.4",
+        "96.255.98.154",
         "usboesrv.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -154,19 +166,19 @@
         "hex_hashes": [],
         "quoted": [
           "SERVICE_DEMAND_START",
+          "C:\\Windows\\system32\\usboesrv.exe",
           "\\Driver\\usboebusdrv",
           "\\Driver\\usboeloaderdrv",
-          "SERVICE_AUTO_START",
-          "C:\\Windows\\system32\\usboesrv.exe"
+          "SERVICE_AUTO_START"
         ]
       },
       "matched": [
         "usboesrv.exe",
         "SERVICE_DEMAND_START",
+        "C:\\Windows\\system32\\usboesrv.exe",
         "\\Driver\\usboebusdrv",
         "\\Driver\\usboeloaderdrv",
-        "SERVICE_AUTO_START",
-        "C:\\Windows\\system32\\usboesrv.exe"
+        "SERVICE_AUTO_START"
       ],
       "missing": [
         "\\Windows\\system32\\usboesrv.exe`",
@@ -174,7 +186,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -218,7 +233,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -249,7 +267,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only a confirmation ID with no specific factual assertion about UserAssist data (execution artifacts, programs run, timestamps, or user activity) to validate against the parsed summary statistics.",
+      "llm_cost_usd": 0.000772
     },
     {
       "claim": {
@@ -273,18 +294,18 @@
         "timestamps": [
           "2012-04-05T22:23:04Z",
           "2012-03-20T18:54:16Z",
-          "2012-03-20T17:57:33Z",
-          "2012-03-20T17:56:42Z"
+          "2012-03-20T17:56:42Z",
+          "2012-03-20T17:57:33Z"
         ],
         "filenames": [
-          "usboe.exe",
-          "hMailAdmin.exe",
-          "Tcpview.exe",
           "sdelete.exe",
-          "Temp1_usb-over-ethernet.zip",
-          "setup.exe",
           "usboesrv.exe",
-          "powershell.exe"
+          "Temp1_usb-over-ethernet.zip",
+          "powershell.exe",
+          "hMailAdmin.exe",
+          "setup.exe",
+          "Tcpview.exe",
+          "usboe.exe"
         ],
         "paths": [
           "\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`"
@@ -300,38 +321,38 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Microsoft.Windows.RemoteDesktop",
-          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
-          "C:\\Tools\\SysInternals\\Tcpview.exe",
-          "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
           "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
+          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
           "C:\\Tools\\SysInternals\\sdelete.exe",
-          "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
           "rsydow",
-          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe"
+          "C:\\Tools\\SysInternals\\Tcpview.exe",
+          "Microsoft.Windows.RemoteDesktop",
+          "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe"
         ]
       },
       "matched": [
         "4.0.0.3",
         "2012-04-05T22:23:04Z",
         "2012-03-20T18:54:16Z",
-        "2012-03-20T17:57:33Z",
         "2012-03-20T17:56:42Z",
-        "usboe.exe",
-        "hMailAdmin.exe",
-        "Tcpview.exe",
+        "2012-03-20T17:57:33Z",
         "sdelete.exe",
         "Temp1_usb-over-ethernet.zip",
-        "setup.exe",
         "powershell.exe",
+        "hMailAdmin.exe",
+        "setup.exe",
+        "Tcpview.exe",
+        "usboe.exe",
         "P:\\Security",
-        "Microsoft.Windows.RemoteDesktop",
         "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        "C:\\Tools\\SysInternals\\Tcpview.exe",
         "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
         "C:\\Tools\\SysInternals\\sdelete.exe",
-        "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-        "rsydow"
+        "rsydow",
+        "C:\\Tools\\SysInternals\\Tcpview.exe",
+        "Microsoft.Windows.RemoteDesktop",
+        "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe"
       ],
       "missing": [
         "usboesrv.exe",
@@ -344,7 +365,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -361,12 +385,12 @@
       ],
       "tokens": {
         "pids": [
-          "137496",
-          "8512",
-          "151132",
           "138320",
           "148904",
-          "139776"
+          "137496",
+          "139776",
+          "151132",
+          "8512"
         ],
         "inodes": [],
         "ips": [],
@@ -374,14 +398,14 @@
           "2012-04-04T18:55:57Z"
         ],
         "filenames": [
-          "explorer.exe",
-          "winlogon.exe",
-          "cmd.exe",
           "taskmgr.exe",
-          "VMwareUser.exe",
+          "winlogon.exe",
           "rdpclip.exe",
+          "femc.exe",
+          "cmd.exe",
           "VMwareTray.exe",
-          "femc.exe"
+          "VMwareUser.exe",
+          "explorer.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -390,37 +414,40 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "explorer.exe",
-          "winlogon.exe",
-          "cmd.exe",
           "taskmgr.exe",
-          "VMwareUser.exe",
+          "winlogon.exe",
           "rdpclip.exe",
+          "femc.exe",
+          "cmd.exe",
           "VMwareTray.exe",
-          "femc.exe"
+          "VMwareUser.exe",
+          "explorer.exe"
         ]
       },
       "matched": [
-        "137496",
-        "8512",
-        "151132",
         "138320",
         "148904",
+        "137496",
         "139776",
+        "151132",
+        "8512",
         "2012-04-04T18:55:57Z",
-        "explorer.exe",
-        "winlogon.exe",
-        "cmd.exe",
         "taskmgr.exe",
-        "VMwareUser.exe",
+        "winlogon.exe",
         "rdpclip.exe",
+        "femc.exe",
+        "cmd.exe",
         "VMwareTray.exe",
-        "femc.exe"
+        "VMwareUser.exe",
+        "explorer.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -439,8 +466,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "10.3.16.5",
-          "10.3.58.4"
+          "10.3.58.4",
+          "10.3.16.5"
         ],
         "timestamps": [],
         "filenames": [],
@@ -455,15 +482,18 @@
         ]
       },
       "matched": [
-        "10.3.16.5",
-        "10.3.58.4"
+        "10.3.58.4",
+        "10.3.16.5"
       ],
       "missing": [
         "10.3.58.4:3389 \u2190 10.3.16.5:46758"
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -494,7 +524,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim references an exec_id identifier with no substantive assertion, while the netscan data contains only foreign IP connection counts with no exec_id or execution-related fields.",
+      "llm_cost_usd": 0.001181
     },
     {
       "claim": {
@@ -525,7 +558,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only a confirmation marker with an execution ID but makes no specific factual assertion about the malfind data that can be verified or refuted.",
+      "llm_cost_usd": 0.002992
     },
     {
       "claim": {
@@ -567,7 +603,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -586,8 +625,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "10.3.58.5",
-          "10.3.58.9"
+          "10.3.58.9",
+          "10.3.58.5"
         ],
         "timestamps": [],
         "filenames": [
@@ -602,14 +641,17 @@
         "quoted": []
       },
       "matched": [
-        "10.3.58.5",
         "10.3.58.9",
+        "10.3.58.5",
         "lsass.exe"
       ],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -650,7 +692,10 @@
         "UdaterUI.exe",
         "spinlock.exe"
       ],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -681,7 +726,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an execution identifier with no specific factual assertion about network connections, foreign IPs, or other forensic data that could be verified against the netscan output.",
+      "llm_cost_usd": 0.000757
     },
     {
       "claim": {
@@ -712,7 +760,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an execution ID identifier with no specific factual assertion about process names, timestamps, file paths, or other forensic artifacts that can be verified against the vol3_psscan parsed data.",
+      "llm_cost_usd": 0.001985
     },
     {
       "claim": {
@@ -744,8 +795,8 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "FrameworkServic",
-          "UdaterUI.exe"
+          "UdaterUI.exe",
+          "FrameworkServic"
         ]
       },
       "matched": [
@@ -756,7 +807,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -776,8 +830,8 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
-          "2012-04-05T17:16Z",
-          "2012-04-04T18:31Z"
+          "2012-04-04T18:31Z",
+          "2012-04-05T17:16Z"
         ],
         "filenames": [
           "spinlock.exe"
@@ -801,7 +855,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -832,7 +889,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim cites an exec_id identifier with no specific factual assertion about network connections, while vol3_netscan data contains only foreign IP addresses and connection counts with no exec_id field or matching identifiers.",
+      "llm_cost_usd": 0.001226
     },
     {
       "claim": {
@@ -873,7 +933,10 @@
         "spinlock.exe",
         "spinlock"
       ],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -906,8 +969,8 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "96.255.98.154:29932",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "96.255.98.154:29932"
         ]
       },
       "matched": [
@@ -919,7 +982,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -960,7 +1026,10 @@
       ],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1008,7 +1077,10 @@
         "spinlock.exe"
       ],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1045,7 +1117,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
     },
     {
       "claim": {
@@ -1076,7 +1151,10 @@
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": "claim has no extractable tokens (prose only)"
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim asserts credential theft mechanisms with a specific exec_id, but vol3_netscan parsed data contains only network connection statistics (IP counts) with no fields related to credential theft, process execution IDs, or forensic indicators of credential compromise.",
+      "llm_cost_usd": 0.001269
     }
   ]
 }
