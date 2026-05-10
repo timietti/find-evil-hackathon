@@ -80,15 +80,27 @@ def split_sentences(text: str) -> list[str]:
     return [p.strip() for p in parts if p.strip()]
 
 
+_RE_PARENTHETICAL = re.compile(r"\([^)]*\)")
+
+
 def is_negated_sentence(sentence: str) -> bool:
     """True if the sentence contains a negation cue.
+
+    Strips parenthetical content first — phrases like
+    "EXFIL.pst is on tdungan (not DC)" have a "not" inside the parens that
+    applies to the parenthetical exception, not the main clause's subject.
+    Without this strip, every token in such sentences would be flagged as
+    negated, producing false negation_violations.
 
     Trade-off: simple lexical detection. Misses ironic / double-negation
     constructions, but those are vanishingly rare in DFIR reports. Catches
     the common patterns: "no spinlock service", "X was not found",
     "absent from filesystem", "never executed".
     """
-    return bool(_RE_NEGATION.search(sentence or ""))
+    if not sentence:
+        return False
+    cleaned = _RE_PARENTHETICAL.sub("", sentence)
+    return bool(_RE_NEGATION.search(cleaned))
 
 
 def token_is_negated_in(claim_text: str, token: str) -> bool:

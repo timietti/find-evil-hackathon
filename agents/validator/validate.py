@@ -107,20 +107,40 @@ def parse_claims(report_text: str) -> list[Claim]:
 
     claims: list[Claim] = []
     for para, start in paragraphs:
-        for m in _RE_TAG.finditer(para):
+        tags = list(_RE_TAG.finditer(para))
+        if not tags:
+            continue
+
+        # Per-tag text policy:
+        #   - 1 tag in paragraph  → use the WHOLE paragraph as the claim text
+        #     (v2 behaviour). Many agent reports place a single citation tag
+        #     at the end of the paragraph that asserts the claim.
+        #   - 2+ tags in paragraph → each Claim's text is the slice from the
+        #     previous tag's end (or paragraph start) to this tag's end. This
+        #     stops sibling claims from polluting each other's tokens
+        #     (failure type #1 from the EZ-Tool run COMPARISON.md).
+        is_multi_tag = len(tags) > 1
+        prev_end = 0
+        for m in tags:
             tag = m.group(1).upper()
             body = m.group(2) or ""
             exec_ids = _RE_EXEC_ID.findall(body)
             primary = exec_ids[0] if exec_ids else None
+
+            if is_multi_tag:
+                claim_text = para[prev_end : m.end()].strip()
+            else:
+                claim_text = para
             offset_lines = para[: m.start()].count("\n")
             claims.append(Claim(
                 tag=tag,
                 exec_id=primary,
                 exec_ids=exec_ids,
-                text=para,
+                text=claim_text,
                 raw_match=m.group(0),
                 line_no=start + offset_lines,
             ))
+            prev_end = m.end()
     return claims
 
 
@@ -154,6 +174,38 @@ class ClaimVerdict:
             "line_no":   self.claim.line_no,
         }
         return d
+
+
+_RE_HAYSTACK_TIMESTAMP = re.compile(
+    r"\b(\d{4}-\d{2}-\d{2}t\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?z?)\b"
+)
+
+
+def _token_in_haystack(token: str, haystack: str) -> bool:
+    """Substring match with two extensions for forensic prose.
+
+    1. **Plain substring** (default). Token is already lower-cased.
+    2. **ISO timestamp prefix match**. Agents quote timestamps at coarser
+       precision than the underlying tool stores ("T23:09Z" claim vs
+       "T23:09:14.123Z" data). If `token` looks like an ISO timestamp,
+       strip its trailing "z" (UTC suffix sits flush against minute-precision)
+       and check whether any haystack timestamp's prefix matches the
+       stripped token.
+
+       So claim `"2012-04-03T23:09Z"` → strip `z` → `"2012-04-03t23:09"`,
+       and haystack timestamp `"2012-04-03t23:09:14z"` starts with that → match.
+    """
+    if token in haystack:
+        return True
+    # Cheap pre-check: timestamp tokens contain a dash + 'T' + ':'.
+    if "-" in token and "t" in token and ":" in token:
+        # Strip the trailing UTC marker so a coarser-precision claim's
+        # timestamp can prefix-match a finer-precision haystack value.
+        token_root = token.rstrip("z")
+        for m in _RE_HAYSTACK_TIMESTAMP.finditer(haystack):
+            if m.group(1).startswith(token_root):
+                return True
+    return False
 
 
 def _flatten_to_searchable(parsed: dict[str, Any]) -> str:
@@ -222,7 +274,7 @@ def verify_claim_against_parsed(
 
     for tok in tokens.all():
         tlow = tok.lower()
-        present_in_any = any(tlow in h for _, h in haystacks)
+        present_in_any = any(_token_in_haystack(tlow, h) for _, h in haystacks)
         is_negated = token_is_negated_in(claim.text, tok)
 
         if is_negated:

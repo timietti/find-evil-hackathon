@@ -7,14 +7,14 @@
     "hypothesis_count": 1,
     "gap_count": 17,
     "other_count": 0,
-    "verified": 7,
-    "partial": 15,
+    "verified": 8,
+    "partial": 9,
     "failed": 0,
-    "unverifiable": 2,
+    "unverifiable": 7,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.292
+    "confirmation_score": 0.333
   },
   "verdicts": [
     {
@@ -32,8 +32,8 @@
       ],
       "tokens": {
         "pids": [
-          "556",
-          "27304"
+          "27304",
+          "556"
         ],
         "inodes": [],
         "ips": [],
@@ -55,14 +55,14 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "C:\\Windows\\system32\\usboesrv.exe",
           "services.exe",
-          "usboesrv.exe",
-          "C:\\Windows\\system32\\usboesrv.exe"
+          "usboesrv.exe"
         ]
       },
       "matched": [
-        "556",
         "27304",
+        "556",
         "2012-03-20T17:58:12Z",
         "services.exe",
         "usboesrv.exe"
@@ -94,8 +94,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "10.3.58.4",
-          "96.255.98.154"
+          "96.255.98.154",
+          "10.3.58.4"
         ],
         "timestamps": [],
         "filenames": [
@@ -112,8 +112,8 @@
         ]
       },
       "matched": [
-        "10.3.58.4",
         "96.255.98.154",
+        "10.3.58.4",
         "usboesrv.exe"
       ],
       "missing": [],
@@ -153,20 +153,20 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "C:\\Windows\\system32\\usboesrv.exe",
           "SERVICE_DEMAND_START",
           "\\Driver\\usboebusdrv",
+          "\\Driver\\usboeloaderdrv",
           "SERVICE_AUTO_START",
-          "\\Driver\\usboeloaderdrv"
+          "C:\\Windows\\system32\\usboesrv.exe"
         ]
       },
       "matched": [
         "usboesrv.exe",
-        "C:\\Windows\\system32\\usboesrv.exe",
         "SERVICE_DEMAND_START",
         "\\Driver\\usboebusdrv",
+        "\\Driver\\usboeloaderdrv",
         "SERVICE_AUTO_START",
-        "\\Driver\\usboeloaderdrv"
+        "C:\\Windows\\system32\\usboesrv.exe"
       ],
       "missing": [
         "\\Windows\\system32\\usboesrv.exe`",
@@ -271,28 +271,28 @@
           "4.0.0.3"
         ],
         "timestamps": [
-          "2012-03-20T17:56:42Z",
-          "2012-03-20T18:54:16Z",
           "2012-04-05T22:23:04Z",
-          "2012-03-20T17:57:33Z"
+          "2012-03-20T18:54:16Z",
+          "2012-03-20T17:57:33Z",
+          "2012-03-20T17:56:42Z"
         ],
         "filenames": [
-          "powershell.exe",
           "usboe.exe",
-          "setup.exe",
           "hMailAdmin.exe",
           "Tcpview.exe",
-          "usboesrv.exe",
           "sdelete.exe",
-          "Temp1_usb-over-ethernet.zip"
+          "Temp1_usb-over-ethernet.zip",
+          "setup.exe",
+          "usboesrv.exe",
+          "powershell.exe"
         ],
         "paths": [
           "\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`"
         ],
         "drive_refs": [
           "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`",
-          "C:\\Tools\\SysInternals\\sdelete.exe`",
           "C:\\Tools\\SysInternals\\Tcpview.exe`",
+          "C:\\Tools\\SysInternals\\sdelete.exe`",
           "P:\\Security"
         ],
         "brace_guids": [],
@@ -301,46 +301,46 @@
         "hex_hashes": [],
         "quoted": [
           "Microsoft.Windows.RemoteDesktop",
-          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
-          "rsydow",
-          "C:\\Tools\\SysInternals\\sdelete.exe",
+          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
           "C:\\Tools\\SysInternals\\Tcpview.exe",
           "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+          "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
+          "C:\\Tools\\SysInternals\\sdelete.exe",
           "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
-          "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe"
+          "rsydow",
+          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe"
         ]
       },
       "matched": [
         "4.0.0.3",
-        "2012-03-20T17:56:42Z",
-        "2012-03-20T18:54:16Z",
         "2012-04-05T22:23:04Z",
+        "2012-03-20T18:54:16Z",
         "2012-03-20T17:57:33Z",
-        "powershell.exe",
+        "2012-03-20T17:56:42Z",
         "usboe.exe",
-        "setup.exe",
         "hMailAdmin.exe",
         "Tcpview.exe",
         "sdelete.exe",
         "Temp1_usb-over-ethernet.zip",
+        "setup.exe",
+        "powershell.exe",
         "P:\\Security",
         "Microsoft.Windows.RemoteDesktop",
-        "rsydow",
-        "C:\\Tools\\SysInternals\\sdelete.exe",
+        "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
         "C:\\Tools\\SysInternals\\Tcpview.exe",
         "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+        "C:\\Tools\\SysInternals\\sdelete.exe",
         "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-        "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+        "rsydow"
       ],
       "missing": [
         "usboesrv.exe",
         "\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`",
         "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`",
-        "C:\\Tools\\SysInternals\\sdelete.exe`",
         "C:\\Tools\\SysInternals\\Tcpview.exe`",
-        "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
-        "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe"
+        "C:\\Tools\\SysInternals\\sdelete.exe`",
+        "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
+        "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -361,12 +361,12 @@
       ],
       "tokens": {
         "pids": [
-          "139776",
-          "151132",
-          "148904",
-          "138320",
+          "137496",
           "8512",
-          "137496"
+          "151132",
+          "138320",
+          "148904",
+          "139776"
         ],
         "inodes": [],
         "ips": [],
@@ -374,14 +374,14 @@
           "2012-04-04T18:55:57Z"
         ],
         "filenames": [
-          "winlogon.exe",
-          "VMwareTray.exe",
-          "femc.exe",
-          "cmd.exe",
           "explorer.exe",
+          "winlogon.exe",
+          "cmd.exe",
           "taskmgr.exe",
+          "VMwareUser.exe",
           "rdpclip.exe",
-          "VMwareUser.exe"
+          "VMwareTray.exe",
+          "femc.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -390,32 +390,32 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "winlogon.exe",
-          "VMwareTray.exe",
-          "femc.exe",
-          "cmd.exe",
           "explorer.exe",
+          "winlogon.exe",
+          "cmd.exe",
           "taskmgr.exe",
+          "VMwareUser.exe",
           "rdpclip.exe",
-          "VMwareUser.exe"
+          "VMwareTray.exe",
+          "femc.exe"
         ]
       },
       "matched": [
-        "139776",
-        "151132",
-        "148904",
-        "138320",
-        "8512",
         "137496",
+        "8512",
+        "151132",
+        "138320",
+        "148904",
+        "139776",
         "2012-04-04T18:55:57Z",
-        "winlogon.exe",
-        "VMwareTray.exe",
-        "femc.exe",
-        "cmd.exe",
         "explorer.exe",
+        "winlogon.exe",
+        "cmd.exe",
         "taskmgr.exe",
+        "VMwareUser.exe",
         "rdpclip.exe",
-        "VMwareUser.exe"
+        "VMwareTray.exe",
+        "femc.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -439,8 +439,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "10.3.58.4",
-          "10.3.16.5"
+          "10.3.16.5",
+          "10.3.58.4"
         ],
         "timestamps": [],
         "filenames": [],
@@ -455,8 +455,8 @@
         ]
       },
       "matched": [
-        "10.3.58.4",
-        "10.3.16.5"
+        "10.3.16.5",
+        "10.3.58.4"
       ],
       "missing": [
         "10.3.58.4:3389 \u2190 10.3.16.5:46758"
@@ -469,155 +469,86 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e26-d010-76a2-a909-84774dc8a202",
-        "text": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]  \n- `System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED` \u2014 SSL/HTTPS connection from the System process (not a user application). [INFERRED] Kernel-mode or highly-privileged component establishing SSL C2 tunnel. This is a second exfiltration/C2 channel.\n- `lsass.exe (pid=564)` \u2014 multiple CLOSED connections to `56.171.18.32` (\u00d75), `56.91.239.31` (\u00d71), `40.167.16.32` (\u00d72) \u2014 residual records of lsass making outbound connections to external IPs. [INFERRED] These are credential-dumping or DCSync-related network calls; lsass should not connect to public IPs.\n- `10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)` \u2014 DC connecting to nromanoff via SMB, live at capture. [INFERRED] Attacker using DC to access nromanoff's file shares or push lateral movement payload.\n- `lsass.exe \u2192 10.3.58.5:49236 CLOSED` \u2014 DC's lsass connected to nromanoff \u2014 possible pass-the-hash or NTLM relay.",
+        "text": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]",
         "line_no": 145
       },
-      "status": "partial",
-      "tool_name": "vol3_netscan",
-      "tool_names": [
-        "vol3_netscan"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
-        "pids": [
-          "4",
-          "564"
-        ],
+        "pids": [],
         "inodes": [],
-        "ips": [
-          "56.91.239.31",
-          "56.171.18.32",
-          "173.173.88.154",
-          "40.167.16.32",
-          "10.3.58.4",
-          "10.3.58.9",
-          "10.3.58.5"
-        ],
+        "ips": [],
         "timestamps": [],
-        "filenames": [
-          "lsass.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)",
-          "56.91.239.31",
-          "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
-          "56.171.18.32",
-          "lsass.exe (pid=564)",
-          "40.167.16.32",
-          "lsass.exe \u2192 10.3.58.5:49236 CLOSED"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "564",
-        "56.91.239.31",
-        "56.171.18.32",
-        "40.167.16.32",
-        "10.3.58.9",
-        "10.3.58.5",
-        "lsass.exe"
-      ],
-      "missing": [
-        "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)",
-        "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
-        "lsass.exe (pid=564)",
-        "lsass.exe \u2192 10.3.58.5:49236 CLOSED"
-      ],
-      "negation_violations": [
-        "4",
-        "173.173.88.154",
-        "10.3.58.4"
-      ],
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e28-c41b-7f12-86b8-7892e62ee8a6",
-        "text": "[CONFIRMED \u2014 exec_id 019e0e28-c41b-7f12-86b8-7892e62ee8a6]  \n`w3wp.exe` (IIS worker, PID 152840) has two RWX private VAD regions. `w3wp.exe` cmdline is null. [INFERRED] RWX regions in an IIS worker process are consistent with a webshell payload or in-process code injection. Combined with `tlntsvr.exe` (Telnet server) running, the DC exposes multiple remote-access services.",
+        "text": "[CONFIRMED \u2014 exec_id 019e0e28-c41b-7f12-86b8-7892e62ee8a6]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e28-c41b-7f12-86b8-7892e62ee8a6]",
         "line_no": 153
       },
-      "status": "partial",
-      "tool_name": "vol3_malfind",
-      "tool_names": [
-        "vol3_malfind"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
-        "pids": [
-          "152840"
-        ],
+        "pids": [],
         "inodes": [],
         "ips": [],
         "timestamps": [],
-        "filenames": [
-          "tlntsvr.exe",
-          "w3wp.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "tlntsvr.exe",
-          "w3wp.exe"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "152840",
-        "w3wp.exe"
-      ],
-      "missing": [
-        "tlntsvr.exe"
-      ],
+      "matched": [],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e26-3e83-7ca0-beb7-3e25052c1a74",
-        "text": "- `tlntsvr.exe` (PID 3928): Telnet server running \u2014 plaintext credential interception risk [CONFIRMED \u2014 exec_id 019e0e26-3e83-7ca0-beb7-3e25052c1a74]\n- `Apache.exe` (PID 3732) + `tomcat5.exe`: McAfee ePO web server \u2014 attack surface\n- `hMailServer.exe` (PID 1720): Email server with two connections to `40.167.16.32` (external) \u2014 possibly receiving or relaying attacker-controlled email\n- `WmiPrvSE.exe` (PID 153192, created 2012-04-06T23:29:40Z): WMI provider, created after capture timestamp \u2014 residual pool artifact. [GAP] Cannot determine if WMI was used for lateral movement commands.\n- `w3wp.exe` (PID 152840, created 2012-04-06T23:24:05Z): IIS worker \u2014 also post-capture timestamp, residual pool artifact.",
+        "text": "- `tlntsvr.exe` (PID 3928): Telnet server running \u2014 plaintext credential interception risk [CONFIRMED \u2014 exec_id 019e0e26-3e83-7ca0-beb7-3e25052c1a74]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e26-3e83-7ca0-beb7-3e25052c1a74]",
         "line_no": 160
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_psscan",
       "tool_names": [
         "vol3_psscan"
       ],
       "tokens": {
         "pids": [
-          "1720",
-          "3732",
-          "3928",
-          "152840",
-          "153192"
+          "3928"
         ],
         "inodes": [],
-        "ips": [
-          "40.167.16.32"
-        ],
-        "timestamps": [
-          "2012-04-06T23:24:05Z",
-          "2012-04-06T23:29:40Z"
-        ],
+        "ips": [],
+        "timestamps": [],
         "filenames": [
-          "WmiPrvSE.exe",
-          "tomcat5.exe",
-          "Apache.exe",
-          "tlntsvr.exe",
-          "hMailServer.exe",
-          "w3wp.exe"
+          "tlntsvr.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -626,33 +557,14 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "WmiPrvSE.exe",
-          "tomcat5.exe",
-          "Apache.exe",
-          "tlntsvr.exe",
-          "40.167.16.32",
-          "hMailServer.exe",
-          "w3wp.exe"
+          "tlntsvr.exe"
         ]
       },
       "matched": [
-        "1720",
-        "3732",
         "3928",
-        "152840",
-        "153192",
-        "2012-04-06T23:24:05Z",
-        "2012-04-06T23:29:40Z",
-        "WmiPrvSE.exe",
-        "tomcat5.exe",
-        "Apache.exe",
-        "tlntsvr.exe",
-        "w3wp.exe"
+        "tlntsvr.exe"
       ],
-      "missing": [
-        "40.167.16.32",
-        "hMailServer.exe"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -674,8 +586,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "10.3.58.9",
-          "10.3.58.5"
+          "10.3.58.5",
+          "10.3.58.9"
         ],
         "timestamps": [],
         "filenames": [
@@ -690,8 +602,8 @@
         "quoted": []
       },
       "matched": [
-        "10.3.58.9",
         "10.3.58.5",
+        "10.3.58.9",
         "lsass.exe"
       ],
       "missing": [],
@@ -719,8 +631,8 @@
         "timestamps": [],
         "filenames": [
           "pe.exe",
-          "spinlock.exe",
-          "UdaterUI.exe"
+          "UdaterUI.exe",
+          "spinlock.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -735,8 +647,8 @@
       "negation_violations": [],
       "verified_absences": [
         "pe.exe",
-        "spinlock.exe",
-        "UdaterUI.exe"
+        "UdaterUI.exe",
+        "spinlock.exe"
       ],
       "notes": ""
     },
@@ -744,59 +656,32 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e27-13e6-7543-ba8f-d21e2d675bc4",
-        "text": "[CONFIRMED \u2014 exec_id 019e0e27-13e6-7543-ba8f-d21e2d675bc4]  \n- `lsass.exe (pid=552)` \u2192 `56.251.168.26` CLOSED \u2014 lsass connecting to external IP. [INFERRED] Residual pool entry; lsass made an outbound connection to a potentially attacker-controlled IP, consistent with NTLM authentication to a rogue server or credential-capturing SMB trap.\n- `10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED` \u2014 nfury initiated SMB/NetBIOS to DC \u2014 normal domain activity.\n- `10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED` \u2014 nfury LDAP query to examiner's host (10.3.16.5, normal during forensic acquisition).\n- No active external connections at capture time.",
+        "text": "[CONFIRMED \u2014 exec_id 019e0e27-13e6-7543-ba8f-d21e2d675bc4]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e27-13e6-7543-ba8f-d21e2d675bc4]",
         "line_no": 204
       },
-      "status": "partial",
-      "tool_name": "vol3_netscan",
-      "tool_names": [
-        "vol3_netscan"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
-        "pids": [
-          "552"
-        ],
+        "pids": [],
         "inodes": [],
-        "ips": [
-          "56.251.168.26",
-          "10.3.16.5",
-          "10.3.58.4",
-          "10.3.58.6"
-        ],
+        "ips": [],
         "timestamps": [],
-        "filenames": [
-          "lsass.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
-          "56.251.168.26",
-          "lsass.exe (pid=552)",
-          "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "552",
-        "56.251.168.26",
-        "10.3.16.5",
-        "10.3.58.4",
-        "10.3.58.6",
-        "lsass.exe"
-      ],
-      "missing": [
-        "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
-        "lsass.exe (pid=552)",
-        "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED"
-      ],
+      "matched": [],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
@@ -833,7 +718,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e26-b5a6-7602-9d54-d6cfa0d5ff3f",
-        "text": "**`UdaterUI.exe`** (PID 2920, PPID 644=`FrameworkServic`) \u2014 SUSPICIOUS TOOL  \n[CONFIRMED \u2014 exec_id 019e0e26-b5a6-7602-9d54-d6cfa0d5ff3f]  \nCreated 2012-04-06T19:07:04Z. Name is a deliberate misspelling of \"UpdaterUI\" \u2014 a classic attacker naming technique. Spawned by McAfee FrameworkService process. [INFERRED] Either injected into or incorrectly parented to McAfee's framework service, likely a post-exploitation tool. Spawned `McTray.exe` (PID 3092) which is also suspicious given the mis-parenting.",
+        "text": "**`UdaterUI.exe`** (PID 2920, PPID 644=`FrameworkServic`) \u2014 SUSPICIOUS TOOL  \n[CONFIRMED \u2014 exec_id 019e0e26-b5a6-7602-9d54-d6cfa0d5ff3f]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e26-b5a6-7602-9d54-d6cfa0d5ff3f]",
         "line_no": 245
       },
@@ -844,17 +729,13 @@
       ],
       "tokens": {
         "pids": [
-          "2920",
-          "3092"
+          "2920"
         ],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2012-04-06T19:07:04Z"
-        ],
+        "timestamps": [],
         "filenames": [
-          "UdaterUI.exe",
-          "McTray.exe"
+          "UdaterUI.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -863,17 +744,13 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "UdaterUI.exe",
-          "McTray.exe",
-          "FrameworkServic"
+          "FrameworkServic",
+          "UdaterUI.exe"
         ]
       },
       "matched": [
         "2920",
-        "3092",
-        "2012-04-06T19:07:04Z",
         "UdaterUI.exe",
-        "McTray.exe",
         "FrameworkServic"
       ],
       "missing": [],
@@ -916,11 +793,11 @@
         ]
       },
       "matched": [
+        "2012-04-04T18:31Z",
         "spinlock.exe"
       ],
       "missing": [
-        "2012-04-05T17:16Z",
-        "2012-04-04T18:31Z"
+        "2012-04-05T17:16Z"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -930,22 +807,17 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e26-d010-76a2-a909-84774dc8a202",
-        "text": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202] **DC \u2192 nromanoff:** DC (10.3.58.9:445) has an ESTABLISHED SMB connection to nromanoff (10.3.58.5:49805) at capture time. DC's lsass also had a connection to nromanoff:49236. [INFERRED] Attacker using the compromised DC to laterally access nromanoff's machine via SMB (possible PsExec-style or file drop).",
+        "text": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]",
         "line_no": 281
       },
-      "status": "verified",
-      "tool_name": "vol3_netscan",
-      "tool_names": [
-        "vol3_netscan"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
-        "ips": [
-          "10.3.58.9",
-          "10.3.58.5"
-        ],
+        "ips": [],
         "timestamps": [],
         "filenames": [],
         "paths": [],
@@ -956,14 +828,11 @@
         "hex_hashes": [],
         "quoted": []
       },
-      "matched": [
-        "10.3.58.9",
-        "10.3.58.5"
-      ],
+      "matched": [],
       "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
@@ -1124,8 +993,8 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "spinlock.exe",
-          "C:\\Tools\\SysInternals\\sdelete.exe"
+          "C:\\Tools\\SysInternals\\sdelete.exe",
+          "spinlock.exe"
         ]
       },
       "matched": [
@@ -1145,11 +1014,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e2a-8fd2-79d3-b454-628d876de324",
-        "text": "**Confirmed compromised / attacker-controlled accounts:**\n- `vibranium` \u2014 [CONFIRMED \u2014 exec_id 019e0e2a-8fd2-79d3-b454-628d876de324] Ran spinlock.exe on the DC 10 times, maintained RDP session (session 3). This account either belongs to the attacker or a compromised insider. The account name \"vibranium\" is atypical for a corporate DC and may be an attacker-created account.\n- `rsydow` \u2014 [INFERRED] rsydow's credentials may have been used by the attacker to install usboesrv.exe. Alternatively rsydow is an unwitting victim of social engineering. rsydow's use of sdelete warrants further investigation.",
+        "text": "**Confirmed compromised / attacker-controlled accounts:**\n- `vibranium` \u2014 [CONFIRMED \u2014 exec_id 019e0e2a-8fd2-79d3-b454-628d876de324]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e2a-8fd2-79d3-b454-628d876de324]",
         "line_no": 362
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
@@ -1159,10 +1028,7 @@
         "inodes": [],
         "ips": [],
         "timestamps": [],
-        "filenames": [
-          "spinlock.exe",
-          "usboesrv.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
@@ -1170,18 +1036,13 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "vibranium",
-          "rsydow"
+          "vibranium"
         ]
       },
       "matched": [
-        "spinlock.exe",
-        "vibranium",
-        "rsydow"
+        "vibranium"
       ],
-      "missing": [
-        "usboesrv.exe"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1190,60 +1051,32 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0e26-d010-76a2-a909-84774dc8a202",
-        "text": "**Credential theft mechanisms observed:**\n[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]  \n- `lsass.exe` on DC had CLOSED connections to `56.171.18.32` (\u00d75), `56.91.239.31`, `40.167.16.32` \u2014 lsass should not initiate outbound connections to public IPs. [INFERRED] These indicate the attacker performed DCSync (replicating NTLM hashes from the DC) or NTLM authentication to attacker-controlled servers (for credential capture).\n- `tlntsvr.exe` (Telnet) running on DC \u2014 plaintext credential exposure.\n- DC `lsass.exe` \u2192 nromanoff (10.3.58.5:49236) CLOSED \u2014 possible Pass-the-Hash lateral authentication.\n- nfury `lsass.exe` \u2192 `56.251.168.26` CLOSED \u2014 possible forced NTLM authentication to rogue SMB server.",
+        "text": "**Credential theft mechanisms observed:**\n[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0e26-d010-76a2-a909-84774dc8a202]",
         "line_no": 366
       },
-      "status": "partial",
-      "tool_name": "vol3_netscan",
-      "tool_names": [
-        "vol3_netscan"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
-        "ips": [
-          "56.91.239.31",
-          "56.171.18.32",
-          "40.167.16.32",
-          "56.251.168.26",
-          "10.3.58.5"
-        ],
+        "ips": [],
         "timestamps": [],
-        "filenames": [
-          "lsass.exe",
-          "tlntsvr.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "56.91.239.31",
-          "lsass.exe",
-          "tlntsvr.exe",
-          "56.171.18.32",
-          "40.167.16.32",
-          "56.251.168.26"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "10.3.58.5",
-        "tlntsvr.exe"
-      ],
-      "missing": [
-        "56.251.168.26"
-      ],
-      "negation_violations": [
-        "56.91.239.31",
-        "56.171.18.32",
-        "40.167.16.32",
-        "lsass.exe"
-      ],
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     }
   ]
 }

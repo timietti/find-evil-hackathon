@@ -11,15 +11,15 @@
 
 ## Verification of CONFIRMED claims
 
-- ✅ **verified:**           15 (every extracted token found in cited tool's parsed output)
-- ⚠ partial:                7 (some tokens found, some missing)
-- ❌ failed:                 4 (no tokens found)
-- ❓ unverifiable:           14 (claim is prose only, no extractable tokens)
+- ✅ **verified:**           19 (every extracted token found in cited tool's parsed output)
+- ⚠ partial:                3 (some tokens found, some missing)
+- ❌ failed:                 2 (no tokens found)
+- ❓ unverifiable:           16 (claim is prose only, no extractable tokens)
 - 🔍 exec_id_not_found:     0 (cited exec_id is not in the audit log)
 - ⛔ tool_not_supported:    0 (no parser for cited tool)
 - ⚠ not_confirmed:           0 (CONFIRMED-tagged but missing exec_id)
 
-**Confirmation score: 37.5%** (15 verified / 40 confirmed)
+**Confirmation score: 47.5%** (19 verified / 40 confirmed)
 
 ## Per-claim verdicts
 
@@ -51,21 +51,19 @@
 - note: claim has no extractable tokens (prose only)
 - claim: > [CONFIRMED — exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76]:
 
-### ⚠ partial _(line 115)_
+### ❌ failed _(line 115)_
 - tools: `ezt_mft_parse`
 - exec_ids: `315b2cefc7ab`
-- matched: `2012-04-04T18:28:42Z`
-- **missing**: `NonCritical_spinlock.exe_f55bbffa...`, `file_name: spinlock.exe`
+- **missing**: `file_name: spinlock.exe`
 - 🚨 negation violations (claimed absent but found): `spinlock.exe`
-- claim: > **The spinlock.exe binary is absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]. A WER crash folder `NonCritical_spinlock.exe_f55bb…
+- claim: > **The spinlock.exe binary is absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]
 
 ### ⚠ partial _(line 115)_
 - tools: `ezt_mft_parse`
 - exec_ids: `315b2cefc7ab`
 - matched: `2012-04-04T18:28:42Z`
-- **missing**: `NonCritical_spinlock.exe_f55bbffa...`, `file_name: spinlock.exe`
-- 🚨 negation violations (claimed absent but found): `spinlock.exe`
-- claim: > **The spinlock.exe binary is absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]. A WER crash folder `NonCritical_spinlock.exe_f55bb…
+- **missing**: `NonCritical_spinlock.exe_f55bbffa...`
+- claim: > . A WER crash folder `NonCritical_spinlock.exe_f55bbffa...` was created 2012-04-04T18:28:42Z [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]
 
 ### ❓ unverifiable _(line 125)_
 - exec_ids: `fad7c6993479`, `69158614d792`
@@ -76,13 +74,12 @@
 - tools: `ezt_mft_parse`
 - exec_ids: `315b2cefc7ab`
 - 🚨 negation violations (claimed absent but found): `a.exe`
-- claim: > **No a.exe was found in DC MFT TEMP paths** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]; **not present in DC ShimCache TEMP entries** [CONFIRMED — exec_id 019e1123-2…
+- claim: > **No a.exe was found in DC MFT TEMP paths** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]
 
-### ❌ failed _(line 131)_
-- tools: `ezt_shimcache_parse`
+### ❓ unverifiable _(line 131)_
 - exec_ids: `7d52002b8c38`
-- 🚨 negation violations (claimed absent but found): `a.exe`
-- claim: > **No a.exe was found in DC MFT TEMP paths** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]; **not present in DC ShimCache TEMP entries** [CONFIRMED — exec_id 019e1123-2…
+- note: claim has no extractable tokens (prose only)
+- claim: > ; **not present in DC ShimCache TEMP entries** [CONFIRMED — exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]
 
 ### ❓ unverifiable _(line 135)_
 - exec_ids: `fad7c6993479`, `69158614d792`
@@ -142,13 +139,13 @@
 - tools: `ezt_mft_parse`
 - exec_ids: `315b2cefc7ab`
 - ✅ verified absences (negated): `EXFIL.pst`
-- claim: > **EXFIL.pst was NOT found in DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-6…
+- claim: > **EXFIL.pst was NOT found in DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]
 
 ### ✅ verified _(line 218)_
 - tools: `ezt_mft_parse`
 - exec_ids: `69158614d792`
 - ✅ verified absences (negated): `EXFIL.pst`
-- claim: > **EXFIL.pst was NOT found in DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-6…
+- claim: > . **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]
 
 ### ❓ unverifiable _(line 226)_
 - exec_ids: `69158614d792`, `225a1ef51bba`, `315b2cefc7ab`
@@ -164,7 +161,7 @@
 - tools: `ezt_evtx_parse`, `ezt_evtx_parse`
 - exec_ids: `4c35ed87f968`, `31d9c7732c3c`
 - ✅ verified absences (negated): `.EVT`, `.Evt`
-- **missing**: `log2timeline`, `evtxtract`, `.evtx`, `winevt`, `SecEvent.Evt`, `SysEvent.Evt`
+- **missing**: `log2timeline`, `evtxtract`, `SecEvent.Evt`, `SysEvent.Evt`, `.evtx`, `winevt`
 - claim: > [CONFIRMED — exec_id 019e1124-5e07-71c1-8f43-4c35ed87f968; exec_id 019e1124-60e3-78c2-83e9-31d9c7732c3c]: Both `SecEvent.Evt` and `SysEvent.Evt` on tdungan returned 0 events. EvtxECmd does not support…
 
 ### ⚠ partial _(line 262)_
@@ -184,24 +181,22 @@
 - tools: `ezt_mft_parse`
 - exec_ids: `69158614d792`
 - ✅ verified absences (negated): `hotcorewin2k.sys`
-- claim: > **hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches] and **absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cef…
+- claim: > **hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]
 
-### ✅ verified _(line 279)_
-- tools: `ezt_mft_parse`
+### ❓ unverifiable _(line 279)_
 - exec_ids: `315b2cefc7ab`
-- ✅ verified absences (negated): `hotcorewin2k.sys`
-- claim: > **hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED — exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches] and **absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cef…
+- note: claim has no extractable tokens (prose only)
+- claim: > and **absent from DC MFT** [CONFIRMED — exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]
 
 ### ❓ unverifiable _(line 285)_
 - exec_ids: `7d52002b8c38`
 - note: claim has no extractable tokens (prose only)
 - claim: > [CONFIRMED — exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]:
 
-### ⚠ partial _(line 340)_
+### ✅ verified _(line 340)_
 - tools: `ezt_mft_parse`, `ezt_shimcache_parse`
 - exec_ids: `69158614d792`, `fad7c6993479`
-- matched: `adberdr813.exe`
-- **missing**: `2011-08-28T22:33Z`
+- matched: `2011-08-28T22:33Z`, `adberdr813.exe`
 - claim: > 1. **adberdr813.exe initial compromise timestamp confirmed as 2011-08-28T22:33Z** on nromanoff — WER crash and ShimCache both corroborate execution; "Executed:No" in ShimCache explained by crash befor…
 
 ### ✅ verified _(line 342)_
@@ -228,30 +223,28 @@
 - matched: `2012-04-05T13:20:58Z`, `hydrakatz.exe`
 - claim: > 5. **hydrakatz.exe** confirmed on nromanoff; last run 2012-04-05T13:20:58Z via Prefetch. Not present on DC or tdungan. [CONFIRMED — exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-…
 
-### ❌ failed _(line 350)_
+### ✅ verified _(line 350)_
 - tools: `ezt_mft_parse`
 - exec_ids: `225a1ef51bba`
-- 🚨 negation violations (claimed absent but found): `2012-04-05T16:07`, `EXFIL.pst`
+- matched: `2012-04-05T16:07`, `EXFIL.pst`
 - claim: > 6. **EXFIL.pst is on tdungan** (not DC) under the vibranium Outlook profile, created 2012-04-05T16:07–16:11Z; 16MB, live on disk, likely exfiltrated via browser. [CONFIRMED — exec_id 019e1123-6e98-714…
 
-### ⚠ partial _(line 352)_
+### ✅ verified _(line 352)_
 - tools: `ezt_mft_parse`
 - exec_ids: `225a1ef51bba`
-- matched: `hotcorewin2k.sys`
-- **missing**: `2012-03-21T03:14Z`
+- matched: `2012-03-21T03:14Z`, `hotcorewin2k.sys`
 - claim: > 7. **hotcorewin2k.sys timestomped on tdungan** to appear as a 2011-05-17 file; actual installation 2012-03-21T03:14Z. Absent from DC and nromanoff. [CONFIRMED — exec_id 019e1123-6e98-7141-b6f1-225a1ef…
 
-### ❌ failed _(line 354)_
+### ✅ verified _(line 354)_
 - tools: `ezt_mft_parse`, `ezt_mft_parse`, `ezt_mft_parse`
 - exec_ids: `69158614d792`, `225a1ef51bba`, `315b2cefc7ab`
-- **missing**: `2012-04-04T17:29Z`, `2012-04-03T23:09Z`, `2012-04-04T16:40Z`
+- matched: `2012-04-04T17:29Z`, `2012-04-03T23:09Z`, `2012-04-04T16:40Z`
 - claim: > 8. **vibranium account present on all three hosts** with first activity: nromanoff (2012-04-03T23:09Z) → tdungan (2012-04-04T16:40Z) → DC (2012-04-04T17:29Z) — confirming nromanoff was the lateral mov…
 
-### ⚠ partial _(line 356)_
+### ✅ verified _(line 356)_
 - tools: `ezt_shimcache_parse`
 - exec_ids: `fad7c6993479`
-- matched: `PSEXESVC.EXE`
-- **missing**: `2012-04-04T01:46Z`
+- matched: `2012-04-04T01:46Z`, `PSEXESVC.EXE`
 - claim: > 9. **PsExec used against nromanoff** — PSEXESVC.EXE on nromanoff ShimCache (2012-04-04T01:46Z) confirms nromanoff was a PsExec target from another compromised host. [CONFIRMED — exec_id 019e1123-26a3-…
 
 ### ✅ verified _(line 358)_

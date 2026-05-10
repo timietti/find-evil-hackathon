@@ -7,14 +7,14 @@
     "hypothesis_count": 1,
     "gap_count": 5,
     "other_count": 0,
-    "verified": 49,
-    "partial": 10,
+    "verified": 54,
+    "partial": 5,
     "failed": 0,
     "unverifiable": 1,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.817
+    "confirmation_score": 0.9
   },
   "verdicts": [
     {
@@ -148,10 +148,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Specs.xlsx",
-          "Death_Blossom_attack.png",
           "Data.xlsx",
-          "Data.docx"
+          "Death_Blossom_attack.png",
+          "Data.docx",
+          "Specs.xlsx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -164,10 +164,10 @@
         "quoted": []
       },
       "matched": [
-        "Specs.xlsx",
-        "Death_Blossom_attack.png",
         "Data.xlsx",
+        "Death_Blossom_attack.png",
         "Data.docx",
+        "Specs.xlsx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -195,9 +195,9 @@
         "timestamps": [],
         "filenames": [
           "Hydrogen_Hybrid_Tech.docx",
-          "KITT.pptx",
           "German-KITT-Specs.docx",
-          "Background.docx"
+          "Background.docx",
+          "KITT.pptx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -211,9 +211,9 @@
       },
       "matched": [
         "Hydrogen_Hybrid_Tech.docx",
-        "KITT.pptx",
         "German-KITT-Specs.docx",
         "Background.docx",
+        "KITT.pptx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -240,9 +240,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Wolves_Lair_Tech_Specs.pptx",
           "Airwolf_schematics.png",
-          "airwolf_blueprints.gif",
-          "Wolves_Lair_Tech_Specs.pptx"
+          "airwolf_blueprints.gif"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -255,9 +255,9 @@
         "quoted": []
       },
       "matched": [
+        "Wolves_Lair_Tech_Specs.pptx",
         "Airwolf_schematics.png",
         "airwolf_blueprints.gif",
-        "Wolves_Lair_Tech_Specs.pptx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -469,7 +469,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10d1-a143-7173-8c13-bbc7f674a3cc",
-        "text": "Two StarFury images were placed in the iCloud sync folder: \\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg and \\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. [GAP \u2014 intruder-placed vs. pre-existing personal files cannot be determined from memory alone; Apple server-side logs required.]",
+        "text": "Two StarFury images were placed in the iCloud sync folder: \\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg and \\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 54
       },
@@ -484,8 +484,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "StarFuryHeader.jpg",
-          "fighter_starfury.jpg"
+          "fighter_starfury.jpg",
+          "StarFuryHeader.jpg"
         ],
         "paths": [
           "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
@@ -499,8 +499,8 @@
         "quoted": []
       },
       "matched": [
-        "StarFuryHeader.jpg",
         "fighter_starfury.jpg",
+        "StarFuryHeader.jpg",
         "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
         "\\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg"
       ],
@@ -513,7 +513,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10d1-a143-7173-8c13-bbc7f674a3cc",
-        "text": "GunStar Death Blossom Data.docx, GunStar Upgrade Specs.xlsx, and Gunstar Test Harness Data.xlsx under \\Users\\fredr\\Stark Research Labs\\SRL-Projects - Gunstar\\ were present as file objects [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. [INFERRED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc; pool-memory file object indicates open handle or recent close.]",
+        "text": "GunStar Death Blossom Data.docx, GunStar Upgrade Specs.xlsx, and Gunstar Test Harness Data.xlsx under \\Users\\fredr\\Stark Research Labs\\SRL-Projects - Gunstar\\ were present as file objects [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 60
       },
@@ -528,9 +528,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Specs.xlsx",
           "Data.xlsx",
-          "Data.docx"
+          "Data.docx",
+          "Specs.xlsx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -543,9 +543,9 @@
         "quoted": []
       },
       "matched": [
-        "Specs.xlsx",
         "Data.xlsx",
         "Data.docx",
+        "Specs.xlsx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -573,8 +573,8 @@
         "timestamps": [],
         "filenames": [
           "Hydrogen_Hybrid_Tech.docx",
-          "KITT.pptx",
-          "Background.docx"
+          "Background.docx",
+          "KITT.pptx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -588,8 +588,8 @@
       },
       "matched": [
         "Hydrogen_Hybrid_Tech.docx",
-        "KITT.pptx",
         "Background.docx",
+        "KITT.pptx",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -616,8 +616,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Airwolf_schematics.png",
-          "Wolves_Lair_Tech_Specs.pptx"
+          "Wolves_Lair_Tech_Specs.pptx",
+          "Airwolf_schematics.png"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -630,8 +630,8 @@
         "quoted": []
       },
       "matched": [
-        "Airwolf_schematics.png",
         "Wolves_Lair_Tech_Specs.pptx",
+        "Airwolf_schematics.png",
         "\\Users\\fredr\\Stark"
       ],
       "missing": [],
@@ -741,9 +741,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "SDelete.lnk",
           "SDelete.zip",
-          "sdelete.exe",
-          "SDelete.lnk"
+          "sdelete.exe"
         ],
         "paths": [
           "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk",
@@ -758,9 +758,9 @@
         "quoted": []
       },
       "matched": [
+        "SDelete.lnk",
         "SDelete.zip",
         "sdelete.exe",
-        "SDelete.lnk",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk"
       ],
       "missing": [
@@ -775,7 +775,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10d1-a143-7173-8c13-bbc7f674a3cc",
-        "text": "\\Users\\srl-h\\Downloads\\sdelete64.exe was present in pool memory, indicating SDelete was also deployed under a second user account [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. [GAP \u2014 origin of srl-h account is unknown; disk SAM hive analysis needed to determine if attacker-created or pre-existing.]",
+        "text": "\\Users\\srl-h\\Downloads\\sdelete64.exe was present in pool memory, indicating SDelete was also deployed under a second user account [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 74
       },
@@ -815,32 +815,21 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10d1-a143-7173-8c13-bbc7f674a3cc",
-        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was staged in the personal OneDrive sync root [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. OneDrive.exe (pid 9648) maintained an ESTABLISHED connection to 13.107.136.9:443 created 2020-11-16T02:32:45Z at capture time [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A second OneDrive.exe ESTABLISHED connection to 52.114.75.149:443 was created 2020-11-16T02:32:55Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A third OneDrive.exe ESTABLISHED connection to 52.179.224.121:443 was present, created 2020-11-13T19:56:50Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. [INFERRED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921; active OneDrive.exe ESTABLISHED sync connections at capture imply StarFury.zip synced automatically to the cloud upon staging.]",
+        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was staged in the personal OneDrive sync root [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 82
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
-        "pids": [
-          "9648"
-        ],
+        "pids": [],
         "inodes": [],
-        "ips": [
-          "13.107.136.9",
-          "52.179.224.121",
-          "52.114.75.149"
-        ],
-        "timestamps": [
-          "2020-11-16T02:32:55Z",
-          "2020-11-13T19:56:50Z",
-          "2020-11-16T02:32:45Z"
-        ],
+        "ips": [],
+        "timestamps": [],
         "filenames": [
-          "OneDrive.exe",
           "StarFury.zip"
         ],
         "paths": [
@@ -854,19 +843,10 @@
         "quoted": []
       },
       "matched": [
-        "9648",
-        "OneDrive.exe",
         "StarFury.zip",
         "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
-      "missing": [
-        "13.107.136.9",
-        "52.179.224.121",
-        "52.114.75.149",
-        "2020-11-16T02:32:55Z",
-        "2020-11-13T19:56:50Z",
-        "2020-11-16T02:32:45Z"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -875,11 +855,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cb-8583-7b42-8e0b-729ae8949921",
-        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was staged in the personal OneDrive sync root [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. OneDrive.exe (pid 9648) maintained an ESTABLISHED connection to 13.107.136.9:443 created 2020-11-16T02:32:45Z at capture time [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A second OneDrive.exe ESTABLISHED connection to 52.114.75.149:443 was created 2020-11-16T02:32:55Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A third OneDrive.exe ESTABLISHED connection to 52.179.224.121:443 was present, created 2020-11-13T19:56:50Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. [INFERRED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921; active OneDrive.exe ESTABLISHED sync connections at capture imply StarFury.zip synced automatically to the cloud upon staging.]",
+        "text": ". OneDrive.exe (pid 9648) maintained an ESTABLISHED connection to 13.107.136.9:443 created 2020-11-16T02:32:45Z at capture time [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]",
         "line_no": 82
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_netscan",
       "tool_names": [
         "vol3_netscan"
@@ -890,22 +870,15 @@
         ],
         "inodes": [],
         "ips": [
-          "13.107.136.9",
-          "52.179.224.121",
-          "52.114.75.149"
+          "13.107.136.9"
         ],
         "timestamps": [
-          "2020-11-16T02:32:55Z",
-          "2020-11-13T19:56:50Z",
           "2020-11-16T02:32:45Z"
         ],
         "filenames": [
-          "OneDrive.exe",
-          "StarFury.zip"
+          "OneDrive.exe"
         ],
-        "paths": [
-          "\\Users\\fredr\\OneDrive\\StarFury.zip"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
@@ -916,17 +889,10 @@
       "matched": [
         "9648",
         "13.107.136.9",
-        "52.179.224.121",
-        "52.114.75.149",
-        "2020-11-16T02:32:55Z",
-        "2020-11-13T19:56:50Z",
         "2020-11-16T02:32:45Z",
         "OneDrive.exe"
       ],
-      "missing": [
-        "StarFury.zip",
-        "\\Users\\fredr\\OneDrive\\StarFury.zip"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -935,37 +901,28 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cb-8583-7b42-8e0b-729ae8949921",
-        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was staged in the personal OneDrive sync root [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. OneDrive.exe (pid 9648) maintained an ESTABLISHED connection to 13.107.136.9:443 created 2020-11-16T02:32:45Z at capture time [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A second OneDrive.exe ESTABLISHED connection to 52.114.75.149:443 was created 2020-11-16T02:32:55Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A third OneDrive.exe ESTABLISHED connection to 52.179.224.121:443 was present, created 2020-11-13T19:56:50Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. [INFERRED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921; active OneDrive.exe ESTABLISHED sync connections at capture imply StarFury.zip synced automatically to the cloud upon staging.]",
+        "text": ". A second OneDrive.exe ESTABLISHED connection to 52.114.75.149:443 was created 2020-11-16T02:32:55Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]",
         "line_no": 82
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_netscan",
       "tool_names": [
         "vol3_netscan"
       ],
       "tokens": {
-        "pids": [
-          "9648"
-        ],
+        "pids": [],
         "inodes": [],
         "ips": [
-          "13.107.136.9",
-          "52.179.224.121",
           "52.114.75.149"
         ],
         "timestamps": [
-          "2020-11-16T02:32:55Z",
-          "2020-11-13T19:56:50Z",
-          "2020-11-16T02:32:45Z"
+          "2020-11-16T02:32:55Z"
         ],
         "filenames": [
-          "OneDrive.exe",
-          "StarFury.zip"
+          "OneDrive.exe"
         ],
-        "paths": [
-          "\\Users\\fredr\\OneDrive\\StarFury.zip"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
@@ -974,19 +931,11 @@
         "quoted": []
       },
       "matched": [
-        "9648",
-        "13.107.136.9",
-        "52.179.224.121",
         "52.114.75.149",
         "2020-11-16T02:32:55Z",
-        "2020-11-13T19:56:50Z",
-        "2020-11-16T02:32:45Z",
         "OneDrive.exe"
       ],
-      "missing": [
-        "StarFury.zip",
-        "\\Users\\fredr\\OneDrive\\StarFury.zip"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -995,37 +944,28 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cb-8583-7b42-8e0b-729ae8949921",
-        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was staged in the personal OneDrive sync root [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. OneDrive.exe (pid 9648) maintained an ESTABLISHED connection to 13.107.136.9:443 created 2020-11-16T02:32:45Z at capture time [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A second OneDrive.exe ESTABLISHED connection to 52.114.75.149:443 was created 2020-11-16T02:32:55Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. A third OneDrive.exe ESTABLISHED connection to 52.179.224.121:443 was present, created 2020-11-13T19:56:50Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]. [INFERRED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921; active OneDrive.exe ESTABLISHED sync connections at capture imply StarFury.zip synced automatically to the cloud upon staging.]",
+        "text": ". A third OneDrive.exe ESTABLISHED connection to 52.179.224.121:443 was present, created 2020-11-13T19:56:50Z [CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-8583-7b42-8e0b-729ae8949921]",
         "line_no": 82
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_netscan",
       "tool_names": [
         "vol3_netscan"
       ],
       "tokens": {
-        "pids": [
-          "9648"
-        ],
+        "pids": [],
         "inodes": [],
         "ips": [
-          "13.107.136.9",
-          "52.179.224.121",
-          "52.114.75.149"
+          "52.179.224.121"
         ],
         "timestamps": [
-          "2020-11-16T02:32:55Z",
-          "2020-11-13T19:56:50Z",
-          "2020-11-16T02:32:45Z"
+          "2020-11-13T19:56:50Z"
         ],
         "filenames": [
-          "OneDrive.exe",
-          "StarFury.zip"
+          "OneDrive.exe"
         ],
-        "paths": [
-          "\\Users\\fredr\\OneDrive\\StarFury.zip"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
@@ -1034,19 +974,11 @@
         "quoted": []
       },
       "matched": [
-        "9648",
-        "13.107.136.9",
         "52.179.224.121",
-        "52.114.75.149",
-        "2020-11-16T02:32:55Z",
         "2020-11-13T19:56:50Z",
-        "2020-11-16T02:32:45Z",
         "OneDrive.exe"
       ],
-      "missing": [
-        "StarFury.zip",
-        "\\Users\\fredr\\OneDrive\\StarFury.zip"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1073,8 +1005,8 @@
           "81.30.144.115"
         ],
         "timestamps": [
-          "2020-11-16T02:31:26Z",
           "2020-11-16T02:34:58Z",
+          "2020-11-16T02:31:26Z",
           "2020-11-16T02:34:45Z"
         ],
         "filenames": [
@@ -1091,8 +1023,8 @@
       "matched": [
         "1248",
         "81.30.144.115",
-        "2020-11-16T02:31:26Z",
         "2020-11-16T02:34:58Z",
+        "2020-11-16T02:31:26Z",
         "2020-11-16T02:34:45Z",
         "svchost.exe"
       ],
@@ -1124,8 +1056,8 @@
         ],
         "timestamps": [
           "2020-11-16T02:34:58Z",
-          "2020-11-16T02:35:53Z",
-          "2020-11-16T02:31:18Z"
+          "2020-11-16T02:31:18Z",
+          "2020-11-16T02:35:53Z"
         ],
         "filenames": [
           "svchost.exe"
@@ -1142,8 +1074,8 @@
         "1248",
         "213.202.233.104",
         "2020-11-16T02:34:58Z",
-        "2020-11-16T02:35:53Z",
         "2020-11-16T02:31:18Z",
+        "2020-11-16T02:35:53Z",
         "svchost.exe"
       ],
       "missing": [],
@@ -1201,7 +1133,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cb-6414-7711-b668-50abd5d244d6",
-        "text": "D:\\Tools\\MRC.exe is the confirmed D: drive artifact in UserAssist [CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]. [INFERRED: additional files may have been transferred to/from the USB; disk forensics required to confirm full contents.]",
+        "text": "D:\\Tools\\MRC.exe is the confirmed D: drive artifact in UserAssist [CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "line_no": 98
       },
@@ -1241,7 +1173,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10d1-a143-7173-8c13-bbc7f674a3cc",
-        "text": "\\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg and \\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg were present in the iCloudDrive sync folder [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. [GAP \u2014 intruder-placed vs. pre-existing personal files cannot be determined from memory.]",
+        "text": "\\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg and \\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg were present in the iCloudDrive sync folder [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 102
       },
@@ -1256,8 +1188,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "StarFuryHeader.jpg",
-          "fighter_starfury.jpg"
+          "fighter_starfury.jpg",
+          "StarFuryHeader.jpg"
         ],
         "paths": [
           "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
@@ -1271,8 +1203,8 @@
         "quoted": []
       },
       "matched": [
-        "StarFuryHeader.jpg",
         "fighter_starfury.jpg",
+        "StarFuryHeader.jpg",
         "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
         "\\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg"
       ],
@@ -1402,7 +1334,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cb-6414-7711-b668-50abd5d244d6",
-        "text": "%windir%\\regedit.exe last_updated 2020-11-14T04:39:15Z with count 1, focus_count 2, time_focused 0:03:40.124000 [CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]. [GAP \u2014 target registry key unknown; disk LastWrite analysis required.]",
+        "text": "%windir%\\regedit.exe last_updated 2020-11-14T04:39:15Z with count 1, focus_count 2, time_focused 0:03:40.124000 [CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "line_no": 118
       },
@@ -1522,7 +1454,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10d1-a143-7173-8c13-bbc7f674a3cc",
-        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was placed in the personal OneDrive sync root; \\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk confirms Explorer navigation to the StarFury directory [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]. [GAP \u2014 exact creation time and compression tool not recoverable from memory; no 7z or robocopy process in cmdline data.]",
+        "text": "\\Users\\fredr\\OneDrive\\StarFury.zip was placed in the personal OneDrive sync root; \\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk confirms Explorer navigation to the StarFury directory [CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 126
       },
@@ -1537,8 +1469,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "StarFury.lnk",
-          "StarFury.zip"
+          "StarFury.zip",
+          "StarFury.lnk"
         ],
         "paths": [
           "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk",
@@ -1552,8 +1484,8 @@
         "quoted": []
       },
       "matched": [
-        "StarFury.lnk",
         "StarFury.zip",
+        "StarFury.lnk",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk",
         "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
@@ -1621,9 +1553,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "SDelete.lnk",
           "SDelete.zip",
-          "sdelete.exe",
-          "SDelete.lnk"
+          "sdelete.exe"
         ],
         "paths": [
           "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk",
@@ -1638,9 +1570,9 @@
         "quoted": []
       },
       "matched": [
+        "SDelete.lnk",
         "SDelete.zip",
         "sdelete.exe",
-        "SDelete.lnk",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk"
       ],
       "missing": [
@@ -1754,11 +1686,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cb-6b0d-74e0-bec2-60452ae865e1",
-        "text": "MRC.exe (pid 29440, ppid 7464, threads 20, wow64 true, create_time 2020-11-16T02:31:15Z) was spawned from explorer.exe (pid 7464, ppid 7404, create_time 2020-11-11T08:13:41Z, session_id 1) [CONFIRMED \u2014 exec_id 019e10cb-6b0d-74e0-bec2-60452ae865e1]. [INFERRED: MRC.exe at D:\\Tools\\ on removable media D: is consistent with DameWare Mini Remote Control delivered on a USB device.]",
+        "text": "MRC.exe (pid 29440, ppid 7464, threads 20, wow64 true, create_time 2020-11-16T02:31:15Z) was spawned from explorer.exe (pid 7464, ppid 7404, create_time 2020-11-11T08:13:41Z, session_id 1) [CONFIRMED \u2014 exec_id 019e10cb-6b0d-74e0-bec2-60452ae865e1]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-6b0d-74e0-bec2-60452ae865e1]",
         "line_no": 140
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_pstree",
       "tool_names": [
         "vol3_pstree"
@@ -1771,17 +1703,15 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
-          "2020-11-16T02:31:15Z",
-          "2020-11-11T08:13:41Z"
+          "2020-11-11T08:13:41Z",
+          "2020-11-16T02:31:15Z"
         ],
         "filenames": [
           "explorer.exe",
           "MRC.exe"
         ],
         "paths": [],
-        "drive_refs": [
-          "D:\\Tools\\"
-        ],
+        "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
@@ -1791,14 +1721,12 @@
       "matched": [
         "29440",
         "7464",
-        "2020-11-16T02:31:15Z",
         "2020-11-11T08:13:41Z",
+        "2020-11-16T02:31:15Z",
         "explorer.exe",
         "MRC.exe"
       ],
-      "missing": [
-        "D:\\Tools\\"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1820,8 +1748,8 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "81.30.144.115",
-          "213.202.233.104"
+          "213.202.233.104",
+          "81.30.144.115"
         ],
         "timestamps": [],
         "filenames": [
@@ -1836,8 +1764,8 @@
         "quoted": []
       },
       "matched": [
-        "81.30.144.115",
-        "213.202.233.104"
+        "213.202.233.104",
+        "81.30.144.115"
       ],
       "missing": [
         "MRC.exe"
@@ -1850,7 +1778,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e10cc-8979-7063-8ef9-4444ba069b56",
-        "text": "vol3_malfind returned 16 findings with by_process counts: MsMpEng.exe (5), SearchApp.exe (6), dllhost.exe (1), LockApp.exe (1), RuntimeBroker. (1), Teams.exe (1), smartscreen.ex (1) \u2014 all attributable to legitimate Windows/Microsoft processes; findings_total 16 [CONFIRMED \u2014 exec_id 019e10cc-8979-7063-8ef9-4444ba069b56]. [INFERRED \u2014 exec_id 019e10cc-8979-7063-8ef9-4444ba069b56; MRC.exe (pid 29440) had zero malfind entries, consistent with no code injection.]",
+        "text": "vol3_malfind returned 16 findings with by_process counts: MsMpEng.exe (5), SearchApp.exe (6), dllhost.exe (1), LockApp.exe (1), RuntimeBroker. (1), Teams.exe (1), smartscreen.ex (1) \u2014 all attributable to legitimate Windows/Microsoft processes; findings_total 16 [CONFIRMED \u2014 exec_id 019e10cc-8979-7063-8ef9-4444ba069b56]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cc-8979-7063-8ef9-4444ba069b56]",
         "line_no": 146
       },
@@ -1860,19 +1788,16 @@
         "vol3_malfind"
       ],
       "tokens": {
-        "pids": [
-          "29440"
-        ],
+        "pids": [],
         "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Teams.exe",
-          "SearchApp.exe",
           "dllhost.exe",
-          "MRC.exe",
+          "SearchApp.exe",
           "LockApp.exe",
-          "MsMpEng.exe"
+          "MsMpEng.exe",
+          "Teams.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1883,18 +1808,15 @@
         "quoted": []
       },
       "matched": [
-        "Teams.exe",
-        "SearchApp.exe",
         "dllhost.exe",
+        "SearchApp.exe",
         "LockApp.exe",
-        "MsMpEng.exe"
+        "MsMpEng.exe",
+        "Teams.exe"
       ],
       "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "29440",
-        "MRC.exe"
-      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
@@ -2585,8 +2507,8 @@
         ],
         "inodes": [],
         "ips": [
-          "81.30.144.115",
-          "213.202.233.104"
+          "213.202.233.104",
+          "81.30.144.115"
         ],
         "timestamps": [
           "2020-11-16T02:34:58Z"
@@ -2604,8 +2526,8 @@
       },
       "matched": [
         "1248",
-        "81.30.144.115",
         "213.202.233.104",
+        "81.30.144.115",
         "2020-11-16T02:34:58Z",
         "svchost.exe"
       ],

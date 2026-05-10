@@ -77,8 +77,8 @@
         "hex_hashes": [],
         "quoted": [
           ":Zone.Identifier",
-          "adberdr813.exe",
-          "Users/nromanoff/Downloads/adberdr813.exe"
+          "Users/nromanoff/Downloads/adberdr813.exe",
+          "adberdr813.exe"
         ]
       },
       "matched": [
@@ -202,17 +202,17 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "vibranium",
+          "Users/vibranium/NTUSER.DAT",
           "S-1-5-21-2036804247-3058324640-2116585241-1673",
-          "Users/vibranium/NTUSER.DAT"
+          "vibranium"
         ]
       },
       "matched": [
         "74541",
         "NTUSER.DAT",
-        "vibranium",
+        "Users/vibranium/NTUSER.DAT",
         "S-1-5-21-2036804247-3058324640-2116585241-1673",
-        "Users/vibranium/NTUSER.DAT"
+        "vibranium"
       ],
       "missing": [],
       "negation_violations": [],
@@ -255,12 +255,12 @@
           "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
         ],
         "quoted": [
-          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
+          "WINDOWS/system32/spinlock.exe",
+          "spinlock.exe.manifest",
           "_MEI",
           "spinlock.exe",
-          "WINDOWS/system32/spinlock.exe",
-          "Windows/System32/spinlock.exe",
-          "spinlock.exe.manifest"
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
+          "Windows/System32/spinlock.exe"
         ]
       },
       "matched": [
@@ -268,10 +268,10 @@
         "60927",
         "spinlock.exe",
         "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
-        "_MEI",
         "WINDOWS/system32/spinlock.exe",
-        "Windows/System32/spinlock.exe",
-        "spinlock.exe.manifest"
+        "spinlock.exe.manifest",
+        "_MEI",
+        "Windows/System32/spinlock.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -314,10 +314,10 @@
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ],
         "quoted": [
-          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
           "WINDOWS/system32/hydrakatz.exe",
+          "hydrakatz.exe",
           "Windows/System32/hydrakatz.exe",
-          "hydrakatz.exe"
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ]
       },
       "matched": [
@@ -352,8 +352,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "PSEXESVC.EXE",
-          "-51BA46F2.pf"
+          "-51BA46F2.pf",
+          "PSEXESVC.EXE"
         ],
         "paths": [],
         "drive_refs": [],
@@ -366,8 +366,8 @@
         ]
       },
       "matched": [
-        "PSEXESVC.EXE",
         "-51BA46F2.pf",
+        "PSEXESVC.EXE",
         "Windows/Prefetch/PSEXESVC.EXE-51BA46F2.pf"
       ],
       "missing": [],
@@ -404,17 +404,17 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "Users/vibranium/AppData/Local/Temp/a.exe",
           "Temp",
-          "a.exe",
           "Documents and Settings/vibranium/Local Settings/Temp/a.exe",
-          "Users/vibranium/AppData/Local/Temp/a.exe"
+          "a.exe"
         ]
       },
       "matched": [
         "a.exe",
+        "Users/vibranium/AppData/Local/Temp/a.exe",
         "Temp",
-        "Documents and Settings/vibranium/Local Settings/Temp/a.exe",
-        "Users/vibranium/AppData/Local/Temp/a.exe"
+        "Documents and Settings/vibranium/Local Settings/Temp/a.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -447,18 +447,18 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Tdungan",
           "rsydow",
           "nromanoff",
           "SRL-Helpdesk",
+          "Tdungan",
           "vibranium"
         ]
       },
       "matched": [
-        "Tdungan",
         "rsydow",
         "nromanoff",
         "SRL-Helpdesk",
+        "Tdungan",
         "vibranium"
       ],
       "missing": [],
@@ -606,8 +606,8 @@
         "hex_hashes": [],
         "quoted": [
           "96.255.98.154",
-          "29932",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "29932"
         ]
       },
       "matched": [
@@ -641,10 +641,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "usb-over-ethernet.zip",
-          "setup.exe",
           "Temp1_usb-over-ethernet.zip",
-          "usboesrv.exe"
+          "setup.exe",
+          "usboesrv.exe",
+          "usb-over-ethernet.zip"
         ],
         "paths": [],
         "drive_refs": [],
@@ -653,21 +653,21 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
-          "usboesrv.exe",
-          "rsydow",
           "setup.exe",
-          "SharedFolders/Public/Security Tools/usb-over-ethernet.zip"
+          "rsydow",
+          "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
+          "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
+          "usboesrv.exe"
         ]
       },
       "matched": [
-        "usb-over-ethernet.zip",
-        "setup.exe",
         "Temp1_usb-over-ethernet.zip",
+        "setup.exe",
         "usboesrv.exe",
-        "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/",
+        "usb-over-ethernet.zip",
         "rsydow",
-        "SharedFolders/Public/Security Tools/usb-over-ethernet.zip"
+        "SharedFolders/Public/Security Tools/usb-over-ethernet.zip",
+        "Users/rsydow/AppData/Local/Temp/2/Temp1_usb-over-ethernet.zip/"
       ],
       "missing": [],
       "negation_violations": [],
@@ -708,20 +708,20 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "WINDOWS/system32/spinlock.exe",
           "_MEI",
-          "spinlock.exe.manifest",
-          "Windows/System32/spinlock.exe"
+          "Windows/System32/spinlock.exe",
+          "WINDOWS/system32/spinlock.exe",
+          "spinlock.exe.manifest"
         ]
       },
       "matched": [
         "7793",
         "60927",
         "spinlock.exe",
-        "WINDOWS/system32/spinlock.exe",
         "_MEI",
-        "spinlock.exe.manifest",
-        "Windows/System32/spinlock.exe"
+        "Windows/System32/spinlock.exe",
+        "WINDOWS/system32/spinlock.exe",
+        "spinlock.exe.manifest"
       ],
       "missing": [],
       "negation_violations": [],
@@ -790,10 +790,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "hydrakatz.exe",
           "-27B49502.pf",
-          "-A0DADA85.pf",
           "HYDRAKATZ.EXE",
-          "hydrakatz.exe"
+          "-A0DADA85.pf"
         ],
         "paths": [],
         "drive_refs": [],
@@ -804,25 +804,25 @@
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ],
         "quoted": [
+          "HYDRAKATZ.EXE-27B49502.pf",
           "WINDOWS/system32/hydrakatz.exe",
           "HYDRAKATZ.EXE-A0DADA85.pf",
-          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
           "Windows/System32/hydrakatz.exe",
-          "HYDRAKATZ.EXE-27B49502.pf"
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ]
       },
       "matched": [
         "60958",
         "4736",
-        "-27B49502.pf",
-        "-A0DADA85.pf",
-        "HYDRAKATZ.EXE",
         "hydrakatz.exe",
+        "-27B49502.pf",
+        "HYDRAKATZ.EXE",
+        "-A0DADA85.pf",
         "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
+        "HYDRAKATZ.EXE-27B49502.pf",
         "WINDOWS/system32/hydrakatz.exe",
         "HYDRAKATZ.EXE-A0DADA85.pf",
-        "Windows/System32/hydrakatz.exe",
-        "HYDRAKATZ.EXE-27B49502.pf"
+        "Windows/System32/hydrakatz.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -851,9 +851,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "TOPLZAGU.EXE",
+          "TopLZAGU.exe",
           "-4EFD8FD3.pf",
-          "TopLZAGU.exe"
+          "TOPLZAGU.EXE"
         ],
         "paths": [],
         "drive_refs": [],
@@ -865,18 +865,18 @@
         ],
         "quoted": [
           "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9",
-          "Windows/TopLZAGU.exe",
-          "TOPLZAGU.EXE-4EFD8FD3.pf"
+          "TOPLZAGU.EXE-4EFD8FD3.pf",
+          "Windows/TopLZAGU.exe"
         ]
       },
       "matched": [
         "9628",
-        "TOPLZAGU.EXE",
-        "-4EFD8FD3.pf",
         "TopLZAGU.exe",
+        "-4EFD8FD3.pf",
+        "TOPLZAGU.EXE",
         "0c8439344e9e2c8cbac86092ec96711c82545d71e9e3f4a1d41e8c4ebd2884c9",
-        "Windows/TopLZAGU.exe",
-        "TOPLZAGU.EXE-4EFD8FD3.pf"
+        "TOPLZAGU.EXE-4EFD8FD3.pf",
+        "Windows/TopLZAGU.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -905,10 +905,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "spinlock.exe",
-          "HYVY.EXE",
           "hyvy.exe",
-          "-2A94EF14.pf"
+          "-2A94EF14.pf",
+          "spinlock.exe",
+          "HYVY.EXE"
         ],
         "paths": [],
         "drive_refs": [],
@@ -919,20 +919,20 @@
           "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232"
         ],
         "quoted": [
-          "WINDOWS/system32/hyvy.exe",
+          "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232",
           "HYVY.EXE-2A94EF14.pf",
-          "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232"
+          "WINDOWS/system32/hyvy.exe"
         ]
       },
       "matched": [
         "5237",
-        "spinlock.exe",
-        "HYVY.EXE",
         "hyvy.exe",
         "-2A94EF14.pf",
+        "spinlock.exe",
+        "HYVY.EXE",
         "5a31b6aae73fdfe211c90370f3d7369846ec55fa2de8f20fd2e35368c1070232",
-        "WINDOWS/system32/hyvy.exe",
-        "HYVY.EXE-2A94EF14.pf"
+        "HYVY.EXE-2A94EF14.pf",
+        "WINDOWS/system32/hyvy.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1160,8 +1160,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "CC-Backstopped-Accounts.xlsx",
-          "Credit-Card-Numbers-For-Research.xls"
+          "Credit-Card-Numbers-For-Research.xls",
+          "CC-Backstopped-Accounts.xlsx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1174,8 +1174,8 @@
         ]
       },
       "matched": [
-        "CC-Backstopped-Accounts.xlsx",
         "Credit-Card-Numbers-For-Research.xls",
+        "CC-Backstopped-Accounts.xlsx",
         " and "
       ],
       "missing": [],
@@ -1241,10 +1241,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "CCleaner.exe",
+          "-126FAE33.pf",
           "Labs.docx",
           "DROPBOX.EXE",
-          "-126FAE33.pf"
+          "CCleaner.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1254,19 +1254,19 @@
         "hex_hashes": [],
         "quoted": [
           "CCleaner.exe",
+          "DROPBOX.EXE-126FAE33.pf",
           "Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx",
-          "Documents and Settings/tdungan/Application Data/Dropbox/",
-          "DROPBOX.EXE-126FAE33.pf"
+          "Documents and Settings/tdungan/Application Data/Dropbox/"
         ]
       },
       "matched": [
-        "CCleaner.exe",
+        "-126FAE33.pf",
         "Labs.docx",
         "DROPBOX.EXE",
-        "-126FAE33.pf",
+        "CCleaner.exe",
+        "DROPBOX.EXE-126FAE33.pf",
         "Documents and Settings/tdungan/My Documents/Dropbox/STARK Research Labs.docx",
-        "Documents and Settings/tdungan/Application Data/Dropbox/",
-        "DROPBOX.EXE-126FAE33.pf"
+        "Documents and Settings/tdungan/Application Data/Dropbox/"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1292,9 +1292,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "-0FFFB5A3.pf",
-          "ZIPPER.EXE",
           "-2C9C69B1.pf",
+          "ZIPPER.EXE",
+          "-0FFFB5A3.pf",
           "FTP.EXE"
         ],
         "paths": [],
@@ -1309,9 +1309,9 @@
         ]
       },
       "matched": [
-        "-0FFFB5A3.pf",
-        "ZIPPER.EXE",
         "-2C9C69B1.pf",
+        "ZIPPER.EXE",
+        "-0FFFB5A3.pf",
         "FTP.EXE",
         "WINDOWS/Prefetch/FTP.EXE-0FFFB5A3.pf",
         "WINDOWS/Prefetch/ZIPPER.EXE-2C9C69B1.pf"
@@ -1354,8 +1354,8 @@
         "hex_hashes": [],
         "quoted": [
           "96.255.98.154",
-          "29932",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "29932"
         ]
       },
       "matched": [
@@ -1481,9 +1481,9 @@
           "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ],
         "quoted": [
-          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975",
           "WINDOWS/system32/hydrakatz.exe",
-          "Windows/System32/hydrakatz.exe"
+          "Windows/System32/hydrakatz.exe",
+          "92d24128a45f33bdca5f28eb0319668cb97fb2f8a7e7b72d70a3aa4c897a4975"
         ]
       },
       "matched": [

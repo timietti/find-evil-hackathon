@@ -7,14 +7,14 @@
     "hypothesis_count": 0,
     "gap_count": 9,
     "other_count": 0,
-    "verified": 14,
-    "partial": 26,
-    "failed": 0,
-    "unverifiable": 2,
+    "verified": 24,
+    "partial": 12,
+    "failed": 1,
+    "unverifiable": 5,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.333
+    "confirmation_score": 0.571
   },
   "verdicts": [
     {
@@ -35,8 +35,8 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
-          "2020-11-16T02:32:38Z",
-          "2020-11-13T22:00Z"
+          "2020-11-13T22:00Z",
+          "2020-11-16T02:32:38Z"
         ],
         "filenames": [],
         "paths": [],
@@ -46,9 +46,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "/cases/find-evil-test/Rocba-Memory.raw",
           "2020-11-16T02:32:38Z",
-          "2020-11-13T22:00Z"
+          "2020-11-13T22:00Z",
+          "/cases/find-evil-test/Rocba-Memory.raw"
         ]
       },
       "matched": [
@@ -112,11 +112,11 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Findoreria_Solved.xlsx",
           "Spreadsheet.xls",
           "Firedam.xls",
-          "NETFLIX.xlsx",
-          "Research.docx"
+          "Research.docx",
+          "Findoreria_Solved.xlsx",
+          "NETFLIX.xlsx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -125,19 +125,19 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Findoreria_Solved.xlsx",
           "WACC Calc Spreadsheet.xls",
           "Firedam.xls",
-          "NETFLIX.xlsx",
-          "TIVO Research.docx"
+          "Findoreria_Solved.xlsx",
+          "TIVO Research.docx",
+          "NETFLIX.xlsx"
         ]
       },
       "matched": [
-        "Findoreria_Solved.xlsx",
         "Spreadsheet.xls",
         "Firedam.xls",
-        "NETFLIX.xlsx",
         "Research.docx",
+        "Findoreria_Solved.xlsx",
+        "NETFLIX.xlsx",
         "WACC Calc Spreadsheet.xls",
         "TIVO Research.docx"
       ],
@@ -165,8 +165,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "StarFury.zip",
-          "StarFury.lnk"
+          "StarFury.lnk",
+          "StarFury.zip"
         ],
         "paths": [
           "\\Users\\fredr\\OneDrive\\StarFury.zip`"
@@ -177,16 +177,16 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "starfury (2).lnk",
+          "StarFury.lnk",
           "\\Users\\fredr\\OneDrive\\StarFury.zip",
-          "StarFury.lnk"
+          "starfury (2).lnk"
         ]
       },
       "matched": [
-        "StarFury.zip",
         "StarFury.lnk",
-        "starfury (2).lnk",
-        "\\Users\\fredr\\OneDrive\\StarFury.zip"
+        "StarFury.zip",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip",
+        "starfury (2).lnk"
       ],
       "missing": [
         "\\Users\\fredr\\OneDrive\\StarFury.zip`"
@@ -214,9 +214,9 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "IDNBREY.pst",
+          "Exported-PST.lnk",
           "backup.pst",
-          "Exported-PST.lnk"
+          "IDNBREY.pst"
         ],
         "paths": [
           "\\Users\\fredr\\OneDrive\\Documents\\Outlook"
@@ -227,19 +227,19 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
           "srl-h",
-          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst",
-          "Exported-PST.lnk"
+          "Exported-PST.lnk",
+          "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
+          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst"
         ]
       },
       "matched": [
-        "IDNBREY.pst",
-        "backup.pst",
         "Exported-PST.lnk",
+        "backup.pst",
+        "IDNBREY.pst",
         "\\Users\\fredr\\OneDrive\\Documents\\Outlook",
-        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
         "srl-h",
+        "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\backup.pst",
         "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IDNBREY.pst"
       ],
       "missing": [],
@@ -307,11 +307,11 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Data.docx",
-          "Death_Blossom_attack.png",
-          "Death_Blossom_test_visualization.png",
+          "Specs.xlsx",
           "Particles...pdf",
-          "Specs.xlsx"
+          "Death_Blossom_test_visualization.png",
+          "Death_Blossom_attack.png",
+          "Data.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -320,20 +320,20 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Death_Blossom_attack.png",
-          "Death_Blossom_test_visualization.png",
-          "GunStar Upgrade Specs.xlsx",
           "GunStar Death Blossom Data.docx",
-          "FTL Comms/Quantum Particles...pdf"
+          "Death_Blossom_test_visualization.png",
+          "FTL Comms/Quantum Particles...pdf",
+          "GunStar Upgrade Specs.xlsx",
+          "Death_Blossom_attack.png"
         ]
       },
       "matched": [
-        "Data.docx",
-        "Death_Blossom_attack.png",
-        "Death_Blossom_test_visualization.png",
         "Specs.xlsx",
-        "GunStar Upgrade Specs.xlsx",
-        "GunStar Death Blossom Data.docx"
+        "Death_Blossom_test_visualization.png",
+        "Death_Blossom_attack.png",
+        "Data.docx",
+        "GunStar Death Blossom Data.docx",
+        "GunStar Upgrade Specs.xlsx"
       ],
       "missing": [
         "Particles...pdf",
@@ -363,12 +363,12 @@
         "timestamps": [],
         "filenames": [
           "German-KITT-Specs.docx",
+          "Background.lnk",
+          "KITT.pptx",
+          "KITT.lnk",
           "Hydrogen_Hybrid_Tech.docx",
           "KITT-older-version.lnk",
-          "KITT.pptx",
-          "Background.docx",
-          "KITT.lnk",
-          "Background.lnk"
+          "Background.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -377,28 +377,28 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "The Future of KITT.pptx",
-          "German-KITT-Specs.docx",
-          "Hydrogen_Hybrid_Tech.docx",
           "Future of KITT - Technical Background.lnk",
+          "The Future of KITT.pptx",
           "Future of KITT - Technical Background.docx",
-          "The Future of KITT.lnk",
-          "The Future of KITT-older-version.lnk"
+          "German-KITT-Specs.docx",
+          "The Future of KITT-older-version.lnk",
+          "Hydrogen_Hybrid_Tech.docx",
+          "The Future of KITT.lnk"
         ]
       },
       "matched": [
         "German-KITT-Specs.docx",
+        "Background.lnk",
+        "KITT.pptx",
+        "KITT.lnk",
         "Hydrogen_Hybrid_Tech.docx",
         "KITT-older-version.lnk",
-        "KITT.pptx",
         "Background.docx",
-        "KITT.lnk",
-        "Background.lnk",
-        "The Future of KITT.pptx",
         "Future of KITT - Technical Background.lnk",
+        "The Future of KITT.pptx",
         "Future of KITT - Technical Background.docx",
-        "The Future of KITT.lnk",
-        "The Future of KITT-older-version.lnk"
+        "The Future of KITT-older-version.lnk",
+        "The Future of KITT.lnk"
       ],
       "missing": [],
       "negation_violations": [],
@@ -424,11 +424,11 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Airwolf_schematics.png",
           "airwolf_blueprints.gif",
+          "Airwolf-ARL.lnk",
           "Wolves_Lair_Tech_Specs.pptx",
-          "airwolf_blueprint.jpg",
-          "Airwolf-ARL.lnk"
+          "Airwolf_schematics.png",
+          "airwolf_blueprint.jpg"
         ],
         "paths": [],
         "drive_refs": [],
@@ -437,19 +437,19 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Airwolf_schematics.png",
           "airwolf_blueprints.gif",
+          "Airwolf-ARL.lnk",
           "Wolves_Lair_Tech_Specs.pptx",
-          "airwolf_blueprint.jpg",
-          "Airwolf-ARL.lnk"
+          "Airwolf_schematics.png",
+          "airwolf_blueprint.jpg"
         ]
       },
       "matched": [
-        "Airwolf_schematics.png",
         "airwolf_blueprints.gif",
+        "Airwolf-ARL.lnk",
         "Wolves_Lair_Tech_Specs.pptx",
-        "airwolf_blueprint.jpg",
-        "Airwolf-ARL.lnk"
+        "Airwolf_schematics.png",
+        "airwolf_blueprint.jpg"
       ],
       "missing": [],
       "negation_violations": [],
@@ -485,8 +485,8 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "RareEarthDeposits_Confidential.jpg",
-          "Vibrainium - SRL.docx"
+          "Vibrainium - SRL.docx",
+          "RareEarthDeposits_Confidential.jpg"
         ]
       },
       "matched": [
@@ -561,10 +561,10 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Encryption.lnk",
-          "C42458BB-...lnk",
           "1694D560-...lnk",
-          "26F77152-...lnk"
+          "Encryption.lnk",
+          "26F77152-...lnk",
+          "C42458BB-...lnk"
         ],
         "paths": [],
         "drive_refs": [],
@@ -573,10 +573,10 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "BitLocker Recovery Key 26F77152-...lnk",
-          "BitLocker Recovery Key C42458BB-...lnk",
           "BitLocker Recovery Key 1694D560-...lnk",
-          "BitLocker Drive Encryption.lnk"
+          "BitLocker Drive Encryption.lnk",
+          "BitLocker Recovery Key 26F77152-...lnk",
+          "BitLocker Recovery Key C42458BB-...lnk"
         ]
       },
       "matched": [
@@ -584,12 +584,12 @@
         "BitLocker Drive Encryption.lnk"
       ],
       "missing": [
-        "C42458BB-...lnk",
         "1694D560-...lnk",
         "26F77152-...lnk",
+        "C42458BB-...lnk",
+        "BitLocker Recovery Key 1694D560-...lnk",
         "BitLocker Recovery Key 26F77152-...lnk",
-        "BitLocker Recovery Key C42458BB-...lnk",
-        "BitLocker Recovery Key 1694D560-...lnk"
+        "BitLocker Recovery Key C42458BB-...lnk"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -654,8 +654,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "starkresearchlabs.sharepoint.com.url",
-          "starkresearchlabs-my.sharepoint.com.url"
+          "starkresearchlabs-my.sharepoint.com.url",
+          "starkresearchlabs.sharepoint.com.url"
         ],
         "paths": [],
         "drive_refs": [],
@@ -664,16 +664,16 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Megaforce on starkresearchlabs.sharepoint.com.url",
           "WorkingFiles on starkresearchlabs-my.sharepoint.com.url",
+          "Megaforce on starkresearchlabs.sharepoint.com.url",
           "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url"
         ]
       },
       "matched": [
-        "starkresearchlabs.sharepoint.com.url",
         "starkresearchlabs-my.sharepoint.com.url",
-        "Megaforce on starkresearchlabs.sharepoint.com.url",
+        "starkresearchlabs.sharepoint.com.url",
         "WorkingFiles on starkresearchlabs-my.sharepoint.com.url",
+        "Megaforce on starkresearchlabs.sharepoint.com.url",
         "KITT-CompetitiveAnalysisDocs on starkresearchlabs-my.sharepoint.com.url"
       ],
       "missing": [],
@@ -717,10 +717,10 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "backup.pst",
           "\\Users\\fredr\\OneDrive\\Documents\\Outlook Files\\",
-          "\\Users\\fredr\\OneDrive\\",
-          "StarFury.zip"
+          "backup.pst",
+          "StarFury.zip",
+          "\\Users\\fredr\\OneDrive\\"
         ]
       },
       "matched": [
@@ -786,7 +786,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0dda-6764-76f3-9816-28eef0687026",
-        "text": "Four external IPs connected via RDP to port 3389 simultaneously:\n- `81.30.144.115` \u2014 59 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `213.202.233.104` \u2014 54 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `201.193.188.114` \u2014 3 connections, first at 02:30:05Z (earliest of all attacker IPs) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `81.19.209.101` \u2014 2 connections including one in SYN_RCVD state at capture (actively connecting) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
+        "text": "Four external IPs connected via RDP to port 3389 simultaneously:\n- `81.30.144.115` \u2014 59 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "line_no": 136
       },
@@ -799,10 +799,7 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
-          "201.193.188.114"
+          "81.30.144.115"
         ],
         "timestamps": [],
         "filenames": [],
@@ -813,17 +810,11 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
-          "201.193.188.114"
+          "81.30.144.115"
         ]
       },
       "matched": [
-        "213.202.233.104",
-        "81.30.144.115",
-        "81.19.209.101",
-        "201.193.188.114"
+        "81.30.144.115"
       ],
       "missing": [],
       "negation_violations": [],
@@ -834,7 +825,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0dda-6764-76f3-9816-28eef0687026",
-        "text": "Four external IPs connected via RDP to port 3389 simultaneously:\n- `81.30.144.115` \u2014 59 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `213.202.233.104` \u2014 54 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `201.193.188.114` \u2014 3 connections, first at 02:30:05Z (earliest of all attacker IPs) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `81.19.209.101` \u2014 2 connections including one in SYN_RCVD state at capture (actively connecting) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
+        "text": "- `213.202.233.104` \u2014 54 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "line_no": 137
       },
@@ -847,10 +838,7 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
-          "201.193.188.114"
+          "213.202.233.104"
         ],
         "timestamps": [],
         "filenames": [],
@@ -861,17 +849,11 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
-          "201.193.188.114"
+          "213.202.233.104"
         ]
       },
       "matched": [
-        "213.202.233.104",
-        "81.30.144.115",
-        "81.19.209.101",
-        "201.193.188.114"
+        "213.202.233.104"
       ],
       "missing": [],
       "negation_violations": [],
@@ -882,7 +864,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0dda-6764-76f3-9816-28eef0687026",
-        "text": "Four external IPs connected via RDP to port 3389 simultaneously:\n- `81.30.144.115` \u2014 59 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `213.202.233.104` \u2014 54 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `201.193.188.114` \u2014 3 connections, first at 02:30:05Z (earliest of all attacker IPs) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `81.19.209.101` \u2014 2 connections including one in SYN_RCVD state at capture (actively connecting) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
+        "text": "- `201.193.188.114` \u2014 3 connections, first at 02:30:05Z (earliest of all attacker IPs) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "line_no": 138
       },
@@ -895,9 +877,6 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
           "201.193.188.114"
         ],
         "timestamps": [],
@@ -909,16 +888,10 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
           "201.193.188.114"
         ]
       },
       "matched": [
-        "213.202.233.104",
-        "81.30.144.115",
-        "81.19.209.101",
         "201.193.188.114"
       ],
       "missing": [],
@@ -930,7 +903,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0dda-6764-76f3-9816-28eef0687026",
-        "text": "Four external IPs connected via RDP to port 3389 simultaneously:\n- `81.30.144.115` \u2014 59 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `213.202.233.104` \u2014 54 connections, 2 ESTABLISHED at capture [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `201.193.188.114` \u2014 3 connections, first at 02:30:05Z (earliest of all attacker IPs) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]\n- `81.19.209.101` \u2014 2 connections including one in SYN_RCVD state at capture (actively connecting) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
+        "text": "- `81.19.209.101` \u2014 2 connections including one in SYN_RCVD state at capture (actively connecting) [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "line_no": 139
       },
@@ -943,10 +916,7 @@
         "pids": [],
         "inodes": [],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
-          "201.193.188.114"
+          "81.19.209.101"
         ],
         "timestamps": [],
         "filenames": [],
@@ -957,17 +927,11 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "213.202.233.104",
-          "81.30.144.115",
-          "81.19.209.101",
-          "201.193.188.114"
+          "81.19.209.101"
         ]
       },
       "matched": [
-        "213.202.233.104",
-        "81.30.144.115",
-        "81.19.209.101",
-        "201.193.188.114"
+        "81.19.209.101"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1005,14 +969,14 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "\\Tools\\",
-          "D:\\Tools\\MRC.exe"
+          "D:\\Tools\\MRC.exe",
+          "\\Tools\\"
         ]
       },
       "matched": [
         "MRC.exe",
-        "\\Tools\\",
-        "D:\\Tools\\MRC.exe"
+        "D:\\Tools\\MRC.exe",
+        "\\Tools\\"
       ],
       "missing": [
         "D:\\Tools\\MRC.exe`"
@@ -1025,11 +989,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 156
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
@@ -1039,68 +1003,32 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
+          "2020-11-14T04:39:15Z"
         ],
-        "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
-        ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "filenames": [],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
+          "2020-11-14T04:39:15Z"
         ]
       },
       "matched": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
-        "DropboxUninstaller.exe"
+        "2020-11-14T04:39:15Z"
       ],
-      "missing": [
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
-      ],
+      "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 157
       },
@@ -1114,72 +1042,40 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
           "2020-11-14T05:05:33Z"
         ],
         "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
+          "mstsc.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
+          "2020-11-14T05:05:33Z"
         ]
       },
       "matched": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
-        "DropboxUninstaller.exe"
+        "2020-11-14T05:05:33Z"
       ],
       "missing": [
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
+        "mstsc.exe"
       ],
       "negation_violations": [],
-      "verified_absences": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 158
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
@@ -1188,73 +1084,37 @@
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
-        ],
+        "timestamps": [],
         "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
           "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
+          "SystemPropertiesAdvanced.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
-        ]
+        "quoted": []
       },
       "matched": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
         "SystemPropertiesProtection.exe",
-        "DropboxUninstaller.exe"
+        "SystemPropertiesAdvanced.exe"
       ],
-      "missing": [
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
-      ],
+      "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 159
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
@@ -1263,148 +1123,66 @@
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
-        ],
+        "timestamps": [],
         "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
+          "BitLockerWizard.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
-        ]
+        "quoted": []
       },
       "matched": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
-        "DropboxUninstaller.exe"
+        "BitLockerWizard.exe"
       ],
-      "missing": [
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
-      ],
+      "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 160
       },
-      "status": "partial",
-      "tool_name": "vol3_userassist",
-      "tool_names": [
-        "vol3_userassist"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
-        ],
-        "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
-        ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
-        "DropboxUninstaller.exe"
-      ],
-      "missing": [
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
-      ],
+      "matched": [],
+      "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
-      "notes": ""
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 161
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
@@ -1414,72 +1192,40 @@
         "inodes": [],
         "ips": [],
         "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
+          "2020-11-14T13:50:02Z"
         ],
         "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
           "DropboxUninstaller.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
+          "DropboxUninstaller.exe",
+          "2020-11-14T13:50:02Z"
         ]
       },
       "matched": [
-        "2020-11-14T04:39:15Z",
         "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
         "DropboxUninstaller.exe"
       ],
-      "missing": [
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
-      ],
+      "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
+      "verified_absences": [],
       "notes": ""
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 162
       },
-      "status": "partial",
+      "status": "failed",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
@@ -1488,19 +1234,9 @@
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
-        ],
+        "timestamps": [],
         "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
+          "sdelete64.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\Downloads\\`.",
@@ -1512,36 +1248,22 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
           "srl-h",
           "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
+          "\\Users\\srl-h\\",
+          "sdelete64.exe"
         ]
       },
-      "matched": [
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe"
-      ],
+      "matched": [],
       "missing": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "DropboxUninstaller.exe",
         "\\Users\\srl-h\\Downloads\\`.",
         "\\Users\\srl-h\\`,"
       ],
       "negation_violations": [
         "sdelete64.exe",
-        "\\Users\\srl-h\\",
         "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
+        "\\Users\\srl-h\\Downloads\\",
+        "\\Users\\srl-h\\"
       ],
       "verified_absences": [],
       "notes": ""
@@ -1550,11 +1272,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- **Regedit** (Registry Editor) opened at `2020-11-14T04:39:15Z` \u2014 likely to enable RDP, create the backdoor account, or disable security settings. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Remote Desktop Connection client (mstsc.exe)** launched twice (UserAssist count:2) last used at `2020-11-14T05:05:33Z` \u2014 intruder may have connected FROM the laptop to an external command system to receive instructions or test exfil channels. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **SystemPropertiesProtection.exe** (focus:7, time:4:33) and **SystemPropertiesAdvanced.exe** (focus:4) accessed \u2014 likely to disable System Restore / shadow copy protection, destroying forensic artifacts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **BitLockerWizard.exe** (focus:3, time:1:13) accessed \u2014 intruder studied and likely exfiltrated the three BitLocker recovery keys. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Office applications** \u2014 PowerPoint, Word, Excel, Outlook, Adobe Reader opened in rapid succession (04:23\u201304:49Z) to identify and stage high-value documents. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Dropbox uninstalled** at `2020-11-14T13:50:02Z` (`DropboxUninstaller.exe` UserAssist count:1) \u2014 removed Dropbox to prevent SRL from detecting changed file sync activity, or to eliminate competing cloud sync visibility. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]\n- **Backdoor account `srl-h` created** \u2014 not directly visible in memory analysis, but confirmed by profile artifacts under `\\Users\\srl-h\\`, CLR usage logs showing PowerShell (both 32-bit and 64-bit) and MMC ran under this account, and `sdelete64.exe` placed in `\\Users\\srl-h\\Downloads\\`. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- **RemoteFXvGPUDisablement.exe** ran under srl-h \u2014 disables RemoteFX GPU virtualization to optimize RDP sessions, suggesting the srl-h account was used for RDP-based remote access. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 163
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
@@ -1563,126 +1285,22 @@
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2020-11-14T04:39:15Z",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z"
-        ],
+        "timestamps": [],
         "filenames": [
-          "sdelete64.exe",
-          "BitLockerWizard.exe",
-          "SystemPropertiesAdvanced.exe",
-          "SystemPropertiesProtection.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "mstsc.exe",
-          "DropboxUninstaller.exe"
+          "RemoteFXvGPUDisablement.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\Downloads\\`.",
-          "\\Users\\srl-h\\`,"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "sdelete64.exe",
-          "\\Users\\srl-h\\",
-          "2020-11-14T13:50:02Z",
-          "2020-11-14T05:05:33Z",
-          "srl-h",
-          "\\Users\\srl-h\\Downloads\\",
-          "2020-11-14T04:39:15Z",
-          "DropboxUninstaller.exe"
-        ]
+        "quoted": []
       },
       "matched": [
-        "BitLockerWizard.exe",
-        "SystemPropertiesAdvanced.exe",
-        "SystemPropertiesProtection.exe",
-        "RemoteFXvGPUDisablement.exe",
-        "mstsc.exe"
+        "RemoteFXvGPUDisablement.exe"
       ],
-      "missing": [
-        "2020-11-14T04:39:15Z",
-        "2020-11-14T13:50:02Z",
-        "2020-11-14T05:05:33Z",
-        "DropboxUninstaller.exe",
-        "\\Users\\srl-h\\Downloads\\`.",
-        "\\Users\\srl-h\\`,"
-      ],
-      "negation_violations": [
-        "sdelete64.exe",
-        "\\Users\\srl-h\\",
-        "srl-h",
-        "\\Users\\srl-h\\Downloads\\"
-      ],
-      "verified_absences": [],
-      "notes": ""
-    },
-    {
-      "claim": {
-        "tag": "CONFIRMED",
-        "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- **StarFury.zip created** \u2014 project files were compressed and moved to the OneDrive sync folder. [INFERRED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8; reasoning: ZIP present in OneDrive root with Recent LNK evidence]\n- **Outlook PST exported** \u2014 `Exported-PST.lnk` in Recent plus `backup.pst` in OneDrive confirm PST was exported and staged. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **SDelete downloaded and staged** \u2014 `SDelete.zip` downloaded; extracted `sdelete.exe` placed in `\\Users\\fredr\\Downloads\\SDelete\\`. A `SDelete.lnk` in Recent confirms it was launched. `sdelete64.exe` also present under srl-h. Used to securely overwrite deleted files to defeat recovery. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **Command Prompt** launched at `2020-11-14T12:43:01Z` \u2014 likely used to run SDelete, copy files, or execute scripts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
-        "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
-        "line_no": 168
-      },
-      "status": "partial",
-      "tool_name": "vol3_filescan",
-      "tool_names": [
-        "vol3_filescan"
-      ],
-      "tokens": {
-        "pids": [],
-        "inodes": [],
-        "ips": [],
-        "timestamps": [
-          "2020-11-14T12:43:01Z"
-        ],
-        "filenames": [
-          "sdelete64.exe",
-          "SDelete.lnk",
-          "sdelete.exe",
-          "StarFury.zip",
-          "SDelete.zip",
-          "backup.pst",
-          "Exported-PST.lnk"
-        ],
-        "paths": [
-          "\\Users\\fredr\\Downloads\\SDelete\\`."
-        ],
-        "drive_refs": [],
-        "brace_guids": [],
-        "emails": [],
-        "hex_offsets": [],
-        "hex_hashes": [],
-        "quoted": [
-          "sdelete64.exe",
-          "2020-11-14T12:43:01Z",
-          "SDelete.lnk",
-          "sdelete.exe",
-          "SDelete.zip",
-          "\\Users\\fredr\\Downloads\\SDelete\\",
-          "backup.pst",
-          "Exported-PST.lnk"
-        ]
-      },
-      "matched": [
-        "sdelete64.exe",
-        "SDelete.lnk",
-        "sdelete.exe",
-        "StarFury.zip",
-        "SDelete.zip",
-        "backup.pst",
-        "Exported-PST.lnk",
-        "\\Users\\fredr\\Downloads\\SDelete\\"
-      ],
-      "missing": [
-        "2020-11-14T12:43:01Z",
-        "\\Users\\fredr\\Downloads\\SDelete\\`."
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1691,7 +1309,49 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- **StarFury.zip created** \u2014 project files were compressed and moved to the OneDrive sync folder. [INFERRED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8; reasoning: ZIP present in OneDrive root with Recent LNK evidence]\n- **Outlook PST exported** \u2014 `Exported-PST.lnk` in Recent plus `backup.pst` in OneDrive confirm PST was exported and staged. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **SDelete downloaded and staged** \u2014 `SDelete.zip` downloaded; extracted `sdelete.exe` placed in `\\Users\\fredr\\Downloads\\SDelete\\`. A `SDelete.lnk` in Recent confirms it was launched. `sdelete64.exe` also present under srl-h. Used to securely overwrite deleted files to defeat recovery. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **Command Prompt** launched at `2020-11-14T12:43:01Z` \u2014 likely used to run SDelete, copy files, or execute scripts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
+        "text": "- **Outlook PST exported** \u2014 `Exported-PST.lnk` in Recent plus `backup.pst` in OneDrive confirm PST was exported and staged. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "line_no": 168
+      },
+      "status": "verified",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Exported-PST.lnk",
+          "backup.pst"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Exported-PST.lnk",
+          "backup.pst"
+        ]
+      },
+      "matched": [
+        "Exported-PST.lnk",
+        "backup.pst"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
+        "text": "- **SDelete downloaded and staged** \u2014 `SDelete.zip` downloaded; extracted `sdelete.exe` placed in `\\Users\\fredr\\Downloads\\SDelete\\`. A `SDelete.lnk` in Recent confirms it was launched. `sdelete64.exe` also present under srl-h. Used to securely overwrite deleted files to defeat recovery. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 169
       },
@@ -1704,17 +1364,12 @@
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2020-11-14T12:43:01Z"
-        ],
+        "timestamps": [],
         "filenames": [
-          "sdelete64.exe",
           "SDelete.lnk",
-          "sdelete.exe",
-          "StarFury.zip",
           "SDelete.zip",
-          "backup.pst",
-          "Exported-PST.lnk"
+          "sdelete64.exe",
+          "sdelete.exe"
         ],
         "paths": [
           "\\Users\\fredr\\Downloads\\SDelete\\`."
@@ -1725,28 +1380,21 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
-          "2020-11-14T12:43:01Z",
           "SDelete.lnk",
-          "sdelete.exe",
+          "sdelete64.exe",
           "SDelete.zip",
           "\\Users\\fredr\\Downloads\\SDelete\\",
-          "backup.pst",
-          "Exported-PST.lnk"
+          "sdelete.exe"
         ]
       },
       "matched": [
-        "sdelete64.exe",
         "SDelete.lnk",
-        "sdelete.exe",
-        "StarFury.zip",
         "SDelete.zip",
-        "backup.pst",
-        "Exported-PST.lnk",
+        "sdelete64.exe",
+        "sdelete.exe",
         "\\Users\\fredr\\Downloads\\SDelete\\"
       ],
       "missing": [
-        "2020-11-14T12:43:01Z",
         "\\Users\\fredr\\Downloads\\SDelete\\`."
       ],
       "negation_violations": [],
@@ -1757,11 +1405,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddb-7249-70a0-8527-ab776038fd0a",
-        "text": "- **StarFury.zip created** \u2014 project files were compressed and moved to the OneDrive sync folder. [INFERRED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8; reasoning: ZIP present in OneDrive root with Recent LNK evidence]\n- **Outlook PST exported** \u2014 `Exported-PST.lnk` in Recent plus `backup.pst` in OneDrive confirm PST was exported and staged. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **SDelete downloaded and staged** \u2014 `SDelete.zip` downloaded; extracted `sdelete.exe` placed in `\\Users\\fredr\\Downloads\\SDelete\\`. A `SDelete.lnk` in Recent confirms it was launched. `sdelete64.exe` also present under srl-h. Used to securely overwrite deleted files to defeat recovery. [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **Command Prompt** launched at `2020-11-14T12:43:01Z` \u2014 likely used to run SDelete, copy files, or execute scripts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
+        "text": "- **Command Prompt** launched at `2020-11-14T12:43:01Z` \u2014 likely used to run SDelete, copy files, or execute scripts. [CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddb-7249-70a0-8527-ab776038fd0a]",
         "line_no": 170
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
@@ -1773,48 +1421,21 @@
         "timestamps": [
           "2020-11-14T12:43:01Z"
         ],
-        "filenames": [
-          "sdelete64.exe",
-          "SDelete.lnk",
-          "sdelete.exe",
-          "StarFury.zip",
-          "SDelete.zip",
-          "backup.pst",
-          "Exported-PST.lnk"
-        ],
-        "paths": [
-          "\\Users\\fredr\\Downloads\\SDelete\\`."
-        ],
+        "filenames": [],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "sdelete64.exe",
-          "2020-11-14T12:43:01Z",
-          "SDelete.lnk",
-          "sdelete.exe",
-          "SDelete.zip",
-          "\\Users\\fredr\\Downloads\\SDelete\\",
-          "backup.pst",
-          "Exported-PST.lnk"
+          "2020-11-14T12:43:01Z"
         ]
       },
       "matched": [
-        "2020-11-14T12:43:01Z",
-        "sdelete.exe",
-        "\\Users\\fredr\\Downloads\\SDelete\\"
+        "2020-11-14T12:43:01Z"
       ],
-      "missing": [
-        "sdelete64.exe",
-        "SDelete.lnk",
-        "StarFury.zip",
-        "SDelete.zip",
-        "backup.pst",
-        "Exported-PST.lnk",
-        "\\Users\\fredr\\Downloads\\SDelete\\`."
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1823,7 +1444,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0dd9-acd5-7651-9a30-ca3ed66e47c7",
-        "text": "- **MRC.exe** (pid 29440, 32-bit, wow64:true) launched at `2020-11-16T02:31:15Z` from `D:\\Tools\\MRC.exe` via Explorer (ppid 7464), session_id:1, 20 threads \u2014 still RUNNING at RAM capture. A companion temp file `MRC179.tmp` was created alongside it. MRC.exe is a remote administration/control tool; its presence on an external drive (D:\\Tools\\) and launch via the user's Explorer session indicates it was brought in on USB and run during the RDP intrusion to facilitate remote control. [CONFIRMED \u2014 exec_id 019e0dd9-acd5-7651-9a30-ca3ed66e47c7; exec_id 019e0ddb-688f-7ae3-8b88-6721d68c42cf; exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RDP flood from 4 attacker IPs** \u2014 within seconds of MRC.exe launch, 113+ TCP connections hit port 3389 from two primary IPs and two secondary IPs, overwhelming the TermService (svchost.exe pid 1248). Two ESTABLISHED sessions from 81.30.144.115 and two from 213.202.233.104 were live at RAM capture time. [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
+        "text": "- **MRC.exe** (pid 29440, 32-bit, wow64:true) launched at `2020-11-16T02:31:15Z` from `D:\\Tools\\MRC.exe` via Explorer (ppid 7464), session_id:1, 20 threads \u2014 still RUNNING at RAM capture. A companion temp file `MRC179.tmp` was created alongside it. MRC.exe is a remote administration/control tool; its presence on an external drive (D:\\Tools\\) and launch via the user's Explorer session indicates it was brought in on USB and run during the RDP intrusion to facilitate remote control. [CONFIRMED \u2014 exec_id 019e0dd9-acd5-7651-9a30-ca3ed66e47c7; exec_id 019e0ddb-688f-7ae3-8b88-6721d68c42cf; exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0dd9-acd5-7651-9a30-ca3ed66e47c7; exec_id 019e0ddb-688f-7ae3-8b88-6721d68c42cf; exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 174
       },
@@ -1836,21 +1457,16 @@
       ],
       "tokens": {
         "pids": [
-          "1248",
           "29440"
         ],
         "inodes": [],
-        "ips": [
-          "213.202.233.104",
-          "81.30.144.115"
-        ],
+        "ips": [],
         "timestamps": [
           "2020-11-16T02:31:15Z"
         ],
         "filenames": [
           "MRC.exe",
-          "MRC179.tmp",
-          "svchost.exe"
+          "MRC179.tmp"
         ],
         "paths": [],
         "drive_refs": [
@@ -1862,23 +1478,19 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          "2020-11-16T02:31:15Z",
           "D:\\Tools\\MRC.exe",
-          "MRC179.tmp",
-          "2020-11-16T02:31:15Z"
+          "MRC179.tmp"
         ]
       },
       "matched": [
-        "1248",
         "29440",
         "2020-11-16T02:31:15Z",
         "MRC.exe",
         "MRC179.tmp",
-        "svchost.exe",
         "D:\\Tools\\MRC.exe"
       ],
       "missing": [
-        "213.202.233.104",
-        "81.30.144.115",
         "D:\\Tools\\MRC.exe`",
         "D:\\Tools\\)"
       ],
@@ -1890,7 +1502,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0dda-6764-76f3-9816-28eef0687026",
-        "text": "- **MRC.exe** (pid 29440, 32-bit, wow64:true) launched at `2020-11-16T02:31:15Z` from `D:\\Tools\\MRC.exe` via Explorer (ppid 7464), session_id:1, 20 threads \u2014 still RUNNING at RAM capture. A companion temp file `MRC179.tmp` was created alongside it. MRC.exe is a remote administration/control tool; its presence on an external drive (D:\\Tools\\) and launch via the user's Explorer session indicates it was brought in on USB and run during the RDP intrusion to facilitate remote control. [CONFIRMED \u2014 exec_id 019e0dd9-acd5-7651-9a30-ca3ed66e47c7; exec_id 019e0ddb-688f-7ae3-8b88-6721d68c42cf; exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- **RDP flood from 4 attacker IPs** \u2014 within seconds of MRC.exe launch, 113+ TCP connections hit port 3389 from two primary IPs and two secondary IPs, overwhelming the TermService (svchost.exe pid 1248). Two ESTABLISHED sessions from 81.30.144.115 and two from 213.202.233.104 were live at RAM capture time. [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
+        "text": "- **RDP flood from 4 attacker IPs** \u2014 within seconds of MRC.exe launch, 113+ TCP connections hit port 3389 from two primary IPs and two secondary IPs, overwhelming the TermService (svchost.exe pid 1248). Two ESTABLISHED sessions from 81.30.144.115 and two from 213.202.233.104 were live at RAM capture time. [CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0dda-6764-76f3-9816-28eef0687026]",
         "line_no": 175
       },
@@ -1901,51 +1513,34 @@
       ],
       "tokens": {
         "pids": [
-          "1248",
-          "29440"
+          "1248"
         ],
         "inodes": [],
         "ips": [
-          "213.202.233.104",
-          "81.30.144.115"
+          "81.30.144.115",
+          "213.202.233.104"
         ],
-        "timestamps": [
-          "2020-11-16T02:31:15Z"
-        ],
+        "timestamps": [],
         "filenames": [
           "MRC.exe",
-          "MRC179.tmp",
           "svchost.exe"
         ],
         "paths": [],
-        "drive_refs": [
-          "D:\\Tools\\MRC.exe`",
-          "D:\\Tools\\)"
-        ],
+        "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "D:\\Tools\\MRC.exe",
-          "MRC179.tmp",
-          "2020-11-16T02:31:15Z"
-        ]
+        "quoted": []
       },
       "matched": [
         "1248",
-        "213.202.233.104",
         "81.30.144.115",
+        "213.202.233.104",
         "svchost.exe"
       ],
       "missing": [
-        "29440",
-        "2020-11-16T02:31:15Z",
-        "MRC.exe",
-        "MRC179.tmp",
-        "D:\\Tools\\MRC.exe`",
-        "D:\\Tools\\)",
-        "D:\\Tools\\MRC.exe"
+        "MRC.exe"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -1971,8 +1566,8 @@
         "timestamps": [],
         "filenames": [
           "SearchApp.exe",
-          "MsMpEng.exe",
-          "Teams.exe"
+          "Teams.exe",
+          "MsMpEng.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1984,8 +1579,8 @@
       },
       "matched": [
         "SearchApp.exe",
-        "MsMpEng.exe",
-        "Teams.exe"
+        "Teams.exe",
+        "MsMpEng.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1996,7 +1591,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 221
       },
@@ -2011,10 +1606,7 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "powershell.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "mmc.exe"
+          "sdelete64.exe"
         ],
         "paths": [
           "\\Users\\srl-h\\`"
@@ -2025,21 +1617,12 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "powershell.exe.log",
-          "\\Users\\srl-h\\",
-          "RemoteFXvGPUDisablement.exe.log",
-          "mmc.exe.log"
+          "\\Users\\srl-h\\"
         ]
       },
       "matched": [
-        "powershell.exe",
-        "RemoteFXvGPUDisablement.exe",
         "sdelete64.exe",
-        "mmc.exe",
-        "powershell.exe.log",
-        "\\Users\\srl-h\\",
-        "RemoteFXvGPUDisablement.exe.log",
-        "mmc.exe.log"
+        "\\Users\\srl-h\\"
       ],
       "missing": [
         "\\Users\\srl-h\\`"
@@ -2052,11 +1635,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 222
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
@@ -2067,39 +1650,23 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "powershell.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "mmc.exe"
+          "powershell.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\`"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "powershell.exe.log",
-          "\\Users\\srl-h\\",
-          "RemoteFXvGPUDisablement.exe.log",
-          "mmc.exe.log"
+          "powershell.exe.log"
         ]
       },
       "matched": [
         "powershell.exe",
-        "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
-        "mmc.exe",
-        "powershell.exe.log",
-        "\\Users\\srl-h\\",
-        "RemoteFXvGPUDisablement.exe.log",
-        "mmc.exe.log"
+        "powershell.exe.log"
       ],
-      "missing": [
-        "\\Users\\srl-h\\`"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -2108,11 +1675,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 223
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
@@ -2123,39 +1690,23 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "powershell.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
           "mmc.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\`"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "powershell.exe.log",
-          "\\Users\\srl-h\\",
-          "RemoteFXvGPUDisablement.exe.log",
           "mmc.exe.log"
         ]
       },
       "matched": [
-        "powershell.exe",
-        "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
         "mmc.exe",
-        "powershell.exe.log",
-        "\\Users\\srl-h\\",
-        "RemoteFXvGPUDisablement.exe.log",
         "mmc.exe.log"
       ],
-      "missing": [
-        "\\Users\\srl-h\\`"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -2164,11 +1715,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 224
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
@@ -2179,39 +1730,23 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "powershell.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "mmc.exe"
+          "RemoteFXvGPUDisablement.exe"
         ],
-        "paths": [
-          "\\Users\\srl-h\\`"
-        ],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "powershell.exe.log",
-          "\\Users\\srl-h\\",
-          "RemoteFXvGPUDisablement.exe.log",
-          "mmc.exe.log"
+          "RemoteFXvGPUDisablement.exe.log"
         ]
       },
       "matched": [
-        "powershell.exe",
         "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
-        "mmc.exe",
-        "powershell.exe.log",
-        "\\Users\\srl-h\\",
-        "RemoteFXvGPUDisablement.exe.log",
-        "mmc.exe.log"
+        "RemoteFXvGPUDisablement.exe.log"
       ],
-      "missing": [
-        "\\Users\\srl-h\\`"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -2220,113 +1755,63 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 225
       },
-      "status": "partial",
-      "tool_name": "vol3_filescan",
-      "tool_names": [
-        "vol3_filescan"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
         "ips": [],
         "timestamps": [],
-        "filenames": [
-          "powershell.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "mmc.exe"
-        ],
-        "paths": [
-          "\\Users\\srl-h\\`"
-        ],
+        "filenames": [],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "powershell.exe.log",
-          "\\Users\\srl-h\\",
-          "RemoteFXvGPUDisablement.exe.log",
-          "mmc.exe.log"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "powershell.exe",
-        "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
-        "mmc.exe",
-        "powershell.exe.log",
-        "\\Users\\srl-h\\",
-        "RemoteFXvGPUDisablement.exe.log",
-        "mmc.exe.log"
-      ],
-      "missing": [
-        "\\Users\\srl-h\\`"
-      ],
+      "matched": [],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e0ddc-336a-77c3-ae5d-6ba398beced8",
-        "text": "- Profile directory `\\Users\\srl-h\\` populated with CLR usage logs, OneDrive binaries, and sdelete64.exe [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `powershell.exe.log` in both CLR_v4.0 and CLR_v4.0_32 (64-bit and 32-bit PowerShell executed) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `mmc.exe.log` (Microsoft Management Console used \u2014 likely for account/computer management) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- `RemoteFXvGPUDisablement.exe.log` (RDP performance optimization) [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- OneDrive fully installed \u2014 independent cloud sync path to attacker-controlled account [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]\n- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
+        "text": "- PST file deleted to Recycle Bin under SID for RID 1002 [CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e0ddc-336a-77c3-ae5d-6ba398beced8]",
         "line_no": 226
       },
-      "status": "partial",
-      "tool_name": "vol3_filescan",
-      "tool_names": [
-        "vol3_filescan"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
         "ips": [],
         "timestamps": [],
-        "filenames": [
-          "powershell.exe",
-          "RemoteFXvGPUDisablement.exe",
-          "sdelete64.exe",
-          "mmc.exe"
-        ],
-        "paths": [
-          "\\Users\\srl-h\\`"
-        ],
+        "filenames": [],
+        "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
         "hex_hashes": [],
-        "quoted": [
-          "powershell.exe.log",
-          "\\Users\\srl-h\\",
-          "RemoteFXvGPUDisablement.exe.log",
-          "mmc.exe.log"
-        ]
+        "quoted": []
       },
-      "matched": [
-        "powershell.exe",
-        "RemoteFXvGPUDisablement.exe",
-        "sdelete64.exe",
-        "mmc.exe",
-        "powershell.exe.log",
-        "\\Users\\srl-h\\",
-        "RemoteFXvGPUDisablement.exe.log",
-        "mmc.exe.log"
-      ],
-      "missing": [
-        "\\Users\\srl-h\\`"
-      ],
+      "matched": [],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {

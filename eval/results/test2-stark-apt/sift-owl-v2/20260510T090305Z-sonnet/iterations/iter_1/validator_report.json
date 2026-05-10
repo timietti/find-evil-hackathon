@@ -7,14 +7,14 @@
     "hypothesis_count": 0,
     "gap_count": 2,
     "other_count": 0,
-    "verified": 15,
-    "partial": 7,
-    "failed": 4,
-    "unverifiable": 14,
+    "verified": 19,
+    "partial": 3,
+    "failed": 2,
+    "unverifiable": 16,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.375
+    "confirmation_score": 0.475
   },
   "verdicts": [
     {
@@ -67,8 +67,8 @@
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "services.exe",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "services.exe"
         ],
         "paths": [],
         "drive_refs": [],
@@ -77,8 +77,8 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "services.exe",
-          "usboesrv.exe"
+          "usboesrv.exe",
+          "services.exe"
         ]
       },
       "matched": [
@@ -197,11 +197,11 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
-        "text": "**The spinlock.exe binary is absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]. A WER crash folder `NonCritical_spinlock.exe_f55bbffa...` was created 2012-04-04T18:28:42Z [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab], proving spinlock was executed on the DC and crashed, but the binary was subsequently deleted (likely sdelete). The absence from ShimCache is consistent with post-deletion shimcache gap.",
+        "text": "**The spinlock.exe binary is absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]",
         "line_no": 115
       },
-      "status": "partial",
+      "status": "failed",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse"
@@ -210,9 +210,7 @@
         "pids": [],
         "inodes": [],
         "ips": [],
-        "timestamps": [
-          "2012-04-04T18:28:42Z"
-        ],
+        "timestamps": [],
         "filenames": [
           "spinlock.exe"
         ],
@@ -223,15 +221,11 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "NonCritical_spinlock.exe_f55bbffa...",
           "file_name: spinlock.exe"
         ]
       },
-      "matched": [
-        "2012-04-04T18:28:42Z"
-      ],
+      "matched": [],
       "missing": [
-        "NonCritical_spinlock.exe_f55bbffa...",
         "file_name: spinlock.exe"
       ],
       "negation_violations": [
@@ -244,7 +238,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
-        "text": "**The spinlock.exe binary is absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]. A WER crash folder `NonCritical_spinlock.exe_f55bbffa...` was created 2012-04-04T18:28:42Z [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab], proving spinlock was executed on the DC and crashed, but the binary was subsequently deleted (likely sdelete). The absence from ShimCache is consistent with post-deletion shimcache gap.",
+        "text": ". A WER crash folder `NonCritical_spinlock.exe_f55bbffa...` was created 2012-04-04T18:28:42Z [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
         "line_no": 115
       },
@@ -260,9 +254,7 @@
         "timestamps": [
           "2012-04-04T18:28:42Z"
         ],
-        "filenames": [
-          "spinlock.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
@@ -270,20 +262,16 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "NonCritical_spinlock.exe_f55bbffa...",
-          "file_name: spinlock.exe"
+          "NonCritical_spinlock.exe_f55bbffa..."
         ]
       },
       "matched": [
         "2012-04-04T18:28:42Z"
       ],
       "missing": [
-        "NonCritical_spinlock.exe_f55bbffa...",
-        "file_name: spinlock.exe"
+        "NonCritical_spinlock.exe_f55bbffa..."
       ],
-      "negation_violations": [
-        "spinlock.exe"
-      ],
+      "negation_violations": [],
       "verified_absences": [],
       "notes": ""
     },
@@ -322,7 +310,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
-        "text": "**No a.exe was found in DC MFT TEMP paths** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]; **not present in DC ShimCache TEMP entries** [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38].",
+        "text": "**No a.exe was found in DC MFT TEMP paths** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]",
         "line_no": 131
       },
@@ -359,23 +347,19 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-20c8-79e3-a814-7d52002b8c38",
-        "text": "**No a.exe was found in DC MFT TEMP paths** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]; **not present in DC ShimCache TEMP entries** [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38].",
+        "text": "; **not present in DC ShimCache TEMP entries** [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
         "line_no": 131
       },
-      "status": "failed",
-      "tool_name": "ezt_shimcache_parse",
-      "tool_names": [
-        "ezt_shimcache_parse"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
         "ips": [],
         "timestamps": [],
-        "filenames": [
-          "a.exe"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
@@ -386,11 +370,9 @@
       },
       "matched": [],
       "missing": [],
-      "negation_violations": [
-        "a.exe"
-      ],
+      "negation_violations": [],
       "verified_absences": [],
-      "notes": ""
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
@@ -741,7 +723,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
-        "text": "**EXFIL.pst was NOT found in DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches].",
+        "text": "**EXFIL.pst was NOT found in DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
         "line_no": 218
       },
@@ -778,7 +760,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
-        "text": "**EXFIL.pst was NOT found in DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches].",
+        "text": ". **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]",
         "line_no": 218
       },
@@ -900,24 +882,24 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
+          ".EVT",
           "log2timeline",
           "evtxtract",
-          ".EVT",
-          ".evtx",
-          ".Evt",
-          "winevt",
           "SecEvent.Evt",
-          "SysEvent.Evt"
+          "SysEvent.Evt",
+          ".evtx",
+          "winevt",
+          ".Evt"
         ]
       },
       "matched": [],
       "missing": [
         "log2timeline",
         "evtxtract",
-        ".evtx",
-        "winevt",
         "SecEvent.Evt",
-        "SysEvent.Evt"
+        "SysEvent.Evt",
+        ".evtx",
+        "winevt"
       ],
       "negation_violations": [],
       "verified_absences": [
@@ -958,9 +940,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "96.255.98.154:29932",
+          "usboesrv.exe",
           "Windows\\System32\\",
-          "usboesrv.exe"
+          "96.255.98.154:29932"
         ]
       },
       "matched": [
@@ -1012,7 +994,7 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
-        "text": "**hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches] and **absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches].",
+        "text": "**hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]",
         "line_no": 279
       },
@@ -1049,23 +1031,19 @@
       "claim": {
         "tag": "CONFIRMED",
         "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
-        "text": "**hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches] and **absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches].",
+        "text": "and **absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
         "line_no": 279
       },
-      "status": "verified",
-      "tool_name": "ezt_mft_parse",
-      "tool_names": [
-        "ezt_mft_parse"
-      ],
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
       "tokens": {
         "pids": [],
         "inodes": [],
         "ips": [],
         "timestamps": [],
-        "filenames": [
-          "hotcorewin2k.sys"
-        ],
+        "filenames": [],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
@@ -1077,10 +1055,8 @@
       "matched": [],
       "missing": [],
       "negation_violations": [],
-      "verified_absences": [
-        "hotcorewin2k.sys"
-      ],
-      "notes": ""
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
     },
     {
       "claim": {
@@ -1121,7 +1097,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
         "line_no": 340
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse",
@@ -1146,11 +1122,10 @@
         "quoted": []
       },
       "matched": [
+        "2011-08-28T22:33Z",
         "adberdr813.exe"
       ],
-      "missing": [
-        "2011-08-28T22:33Z"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1317,7 +1292,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
         "line_no": 350
       },
-      "status": "failed",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse"
@@ -1340,12 +1315,12 @@
         "hex_hashes": [],
         "quoted": []
       },
-      "matched": [],
-      "missing": [],
-      "negation_violations": [
+      "matched": [
         "2012-04-05T16:07",
         "EXFIL.pst"
       ],
+      "missing": [],
+      "negation_violations": [],
       "verified_absences": [],
       "notes": ""
     },
@@ -1357,7 +1332,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
         "line_no": 352
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse"
@@ -1381,11 +1356,10 @@
         "quoted": []
       },
       "matched": [
+        "2012-03-21T03:14Z",
         "hotcorewin2k.sys"
       ],
-      "missing": [
-        "2012-03-21T03:14Z"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1398,7 +1372,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
         "line_no": 354
       },
-      "status": "failed",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse",
@@ -1423,12 +1397,12 @@
         "hex_hashes": [],
         "quoted": []
       },
-      "matched": [],
-      "missing": [
+      "matched": [
         "2012-04-04T17:29Z",
         "2012-04-03T23:09Z",
         "2012-04-04T16:40Z"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1441,7 +1415,7 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
         "line_no": 356
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "ezt_shimcache_parse",
       "tool_names": [
         "ezt_shimcache_parse"
@@ -1465,11 +1439,10 @@
         "quoted": []
       },
       "matched": [
+        "2012-04-04T01:46Z",
         "PSEXESVC.EXE"
       ],
-      "missing": [
-        "2012-04-04T01:46Z"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""

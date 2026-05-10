@@ -444,6 +444,131 @@ def test_validator_falls_back_to_parsed_summary_for_parserless_tools(
     assert "598e53b69c71643d" in matched_str
 
 
+# ---- v3: per-tag claim segmentation ---------------------------------------
+
+
+def test_parse_claims_two_confirmed_tags_in_one_paragraph_get_separate_text() -> None:
+    """v3 fix #1: when a paragraph has multiple [CONFIRMED] tags, each
+    Claim's text should be ONLY its own slice, not the whole paragraph.
+
+    Without this, two claims pollute each other's token lists and the
+    validator can't tell which exec_id is supposed to support which token.
+    """
+    md = (
+        "**No a.exe was found in DC MFT TEMP paths** "
+        "[CONFIRMED — exec_id 019eaaaa-1111]; "
+        "**not present in DC ShimCache TEMP entries** "
+        "[CONFIRMED — exec_id 019ebbbb-2222].\n"
+    )
+    claims = parse_claims(md)
+    assert len(claims) == 2
+    # Each claim's text is its own slice
+    assert "DC MFT TEMP paths" in claims[0].text
+    assert "DC ShimCache TEMP entries" in claims[1].text
+    # And they don't overlap into each other's content
+    assert "DC ShimCache" not in claims[0].text
+    assert "DC MFT TEMP paths" not in claims[1].text
+    # exec_ids are correctly attributed
+    assert claims[0].exec_ids == ["019eaaaa-1111"]
+    assert claims[1].exec_ids == ["019ebbbb-2222"]
+
+
+def test_parse_claims_single_tag_per_paragraph_unchanged() -> None:
+    """v3 segmentation must not break the simple case where each
+    paragraph has exactly one tag (the most common pattern)."""
+    md = "Para 1 with PID 4. [CONFIRMED — exec_id 019eaaaa-1111]\n"
+    claims = parse_claims(md)
+    assert len(claims) == 1
+    # text contains the full paragraph leading up to + including the tag
+    assert "PID 4" in claims[0].text
+
+
+# ---- v3: paren-aware negation ---------------------------------------------
+
+
+def test_is_negated_sentence_strips_parens_before_check() -> None:
+    """v3 fix #2: a 'not' inside a parenthetical exception should NOT
+    cause the whole sentence to be classified as negated."""
+    # The "not" is inside parens; the main clause is positive.
+    assert is_negated_sentence("EXFIL.pst is on tdungan (not DC).") is False
+    # Real negation outside parens still classifies as negated.
+    assert is_negated_sentence("usboesrv.exe was not found on nromanoff.") is True
+    # Negation both inside parens AND outside parens → negated (real negation present).
+    assert is_negated_sentence("X is not present (not even on Y).") is True
+
+
+def test_token_negation_paren_aware_e2e() -> None:
+    """End-to-end: a token in a sentence with only a parenthetical 'not'
+    should be treated as positive, so its presence in the haystack
+    counts as a match (not a negation_violation)."""
+    parsed = {
+        "rows": [
+            {"file_name": "EXFIL.pst", "parent_path": "\\Users\\vibranium\\..."},
+        ]
+    }
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text="EXFIL.pst is on tdungan (not DC). [CONFIRMED — exec_id 01x]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="ezt_mft_parse")
+    assert v.status == "verified", (
+        f"paren-isolated 'not' should not cause negation; got {v.status} "
+        f"violations={v.negation_violations}"
+    )
+    assert "EXFIL.pst" in v.matched
+
+
+# ---- v3: timestamp prefix matching ----------------------------------------
+
+
+def test_timestamp_prefix_match_minute_precision() -> None:
+    """v3 fix #3: claim's 'T23:09Z' (minute precision) should match
+    haystack's 'T23:09:14Z' (second precision) via prefix match."""
+    parsed = {
+        "events": [
+            {"time_created": "2012-04-03T23:09:14Z"},
+        ]
+    }
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text="vibranium first activity at 2012-04-03T23:09Z. [CONFIRMED — exec_id 01x]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="ezt_evtx_parse")
+    assert v.status == "verified", (
+        f"timestamp prefix should match; got {v.status} missing={v.missing}"
+    )
+
+
+def test_timestamp_full_match_still_works() -> None:
+    """v3 prefix match must not break the case where the claim's
+    timestamp matches the haystack's timestamp exactly."""
+    parsed = {"events": [{"time_created": "2012-04-03T23:09:14Z"}]}
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text="event at 2012-04-03T23:09:14Z [CONFIRMED — exec_id 01x]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="ezt_evtx_parse")
+    assert v.status == "verified"
+
+
+def test_timestamp_prefix_does_not_overshoot_to_unrelated_times() -> None:
+    """A claim's timestamp 'T23:09Z' must NOT match haystack's 'T23:08:59Z'
+    just because they share a prefix string-wise — they don't (different minute)."""
+    parsed = {"events": [{"time_created": "2012-04-03T23:08:59Z"}]}
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text="event at 2012-04-03T23:09Z [CONFIRMED — exec_id 01x]",
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="ezt_evtx_parse")
+    # The token "2012-04-03T23:09Z" is NOT a prefix of "2012-04-03T23:08:59Z",
+    # so the substring/prefix matcher correctly returns False.
+    assert v.status == "failed"
+
+
 # ---- end-to-end against committed ROCBA-001 v1 run ------------------------
 
 
