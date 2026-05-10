@@ -1,0 +1,60 @@
+{
+  "run_id": "20260510T065909Z-sonnet",
+  "case": "rocba-001",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_iterations": 3,
+  "started_utc": "2026-05-10T06:59:36Z",
+  "evidence_dir": "/cases/find-evil-test",
+  "pre_run_hashes": {
+    "/cases/find-evil-test/Rocba-Memory.raw": {
+      "expected_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "actual_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "match": true,
+      "size_bytes": 19050528768
+    },
+    "/cases/find-evil-test/ROCBA-BACKGROUND.pptx": {
+      "expected_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "actual_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "match": true,
+      "size_bytes": 40148560
+    }
+  },
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v1/prompt.md",
+  "claude_version": "2.1.137 (Claude Code)",
+  "harness_git_rev": "974a0171365cff56a59ec05ba5acc22424cd77c2",
+  "finished_utc": "2026-05-10T07:49:01Z",
+  "total_cost_usd": 2.7074045499999997,
+  "iterations": [
+    {
+      "iteration": 1,
+      "exit_code": 0,
+      "wall_seconds": 1148.2438173294067,
+      "cost_usd": 0.93036385,
+      "tool_use_count": 39,
+      "confirmed_count": 26,
+      "verified_count": 1,
+      "demoted_count": 25
+    },
+    {
+      "iteration": 2,
+      "exit_code": 0,
+      "wall_seconds": 529.7690739631653,
+      "cost_usd": 0.6579769999999999,
+      "tool_use_count": 15,
+      "confirmed_count": 43,
+      "verified_count": 9,
+      "demoted_count": 33
+    },
+    {
+      "iteration": 3,
+      "exit_code": 0,
+      "wall_seconds": 1280.077138185501,
+      "cost_usd": 1.1190636999999999,
+      "tool_use_count": 31,
+      "confirmed_count": 60,
+      "verified_count": 29,
+      "demoted_count": 30
+    }
+  ]
+}

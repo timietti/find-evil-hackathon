@@ -1,0 +1,1274 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v2/20260510T065909Z-sonnet/iterations/iter_1",
+    "total_claims": 34,
+    "confirmed_count": 26,
+    "inferred_count": 4,
+    "hypothesis_count": 0,
+    "gap_count": 4,
+    "other_count": 0,
+    "verified": 1,
+    "partial": 22,
+    "failed": 3,
+    "unverifiable": 0,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 0,
+    "confirmation_score": 0.038
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10af-5c21-7842-b611-482594d77c2f",
+        "text": "# CASE ROCBA-001 \u2014 FINAL INVESTIGATION REPORT\n## Memory-Only Analysis of Rocba-Memory.raw\n**Analyst:** SIFT-OWL v2 \u2014 Principal DFIR Orchestrator\n**Capture anchor:** `2020-11-16T02:32:38Z` [CONFIRMED \u2014 exec_id `019e10af-5c21-7842-b611-482594d77c2f`]\n**OS:** Windows 10 Build 19041 x64 | User hive: `C:\\Users\\fredr\\ntuser.dat`\n**Break-in window:** `2020-11-13T22:00Z \u2013 2020-11-16T02:32:38Z`",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10af-5c21-7842-b611-482594d77c2f`]",
+        "line_no": 39
+      },
+      "status": "partial",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-13T22:00Z",
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [
+          "ntuser.dat"
+        ],
+        "paths": [
+          "\\Users\\fredr\\ntuser.dat`"
+        ],
+        "drive_refs": [
+          "C:\\Users\\fredr\\ntuser.dat`"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "C:\\Users\\fredr\\ntuser.dat",
+          "2020-11-16T02:32:38Z",
+          "2020-11-13T22:00Z \u2013 2020-11-16T02:32:38Z",
+          "019e10af-5c21-7842-b611-482594d77c2f"
+        ]
+      },
+      "matched": [
+        "2020-11-16T02:32:38Z"
+      ],
+      "missing": [
+        "2020-11-13T22:00Z",
+        "ntuser.dat",
+        "\\Users\\fredr\\ntuser.dat`",
+        "C:\\Users\\fredr\\ntuser.dat`",
+        "C:\\Users\\fredr\\ntuser.dat",
+        "2020-11-13T22:00Z \u2013 2020-11-16T02:32:38Z",
+        "019e10af-5c21-7842-b611-482594d77c2f"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "The following SRL project directories were present in pool-memory file objects [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 47
+      },
+      "status": "failed",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "Email archive `frocba@stark-research-labs.com.ost` was also present in memory pool, confirming full corporate mailbox access [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 62
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "stark-research-labs.com.ost"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [
+          "frocba@stark-research-labs.com"
+        ],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "frocba@stark-research-labs.com.ost"
+        ]
+      },
+      "matched": [
+        "stark-research-labs.com.ost",
+        "frocba@stark-research-labs.com",
+        "frocba@stark-research-labs.com.ost"
+      ],
+      "missing": [
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "- `\\Users\\fredr\\OneDrive\\StarFury.zip` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`] \u2014 a compressed archive of StarFury material placed inside the OneDrive sync folder, meaning it would automatically upload to Microsoft's cloud. Its presence in the OneDrive root (not the `OneDrive - Stark Research Labs` corporate share) indicates deliberate packaging separate from the synced corporate tree.\n- `\\Users\\fredr\\OneDrive\\Desktop\\SA-23E Mitchell-Hyundyne Starfury.docx` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`] \u2014 primary StarFury design document.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 70
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Starfury.docx",
+          "StarFury.zip"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E",
+          "\\Users\\fredr\\OneDrive\\StarFury.zip`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E Mitchell-Hyundyne Starfury.docx",
+          "OneDrive - Stark Research Labs",
+          "\\Users\\fredr\\OneDrive\\StarFury.zip"
+        ]
+      },
+      "matched": [
+        "Starfury.docx",
+        "StarFury.zip"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E Mitchell-Hyundyne Starfury.docx",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip"
+      ],
+      "negation_violations": [
+        "OneDrive - Stark Research Labs"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "- `\\Users\\fredr\\OneDrive\\StarFury.zip` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`] \u2014 a compressed archive of StarFury material placed inside the OneDrive sync folder, meaning it would automatically upload to Microsoft's cloud. Its presence in the OneDrive root (not the `OneDrive - Stark Research Labs` corporate share) indicates deliberate packaging separate from the synced corporate tree.\n- `\\Users\\fredr\\OneDrive\\Desktop\\SA-23E Mitchell-Hyundyne Starfury.docx` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`] \u2014 primary StarFury design document.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 71
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Starfury.docx",
+          "StarFury.zip"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E",
+          "\\Users\\fredr\\OneDrive\\StarFury.zip`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E Mitchell-Hyundyne Starfury.docx",
+          "OneDrive - Stark Research Labs",
+          "\\Users\\fredr\\OneDrive\\StarFury.zip"
+        ]
+      },
+      "matched": [
+        "Starfury.docx",
+        "StarFury.zip"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E Mitchell-Hyundyne Starfury.docx",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip"
+      ],
+      "negation_violations": [
+        "OneDrive - Stark Research Labs"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "[CONFIRMED files in memory \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`; INFERRED copying from concurrent process activity]",
+        "raw_match": "[CONFIRMED files in memory \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`; INFERRED copying from concurrent process activity]",
+        "line_no": 83
+      },
+      "status": "failed",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "**Anti-forensics applied to scope of theft:**\n- `\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe` and `SDelete.zip` present in pool memory; `SDelete.lnk` in Recent [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]. SDelete was downloaded, extracted, and run (Recent link present). The scope of what was wiped is unrecoverable from memory alone.\n- A second user account `srl-h` also had `sdelete64.exe` in `\\Users\\srl-h\\Downloads\\` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`] \u2014 [GAP: origin of `srl-h` account unclear; disk forensics needed to determine if it was a pre-existing SRL IT account or created by the intruder for persistence].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 86
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "sdelete.exe",
+          "SDelete.lnk",
+          "SDelete.zip",
+          "sdelete64.exe"
+        ],
+        "paths": [
+          "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe`",
+          "\\Users\\srl-h\\Downloads\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "sdelete64.exe",
+          "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe",
+          "\\Users\\srl-h\\Downloads\\",
+          "srl-h",
+          "SDelete.lnk",
+          "SDelete.zip"
+        ]
+      },
+      "matched": [
+        "sdelete.exe",
+        "SDelete.lnk",
+        "SDelete.zip",
+        "sdelete64.exe",
+        "srl-h"
+      ],
+      "missing": [
+        "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe`",
+        "\\Users\\srl-h\\Downloads\\`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe",
+        "\\Users\\srl-h\\Downloads\\"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "**Anti-forensics applied to scope of theft:**\n- `\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe` and `SDelete.zip` present in pool memory; `SDelete.lnk` in Recent [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]. SDelete was downloaded, extracted, and run (Recent link present). The scope of what was wiped is unrecoverable from memory alone.\n- A second user account `srl-h` also had `sdelete64.exe` in `\\Users\\srl-h\\Downloads\\` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`] \u2014 [GAP: origin of `srl-h` account unclear; disk forensics needed to determine if it was a pre-existing SRL IT account or created by the intruder for persistence].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 87
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "sdelete.exe",
+          "SDelete.lnk",
+          "SDelete.zip",
+          "sdelete64.exe"
+        ],
+        "paths": [
+          "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe`",
+          "\\Users\\srl-h\\Downloads\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "sdelete64.exe",
+          "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe",
+          "\\Users\\srl-h\\Downloads\\",
+          "srl-h",
+          "SDelete.lnk",
+          "SDelete.zip"
+        ]
+      },
+      "matched": [
+        "sdelete.exe",
+        "SDelete.lnk",
+        "SDelete.zip",
+        "sdelete64.exe",
+        "srl-h"
+      ],
+      "missing": [
+        "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe`",
+        "\\Users\\srl-h\\Downloads\\`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe",
+        "\\Users\\srl-h\\Downloads\\"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "**Channel 1 \u2014 Microsoft OneDrive cloud sync (primary confirmed exfil vector):**\n`\\Users\\fredr\\OneDrive\\StarFury.zip` placed in the OneDrive sync root [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]. With the OneDrive client running (confirmed by sync activity in netscan to Microsoft Azure IPs `52.114.*`, `52.167.*`, `13.107.*`), this archive would sync automatically. [INFERRED sync occurred \u2014 exec_id `019e10b2-33c8-71f0-b971-f1487a706533`]",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 94
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "StarFury.zip"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\StarFury.zip`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "13.107.*",
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "52.114.*",
+          "52.167.*",
+          "019e10b2-33c8-71f0-b971-f1487a706533",
+          "\\Users\\fredr\\OneDrive\\StarFury.zip"
+        ]
+      },
+      "matched": [
+        "StarFury.zip"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\StarFury.zip`",
+        "13.107.*",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "52.114.*",
+        "52.167.*",
+        "019e10b2-33c8-71f0-b971-f1487a706533",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b2-33c8-71f0-b971-f1487a706533",
+        "text": "[CONFIRMED connections \u2014 exec_id `019e10b2-33c8-71f0-b971-f1487a706533`]. RDP supports clipboard and drive-share redirection as built-in file transfer mechanisms. [INFERRED: files transferred via RDP drive map/clipboard to attacker machines.]",
+        "raw_match": "[CONFIRMED connections \u2014 exec_id `019e10b2-33c8-71f0-b971-f1487a706533`]",
+        "line_no": 106
+      },
+      "status": "failed",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10b2-33c8-71f0-b971-f1487a706533"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "019e10b2-33c8-71f0-b971-f1487a706533"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "**Channel 4 \u2014 iCloud (possible pre-existing personal sync):**\nStarFury images `StarFuryHeader.jpg` and `fighter_starfury.jpg` were found at `\\Users\\fredr\\iCloudDrive\\` [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]. Whether these were placed by the intruder or were Fred's pre-existing personal files is [GAP \u2014 iCloud sync logs on disk or Apple server-side records would resolve this].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 114
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "fighter_starfury.jpg",
+          "StarFuryHeader.jpg"
+        ],
+        "paths": [
+          "\\Users\\fredr\\iCloudDrive\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "fighter_starfury.jpg",
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "StarFuryHeader.jpg",
+          "\\Users\\fredr\\iCloudDrive\\"
+        ]
+      },
+      "matched": [
+        "fighter_starfury.jpg",
+        "StarFuryHeader.jpg"
+      ],
+      "missing": [
+        "\\Users\\fredr\\iCloudDrive\\`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\iCloudDrive\\"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b2-2a45-70f1-933d-4c58ee0e06b2",
+        "text": "**Step 1 \u2014 Physical break-in and USB deployment:**\nOn the evening of 2020-11-13 EST, the intruder physically entered Fred's residence. The SRL Surface was left logged in (Fred on vacation). The intruder inserted a USB drive whose D: drive root contained a `Tools\\` directory with `MRC.exe` [CONFIRMED D:\\Tools\\MRC.exe cmdline \u2014 exec_id `019e10b2-2a45-70f1-933d-4c58ee0e06b2`].",
+        "raw_match": "[CONFIRMED D:\\Tools\\MRC.exe cmdline \u2014 exec_id `019e10b2-2a45-70f1-933d-4c58ee0e06b2`]",
+        "line_no": 121
+      },
+      "status": "partial",
+      "tool_name": "vol3_cmdline",
+      "tool_names": [
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [
+          "D:\\Tools\\MRC.exe"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "MRC.exe",
+          "Tools\\",
+          "019e10b2-2a45-70f1-933d-4c58ee0e06b2"
+        ]
+      },
+      "matched": [
+        "MRC.exe",
+        "Tools\\"
+      ],
+      "missing": [
+        "D:\\Tools\\MRC.exe",
+        "019e10b2-2a45-70f1-933d-4c58ee0e06b2"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+        "text": "**Step 2 \u2014 DameWare Mini Remote Control deployment:**\n`MRC.exe` (DameWare Mini Remote Control, a commercial remote admin tool, WOW64/32-bit) was launched by double-clicking it through Windows Explorer (parent chain: `explorer.exe` PID 7464 \u2192 `MRC.exe` PID 29440) [CONFIRMED process tree \u2014 exec_id `019e10b0-a4a8-73c3-a0be-dbe94c39f245`; CONFIRMED cmdline \u2014 exec_id `019e10b2-2a45-70f1-933d-4c58ee0e06b2`]. This established a remote access channel back to the attacker, separate from the RDP path.",
+        "raw_match": "[CONFIRMED process tree \u2014 exec_id `019e10b0-a4a8-73c3-a0be-dbe94c39f245`; CONFIRMED cmdline \u2014 exec_id `019e10b2-2a45-70f1-933d-4c58ee0e06b2`]",
+        "line_no": 124
+      },
+      "status": "partial",
+      "tool_name": "vol3_pstree",
+      "tool_names": [
+        "vol3_pstree",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "7464",
+          "29440"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "explorer.exe",
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "explorer.exe",
+          "MRC.exe",
+          "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+          "019e10b2-2a45-70f1-933d-4c58ee0e06b2"
+        ]
+      },
+      "matched": [
+        "7464",
+        "29440",
+        "explorer.exe",
+        "MRC.exe"
+      ],
+      "missing": [
+        "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+        "019e10b2-2a45-70f1-933d-4c58ee0e06b2"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "**Step 3 \u2014 File reconnaissance and staging (hands-on-keyboard, 2020-11-13T22:09Z \u2013 2020-11-14T13:50Z):**\nThe intruder browsed the filesystem using Windows Explorer (13 launches, 1:18:28 total focus [CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]) and opened Office documents (Word 14\u00d7, Excel 5\u00d7, PowerPoint 3\u00d7), Acrobat PDFs (6\u00d7), and Photos (15\u00d7). The command prompt was launched for ~6:43 [CONFIRMED UserAssist cmd.exe last_updated 2020-11-14T12:43:01Z \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`].",
+        "raw_match": "[CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]",
+        "line_no": 127
+      },
+      "status": "partial",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:50Z",
+          "2020-11-14T12:43:01Z",
+          "2020-11-13T22:09Z"
+        ],
+        "filenames": [
+          "cmd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10b3-343f-7270-b730-d532b6046c33"
+        ]
+      },
+      "matched": [
+        "2020-11-14T12:43:01Z",
+        "cmd.exe"
+      ],
+      "missing": [
+        "2020-11-14T13:50Z",
+        "2020-11-13T22:09Z",
+        "019e10b3-343f-7270-b730-d532b6046c33"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "**Step 3 \u2014 File reconnaissance and staging (hands-on-keyboard, 2020-11-13T22:09Z \u2013 2020-11-14T13:50Z):**\nThe intruder browsed the filesystem using Windows Explorer (13 launches, 1:18:28 total focus [CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]) and opened Office documents (Word 14\u00d7, Excel 5\u00d7, PowerPoint 3\u00d7), Acrobat PDFs (6\u00d7), and Photos (15\u00d7). The command prompt was launched for ~6:43 [CONFIRMED UserAssist cmd.exe last_updated 2020-11-14T12:43:01Z \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`].",
+        "raw_match": "[CONFIRMED UserAssist cmd.exe last_updated 2020-11-14T12:43:01Z \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]",
+        "line_no": 127
+      },
+      "status": "partial",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:50Z",
+          "2020-11-14T12:43:01Z",
+          "2020-11-13T22:09Z"
+        ],
+        "filenames": [
+          "cmd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10b3-343f-7270-b730-d532b6046c33"
+        ]
+      },
+      "matched": [
+        "2020-11-14T12:43:01Z",
+        "cmd.exe"
+      ],
+      "missing": [
+        "2020-11-14T13:50Z",
+        "2020-11-13T22:09Z",
+        "019e10b3-343f-7270-b730-d532b6046c33"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "**Step 4 \u2014 Archive creation and cloud staging:**\n`StarFury.zip` was created and placed in `\\Users\\fredr\\OneDrive\\` for automatic cloud exfiltration [CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]. Exact creation time not determinable from memory alone. [GAP: PowerShell/cmd history or $MFT timestamps needed to confirm creation time and compression tool used. No 7z/robocopy/xcopy processes found in cmdline \u2014 exec_id `019e10b2-2a45-70f1-933d-4c58ee0e06b2`; Windows built-in ZIP (Explorer right-click or PowerShell Compress-Archive) is the most likely tool.]",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 130
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "StarFury.zip"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "019e10b2-2a45-70f1-933d-4c58ee0e06b2",
+          "StarFury.zip",
+          "\\Users\\fredr\\OneDrive\\"
+        ]
+      },
+      "matched": [
+        "StarFury.zip"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\OneDrive\\"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "019e10b2-2a45-70f1-933d-4c58ee0e06b2"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "**Step 5 \u2014 Registry manipulation:**\n`regedit.exe` was opened at `2020-11-14T04:39:15Z` [CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]. [GAP: purpose unknown; possible modification of audit policy, RDP settings, or run keys. Disk-based registry hive comparison needed.]",
+        "raw_match": "[CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]",
+        "line_no": 133
+      },
+      "status": "partial",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T04:39:15Z"
+        ],
+        "filenames": [
+          "regedit.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "regedit.exe",
+          "2020-11-14T04:39:15Z",
+          "019e10b3-343f-7270-b730-d532b6046c33"
+        ]
+      },
+      "matched": [
+        "2020-11-14T04:39:15Z",
+        "regedit.exe"
+      ],
+      "missing": [
+        "019e10b3-343f-7270-b730-d532b6046c33"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "**Step 6 \u2014 Anti-forensic cleanup:**\n- `DropboxUninstaller.exe` run at `2020-11-14T13:50:02Z` \u2014 Dropbox removed, likely to prevent sync-based artifact trail [CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]\n- SDelete downloaded (`SDelete.zip`), extracted, and executed from `\\Users\\fredr\\Downloads\\SDelete\\` \u2014 secure file deletion to destroy evidence [CONFIRMED pool-memory files + Recent LNK \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "raw_match": "[CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]",
+        "line_no": 136
+      },
+      "status": "partial",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:50:02Z"
+        ],
+        "filenames": [
+          "DropboxUninstaller.exe",
+          "SDelete.zip"
+        ],
+        "paths": [
+          "\\Users\\fredr\\Downloads\\SDelete\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "2020-11-14T13:50:02Z",
+          "DropboxUninstaller.exe",
+          "\\Users\\fredr\\Downloads\\SDelete\\",
+          "019e10b3-343f-7270-b730-d532b6046c33",
+          "SDelete.zip"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:50:02Z",
+        "DropboxUninstaller.exe"
+      ],
+      "missing": [
+        "SDelete.zip",
+        "\\Users\\fredr\\Downloads\\SDelete\\`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\Downloads\\SDelete\\",
+        "019e10b3-343f-7270-b730-d532b6046c33"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "text": "**Step 6 \u2014 Anti-forensic cleanup:**\n- `DropboxUninstaller.exe` run at `2020-11-14T13:50:02Z` \u2014 Dropbox removed, likely to prevent sync-based artifact trail [CONFIRMED UserAssist \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33`]\n- SDelete downloaded (`SDelete.zip`), extracted, and executed from `\\Users\\fredr\\Downloads\\SDelete\\` \u2014 secure file deletion to destroy evidence [CONFIRMED pool-memory files + Recent LNK \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "raw_match": "[CONFIRMED pool-memory files + Recent LNK \u2014 exec_id `019e10ba-06c7-70c0-b1e3-590aa4c55cf2`]",
+        "line_no": 137
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:50:02Z"
+        ],
+        "filenames": [
+          "DropboxUninstaller.exe",
+          "SDelete.zip"
+        ],
+        "paths": [
+          "\\Users\\fredr\\Downloads\\SDelete\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+          "2020-11-14T13:50:02Z",
+          "DropboxUninstaller.exe",
+          "\\Users\\fredr\\Downloads\\SDelete\\",
+          "019e10b3-343f-7270-b730-d532b6046c33",
+          "SDelete.zip"
+        ]
+      },
+      "matched": [
+        "SDelete.zip"
+      ],
+      "missing": [
+        "2020-11-14T13:50:02Z",
+        "DropboxUninstaller.exe",
+        "\\Users\\fredr\\Downloads\\SDelete\\`",
+        "019e10ba-06c7-70c0-b1e3-590aa4c55cf2",
+        "\\Users\\fredr\\Downloads\\SDelete\\",
+        "019e10b3-343f-7270-b730-d532b6046c33"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "**Step 7 \u2014 Persistent remote re-entry (2020-11-16T02:30Z onwards):**\nRDP connections began at ~02:30Z from four external IPs. MRC.exe was re-launched at `2020-11-16T02:31:13Z` (UserAssist) / `02:31:15Z` (process creation) [CONFIRMED \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33` / `019e10b0-a4a8-73c3-a0be-dbe94c39f245`]. The intruder was in an active RDP session from 81.30.144.115 and 213.202.233.104 (ESTABLISHED state) when SRL captured RAM at `02:32:38Z` [CONFIRMED \u2014 exec_id `019e10b2-33c8-71f0-b971-f1487a706533`].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33` / `019e10b0-a4a8-73c3-a0be-dbe94c39f245`]",
+        "line_no": 140
+      },
+      "status": "partial",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist",
+        "vol3_pstree"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [
+          "81.30.144.115",
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:13Z",
+          "2020-11-16T02:30Z"
+        ],
+        "filenames": [
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "02:32:38Z",
+          "019e10b2-33c8-71f0-b971-f1487a706533",
+          "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+          "2020-11-16T02:31:13Z",
+          "019e10b3-343f-7270-b730-d532b6046c33",
+          "02:31:15Z"
+        ]
+      },
+      "matched": [
+        "2020-11-16T02:31:13Z",
+        "MRC.exe",
+        "02:31:15Z"
+      ],
+      "missing": [
+        "81.30.144.115",
+        "213.202.233.104",
+        "2020-11-16T02:30Z",
+        "02:32:38Z",
+        "019e10b2-33c8-71f0-b971-f1487a706533",
+        "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+        "019e10b3-343f-7270-b730-d532b6046c33"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b2-33c8-71f0-b971-f1487a706533",
+        "text": "**Step 7 \u2014 Persistent remote re-entry (2020-11-16T02:30Z onwards):**\nRDP connections began at ~02:30Z from four external IPs. MRC.exe was re-launched at `2020-11-16T02:31:13Z` (UserAssist) / `02:31:15Z` (process creation) [CONFIRMED \u2014 exec_id `019e10b3-343f-7270-b730-d532b6046c33` / `019e10b0-a4a8-73c3-a0be-dbe94c39f245`]. The intruder was in an active RDP session from 81.30.144.115 and 213.202.233.104 (ESTABLISHED state) when SRL captured RAM at `02:32:38Z` [CONFIRMED \u2014 exec_id `019e10b2-33c8-71f0-b971-f1487a706533`].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10b2-33c8-71f0-b971-f1487a706533`]",
+        "line_no": 140
+      },
+      "status": "partial",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [
+          "81.30.144.115",
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:13Z",
+          "2020-11-16T02:30Z"
+        ],
+        "filenames": [
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "02:32:38Z",
+          "019e10b2-33c8-71f0-b971-f1487a706533",
+          "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+          "2020-11-16T02:31:13Z",
+          "019e10b3-343f-7270-b730-d532b6046c33",
+          "02:31:15Z"
+        ]
+      },
+      "matched": [
+        "81.30.144.115",
+        "213.202.233.104"
+      ],
+      "missing": [
+        "2020-11-16T02:31:13Z",
+        "2020-11-16T02:30Z",
+        "MRC.exe",
+        "02:32:38Z",
+        "019e10b2-33c8-71f0-b971-f1487a706533",
+        "019e10b0-a4a8-73c3-a0be-dbe94c39f245",
+        "019e10b3-343f-7270-b730-d532b6046c33",
+        "02:31:15Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-6ee6-7a31-9132-8cf7c7432210",
+        "text": "**No malware/code injection detected:** `vol3_malfind` returned 16 findings, all attributable to legitimate processes (Windows Defender, SearchApp, LockApp, RuntimeBroker, Teams, SmartScreen) with no suspicious private-MZ-headed regions [CONFIRMED \u2014 exec_id `019e10b3-6ee6-7a31-9132-8cf7c7432210`]. The attack was entirely tool-based (MRC.exe + built-in Windows utilities). **No persistence via services identified** \u2014 svcscan showed no non-Windows binary paths [CONFIRMED \u2014 exec_id `019e10b3-3b9b-74e2-9fdf-503d754fe7e0`].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10b3-6ee6-7a31-9132-8cf7c7432210`]",
+        "line_no": 142
+      },
+      "status": "partial",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10b3-6ee6-7a31-9132-8cf7c7432210",
+          "019e10b3-3b9b-74e2-9fdf-503d754fe7e0",
+          "vol3_malfind"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "MRC.exe",
+        "vol3_malfind"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "019e10b3-6ee6-7a31-9132-8cf7c7432210",
+        "019e10b3-3b9b-74e2-9fdf-503d754fe7e0"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-3b9b-74e2-9fdf-503d754fe7e0",
+        "text": "**No malware/code injection detected:** `vol3_malfind` returned 16 findings, all attributable to legitimate processes (Windows Defender, SearchApp, LockApp, RuntimeBroker, Teams, SmartScreen) with no suspicious private-MZ-headed regions [CONFIRMED \u2014 exec_id `019e10b3-6ee6-7a31-9132-8cf7c7432210`]. The attack was entirely tool-based (MRC.exe + built-in Windows utilities). **No persistence via services identified** \u2014 svcscan showed no non-Windows binary paths [CONFIRMED \u2014 exec_id `019e10b3-3b9b-74e2-9fdf-503d754fe7e0`].",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019e10b3-3b9b-74e2-9fdf-503d754fe7e0`]",
+        "line_no": 142
+      },
+      "status": "partial",
+      "tool_name": "vol3_svcscan",
+      "tool_names": [
+        "vol3_svcscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": [
+          "019e10b3-6ee6-7a31-9132-8cf7c7432210",
+          "019e10b3-3b9b-74e2-9fdf-503d754fe7e0",
+          "vol3_malfind"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "MRC.exe",
+        "vol3_malfind"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        "019e10b3-6ee6-7a31-9132-8cf7c7432210",
+        "019e10b3-3b9b-74e2-9fdf-503d754fe7e0"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "```\n2020-11-13T22:09:17Z  Xbox Gaming Overlay triggered \u2014 first post-22:00 UserAssist hit\n                       [CONFIRMED UA exec_id 019e10b3-343f-7270-b730-d532b6046c33]",
+        "raw_match": "[CONFIRMED UA exec_id 019e10b3-343f-7270-b730-d532b6046c33]",
+        "line_no": 152
+      },
+      "status": "verified",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-13T22:09:17Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": []
+      },
+      "matched": [
+        "2020-11-13T22:09:17Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b3-343f-7270-b730-d532b6046c33",
+        "text": "2020-11-16T02:30:05Z  First RDP connection from 201.193.188.114 (CLOSED)\n2020-11-16T02:31:13Z  MRC.exe launched via Explorer (UserAssist timestamp)\n2020-11-16T02:31:15Z  MRC.exe process created (PID 29440, 20 threads, WOW64)\n                       [CONFIRMED UA exec_id 019e10b3-343f-7270-b730-d532b6046c33;\n                        CONFIRMED pstree exec_id 019e10b0-a4a8-73c3-a0be-dbe94c39f245]\n2020-11-16T02:31:26Z  First RDP connection from 81.30.144.115 (CLOSED)\n2020-11-16T02:31:18Z  RDP from 213.202.233.104 (CLOSED)\n                       [All CONFIRMED netscan exec_id 019e10b2-33c8-71f0-b971-f1487a706533]",
+        "raw_match": "[CONFIRMED UA exec_id 019e10b3-343f-7270-b730-d532b6046c33;\n                        CONFIRMED pstree exec_id 019e10b0-a4a8-73c3-a0be-dbe94c39f245]",
+        "line_no": 179
+      },
+      "status": "partial",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist",
+        "vol3_pstree"
+      ],
+      "tokens": {
+        "pids": [
+          "29440"
+        ],
+        "ips": [
+          "81.30.144.115",
+          "201.193.188.114",
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:15Z",
+          "2020-11-16T02:30:05Z",
+          "2020-11-16T02:31:26Z",
+          "2020-11-16T02:31:13Z",
+          "2020-11-16T02:31:18Z"
+        ],
+        "filenames": [
+          "MRC.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": []
+      },
+      "matched": [
+        "29440",
+        "2020-11-16T02:31:15Z",
+        "2020-11-16T02:31:13Z",
+        "MRC.exe"
+      ],
+      "missing": [
+        "81.30.144.115",
+        "201.193.188.114",
+        "213.202.233.104",
+        "2020-11-16T02:30:05Z",
+        "2020-11-16T02:31:26Z",
+        "2020-11-16T02:31:18Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e10b2-33c8-71f0-b971-f1487a706533",
+        "text": "2020-11-16T02:32:38Z  *** SRL RAM CAPTURE ***\n                       At capture: 81.30.144.115 and 213.202.233.104 both ESTABLISHED\n                       Intruder was actively connected during acquisition\n                       [CONFIRMED netscan exec_id 019e10b2-33c8-71f0-b971-f1487a706533]\n```",
+        "raw_match": "[CONFIRMED netscan exec_id 019e10b2-33c8-71f0-b971-f1487a706533]",
+        "line_no": 188
+      },
+      "status": "partial",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "ips": [
+          "81.30.144.115",
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "quoted": []
+      },
+      "matched": [
+        "81.30.144.115",
+        "213.202.233.104"
+      ],
+      "missing": [
+        "2020-11-16T02:32:38Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    }
+  ]
+}
