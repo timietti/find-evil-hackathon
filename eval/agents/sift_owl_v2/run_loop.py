@@ -479,6 +479,15 @@ def main(
     max_turns_per_iter: int = typer.Option(120, "--max-turns-per-iter"),
     max_iterations: int = typer.Option(3, "--max-iterations"),
     skip_post_hash: bool = typer.Option(False, "--skip-post-hash"),
+    skip_pre_hash: bool = typer.Option(
+        False,
+        "--skip-pre-hash",
+        help=(
+            "Skip the pre-run evidence-hash check. Use on multi-host cases "
+            "(SHIELDBASE has ~198 GB; pre-hash takes ~10 min) where intake "
+            "hashes are already canonical in eval/cases/<case>/intake/hashes/."
+        ),
+    ),
     dry_run: bool = typer.Option(False, "--dry-run"),
 ) -> None:
     if shutil.which("claude") is None:
@@ -520,12 +529,16 @@ def main(
         target=mcp_config_path,
     )
 
-    console.log(f"[bold]Hashing evidence (pre-run)...[/]")
-    pre_hashes = _verify_evidence_unchanged(case_data)
-    for p, info in pre_hashes.items():
-        if not info["match"]:
-            raise RuntimeError(f"pre-run hash mismatch for {p}")
-    console.log(f"[green]Pre-run hashes match.[/] ({len(pre_hashes)} files)")
+    if skip_pre_hash:
+        console.log("[yellow]Pre-run hash check skipped (--skip-pre-hash).[/]")
+        pre_hashes = {}
+    else:
+        console.log("[bold]Hashing evidence (pre-run)...[/]")
+        pre_hashes = _verify_evidence_unchanged(case_data)
+        for p, info in pre_hashes.items():
+            if not info["match"]:
+                raise RuntimeError(f"pre-run hash mismatch for {p}")
+        console.log(f"[green]Pre-run hashes match.[/] ({len(pre_hashes)} files)")
 
     meta = {
         "run_id":          run_id,
