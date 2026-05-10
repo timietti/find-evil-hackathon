@@ -94,15 +94,38 @@ def is_negated_sentence(sentence: str) -> bool:
 def token_is_negated_in(claim_text: str, token: str) -> bool:
     """True if `token` appears in any negated sentence of `claim_text`.
 
-    If the token appears in BOTH a positive and a negative sentence in
-    the same claim, we treat it as negated (the conservative choice
-    raises the bar for "verified": we'd rather flag something for human
-    review than let a hallucination slip).
+    Two ways a token can be negated:
+
+      1. **Direct**: token appears in a sentence/clause that itself contains
+         a negation cue. ("usboesrv.exe was not found on nromanoff.")
+
+      2. **Subject-clause**: token appears alone (or very nearly so — clause
+         length ≤ len(token) + 5 characters, ignoring trailing punctuation)
+         in a clause that is *immediately followed* by a negated clause.
+         ("usboesrv.exe: **Not found on nromanoff**" → after clause-split
+         by `:\s+`, clause 1 is just "usboesrv.exe" and clause 2 has the
+         negation. The negation logically applies to clause 1's subject.)
+
+    If the token appears in BOTH a positive and a negative sentence in the
+    same claim, we treat it as negated (the conservative choice raises the
+    bar for "verified" — better to flag for human review than let a
+    hallucination slip).
     """
     tlow = token.lower()
-    for sent in split_sentences(claim_text):
-        if tlow in sent.lower() and is_negated_sentence(sent):
+    sentences = split_sentences(claim_text)
+    for i, sent in enumerate(sentences):
+        sent_lower = sent.lower()
+        if tlow not in sent_lower:
+            continue
+        # (1) Direct negation in the same clause.
+        if is_negated_sentence(sent):
             return True
+        # (2) Subject-clause negation: very short clause that's basically
+        #     just the token, immediately followed by a negated clause.
+        bare = sent.strip().rstrip(":;")
+        if len(bare) <= len(token) + 5 and i + 1 < len(sentences):
+            if is_negated_sentence(sentences[i + 1]):
+                return True
     return False
 
 
@@ -114,6 +137,12 @@ def token_is_negated_in(claim_text: str, token: str) -> bool:
 
 _RE_PID = re.compile(
     r"\b(?:PID|pid)\s*(?:=|\(|:)?\s*(\d{1,7})\b",
+)
+# Inode / MFT-entry references: "inode 12345", "MFT entry 67890". Same pattern
+# but distinct semantic — used when the agent cites a file by its NTFS inode.
+_RE_INODE = re.compile(
+    r"\b(?:inode|MFT(?:\s+entry)?)\s*(?:=|\(|:|#)?\s*(\d{1,9})\b",
+    re.IGNORECASE,
 )
 _RE_IPV4 = re.compile(
     r"\b((?:25[0-5]|2[0-4]\d|1\d\d|\d{1,2})"
@@ -159,6 +188,11 @@ _RE_EMAIL = re.compile(
 )
 # Plain hex offsets like `0xb78d106d2080` (Vol3 emits these for VAD/Offset).
 _RE_HEX_OFFSET = re.compile(r"\b(0x[0-9a-fA-F]{8,})\b")
+# Hash-shaped hex strings: 16+ contiguous hex chars (no 0x prefix). Captures
+# MD5 (32), SHA1 (40), SHA256 (64), and partial-prefix quotes ("sha256 abc…").
+# Word-boundary anchored so it doesn't grab embedded substrings of longer
+# tokens like exec_ids (which are UUIDv7 with dashes).
+_RE_HEX_HASH = re.compile(r"\b([0-9a-fA-F]{16,64})\b")
 # Process / image-name candidates (quoted backticked names).
 _RE_BACKTICK = re.compile(r"`([^`\n]{1,80})`")
 
@@ -168,6 +202,7 @@ class ExtractedTokens:
     """Bag of testable tokens pulled from a single claim's text."""
 
     pids:        list[str] = field(default_factory=list)
+    inodes:      list[str] = field(default_factory=list)
     ips:         list[str] = field(default_factory=list)
     timestamps:  list[str] = field(default_factory=list)
     filenames:   list[str] = field(default_factory=list)
@@ -176,16 +211,20 @@ class ExtractedTokens:
     brace_guids: list[str] = field(default_factory=list)
     emails:      list[str] = field(default_factory=list)
     hex_offsets: list[str] = field(default_factory=list)
+    hex_hashes:  list[str] = field(default_factory=list)
     quoted:      list[str] = field(default_factory=list)
+
+    def _buckets(self) -> tuple[list[str], ...]:
+        return (
+            self.pids, self.inodes, self.ips, self.timestamps, self.filenames,
+            self.paths, self.drive_refs, self.brace_guids, self.emails,
+            self.hex_offsets, self.hex_hashes, self.quoted,
+        )
 
     def all(self) -> list[str]:
         """Flat list of all extracted tokens (deduplicated, preserving order)."""
         seen, out = set(), []
-        for bucket in (
-            self.pids, self.ips, self.timestamps, self.filenames,
-            self.paths, self.drive_refs, self.brace_guids, self.emails,
-            self.hex_offsets, self.quoted,
-        ):
+        for bucket in self._buckets():
             for t in bucket:
                 if t in seen:
                     continue
@@ -194,13 +233,7 @@ class ExtractedTokens:
         return out
 
     def is_empty(self) -> bool:
-        return all(
-            not bucket for bucket in (
-                self.pids, self.ips, self.timestamps, self.filenames,
-                self.paths, self.drive_refs, self.brace_guids, self.emails,
-                self.hex_offsets, self.quoted,
-            )
-        )
+        return all(not bucket for bucket in self._buckets())
 
 
 def extract_tokens(claim: str) -> ExtractedTokens:
@@ -214,6 +247,7 @@ def extract_tokens(claim: str) -> ExtractedTokens:
         return ExtractedTokens()
 
     pids        = list({m.group(1) for m in _RE_PID.finditer(claim)})
+    inodes      = list({m.group(1) for m in _RE_INODE.finditer(claim)})
     ips         = list({m.group(1) for m in _RE_IPV4.finditer(claim)})
     timestamps  = list({m.group(1) for m in _RE_TIMESTAMP_ISO.finditer(claim)})
     filenames   = list({m.group(1) for m in _RE_FILENAME.finditer(claim)})
@@ -221,6 +255,23 @@ def extract_tokens(claim: str) -> ExtractedTokens:
     drive_refs  = list({m.group(1) for m in _RE_DRIVE_REF.finditer(claim)})
     brace_guids = list({m.group(0) for m in _RE_BRACE_GUID.finditer(claim)})
     hex_offsets = list({m.group(1) for m in _RE_HEX_OFFSET.finditer(claim)})
+    # Hash extraction needs a tight filter — UUIDv7 exec_ids are also long
+    # hex strings (with dashes between segments), but they're cited as
+    # `exec_id <uuid>`. We don't want to treat the exec_id citation itself
+    # as a verifiable token. Drop hex matches that immediately follow
+    # "exec_id" or sit inside a UUIDv7 dash pattern.
+    raw_hashes = []
+    for m in _RE_HEX_HASH.finditer(claim):
+        s, e = m.span(1)
+        # Skip if preceded by "exec_id" / "exec id"
+        before = claim[max(0, s - 20):s].lower()
+        if "exec_id" in before or "exec id" in before:
+            continue
+        # Skip if surrounded by hyphens (UUIDv7 segment)
+        if (s > 0 and claim[s - 1] == "-") or (e < len(claim) and claim[e] == "-"):
+            continue
+        raw_hashes.append(m.group(1))
+    hex_hashes  = list(set(raw_hashes))
     quoted      = list({m.group(1) for m in _RE_BACKTICK.finditer(claim)})
 
     # Email post-processing: the regex greedily matches a `.tld`, but in
@@ -252,7 +303,8 @@ def extract_tokens(claim: str) -> ExtractedTokens:
     drive_refs = _drop_strict_prefixes(drive_refs)
 
     return ExtractedTokens(
-        pids=pids, ips=ips, timestamps=timestamps, filenames=filenames,
-        paths=paths, drive_refs=drive_refs, brace_guids=brace_guids,
-        emails=emails, hex_offsets=hex_offsets, quoted=quoted,
+        pids=pids, inodes=inodes, ips=ips, timestamps=timestamps,
+        filenames=filenames, paths=paths, drive_refs=drive_refs,
+        brace_guids=brace_guids, emails=emails,
+        hex_offsets=hex_offsets, hex_hashes=hex_hashes, quoted=quoted,
     )

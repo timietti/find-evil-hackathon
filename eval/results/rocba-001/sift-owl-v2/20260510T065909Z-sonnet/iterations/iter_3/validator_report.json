@@ -7,14 +7,14 @@
     "hypothesis_count": 1,
     "gap_count": 5,
     "other_count": 0,
-    "verified": 29,
-    "partial": 29,
-    "failed": 1,
+    "verified": 49,
+    "partial": 10,
+    "failed": 0,
     "unverifiable": 1,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 0,
-    "confirmation_score": 0.483
+    "confirmation_score": 0.817
   },
   "verdicts": [
     {
@@ -32,6 +32,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-16T02:32:38Z"
@@ -42,6 +43,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -65,6 +67,7 @@
       "tool_names": [],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [],
@@ -73,6 +76,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [],
@@ -96,6 +100,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -110,6 +115,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -131,20 +137,21 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 32
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "Data.xlsx",
+          "Specs.xlsx",
           "Death_Blossom_attack.png",
-          "Data.docx",
-          "Specs.xlsx"
+          "Data.xlsx",
+          "Data.docx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -153,17 +160,17 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "Data.xlsx",
+        "Specs.xlsx",
         "Death_Blossom_attack.png",
+        "Data.xlsx",
         "Data.docx",
-        "Specs.xlsx"
-      ],
-      "missing": [
         "\\Users\\fredr\\Stark"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -176,20 +183,21 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 34
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Hydrogen_Hybrid_Tech.docx",
           "KITT.pptx",
           "German-KITT-Specs.docx",
-          "Background.docx",
-          "Hydrogen_Hybrid_Tech.docx"
+          "Background.docx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -198,17 +206,17 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "Hydrogen_Hybrid_Tech.docx",
         "KITT.pptx",
         "German-KITT-Specs.docx",
         "Background.docx",
-        "Hydrogen_Hybrid_Tech.docx"
-      ],
-      "missing": [
         "\\Users\\fredr\\Stark"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -221,18 +229,19 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 36
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "airwolf_blueprints.gif",
           "Airwolf_schematics.png",
+          "airwolf_blueprints.gif",
           "Wolves_Lair_Tech_Specs.pptx"
         ],
         "paths": [
@@ -242,16 +251,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "airwolf_blueprints.gif",
         "Airwolf_schematics.png",
-        "Wolves_Lair_Tech_Specs.pptx"
-      ],
-      "missing": [
+        "airwolf_blueprints.gif",
+        "Wolves_Lair_Tech_Specs.pptx",
         "\\Users\\fredr\\Stark"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -264,13 +273,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 38
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -283,14 +293,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "Starfury.docx"
-      ],
-      "missing": [
+        "Starfury.docx",
         "\\Users\\fredr\\OneDrive\\Desktop\\SA-23E"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -303,13 +313,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 40
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -322,14 +333,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "SRL.docx"
-      ],
-      "missing": [
+        "SRL.docx",
         "\\Users\\fredr\\OneDrive"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -342,13 +353,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 42
       },
-      "status": "failed",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [],
@@ -359,12 +371,13 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
-      "matched": [],
-      "missing": [
+      "matched": [
         "\\Users\\fredr\\OneDrive"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -377,13 +390,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 44
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -398,15 +412,15 @@
           "frocba@stark-research-labs.com"
         ],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "stark-research-labs.com.ost",
+        "\\Users\\fredr\\AppData\\Local\\Microsoft\\Outlook\\frocba@stark-research-labs.com.ost",
         "frocba@stark-research-labs.com"
       ],
-      "missing": [
-        "\\Users\\fredr\\AppData\\Local\\Microsoft\\Outlook\\frocba@stark-research-labs.com.ost"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -419,13 +433,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 52
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -438,14 +453,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "StarFury.zip"
-      ],
-      "missing": [
+        "StarFury.zip",
         "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -458,18 +473,19 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 54
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "fighter_starfury.jpg",
-          "StarFuryHeader.jpg"
+          "StarFuryHeader.jpg",
+          "fighter_starfury.jpg"
         ],
         "paths": [
           "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
@@ -479,16 +495,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "StarFuryHeader.jpg",
         "fighter_starfury.jpg",
-        "StarFuryHeader.jpg"
-      ],
-      "missing": [
         "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
         "\\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -501,19 +517,20 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 60
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Specs.xlsx",
           "Data.xlsx",
-          "Data.docx",
-          "Specs.xlsx"
+          "Data.docx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -522,16 +539,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "Specs.xlsx",
         "Data.xlsx",
         "Data.docx",
-        "Specs.xlsx"
-      ],
-      "missing": [
         "\\Users\\fredr\\Stark"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -544,19 +561,20 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 62
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "Hydrogen_Hybrid_Tech.docx",
           "KITT.pptx",
-          "Background.docx",
-          "Hydrogen_Hybrid_Tech.docx"
+          "Background.docx"
         ],
         "paths": [
           "\\Users\\fredr\\Stark"
@@ -565,16 +583,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "Hydrogen_Hybrid_Tech.docx",
         "KITT.pptx",
         "Background.docx",
-        "Hydrogen_Hybrid_Tech.docx"
-      ],
-      "missing": [
         "\\Users\\fredr\\Stark"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -587,13 +605,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 64
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -607,15 +626,15 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "Airwolf_schematics.png",
-        "Wolves_Lair_Tech_Specs.pptx"
-      ],
-      "missing": [
+        "Wolves_Lair_Tech_Specs.pptx",
         "\\Users\\fredr\\Stark"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -628,13 +647,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 66
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -647,14 +667,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "SRL.docx"
-      ],
-      "missing": [
+        "SRL.docx",
         "\\Users\\fredr\\OneDrive"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -667,13 +687,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 68
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -688,15 +709,15 @@
           "frocba@stark-research-labs.com"
         ],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "stark-research-labs.com.ost",
+        "\\Users\\fredr\\AppData\\Local\\Microsoft\\Outlook",
         "frocba@stark-research-labs.com"
       ],
-      "missing": [
-        "\\Users\\fredr\\AppData\\Local\\Microsoft\\Outlook"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -716,12 +737,13 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "SDelete.zip",
           "sdelete.exe",
-          "SDelete.lnk",
-          "SDelete.zip"
+          "SDelete.lnk"
         ],
         "paths": [
           "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk",
@@ -732,15 +754,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "SDelete.zip",
         "sdelete.exe",
         "SDelete.lnk",
-        "SDelete.zip"
+        "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk"
       ],
       "missing": [
-        "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk",
         "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe,",
         "\\Users\\fredr\\Downloads\\SDelete.zip,"
       ],
@@ -756,13 +779,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 74
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -775,14 +799,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "sdelete64.exe"
-      ],
-      "missing": [
+        "sdelete64.exe",
         "\\Users\\srl-h\\Downloads\\sdelete64.exe"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -804,15 +828,16 @@
         "pids": [
           "9648"
         ],
+        "inodes": [],
         "ips": [
+          "13.107.136.9",
           "52.179.224.121",
-          "52.114.75.149",
-          "13.107.136.9"
+          "52.114.75.149"
         ],
         "timestamps": [
           "2020-11-16T02:32:55Z",
-          "2020-11-16T02:32:45Z",
-          "2020-11-13T19:56:50Z"
+          "2020-11-13T19:56:50Z",
+          "2020-11-16T02:32:45Z"
         ],
         "filenames": [
           "OneDrive.exe",
@@ -825,21 +850,22 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "9648",
         "OneDrive.exe",
-        "StarFury.zip"
+        "StarFury.zip",
+        "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
       "missing": [
+        "13.107.136.9",
         "52.179.224.121",
         "52.114.75.149",
-        "13.107.136.9",
         "2020-11-16T02:32:55Z",
-        "2020-11-16T02:32:45Z",
         "2020-11-13T19:56:50Z",
-        "\\Users\\fredr\\OneDrive\\StarFury.zip"
+        "2020-11-16T02:32:45Z"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -862,15 +888,16 @@
         "pids": [
           "9648"
         ],
+        "inodes": [],
         "ips": [
+          "13.107.136.9",
           "52.179.224.121",
-          "52.114.75.149",
-          "13.107.136.9"
+          "52.114.75.149"
         ],
         "timestamps": [
           "2020-11-16T02:32:55Z",
-          "2020-11-16T02:32:45Z",
-          "2020-11-13T19:56:50Z"
+          "2020-11-13T19:56:50Z",
+          "2020-11-16T02:32:45Z"
         ],
         "filenames": [
           "OneDrive.exe",
@@ -883,16 +910,17 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "9648",
+        "13.107.136.9",
         "52.179.224.121",
         "52.114.75.149",
-        "13.107.136.9",
         "2020-11-16T02:32:55Z",
-        "2020-11-16T02:32:45Z",
         "2020-11-13T19:56:50Z",
+        "2020-11-16T02:32:45Z",
         "OneDrive.exe"
       ],
       "missing": [
@@ -920,15 +948,16 @@
         "pids": [
           "9648"
         ],
+        "inodes": [],
         "ips": [
+          "13.107.136.9",
           "52.179.224.121",
-          "52.114.75.149",
-          "13.107.136.9"
+          "52.114.75.149"
         ],
         "timestamps": [
           "2020-11-16T02:32:55Z",
-          "2020-11-16T02:32:45Z",
-          "2020-11-13T19:56:50Z"
+          "2020-11-13T19:56:50Z",
+          "2020-11-16T02:32:45Z"
         ],
         "filenames": [
           "OneDrive.exe",
@@ -941,16 +970,17 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "9648",
+        "13.107.136.9",
         "52.179.224.121",
         "52.114.75.149",
-        "13.107.136.9",
         "2020-11-16T02:32:55Z",
-        "2020-11-16T02:32:45Z",
         "2020-11-13T19:56:50Z",
+        "2020-11-16T02:32:45Z",
         "OneDrive.exe"
       ],
       "missing": [
@@ -978,15 +1008,16 @@
         "pids": [
           "9648"
         ],
+        "inodes": [],
         "ips": [
+          "13.107.136.9",
           "52.179.224.121",
-          "52.114.75.149",
-          "13.107.136.9"
+          "52.114.75.149"
         ],
         "timestamps": [
           "2020-11-16T02:32:55Z",
-          "2020-11-16T02:32:45Z",
-          "2020-11-13T19:56:50Z"
+          "2020-11-13T19:56:50Z",
+          "2020-11-16T02:32:45Z"
         ],
         "filenames": [
           "OneDrive.exe",
@@ -999,16 +1030,17 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "9648",
+        "13.107.136.9",
         "52.179.224.121",
         "52.114.75.149",
-        "13.107.136.9",
         "2020-11-16T02:32:55Z",
-        "2020-11-16T02:32:45Z",
         "2020-11-13T19:56:50Z",
+        "2020-11-16T02:32:45Z",
         "OneDrive.exe"
       ],
       "missing": [
@@ -1036,13 +1068,14 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "81.30.144.115"
         ],
         "timestamps": [
           "2020-11-16T02:31:26Z",
-          "2020-11-16T02:34:45Z",
-          "2020-11-16T02:34:58Z"
+          "2020-11-16T02:34:58Z",
+          "2020-11-16T02:34:45Z"
         ],
         "filenames": [
           "svchost.exe"
@@ -1052,14 +1085,15 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "1248",
         "81.30.144.115",
         "2020-11-16T02:31:26Z",
-        "2020-11-16T02:34:45Z",
         "2020-11-16T02:34:58Z",
+        "2020-11-16T02:34:45Z",
         "svchost.exe"
       ],
       "missing": [],
@@ -1084,13 +1118,14 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "213.202.233.104"
         ],
         "timestamps": [
-          "2020-11-16T02:31:18Z",
+          "2020-11-16T02:34:58Z",
           "2020-11-16T02:35:53Z",
-          "2020-11-16T02:34:58Z"
+          "2020-11-16T02:31:18Z"
         ],
         "filenames": [
           "svchost.exe"
@@ -1100,14 +1135,15 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "1248",
         "213.202.233.104",
-        "2020-11-16T02:31:18Z",
-        "2020-11-16T02:35:53Z",
         "2020-11-16T02:34:58Z",
+        "2020-11-16T02:35:53Z",
+        "2020-11-16T02:31:18Z",
         "svchost.exe"
       ],
       "missing": [],
@@ -1132,6 +1168,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "201.193.188.114"
         ],
@@ -1146,6 +1183,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1167,13 +1205,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "line_no": 98
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -1186,14 +1225,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
-        "MRC.exe"
-      ],
-      "missing": [
+        "MRC.exe",
         "D:\\Tools\\MRC.exe"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1206,18 +1245,19 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 102
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "fighter_starfury.jpg",
-          "StarFuryHeader.jpg"
+          "StarFuryHeader.jpg",
+          "fighter_starfury.jpg"
         ],
         "paths": [
           "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
@@ -1227,16 +1267,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "StarFuryHeader.jpg",
         "fighter_starfury.jpg",
-        "StarFuryHeader.jpg"
-      ],
-      "missing": [
         "\\Users\\fredr\\iCloudDrive\\fighter_starfury.jpg",
         "\\Users\\fredr\\iCloudDrive\\StarFuryHeader.jpg"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1256,6 +1296,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-13T22:09:17Z"
@@ -1266,6 +1307,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1291,6 +1333,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T04:29:49Z"
@@ -1303,6 +1346,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1329,6 +1373,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T04:49:43Z"
@@ -1341,6 +1386,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1367,6 +1413,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T04:39:15Z"
@@ -1379,6 +1426,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1405,6 +1453,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T12:43:01Z"
@@ -1417,6 +1466,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1443,6 +1493,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T14:09:15Z"
@@ -1455,6 +1506,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1474,13 +1526,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10d1-a143-7173-8c13-bbc7f674a3cc]",
         "line_no": 126
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_filescan",
       "tool_names": [
         "vol3_filescan"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -1495,16 +1548,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "StarFury.lnk",
-        "StarFury.zip"
-      ],
-      "missing": [
+        "StarFury.zip",
         "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\StarFury.lnk",
         "\\Users\\fredr\\OneDrive\\StarFury.zip"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1524,6 +1577,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T13:50:02Z"
@@ -1536,6 +1590,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1562,12 +1617,13 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
+          "SDelete.zip",
           "sdelete.exe",
-          "SDelete.lnk",
-          "SDelete.zip"
+          "SDelete.lnk"
         ],
         "paths": [
           "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk",
@@ -1578,15 +1634,16 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "SDelete.zip",
         "sdelete.exe",
         "SDelete.lnk",
-        "SDelete.zip"
+        "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk"
       ],
       "missing": [
-        "\\Users\\fredr\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\SDelete.lnk",
         "\\Users\\fredr\\Downloads\\SDelete\\sdelete.exe,",
         "\\Users\\fredr\\Downloads\\SDelete.zip,"
       ],
@@ -1611,6 +1668,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "201.193.188.114"
         ],
@@ -1618,14 +1676,15 @@
           "2020-11-16T02:30:05Z"
         ],
         "filenames": [
-          "MRC.exe",
-          "svchost.exe"
+          "svchost.exe",
+          "MRC.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1649,13 +1708,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "line_no": 138
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-16T02:31:13Z"
@@ -1674,18 +1734,18 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "2020-11-16T02:31:13Z",
         "ntuser.dat",
-        "MRC.exe"
-      ],
-      "missing": [
+        "MRC.exe",
         "\\C:\\Users\\fredr\\ntuser.dat",
         "C:\\Users\\fredr\\ntuser.dat",
         "D:\\Tools\\MRC.exe"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -1708,10 +1768,11 @@
           "29440",
           "7464"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [
-          "2020-11-11T08:13:41Z",
-          "2020-11-16T02:31:15Z"
+          "2020-11-16T02:31:15Z",
+          "2020-11-11T08:13:41Z"
         ],
         "filenames": [
           "explorer.exe",
@@ -1724,13 +1785,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "29440",
         "7464",
-        "2020-11-11T08:13:41Z",
         "2020-11-16T02:31:15Z",
+        "2020-11-11T08:13:41Z",
         "explorer.exe",
         "MRC.exe"
       ],
@@ -1756,6 +1818,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "81.30.144.115",
           "213.202.233.104"
@@ -1769,6 +1832,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1799,29 +1863,31 @@
         "pids": [
           "29440"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "MRC.exe",
-          "dllhost.exe",
-          "LockApp.exe",
           "Teams.exe",
-          "MsMpEng.exe",
-          "SearchApp.exe"
+          "SearchApp.exe",
+          "dllhost.exe",
+          "MRC.exe",
+          "LockApp.exe",
+          "MsMpEng.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
+        "Teams.exe",
+        "SearchApp.exe",
         "dllhost.exe",
         "LockApp.exe",
-        "Teams.exe",
-        "MsMpEng.exe",
-        "SearchApp.exe"
+        "MsMpEng.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -1846,6 +1912,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -1856,6 +1923,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1881,6 +1949,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-13T22:09:17Z"
@@ -1891,6 +1960,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1916,6 +1986,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T04:29:49Z"
@@ -1928,6 +1999,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1954,6 +2026,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T04:39:15Z"
@@ -1966,6 +2039,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -1992,6 +2066,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T04:49:43Z"
@@ -2004,6 +2079,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2030,6 +2106,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T12:43:01Z"
@@ -2042,6 +2119,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2068,6 +2146,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T13:50:02Z"
@@ -2080,6 +2159,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2106,6 +2186,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-14T14:09:15Z"
@@ -2118,6 +2199,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2146,6 +2228,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "201.193.188.114"
         ],
@@ -2160,6 +2243,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2181,13 +2265,14 @@
         "raw_match": "[CONFIRMED \u2014 exec_id 019e10cb-6414-7711-b668-50abd5d244d6]",
         "line_no": 187
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "vol3_userassist",
       "tool_names": [
         "vol3_userassist"
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-16T02:31:13Z"
@@ -2202,15 +2287,15 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
         "2020-11-16T02:31:13Z",
-        "MRC.exe"
-      ],
-      "missing": [
+        "MRC.exe",
         "D:\\Tools\\MRC.exe"
       ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": ""
@@ -2232,6 +2317,7 @@
         "pids": [
           "29440"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-16T02:31:15Z"
@@ -2245,6 +2331,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2275,6 +2362,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "213.202.233.104"
         ],
@@ -2289,6 +2377,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2319,6 +2408,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "81.30.144.115"
         ],
@@ -2333,6 +2423,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2361,6 +2452,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2020-11-16T02:32:38Z"
@@ -2371,6 +2463,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2398,6 +2491,7 @@
         "pids": [
           "9648"
         ],
+        "inodes": [],
         "ips": [
           "13.107.136.9"
         ],
@@ -2412,6 +2506,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2442,6 +2537,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "81.30.144.115"
         ],
@@ -2456,6 +2552,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2486,6 +2583,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "81.30.144.115",
           "213.202.233.104"
@@ -2501,6 +2599,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -2532,6 +2631,7 @@
         "pids": [
           "1248"
         ],
+        "inodes": [],
         "ips": [
           "213.202.233.104"
         ],
@@ -2546,6 +2646,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [

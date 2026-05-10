@@ -336,6 +336,114 @@ def test_verify_claim_multi_citation_token_in_neither_tool() -> None:
     assert "81.30.144.115" in v.missing
 
 
+# ---- v2: validator improvements -------------------------------------------
+
+
+def test_verify_claim_path_with_backslashes_matches_haystack() -> None:
+    """v2 path-prefix matching fix.
+
+    `_flatten_to_searchable` previously JSON-encoded backslashes (`\\` → `\\\\`)
+    so single-backslash path tokens couldn't match. v2 normalises both sides
+    to single backslashes.
+    """
+    parsed = {
+        "files": [
+            {"name": "\\Users\\fredr\\OneDrive - Stark Research Labs\\Research\\foo.docx"}
+        ]
+    }
+    claim = Claim(
+        tag="CONFIRMED", exec_id="01x",
+        text=(
+            "The Adamantium file "
+            "\\Users\\fredr\\OneDrive - Stark Research Labs\\Research\\foo.docx "
+            "was present [CONFIRMED — exec_id 01x]"
+        ),
+        raw_match="...", line_no=1,
+    )
+    v = verify_claim_against_parsed(claim, parsed=parsed, tool_name="vol3_filescan")
+    assert v.status == "verified", (
+        f"path-prefix matching should verify; got {v.status} "
+        f"with missing={v.missing}"
+    )
+
+
+def test_token_subject_clause_negation_pattern() -> None:
+    """v2 'X: Not Y' subject-clause negation.
+
+    'usboesrv.exe: **Not found on nromanoff**' splits at `:\s+` into
+    ['usboesrv.exe', 'Not found on nromanoff']. Clause 1 has no negation
+    cue but is a *subject* clause (length ≤ len(token)+5) followed by a
+    negated clause. v2 treats clause-1's token as negated.
+    """
+    text = "usboesrv.exe: Not found on nromanoff."
+    assert token_is_negated_in(text, "usboesrv.exe") is True
+
+
+def test_token_subject_clause_does_not_overshoot() -> None:
+    """A token in a long sentence with a following short negated clause
+    should NOT be treated as negated by the subject-clause heuristic."""
+    text = "Foo.exe is the legitimate binary on this host. Bar.exe was not present."
+    # Foo.exe is in a long positive sentence; the next sentence's "not"
+    # applies to Bar.exe, not to Foo.exe.
+    assert token_is_negated_in(text, "Foo.exe") is False
+    assert token_is_negated_in(text, "Bar.exe") is True
+
+
+def test_validator_falls_back_to_parsed_summary_for_parserless_tools(
+    tmp_path: Path,
+) -> None:
+    """v2 parsed_summary fallback for tsk_icat_extract.
+
+    The audit row for tsk_icat_extract has parsed_summary={size_bytes,
+    sha256, inode}. v0 validator marked any claim citing it as
+    `tool_not_supported` because there's no text parser. v2 falls back
+    to the parsed_summary as the verification haystack.
+    """
+    from mcp_server.audit import AuditLogger
+
+    # validate_run() expects <run_dir>/audit/exec_log.jsonl + audit/raw/
+    audit_dir = tmp_path / "audit"
+    audit_dir.mkdir()
+    audit = AuditLogger(
+        exec_log_path=audit_dir / "exec_log.jsonl",
+        raw_output_dir=audit_dir / "raw",
+    )
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="disk_agent", tool="tsk_icat_extract",
+        args={"image": "/cases/x.E01", "inode": 12345},
+        raw_output_path=None,  # icat emits raw bytes; no parsed text
+        exit_code=0, wall_ms=42,
+        summary="extracted inode=12345, 9216 bytes, sha256=598e53b6...1dec",
+        parsed_summary={"size_bytes": 9216, "sha256": "598e53b69c71643d", "inode": 12345},
+    )
+
+    # Build a final_response.md that cites this exec_id with tokens that
+    # ARE in parsed_summary (size, sha256, inode — but NOT a filename like
+    # "a.exe", which the agent should multi-cite from the prior fls call).
+    final = tmp_path / "final_response.md"
+    final.write_text(
+        f"Extracted file at inode 12345 is 9216 bytes, sha256 598e53b69c71643d.\n"
+        f"[CONFIRMED — exec_id {eid}]\n"
+    )
+
+    rv, verdicts = validate_run(tmp_path)
+    assert len(verdicts) == 1
+    v = verdicts[0]
+    # The headline v0→v2 bug: tsk_icat_extract used to return
+    # tool_not_supported. v2 falls back to parsed_summary, so the verdict
+    # should now be a real verification result (verified / partial / failed).
+    assert v.status != "tool_not_supported", (
+        f"v2 should fall back to parsed_summary; got {v.status}"
+    )
+    # The extractor pulls inode (12345) and the sha256 hash from the claim;
+    # both are in parsed_summary, so verified.
+    assert v.status == "verified", f"expected verified; got {v.status} missing={v.missing}"
+    matched_str = " ".join(v.matched)
+    assert "12345" in matched_str
+    assert "598e53b69c71643d" in matched_str
+
+
 # ---- end-to-end against committed ROCBA-001 v1 run ------------------------
 
 

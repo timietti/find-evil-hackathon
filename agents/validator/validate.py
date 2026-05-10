@@ -159,11 +159,17 @@ class ClaimVerdict:
 def _flatten_to_searchable(parsed: dict[str, Any]) -> str:
     """Render parsed JSON as a single lower-case string for substring search.
 
-    Sufficient for v0. A smarter validator would walk specific fields per
+    Normalises JSON-escaped backslashes back to single backslashes so that
+    Windows-path tokens captured by the extractor (`\\Users\\fredr\\…`) match
+    paths in the parsed data (which JSON-encode each backslash as `\\\\`).
+    Without this, claims about disk paths fail to verify even when the path
+    is structurally present.
+
+    Sufficient for v0/v1. A smarter validator would walk specific fields per
     plugin (e.g. only check `pid` against `processes[].pid`), but the
     flatten-and-search approach gets us 90% of the way and is robust.
     """
-    return json.dumps(parsed, default=str).lower()
+    return json.dumps(parsed, default=str).lower().replace("\\\\", "\\")
 
 
 def verify_claim_against_parsed(
@@ -325,8 +331,18 @@ def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
                 continue
             tname = row.get("tool")
             parser = _PARSERS.get(tname)
-            if not parser:
-                unsupported_tools.add(tname or "?")
+            if parser is None:
+                # Fallback: tools that have no text parser but DO record
+                # structured metadata in the audit row's parsed_summary
+                # (e.g. tsk_icat_extract — emits raw bytes; the audit row
+                # has size_bytes + sha256 + inode). Use the parsed_summary
+                # as the verification haystack so the agent's claim
+                # ("hash X / size Y / inode Z") can be checked.
+                parsed_summary = row.get("parsed_summary") or {}
+                if parsed_summary:
+                    parsed_by_tool.append((tname, parsed_summary))
+                else:
+                    unsupported_tools.add(tname or "?")
                 continue
             raw_path = Path(row.get("raw_output_path") or "")
             if not raw_path.exists():

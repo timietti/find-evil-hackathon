@@ -35,6 +35,7 @@
           "556",
           "27304"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2012-03-20T17:58:12Z"
@@ -52,6 +53,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "services.exe",
           "usboesrv.exe",
@@ -90,6 +92,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "10.3.58.4",
           "96.255.98.154"
@@ -103,6 +106,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "usboesrv.exe"
         ]
@@ -132,6 +136,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -146,25 +151,26 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "\\Driver\\usboeloaderdrv",
-          "\\Driver\\usboebusdrv",
+          "C:\\Windows\\system32\\usboesrv.exe",
           "SERVICE_DEMAND_START",
+          "\\Driver\\usboebusdrv",
           "SERVICE_AUTO_START",
-          "C:\\Windows\\system32\\usboesrv.exe"
+          "\\Driver\\usboeloaderdrv"
         ]
       },
       "matched": [
         "usboesrv.exe",
+        "C:\\Windows\\system32\\usboesrv.exe",
         "SERVICE_DEMAND_START",
-        "SERVICE_AUTO_START"
+        "\\Driver\\usboebusdrv",
+        "SERVICE_AUTO_START",
+        "\\Driver\\usboeloaderdrv"
       ],
       "missing": [
         "\\Windows\\system32\\usboesrv.exe`",
-        "C:\\Windows\\system32\\usboesrv.exe`",
-        "\\Driver\\usboeloaderdrv",
-        "\\Driver\\usboebusdrv",
-        "C:\\Windows\\system32\\usboesrv.exe"
+        "C:\\Windows\\system32\\usboesrv.exe`"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -185,6 +191,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -197,16 +204,17 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "\\Windows\\System32\\usboesrv.exe"
         ]
       },
       "matched": [
-        "usboesrv.exe"
+        "usboesrv.exe",
+        "\\Windows\\System32\\usboesrv.exe"
       ],
       "missing": [
-        "\\Windows\\System32\\usboesrv.exe`",
-        "\\Windows\\System32\\usboesrv.exe"
+        "\\Windows\\System32\\usboesrv.exe`"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -225,6 +233,7 @@
       "tool_names": [],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [],
@@ -233,6 +242,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [],
@@ -256,79 +266,81 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "4.0.0.3"
         ],
         "timestamps": [
+          "2012-03-20T17:56:42Z",
           "2012-03-20T18:54:16Z",
           "2012-04-05T22:23:04Z",
-          "2012-03-20T17:56:42Z",
           "2012-03-20T17:57:33Z"
         ],
         "filenames": [
-          "usboesrv.exe",
-          "Tcpview.exe",
-          "hMailAdmin.exe",
-          "usboe.exe",
-          "sdelete.exe",
           "powershell.exe",
-          "Temp1_usb-over-ethernet.zip",
-          "setup.exe"
+          "usboe.exe",
+          "setup.exe",
+          "hMailAdmin.exe",
+          "Tcpview.exe",
+          "usboesrv.exe",
+          "sdelete.exe",
+          "Temp1_usb-over-ethernet.zip"
         ],
         "paths": [
           "\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`"
         ],
         "drive_refs": [
           "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`",
-          "C:\\Tools\\SysInternals\\Tcpview.exe`",
           "C:\\Tools\\SysInternals\\sdelete.exe`",
+          "C:\\Tools\\SysInternals\\Tcpview.exe`",
           "P:\\Security"
         ],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
-          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
-          "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
-          "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-          "C:\\Tools\\SysInternals\\sdelete.exe",
-          "rsydow",
-          "C:\\Tools\\SysInternals\\Tcpview.exe",
           "Microsoft.Windows.RemoteDesktop",
-          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+          "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
+          "rsydow",
+          "C:\\Tools\\SysInternals\\sdelete.exe",
+          "C:\\Tools\\SysInternals\\Tcpview.exe",
+          "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+          "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
+          "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe"
         ]
       },
       "matched": [
         "4.0.0.3",
+        "2012-03-20T17:56:42Z",
         "2012-03-20T18:54:16Z",
         "2012-04-05T22:23:04Z",
-        "2012-03-20T17:56:42Z",
         "2012-03-20T17:57:33Z",
-        "Tcpview.exe",
-        "hMailAdmin.exe",
-        "usboe.exe",
-        "sdelete.exe",
         "powershell.exe",
-        "Temp1_usb-over-ethernet.zip",
+        "usboe.exe",
         "setup.exe",
+        "hMailAdmin.exe",
+        "Tcpview.exe",
+        "sdelete.exe",
+        "Temp1_usb-over-ethernet.zip",
+        "P:\\Security",
+        "Microsoft.Windows.RemoteDesktop",
         "rsydow",
-        "Microsoft.Windows.RemoteDesktop"
+        "C:\\Tools\\SysInternals\\sdelete.exe",
+        "C:\\Tools\\SysInternals\\Tcpview.exe",
+        "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+        "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
+        "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
       ],
       "missing": [
         "usboesrv.exe",
         "\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`",
         "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe`",
-        "C:\\Tools\\SysInternals\\Tcpview.exe`",
         "C:\\Tools\\SysInternals\\sdelete.exe`",
-        "P:\\Security",
-        "C:\\Users\\rsydow\\AppData\\Local\\Temp\\2\\Temp1_usb-over-ethernet.zip\\setup.exe",
+        "C:\\Tools\\SysInternals\\Tcpview.exe`",
         "P:\\Security Tools\\F-ResponseEnterprise-4.0.0.3-EN\\...exe",
-        "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe",
-        "%ProgramFiles%\\hMailServer\\Bin\\hMailAdmin.exe",
-        "C:\\Tools\\SysInternals\\sdelete.exe",
-        "C:\\Tools\\SysInternals\\Tcpview.exe",
-        "%windir%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+        "{6D809377-\u2026}\\USB over Ethernet\\usboe.exe"
       ],
       "negation_violations": [],
       "verified_absences": [],
@@ -349,59 +361,61 @@
       ],
       "tokens": {
         "pids": [
-          "138320",
+          "139776",
           "151132",
-          "137496",
           "148904",
+          "138320",
           "8512",
-          "139776"
+          "137496"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2012-04-04T18:55:57Z"
         ],
         "filenames": [
           "winlogon.exe",
-          "femc.exe",
-          "VMwareUser.exe",
-          "rdpclip.exe",
           "VMwareTray.exe",
-          "explorer.exe",
+          "femc.exe",
           "cmd.exe",
-          "taskmgr.exe"
+          "explorer.exe",
+          "taskmgr.exe",
+          "rdpclip.exe",
+          "VMwareUser.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "winlogon.exe",
-          "femc.exe",
-          "VMwareUser.exe",
-          "rdpclip.exe",
           "VMwareTray.exe",
-          "explorer.exe",
+          "femc.exe",
           "cmd.exe",
-          "taskmgr.exe"
+          "explorer.exe",
+          "taskmgr.exe",
+          "rdpclip.exe",
+          "VMwareUser.exe"
         ]
       },
       "matched": [
-        "138320",
-        "151132",
-        "137496",
-        "148904",
-        "8512",
         "139776",
+        "151132",
+        "148904",
+        "138320",
+        "8512",
+        "137496",
         "2012-04-04T18:55:57Z",
         "winlogon.exe",
-        "femc.exe",
-        "VMwareUser.exe",
-        "rdpclip.exe",
         "VMwareTray.exe",
-        "explorer.exe",
+        "femc.exe",
         "cmd.exe",
-        "taskmgr.exe"
+        "explorer.exe",
+        "taskmgr.exe",
+        "rdpclip.exe",
+        "VMwareUser.exe"
       ],
       "missing": [],
       "negation_violations": [],
@@ -423,9 +437,10 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
-          "10.3.16.5",
-          "10.3.58.4"
+          "10.3.58.4",
+          "10.3.16.5"
         ],
         "timestamps": [],
         "filenames": [],
@@ -434,13 +449,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "10.3.58.4:3389 \u2190 10.3.16.5:46758"
         ]
       },
       "matched": [
-        "10.3.16.5",
-        "10.3.58.4"
+        "10.3.58.4",
+        "10.3.16.5"
       ],
       "missing": [
         "10.3.58.4:3389 \u2190 10.3.16.5:46758"
@@ -464,15 +480,16 @@
       ],
       "tokens": {
         "pids": [
-          "564",
-          "4"
+          "4",
+          "564"
         ],
+        "inodes": [],
         "ips": [
+          "56.91.239.31",
           "56.171.18.32",
           "173.173.88.154",
-          "10.3.58.4",
-          "56.91.239.31",
           "40.167.16.32",
+          "10.3.58.4",
           "10.3.58.9",
           "10.3.58.5"
         ],
@@ -485,30 +502,31 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "56.171.18.32",
-          "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
+          "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)",
           "56.91.239.31",
-          "40.167.16.32",
-          "lsass.exe \u2192 10.3.58.5:49236 CLOSED",
+          "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
+          "56.171.18.32",
           "lsass.exe (pid=564)",
-          "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)"
+          "40.167.16.32",
+          "lsass.exe \u2192 10.3.58.5:49236 CLOSED"
         ]
       },
       "matched": [
         "564",
-        "56.171.18.32",
         "56.91.239.31",
+        "56.171.18.32",
         "40.167.16.32",
         "10.3.58.9",
         "10.3.58.5",
         "lsass.exe"
       ],
       "missing": [
+        "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)",
         "System (pid=4): 10.3.58.4:443 \u2192 173.173.88.154:18682 ESTABLISHED",
-        "lsass.exe \u2192 10.3.58.5:49236 CLOSED",
         "lsass.exe (pid=564)",
-        "10.3.58.9:445 \u2192 10.3.58.5:49805 ESTABLISHED (System)"
+        "lsass.exe \u2192 10.3.58.5:49236 CLOSED"
       ],
       "negation_violations": [
         "4",
@@ -535,6 +553,7 @@
         "pids": [
           "152840"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -546,6 +565,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "tlntsvr.exe",
           "w3wp.exe"
@@ -578,54 +598,56 @@
       "tokens": {
         "pids": [
           "1720",
-          "152840",
+          "3732",
           "3928",
-          "153192",
-          "3732"
+          "152840",
+          "153192"
         ],
+        "inodes": [],
         "ips": [
           "40.167.16.32"
         ],
         "timestamps": [
-          "2012-04-06T23:29:40Z",
-          "2012-04-06T23:24:05Z"
+          "2012-04-06T23:24:05Z",
+          "2012-04-06T23:29:40Z"
         ],
         "filenames": [
-          "tlntsvr.exe",
           "WmiPrvSE.exe",
-          "w3wp.exe",
-          "hMailServer.exe",
+          "tomcat5.exe",
           "Apache.exe",
-          "tomcat5.exe"
+          "tlntsvr.exe",
+          "hMailServer.exe",
+          "w3wp.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "tlntsvr.exe",
           "WmiPrvSE.exe",
-          "40.167.16.32",
-          "w3wp.exe",
-          "hMailServer.exe",
+          "tomcat5.exe",
           "Apache.exe",
-          "tomcat5.exe"
+          "tlntsvr.exe",
+          "40.167.16.32",
+          "hMailServer.exe",
+          "w3wp.exe"
         ]
       },
       "matched": [
         "1720",
-        "152840",
-        "3928",
-        "153192",
         "3732",
-        "2012-04-06T23:29:40Z",
+        "3928",
+        "152840",
+        "153192",
         "2012-04-06T23:24:05Z",
-        "tlntsvr.exe",
+        "2012-04-06T23:29:40Z",
         "WmiPrvSE.exe",
-        "w3wp.exe",
+        "tomcat5.exe",
         "Apache.exe",
-        "tomcat5.exe"
+        "tlntsvr.exe",
+        "w3wp.exe"
       ],
       "missing": [
         "40.167.16.32",
@@ -650,6 +672,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "10.3.58.9",
           "10.3.58.5"
@@ -663,6 +686,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -690,18 +714,20 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
           "pe.exe",
-          "UdaterUI.exe",
-          "spinlock.exe"
+          "spinlock.exe",
+          "UdaterUI.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [],
@@ -709,8 +735,8 @@
       "negation_violations": [],
       "verified_absences": [
         "pe.exe",
-        "UdaterUI.exe",
-        "spinlock.exe"
+        "spinlock.exe",
+        "UdaterUI.exe"
       ],
       "notes": ""
     },
@@ -731,11 +757,12 @@
         "pids": [
           "552"
         ],
+        "inodes": [],
         "ips": [
-          "10.3.58.6",
           "56.251.168.26",
           "10.3.16.5",
-          "10.3.58.4"
+          "10.3.58.4",
+          "10.3.58.6"
         ],
         "timestamps": [],
         "filenames": [
@@ -746,24 +773,25 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
+          "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
           "56.251.168.26",
           "lsass.exe (pid=552)",
-          "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
           "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED"
         ]
       },
       "matched": [
         "552",
-        "10.3.58.6",
         "56.251.168.26",
         "10.3.16.5",
         "10.3.58.4",
+        "10.3.58.6",
         "lsass.exe"
       ],
       "missing": [
-        "lsass.exe (pid=552)",
         "10.3.58.6:49325 \u2192 10.3.58.4:139 CLOSED",
+        "lsass.exe (pid=552)",
         "10.3.58.6:49265 \u2192 10.3.16.5:389 CLOSED"
       ],
       "negation_violations": [],
@@ -783,6 +811,7 @@
       "tool_names": [],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [],
@@ -791,6 +820,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [],
@@ -817,22 +847,24 @@
           "2920",
           "3092"
         ],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2012-04-06T19:07:04Z"
         ],
         "filenames": [
-          "McTray.exe",
-          "UdaterUI.exe"
+          "UdaterUI.exe",
+          "McTray.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "McTray.exe",
           "UdaterUI.exe",
+          "McTray.exe",
           "FrameworkServic"
         ]
       },
@@ -840,8 +872,8 @@
         "2920",
         "3092",
         "2012-04-06T19:07:04Z",
-        "McTray.exe",
         "UdaterUI.exe",
+        "McTray.exe",
         "FrameworkServic"
       ],
       "missing": [],
@@ -864,6 +896,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [
           "2012-04-05T17:16Z",
@@ -877,6 +910,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "spinlock.exe"
         ]
@@ -907,6 +941,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "10.3.58.9",
           "10.3.58.5"
@@ -918,6 +953,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": []
       },
       "matched": [
@@ -944,6 +980,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -954,6 +991,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "spinlock",
           "spinlock.exe"
@@ -984,6 +1022,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "96.255.98.154"
         ],
@@ -996,9 +1035,10 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "usboesrv.exe",
-          "96.255.98.154:29932"
+          "96.255.98.154:29932",
+          "usboesrv.exe"
         ]
       },
       "matched": [
@@ -1027,6 +1067,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
           "173.173.88.154"
         ],
@@ -1037,6 +1078,7 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
           "173.173.88.154:18682"
         ]
@@ -1066,6 +1108,7 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
@@ -1079,17 +1122,18 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "C:\\Tools\\SysInternals\\sdelete.exe",
-          "spinlock.exe"
+          "spinlock.exe",
+          "C:\\Tools\\SysInternals\\sdelete.exe"
         ]
       },
       "matched": [
-        "sdelete.exe"
+        "sdelete.exe",
+        "C:\\Tools\\SysInternals\\sdelete.exe"
       ],
       "missing": [
-        "C:\\Tools\\SysInternals\\sdelete.exe`",
-        "C:\\Tools\\SysInternals\\sdelete.exe"
+        "C:\\Tools\\SysInternals\\sdelete.exe`"
       ],
       "negation_violations": [
         "spinlock.exe"
@@ -1112,26 +1156,28 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [],
         "timestamps": [],
         "filenames": [
-          "usboesrv.exe",
-          "spinlock.exe"
+          "spinlock.exe",
+          "usboesrv.exe"
         ],
         "paths": [],
         "drive_refs": [],
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
-          "rsydow",
-          "vibranium"
+          "vibranium",
+          "rsydow"
         ]
       },
       "matched": [
         "spinlock.exe",
-        "rsydow",
-        "vibranium"
+        "vibranium",
+        "rsydow"
       ],
       "missing": [
         "usboesrv.exe"
@@ -1155,11 +1201,12 @@
       ],
       "tokens": {
         "pids": [],
+        "inodes": [],
         "ips": [
-          "56.171.18.32",
-          "56.251.168.26",
           "56.91.239.31",
+          "56.171.18.32",
           "40.167.16.32",
+          "56.251.168.26",
           "10.3.58.5"
         ],
         "timestamps": [],
@@ -1172,13 +1219,14 @@
         "brace_guids": [],
         "emails": [],
         "hex_offsets": [],
+        "hex_hashes": [],
         "quoted": [
+          "56.91.239.31",
           "lsass.exe",
           "tlntsvr.exe",
           "56.171.18.32",
-          "56.251.168.26",
-          "56.91.239.31",
-          "40.167.16.32"
+          "40.167.16.32",
+          "56.251.168.26"
         ]
       },
       "matched": [
@@ -1189,8 +1237,8 @@
         "56.251.168.26"
       ],
       "negation_violations": [
-        "56.171.18.32",
         "56.91.239.31",
+        "56.171.18.32",
         "40.167.16.32",
         "lsass.exe"
       ],
