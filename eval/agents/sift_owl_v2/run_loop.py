@@ -83,6 +83,10 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__tsk_fs_stat",
     "mcp__sift-owl__tsk_fls_list",
     "mcp__sift-owl__tsk_icat_extract",
+    # EZ Tools (extract-then-parse Windows artifacts)
+    "mcp__sift-owl__ezt_mft_parse",
+    "mcp__sift-owl__ezt_shimcache_parse",
+    "mcp__sift-owl__ezt_evtx_parse",
     # drill helper
     "mcp__sift-owl__query_rows",
 ])

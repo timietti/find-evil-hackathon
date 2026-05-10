@@ -1,0 +1,1515 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v2/20260510T090305Z-sonnet/iterations/iter_1",
+    "total_claims": 44,
+    "confirmed_count": 40,
+    "inferred_count": 2,
+    "hypothesis_count": 0,
+    "gap_count": 2,
+    "other_count": 0,
+    "verified": 15,
+    "partial": 7,
+    "failed": 4,
+    "unverifiable": 14,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 0,
+    "confirmation_score": 0.375
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "**Two copies present in DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
+        "line_no": 61
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-20c8-79e3-a814-7d52002b8c38",
+        "text": "The `usboesrv.exe` binary is **absent from the DC ShimCache** (0 matches in 962 entries) [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]. This is consistent with Windows Server 2008 R2 behavior where service executables loaded via the Service Control Manager (`services.exe`) frequently bypass AppCompatCache registration.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "line_no": 70
+      },
+      "status": "verified",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "services.exe",
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "services.exe",
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "services.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "usboesrv.exe"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "**No `usboesrv.exe` was found in nromanoff or tdungan MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792; exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba \u2014 both returned 0 rows].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792; exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba \u2014 both returned 0 rows]",
+        "line_no": 74
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "usboesrv.exe"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-26a3-7c51-be46-fad7c6993479]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 78
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76]",
+        "line_no": 98
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "**The spinlock.exe binary is absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]. A WER crash folder `NonCritical_spinlock.exe_f55bbffa...` was created 2012-04-04T18:28:42Z [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab], proving spinlock was executed on the DC and crashed, but the binary was subsequently deleted (likely sdelete). The absence from ShimCache is consistent with post-deletion shimcache gap.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]",
+        "line_no": 115
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-04T18:28:42Z"
+        ],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "NonCritical_spinlock.exe_f55bbffa...",
+          "file_name: spinlock.exe"
+        ]
+      },
+      "matched": [
+        "2012-04-04T18:28:42Z"
+      ],
+      "missing": [
+        "NonCritical_spinlock.exe_f55bbffa...",
+        "file_name: spinlock.exe"
+      ],
+      "negation_violations": [
+        "spinlock.exe"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "**The spinlock.exe binary is absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches on `file_name: spinlock.exe`]. A WER crash folder `NonCritical_spinlock.exe_f55bbffa...` was created 2012-04-04T18:28:42Z [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab], proving spinlock was executed on the DC and crashed, but the binary was subsequently deleted (likely sdelete). The absence from ShimCache is consistent with post-deletion shimcache gap.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
+        "line_no": 115
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-04T18:28:42Z"
+        ],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "NonCritical_spinlock.exe_f55bbffa...",
+          "file_name: spinlock.exe"
+        ]
+      },
+      "matched": [
+        "2012-04-04T18:28:42Z"
+      ],
+      "missing": [
+        "NonCritical_spinlock.exe_f55bbffa...",
+        "file_name: spinlock.exe"
+      ],
+      "negation_violations": [
+        "spinlock.exe"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]",
+        "line_no": 125
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "**No a.exe was found in DC MFT TEMP paths** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]; **not present in DC ShimCache TEMP entries** [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]",
+        "line_no": 131
+      },
+      "status": "failed",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [
+        "a.exe"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-20c8-79e3-a814-7d52002b8c38",
+        "text": "**No a.exe was found in DC MFT TEMP paths** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 relevant matches]; **not present in DC ShimCache TEMP entries** [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "line_no": 131
+      },
+      "status": "failed",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [
+        "a.exe"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]",
+        "line_no": 135
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "hydrakatz.exe is NOT in DC MFT or nromanoff file listing [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. Credential harvesting was confined to nromanoff.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
+        "line_no": 148
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "hydrakatz.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "hydrakatz.exe"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 152
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792]",
+        "line_no": 162
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "A WER crash archive `AppCrash_adberdr813.exe_4e6f6a6fc187a212f1b1b22f543c633f36ebbe_0cd92e4e` was created 2011-08-28T22:35:45Z [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792], confirming execution and crash on the same day as the download \u2014 the exploit caused the Reader crash while dropping the payload.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792]",
+        "line_no": 177
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2011-08-28T22:35:45Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "AppCrash_adberdr813.exe_4e6f6a6fc187a212f1b1b22f543c633f36ebbe_0cd92e4e"
+        ]
+      },
+      "matched": [
+        "2011-08-28T22:35:45Z",
+        "AppCrash_adberdr813.exe_4e6f6a6fc187a212f1b1b22f543c633f36ebbe_0cd92e4e"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "ShimCache entry for `adberdr813.exe` shows LastModified 2011-08-28T22:35:24Z, **Executed: No** [CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]. The \"No\" flag is consistent with the binary crashing before the Windows program loader could register the shimcache execute flag \u2014 the WER crash report is the corroborating execution proof.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 179
+      },
+      "status": "verified",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2011-08-28T22:35:24Z"
+        ],
+        "filenames": [
+          "adberdr813.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "adberdr813.exe"
+        ]
+      },
+      "matched": [
+        "2011-08-28T22:35:24Z",
+        "adberdr813.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 183
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2b73-75a0-ad0a-37769fe4cd76",
+        "text": "AdbeRdr910 is **absent from tdungan ShimCache** [CONFIRMED \u2014 exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76, 0 matches]. XP ShimCache capacity (96 entries per ControlSet) was likely exhausted; subsequent entries evicted it. The Prefetch file remains as the execution proof.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2b73-75a0-ad0a-37769fe4cd76, 0 matches]",
+        "line_no": 197
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 201
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "The 3-minute window between creation and modification (16:07 \u2192 16:11) is consistent with a scripted PST-building operation. Vibranium's browser temp folder (`Content.IE5\\O52ZG5AZ`) was last modified 2012-04-05T16:11:20Z [CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba], seven seconds after PST completion, suggesting a browser-based web upload was the exfiltration method.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 216
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-05T16:11:20Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Content.IE5\\O52ZG5AZ"
+        ]
+      },
+      "matched": [
+        "2012-04-05T16:11:20Z",
+        "Content.IE5\\O52ZG5AZ"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "**EXFIL.pst was NOT found in DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
+        "line_no": 218
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "EXFIL.pst"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "EXFIL.pst"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "**EXFIL.pst was NOT found in DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]. **EXFIL.pst was NOT found in nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]",
+        "line_no": 218
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "EXFIL.pst"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "EXFIL.pst"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
+        "line_no": 226
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 240
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1124-5e07-71c1-8f43-4c35ed87f968",
+        "text": "[CONFIRMED \u2014 exec_id 019e1124-5e07-71c1-8f43-4c35ed87f968; exec_id 019e1124-60e3-78c2-83e9-31d9c7732c3c]: Both `SecEvent.Evt` and `SysEvent.Evt` on tdungan returned 0 events. EvtxECmd does not support the legacy Win XP `.EVT` binary format; it requires Vista+ `.evtx`. Tdungan event log data is inaccessible via this tool path. An alternative would be to use `evtxtract` or `log2timeline` with the `winevt` parser on the raw `.Evt` files.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1124-5e07-71c1-8f43-4c35ed87f968; exec_id 019e1124-60e3-78c2-83e9-31d9c7732c3c]",
+        "line_no": 254
+      },
+      "status": "partial",
+      "tool_name": "ezt_evtx_parse",
+      "tool_names": [
+        "ezt_evtx_parse",
+        "ezt_evtx_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "log2timeline",
+          "evtxtract",
+          ".EVT",
+          ".evtx",
+          ".Evt",
+          "winevt",
+          "SecEvent.Evt",
+          "SysEvent.Evt"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "log2timeline",
+        "evtxtract",
+        ".evtx",
+        "winevt",
+        "SecEvent.Evt",
+        "SysEvent.Evt"
+      ],
+      "negation_violations": [],
+      "verified_absences": [
+        ".EVT",
+        ".Evt"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]: DC MFT shows `usboesrv.exe` placed in `Windows\\System32\\` on 2012-03-20T17:57:59Z. The dual-directory deployment pattern (Program Files + System32), combined with the prior run's memory analysis confirming `usboesrv.exe` was a running process with active C2 connection to `96.255.98.154:29932`, constitutes confirmation of service installation even absent EID 7045.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
+        "line_no": 262
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "96.255.98.154"
+        ],
+        "timestamps": [
+          "2012-03-20T17:57:59Z"
+        ],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "96.255.98.154:29932",
+          "Windows\\System32\\",
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "2012-03-20T17:57:59Z",
+        "Windows\\System32\\"
+      ],
+      "missing": [],
+      "negation_violations": [
+        "usboesrv.exe"
+      ],
+      "verified_absences": [
+        "96.255.98.154",
+        "96.255.98.154:29932"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 268
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "**hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches] and **absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches]",
+        "line_no": 279
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "hotcorewin2k.sys"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "hotcorewin2k.sys"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "**hotcorewin2k.sys is absent from nromanoff MFT** [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, 0 matches] and **absent from DC MFT** [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches].",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, 0 matches]",
+        "line_no": 279
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "hotcorewin2k.sys"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "hotcorewin2k.sys"
+      ],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-20c8-79e3-a814-7d52002b8c38",
+        "text": "[CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "line_no": 285
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)"
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "1. **adberdr813.exe initial compromise timestamp confirmed as 2011-08-28T22:33Z** on nromanoff \u2014 WER crash and ShimCache both corroborate execution; \"Executed:No\" in ShimCache explained by crash before flag write. [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 340
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2011-08-28T22:33Z"
+        ],
+        "filenames": [
+          "adberdr813.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "adberdr813.exe"
+      ],
+      "missing": [
+        "2011-08-28T22:33Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-2e48-7b90-bcaa-315b2cefc7ab",
+        "text": "2. **usboesrv.exe deployed to DC on 2012-03-20** with anti-forensic timestomping on the Program Files copy. Two copies confirm service-registration persistence pattern. Absent from shimcache (service loader bypass). [CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab, exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "line_no": 342
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "usboesrv.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "3. **spinlock.exe timestomped on nromanoff** (Created > Modified by 6 minutes), usec_zeros:true, copied:true \u2014 anti-forensic flags confirmed. Identical 2,271,885-byte binary on both nromanoff and tdungan. [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 344
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "spinlock.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "4. **a.exe ran ~30 times in 30 minutes** on nromanoff (00:14\u201300:44Z on 2012-04-04) with file being regenerated each cycle \u2014 indicative of automated credential spraying or callback loop. [CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 346
+      },
+      "status": "verified",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "a.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "5. **hydrakatz.exe** confirmed on nromanoff; last run 2012-04-05T13:20:58Z via Prefetch. Not present on DC or tdungan. [CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479, exec_id 019e1123-52f9-7f71-9651-69158614d792]",
+        "line_no": 348
+      },
+      "status": "verified",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse",
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-05T13:20:58Z"
+        ],
+        "filenames": [
+          "hydrakatz.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2012-04-05T13:20:58Z",
+        "hydrakatz.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "6. **EXFIL.pst is on tdungan** (not DC) under the vibranium Outlook profile, created 2012-04-05T16:07\u201316:11Z; 16MB, live on disk, likely exfiltrated via browser. [CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 350
+      },
+      "status": "failed",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-05T16:07"
+        ],
+        "filenames": [
+          "EXFIL.pst"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [
+        "2012-04-05T16:07",
+        "EXFIL.pst"
+      ],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-6e98-7141-b6f1-225a1ef51bba",
+        "text": "7. **hotcorewin2k.sys timestomped on tdungan** to appear as a 2011-05-17 file; actual installation 2012-03-21T03:14Z. Absent from DC and nromanoff. [CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba]",
+        "line_no": 352
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-03-21T03:14Z"
+        ],
+        "filenames": [
+          "hotcorewin2k.sys"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "hotcorewin2k.sys"
+      ],
+      "missing": [
+        "2012-03-21T03:14Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-52f9-7f71-9651-69158614d792",
+        "text": "8. **vibranium account present on all three hosts** with first activity: nromanoff (2012-04-03T23:09Z) \u2192 tdungan (2012-04-04T16:40Z) \u2192 DC (2012-04-04T17:29Z) \u2014 confirming nromanoff was the lateral movement origin. [CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-52f9-7f71-9651-69158614d792, exec_id 019e1123-6e98-7141-b6f1-225a1ef51bba, exec_id 019e1123-2e48-7b90-bcaa-315b2cefc7ab]",
+        "line_no": 354
+      },
+      "status": "failed",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_mft_parse",
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-04T17:29Z",
+          "2012-04-03T23:09Z",
+          "2012-04-04T16:40Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [
+        "2012-04-04T17:29Z",
+        "2012-04-03T23:09Z",
+        "2012-04-04T16:40Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-26a3-7c51-be46-fad7c6993479",
+        "text": "9. **PsExec used against nromanoff** \u2014 PSEXESVC.EXE on nromanoff ShimCache (2012-04-04T01:46Z) confirms nromanoff was a PsExec target from another compromised host. [CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-26a3-7c51-be46-fad7c6993479]",
+        "line_no": 356
+      },
+      "status": "partial",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-04T01:46Z"
+        ],
+        "filenames": [
+          "PSEXESVC.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "PSEXESVC.EXE"
+      ],
+      "missing": [
+        "2012-04-04T01:46Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": ""
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e1123-20c8-79e3-a814-7d52002b8c38",
+        "text": "10. **No attacker tools in DC ShimCache** \u2014 DC was used as a persistence/pivot platform (service-level, not interactive tool execution) until the vibranium account was activated on 2012-04-04T17:29Z. [CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e1123-20c8-79e3-a814-7d52002b8c38]",
+        "line_no": 358
+      },
+      "status": "verified",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-04T17:29Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "2012-04-04T17:29Z"
+      ],
+      "notes": ""
+    }
+  ]
+}
