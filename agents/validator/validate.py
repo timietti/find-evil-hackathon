@@ -30,6 +30,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -163,6 +164,10 @@ class ClaimVerdict:
     negation_violations: list[str] = field(default_factory=list)
     verified_absences: list[str] = field(default_factory=list)
     notes: str = ""
+    # v4: LLM-based prose check (only populated when --llm-check is on)
+    llm_verdict: str | None = None    # VERIFIED | UNSUPPORTED | UNRELATED | UNCERTAIN
+    llm_reason: str | None = None
+    llm_cost_usd: float = 0.0
 
     def as_dict(self) -> dict[str, Any]:
         d = asdict(self)
@@ -338,10 +343,33 @@ class RunVerdict:
     tool_not_supported:  int = 0
     not_confirmed:       int = 0  # confirmed-tagged but missing exec_id
     confirmation_score:  float = 0.0  # verified / confirmed_count
+    # v4 LLM-check stats (populated when --llm-check is on)
+    llm_checked:         int = 0
+    llm_verified:        int = 0  # rule-unverifiable → LLM said VERIFIED
+    llm_unsupported:     int = 0  # rule-unverifiable → LLM said UNSUPPORTED
+    llm_unrelated:       int = 0
+    llm_uncertain:       int = 0
+    llm_total_cost_usd:  float = 0.0
 
 
-def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
-    """Validate every CONFIRMED claim in `run_dir/final_response.md`."""
+def validate_run(
+    run_dir: Path,
+    *,
+    llm_check: bool = False,
+    llm_client=None,
+    llm_max_calls: int | None = None,
+) -> tuple[RunVerdict, list[ClaimVerdict]]:
+    """Validate every CONFIRMED claim in `run_dir/final_response.md`.
+
+    With `llm_check=True`, every verdict that the rule-based pass tagged
+    as `unverifiable` (no extractable tokens) is sent to a small Claude
+    along with its cited tool's parsed data. The LLM verdict (VERIFIED /
+    UNSUPPORTED / UNRELATED / UNCERTAIN) is recorded on the ClaimVerdict
+    and may upgrade the status to verified or failed.
+
+    `llm_max_calls` caps the number of LLM invocations to bound cost
+    (defaults to no cap).
+    """
     _register_parsers()
 
     report_path = run_dir / "final_response.md"
@@ -396,8 +424,17 @@ def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
                 else:
                     unsupported_tools.add(tname or "?")
                 continue
-            raw_path = Path(row.get("raw_output_path") or "")
-            if not raw_path.exists():
+            raw_output_path = row.get("raw_output_path")
+            if not raw_output_path:
+                # No raw file; fall back to parsed_summary if present.
+                ps = row.get("parsed_summary") or {}
+                if ps:
+                    parsed_by_tool.append((tname, ps))
+                else:
+                    unresolved.append(f"{eid} (raw missing)")
+                continue
+            raw_path = Path(raw_output_path)
+            if not (raw_path.exists() and raw_path.is_file()):
                 unresolved.append(f"{eid} (raw missing)")
                 continue
             parsed_by_tool.append(
@@ -431,6 +468,90 @@ def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
             v.notes = (v.notes + "; " if v.notes else "") + "; ".join(extra)
         verdicts.append(v)
 
+    # ----------------------------------------------------------------
+    # v4 LLM-based prose check on `unverifiable` verdicts.
+    # ----------------------------------------------------------------
+    if llm_check:
+        # Auth check up-front — the SDK only honours ANTHROPIC_API_KEY,
+        # not Claude Code's OAuth credential. Surface this clearly so a
+        # silent "0 LLM checks ran" doesn't get mistaken for "everything
+        # was already verified".
+        if llm_client is None and not os.environ.get("ANTHROPIC_API_KEY"):
+            import sys
+            print(
+                "[validator] WARNING: --llm-check requested but "
+                "ANTHROPIC_API_KEY is not set. The Anthropic SDK does not "
+                "use Claude Code's OAuth credential; export an API key to "
+                "enable the prose check.",
+                file=sys.stderr,
+            )
+
+        from agents.validator.prose_check import check_claim_prose
+        n_called = 0
+        n_errors = 0
+        for v in verdicts:
+            if v.status != "unverifiable":
+                continue
+            if llm_max_calls is not None and n_called >= llm_max_calls:
+                break
+            # Need to re-resolve the cited exec_id(s) → parsed data.
+            # Use the first cited exec_id as the haystack source. (Multi-cite
+            # could be supported later by merging haystacks; for now use the
+            # primary citation.)
+            primary_eid = v.claim.exec_ids[0] if v.claim.exec_ids else None
+            if not primary_eid:
+                continue
+            row = audit.lookup_exec(primary_eid)
+            if row is None:
+                continue
+            tname = row.get("tool")
+            parser = _PARSERS.get(tname)
+            parsed_for_prompt: dict[str, Any] = {}
+            raw_output_path = row.get("raw_output_path")
+            if parser is not None and raw_output_path:
+                raw_path = Path(raw_output_path)
+                if raw_path.exists() and raw_path.is_file():
+                    try:
+                        parsed_for_prompt = parser(raw_path.read_text(errors="replace"))
+                    except Exception:
+                        parsed_for_prompt = row.get("parsed_summary") or {}
+                else:
+                    parsed_for_prompt = row.get("parsed_summary") or {}
+            else:
+                parsed_for_prompt = row.get("parsed_summary") or {}
+
+            try:
+                pcr = check_claim_prose(
+                    claim_text=v.claim.text,
+                    tool_name=tname or "?",
+                    parsed=parsed_for_prompt,
+                    client=llm_client,
+                )
+            except Exception as exc:  # noqa: BLE001 — bubble up via notes
+                v.notes = (v.notes + "; " if v.notes else "") + f"prose_check error: {exc}"
+                n_errors += 1
+                # If the FIRST call errored on auth, no point trying more
+                # — bail to avoid spamming stderr with the same error.
+                if n_errors == 1 and "auth" in str(exc).lower():
+                    import sys
+                    print(
+                        f"[validator] prose check disabled — first call errored: {exc}",
+                        file=sys.stderr,
+                    )
+                if n_errors >= 3:
+                    break
+                continue
+            n_called += 1
+            v.llm_verdict = pcr.verdict
+            v.llm_reason = pcr.reason
+            v.llm_cost_usd = pcr.cost_usd
+            # Upgrade / downgrade the status based on LLM judgment.
+            if pcr.verdict == "VERIFIED":
+                v.status = "verified"
+            elif pcr.verdict == "UNSUPPORTED":
+                v.status = "failed"
+            # UNRELATED + UNCERTAIN keep status as `unverifiable`.
+
     # Aggregate
     rv = RunVerdict(run_dir=str(run_dir))
     rv.total_claims = len(claims)
@@ -450,6 +571,17 @@ def validate_run(run_dir: Path) -> tuple[RunVerdict, list[ClaimVerdict]]:
         elif v.status == "not_confirmed":      rv.not_confirmed      += 1
     if rv.confirmed_count > 0:
         rv.confirmation_score = round(rv.verified / rv.confirmed_count, 3)
+    # LLM-check aggregates
+    for v in verdicts:
+        if v.llm_verdict is None:
+            continue
+        rv.llm_checked += 1
+        rv.llm_total_cost_usd += v.llm_cost_usd
+        if   v.llm_verdict == "VERIFIED":    rv.llm_verified    += 1
+        elif v.llm_verdict == "UNSUPPORTED": rv.llm_unsupported += 1
+        elif v.llm_verdict == "UNRELATED":   rv.llm_unrelated   += 1
+        elif v.llm_verdict == "UNCERTAIN":   rv.llm_uncertain   += 1
+    rv.llm_total_cost_usd = round(rv.llm_total_cost_usd, 4)
     return rv, verdicts
 
 
@@ -492,9 +624,23 @@ def write_validator_report(
         f"**Confirmation score: {rv.confirmation_score:.1%}** "
         f"({rv.verified} verified / {rv.confirmed_count} confirmed)",
         "",
+    ]
+    if rv.llm_checked:
+        lines.extend([
+            "## LLM-based prose check (v4)",
+            "",
+            f"- LLM verdicts collected: **{rv.llm_checked}** "
+            f"(cost: ${rv.llm_total_cost_usd:.4f})",
+            f"  - ✅ VERIFIED:    {rv.llm_verified} (rule-unverifiable → upgraded to verified)",
+            f"  - ❌ UNSUPPORTED: {rv.llm_unsupported} (downgraded to failed)",
+            f"  - ❓ UNRELATED:   {rv.llm_unrelated} (cited tool not relevant — kept unverifiable)",
+            f"  - ❓ UNCERTAIN:   {rv.llm_uncertain} (genuinely ambiguous — kept unverifiable)",
+            "",
+        ])
+    lines.extend([
         "## Per-claim verdicts",
         "",
-    ]
+    ])
     for v in verdicts:
         line_marker = f"_(line {v.claim.line_no})_"
         if v.status == "verified":
@@ -540,6 +686,8 @@ def write_validator_report(
                           + ', '.join(f'`{t}`' for t in v.negation_violations[:6]))
         if v.notes:
             lines.append(f"- note: {v.notes}")
+        if v.llm_verdict:
+            lines.append(f"- LLM check: **{v.llm_verdict}** — {v.llm_reason or '(no reason)'}")
         lines.append(f"- claim: > {snippet}")
         lines.append("")
 
@@ -551,12 +699,26 @@ def write_validator_report(
 def _run(
     run_dir: str = typer.Option(..., "--run-dir"),
     quiet: bool = typer.Option(False, "--quiet"),
+    llm_check: bool = typer.Option(
+        False, "--llm-check",
+        help="After rule-based pass, send each `unverifiable` verdict to "
+             "Claude Haiku to check if the cited tool's parsed data "
+             "supports the claim. Requires ANTHROPIC_API_KEY. ~$0.10/run.",
+    ),
+    llm_max_calls: int = typer.Option(
+        50, "--llm-max-calls",
+        help="Cap on LLM invocations (cost safety). 0 = unlimited.",
+    ),
 ) -> None:
     p = Path(run_dir)
     if not p.exists():
         raise typer.BadParameter(f"run-dir does not exist: {run_dir}")
 
-    rv, verdicts = validate_run(p)
+    rv, verdicts = validate_run(
+        p,
+        llm_check=llm_check,
+        llm_max_calls=(None if llm_max_calls == 0 else llm_max_calls),
+    )
     json_path, md_path = write_validator_report(p, rv, verdicts)
 
     if not quiet:

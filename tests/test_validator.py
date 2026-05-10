@@ -569,6 +569,249 @@ def test_timestamp_prefix_does_not_overshoot_to_unrelated_times() -> None:
     assert v.status == "failed"
 
 
+# ---- v4: LLM-based prose check --------------------------------------------
+
+
+from dataclasses import dataclass as _dc
+from unittest.mock import patch
+from agents.validator.prose_check import check_claim_prose, _parse_response
+
+
+def _mock_anthropic_response(verdict: str, reason: str = "looks fine"):
+    """Build a fake Anthropic SDK response object for unit tests."""
+    @_dc
+    class _UsageStub:
+        input_tokens: int = 1000
+        output_tokens: int = 50
+    @_dc
+    class _BlockStub:
+        type: str = "text"
+        text: str = ""
+    @_dc
+    class _RespStub:
+        content: list = None
+        usage: _UsageStub = None
+    block = _BlockStub(text=f'{{"verdict": "{verdict}", "reason": "{reason}"}}')
+    return _RespStub(content=[block], usage=_UsageStub())
+
+
+class _MockAnthropic:
+    """Stand-in for anthropic.Anthropic that returns a configured verdict."""
+
+    def __init__(self, verdict: str, reason: str = "ok"):
+        self._verdict = verdict
+        self._reason = reason
+        self._calls: list = []
+
+        class _Messages:
+            def __init__(self_inner, parent):
+                self_inner._parent = parent
+
+            def create(self_inner, **kwargs):
+                self_inner._parent._calls.append(kwargs)
+                return _mock_anthropic_response(
+                    self_inner._parent._verdict,
+                    self_inner._parent._reason,
+                )
+
+        self.messages = _Messages(self)
+
+
+def test_prose_check_parse_response_handles_bare_json() -> None:
+    out = _parse_response('{"verdict": "VERIFIED", "reason": "ok"}')
+    assert out["verdict"] == "VERIFIED"
+
+
+def test_prose_check_parse_response_handles_code_fence() -> None:
+    out = _parse_response('```json\n{"verdict":"UNSUPPORTED","reason":"x"}\n```')
+    assert out["verdict"] == "UNSUPPORTED"
+
+
+def test_prose_check_parse_response_heuristic_salvage() -> None:
+    out = _parse_response('I think the verdict is UNRELATED based on the data.')
+    assert out["verdict"] == "UNRELATED"
+
+
+def test_check_claim_prose_returns_result(tmp_path: Path) -> None:
+    client = _MockAnthropic("VERIFIED", "found in data")
+    pcr = check_claim_prose(
+        claim_text="Some prose claim.",
+        tool_name="vol3_psscan",
+        parsed={"count": 5},
+        client=client,
+    )
+    assert pcr.verdict == "VERIFIED"
+    assert pcr.reason == "found in data"
+    assert pcr.cost_usd > 0
+    # Verify the call shape sent to the SDK
+    assert len(client._calls) == 1
+    assert client._calls[0]["model"]
+    assert "Some prose claim" in client._calls[0]["messages"][0]["content"]
+
+
+def test_check_claim_prose_truncates_oversized_parsed() -> None:
+    """A multi-MB parsed dict should be trimmed before sending to the LLM."""
+    client = _MockAnthropic("UNCERTAIN", "n/a")
+    huge = {"rows": [{"x": "y" * 1000} for _ in range(2000)]}  # ~2 MB
+    check_claim_prose(
+        claim_text="a", tool_name="t", parsed=huge, client=client,
+    )
+    # The user content sent should be capped well below the 2 MB
+    sent = client._calls[0]["messages"][0]["content"]
+    assert len(sent) < 50_000  # generous cap; default MAX_PARSED_BYTES=12K
+
+
+def test_validate_run_with_llm_check_upgrades_unverifiable_to_verified(
+    tmp_path: Path,
+) -> None:
+    """End-to-end: an unverifiable rule-based verdict gets sent to the LLM,
+    which returns VERIFIED, and the verdict's status is upgraded."""
+    from mcp_server.audit import AuditLogger
+
+    audit_dir = tmp_path / "audit"
+    audit_dir.mkdir()
+    audit = AuditLogger(
+        exec_log_path=audit_dir / "exec_log.jsonl",
+        raw_output_dir=audit_dir / "raw",
+    )
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="memory_agent", tool="vol3_psscan",
+        args={"image": "/cases/x.raw"}, raw_output_path=None,
+        exit_code=0, wall_ms=10, summary="x",
+        parsed_summary={"count": 5, "by_image": {"MRC.exe": 1}},
+    )
+    # Pure-prose claim that the rule extractor can't tokenise
+    (tmp_path / "final_response.md").write_text(
+        f"The agent's evidence pattern is consistent. [CONFIRMED — exec_id {eid}]\n"
+    )
+
+    fake_client = _MockAnthropic("VERIFIED", "consistent evidence")
+    rv, verdicts = validate_run(tmp_path, llm_check=True, llm_client=fake_client)
+
+    assert len(verdicts) == 1
+    v = verdicts[0]
+    assert v.status == "verified"           # upgraded
+    assert v.llm_verdict == "VERIFIED"
+    assert v.llm_reason == "consistent evidence"
+    # RunVerdict aggregates updated
+    assert rv.llm_checked == 1
+    assert rv.llm_verified == 1
+    assert rv.llm_total_cost_usd > 0
+
+
+def test_validate_run_llm_check_unsupported_downgrades_to_failed(
+    tmp_path: Path,
+) -> None:
+    from mcp_server.audit import AuditLogger
+
+    (tmp_path / "audit").mkdir()
+    audit = AuditLogger(
+        exec_log_path=tmp_path / "audit" / "exec_log.jsonl",
+        raw_output_dir=tmp_path / "audit" / "raw",
+    )
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="x", tool="vol3_psscan",
+        args={}, raw_output_path=None, exit_code=0, wall_ms=1, summary="",
+        parsed_summary={"count": 0},
+    )
+    (tmp_path / "final_response.md").write_text(
+        f"Some unsupported prose claim. [CONFIRMED — exec_id {eid}]\n"
+    )
+
+    rv, verdicts = validate_run(
+        tmp_path, llm_check=True,
+        llm_client=_MockAnthropic("UNSUPPORTED", "no match"),
+    )
+    assert verdicts[0].status == "failed"
+    assert rv.llm_unsupported == 1
+
+
+def test_validate_run_llm_check_uncertain_keeps_unverifiable(
+    tmp_path: Path,
+) -> None:
+    from mcp_server.audit import AuditLogger
+    (tmp_path / "audit").mkdir()
+    audit = AuditLogger(
+        exec_log_path=tmp_path / "audit" / "exec_log.jsonl",
+        raw_output_dir=tmp_path / "audit" / "raw",
+    )
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="x", tool="vol3_psscan",
+        args={}, raw_output_path=None, exit_code=0, wall_ms=1, summary="",
+        parsed_summary={"count": 0},
+    )
+    (tmp_path / "final_response.md").write_text(
+        f"Ambiguous prose. [CONFIRMED — exec_id {eid}]\n"
+    )
+    rv, verdicts = validate_run(
+        tmp_path, llm_check=True,
+        llm_client=_MockAnthropic("UNCERTAIN", "vague"),
+    )
+    assert verdicts[0].status == "unverifiable"
+    assert rv.llm_uncertain == 1
+
+
+def test_validate_run_llm_check_max_calls_caps_invocations(tmp_path: Path) -> None:
+    """`llm_max_calls=1` should stop after the first LLM call even with
+    multiple unverifiable claims."""
+    from mcp_server.audit import AuditLogger
+    (tmp_path / "audit").mkdir()
+    audit = AuditLogger(
+        exec_log_path=tmp_path / "audit" / "exec_log.jsonl",
+        raw_output_dir=tmp_path / "audit" / "raw",
+    )
+    eids = []
+    for _ in range(3):
+        e = audit.new_exec_id()
+        audit.record(
+            exec_id=e, agent="x", tool="vol3_psscan",
+            args={}, raw_output_path=None, exit_code=0, wall_ms=1, summary="",
+            parsed_summary={"count": 0},
+        )
+        eids.append(e)
+    md = "\n\n".join(
+        f"Prose claim {i}. [CONFIRMED — exec_id {eid}]"
+        for i, eid in enumerate(eids)
+    )
+    (tmp_path / "final_response.md").write_text(md + "\n")
+
+    fake = _MockAnthropic("VERIFIED", "ok")
+    rv, _ = validate_run(
+        tmp_path, llm_check=True, llm_client=fake, llm_max_calls=1,
+    )
+    # Only one LLM call should have happened despite 3 unverifiable claims
+    assert rv.llm_checked == 1
+    assert len(fake._calls) == 1
+
+
+def test_validate_run_without_llm_check_does_not_call_llm(tmp_path: Path) -> None:
+    """Default path: llm_check=False. No LLM client should be invoked."""
+    from mcp_server.audit import AuditLogger
+    (tmp_path / "audit").mkdir()
+    audit = AuditLogger(
+        exec_log_path=tmp_path / "audit" / "exec_log.jsonl",
+        raw_output_dir=tmp_path / "audit" / "raw",
+    )
+    eid = audit.new_exec_id()
+    audit.record(
+        exec_id=eid, agent="x", tool="vol3_psscan",
+        args={}, raw_output_path=None, exit_code=0, wall_ms=1, summary="",
+        parsed_summary={"count": 0},
+    )
+    (tmp_path / "final_response.md").write_text(
+        f"Prose. [CONFIRMED — exec_id {eid}]\n"
+    )
+    fake = _MockAnthropic("VERIFIED", "should not be called")
+    # llm_check=False (default) — even if we passed a client, it's ignored.
+    rv, verdicts = validate_run(tmp_path, llm_client=fake)
+    assert rv.llm_checked == 0
+    assert verdicts[0].status == "unverifiable"
+    assert verdicts[0].llm_verdict is None
+
+
 # ---- end-to-end against committed ROCBA-001 v1 run ------------------------
 
 
