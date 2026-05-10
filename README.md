@@ -10,19 +10,19 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 
 ### What ships today
 
-- **20 typed read-only MCP tools** over a FastMCP stdio server (`sift-mcp`). The agent connected to it has **no shell, no filesystem, no network** — it can only call the registered forensic functions.
+- **26 typed read-only MCP tools** over a FastMCP stdio server (`sift-mcp`). The agent connected to it has **no shell, no filesystem, no network** — it can only call the registered forensic functions.
 - **Self-correcting agent loop** (`eval/agents/sift_owl_v2/run_loop.py`). The agent generates a report; a validator scores every claim against parsed tool output; the loop replans for the next iteration with the flagged claims spelled out. Terminates on convergence, no-improvement, or max-iter cap.
 - **Validator v4** — rule-based extraction (PIDs, IPs, paths, timestamps, hashes, inodes) with paren-aware negation handling, timestamp prefix matching, and an opt-in LLM prose-check pass (Haiku 4.5) for unverifiable prose claims.
 - **Per-call audit trail** — `audit/exec_log.jsonl` records every MCP call with `exec_id`, args, sha256 of inputs and raw output, `parsed_summary`, `wall_ms`. Every "confirmed" claim in a final report cites an `exec_id` that the validator can resolve.
-- **173 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
+- **198 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
 
 ### MCP tool inventory
 
 | Domain | Tools |
 |---|---|
-| **Memory (Vol3)** — 9 | `vol3_image_info`, `vol3_psscan`, `vol3_pstree`, `vol3_cmdline`, `vol3_netscan`, `vol3_filescan`, `vol3_malfind`, `vol3_svcscan`, `vol3_userassist` |
+| **Memory (Vol3)** — 11 | `vol3_image_info`, `vol3_psscan`, `vol3_pstree`, `vol3_cmdline`, `vol3_netscan`, `vol3_filescan`, `vol3_malfind`, `vol3_svcscan`, `vol3_userassist`, `vol3_dlllist`, `vol3_handles` |
 | **Disk (Sleuth Kit + EWF)** — 6 | `ewf_info`, `ewf_verify`, `tsk_partition_table`, `tsk_fs_stat`, `tsk_fls_list`, `tsk_icat_extract` |
-| **Windows artifacts (EZ Tools)** — 4 | `ezt_mft_parse`, `ezt_shimcache_parse`, `ezt_evtx_parse`, `ezt_amcache_parse` |
+| **Windows artifacts (EZ Tools)** — 8 | `ezt_mft_parse`, `ezt_shimcache_parse`, `ezt_evtx_parse`, `ezt_amcache_parse`, `ezt_prefetch_parse`, `ezt_jumplist_parse`, `ezt_recyclebin_parse`, `ezt_srum_parse` |
 | **Drill helper** — 1 | `query_rows` (re-parse + filter any prior call's full row list by `exec_id`) |
 
 `sift-mcp inspect` prints the inventory. EZ Tools take an `extract_exec_id` (output of a prior `tsk_icat_extract`) instead of a filesystem path — the agent has no way to point a parser at an arbitrary file.

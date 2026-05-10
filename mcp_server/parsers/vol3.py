@@ -545,6 +545,134 @@ def summarise_filescan(parsed: dict[str, Any]) -> str:
     return f"{parsed.get('count', 0)} file objects in pool memory"
 
 
+# ---------------------------------------------------------------------------
+# windows.dlllist — DLLs loaded per process.
+#
+# JSONL fields (Vol3 2.x): PID, Process, Base, Size, Name, Path, LoadTime, File
+# output. High-signal for malware triage:
+#   - unsigned DLLs in lsass / spoolsv / svchost (credential stealers, hooks)
+#   - sideloaded DLLs adjacent to LOLBin executables
+#   - DLLs without an on-disk path (in-memory injected modules)
+# ---------------------------------------------------------------------------
+
+
+def parse_dlllist(stdout: str) -> dict[str, Any]:
+    """Parse `vol -r jsonl <image> windows.dlllist` output.
+
+    Returns:
+        count: total rows
+        rows: per-DLL records (pid, process, base, size, name, path, load_time)
+        by_process: count of loaded DLLs keyed by process name
+        by_path_top: top-20 directory roots (e.g. `C:\\Windows\\System32`,
+            `C:\\Users\\frocba\\AppData\\Local`) for distribution analysis
+        unbacked: count of DLLs with no on-disk Path (in-memory only)
+    """
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_process: dict[str, int] = {}
+    by_dir: dict[str, int] = {}
+    unbacked = 0
+    for r in rows:
+        path = r.get("Path") or ""
+        proc = r.get("Process") or ""
+        out_rows.append({
+            "pid":       r.get("PID"),
+            "process":   proc,
+            "base":      r.get("Base"),
+            "size":      r.get("Size"),
+            "name":      r.get("Name"),
+            "path":      path,
+            "load_time": _normalise_dt(r.get("LoadTime")),
+        })
+        if proc:
+            by_process[proc] = by_process.get(proc, 0) + 1
+        if not path:
+            unbacked += 1
+        else:
+            # Top-level dir e.g. 'C:\Windows\System32'
+            head = path.rsplit("\\", 1)[0] if "\\" in path else path
+            if head:
+                by_dir[head] = by_dir.get(head, 0) + 1
+    return {
+        "count":        len(out_rows),
+        "unbacked":     unbacked,
+        "by_process":   dict(sorted(by_process.items(), key=lambda kv: -kv[1])[:20]),
+        "by_path_top":  dict(sorted(by_dir.items(), key=lambda kv: -kv[1])[:20]),
+        "rows":         out_rows,
+    }
+
+
+def summarise_dlllist(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    unbacked = parsed.get("unbacked", 0)
+    parts = [f"{n} DLLs"]
+    if unbacked:
+        parts.append(f"{unbacked} unbacked (no on-disk path)")
+    return ", ".join(parts)
+
+
+# ---------------------------------------------------------------------------
+# windows.handles — process open handles.
+#
+# JSONL fields: PID, Process, Offset, HandleValue, Type, GrantedAccess,
+# Name. High-signal for:
+#   - mutex names (malware-family fingerprint: e.g. `Global\rundll32.exe`)
+#   - file handles (what was open at capture time)
+#   - registry handles (persistence locations actively held)
+#   - Section / Event handles (IPC primitives)
+#
+# Per-PID required by Vol3 — calling without --pid scans all procs (very slow).
+# ---------------------------------------------------------------------------
+
+
+def parse_handles(stdout: str) -> dict[str, Any]:
+    """Parse `vol -r jsonl <image> windows.handles --pid <PID>` output."""
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_type: dict[str, int] = {}
+    mutexes: list[str] = []
+    files: list[str] = []
+    keys: list[str] = []
+    for r in rows:
+        htype = r.get("Type") or ""
+        name = r.get("Name") or ""
+        out_rows.append({
+            "pid":            r.get("PID"),
+            "process":        r.get("Process"),
+            "handle_value":   r.get("HandleValue"),
+            "type":           htype,
+            "granted_access": r.get("GrantedAccess"),
+            "name":           name,
+        })
+        if htype:
+            by_type[htype] = by_type.get(htype, 0) + 1
+        # High-signal name lists for triage. Limited to keep summary small.
+        if htype == "Mutant" and name:
+            mutexes.append(name)
+        elif htype == "File" and name:
+            files.append(name)
+        elif htype == "Key" and name:
+            keys.append(name)
+    return {
+        "count":           len(out_rows),
+        "by_type":         dict(sorted(by_type.items(), key=lambda kv: -kv[1])),
+        "mutexes_top":     mutexes[:30],
+        "file_handles_top": files[:30],
+        "key_handles_top": keys[:30],
+        "rows":            out_rows,
+    }
+
+
+def summarise_handles(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    by_type = parsed.get("by_type") or {}
+    parts = [f"{n} handles"]
+    if by_type:
+        top = ", ".join(f"{k}×{v}" for k, v in list(by_type.items())[:3])
+        parts.append(f"top: {top}")
+    return "; ".join(parts)
+
+
 def _parse_system_time(raw: str) -> str | None:
     """Convert Vol3's `SystemTime` field to an ISO-8601 UTC timestamp.
 

@@ -1,0 +1,5 @@
+{"PID": 4, "Process": "System", "Base": "0xfffff80000000000", "Size": 12345, "Name": "ntoskrnl.exe", "Path": "\\Windows\\System32\\ntoskrnl.exe", "LoadTime": "2020-11-13T22:00:00+00:00", "File output": "Disabled"}
+{"PID": 600, "Process": "lsass.exe", "Base": "0x7ffd00000000", "Size": 2048000, "Name": "lsass.exe", "Path": "\\Windows\\System32\\lsass.exe", "LoadTime": "2020-11-13T22:30:01+00:00", "File output": "Disabled"}
+{"PID": 600, "Process": "lsass.exe", "Base": "0x7ffd11111111", "Size": 524288, "Name": "ntdll.dll", "Path": "\\Windows\\System32\\ntdll.dll", "LoadTime": "2020-11-13T22:30:01+00:00", "File output": "Disabled"}
+{"PID": 600, "Process": "lsass.exe", "Base": "0x7ffd22222222", "Size": 65536, "Name": "evil.dll", "Path": "", "LoadTime": "2020-11-14T03:42:55+00:00", "File output": "Disabled"}
+{"PID": 1912, "Process": "stun.exe", "Base": "0x10000000", "Size": 524288, "Name": "stun.exe", "Path": "C:\\Users\\frocba\\AppData\\Local\\Temp\\stun.exe", "LoadTime": "2020-11-13T22:31:12+00:00", "File output": "Disabled"}

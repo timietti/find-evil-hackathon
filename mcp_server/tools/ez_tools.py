@@ -25,6 +25,10 @@ Tool inventory:
   ezt_shimcache_parse(extract_exec_id)  — AppCompatCacheParser on extracted SYSTEM hive
   ezt_evtx_parse(extract_exec_id)       — EvtxECmd on extracted .evtx file
   ezt_amcache_parse(extract_exec_id)    — AmcacheParser on extracted Amcache.hve
+  ezt_prefetch_parse(extract_exec_id)   — PECmd on extracted .pf file
+  ezt_jumplist_parse(extract_exec_id)   — JLECmd on extracted Jump List
+  ezt_recyclebin_parse(extract_exec_id) — RBCmd on extracted $I record
+  ezt_srum_parse(extract_exec_id)       — SrumECmd on extracted SRUDB.dat
 """
 
 from __future__ import annotations
@@ -39,12 +43,20 @@ from mcp_server.audit import AuditLogger
 from mcp_server.parsers.ez_tools import (
     parse_amcache_from_dir,
     parse_evtx,
+    parse_jumplist,
     parse_mft,
+    parse_prefetch,
+    parse_recyclebin,
     parse_shimcache,
+    parse_srum_from_dir,
     summarise_amcache,
     summarise_evtx,
+    summarise_jumplist,
     summarise_mft,
+    summarise_prefetch,
+    summarise_recyclebin,
     summarise_shimcache,
+    summarise_srum,
 )
 from mcp_server.tools._common import (
     DEFAULT_EVIDENCE_ROOTS,
@@ -383,3 +395,194 @@ def ezt_evtx_parse(
         summariser=summarise_evtx,
         timeout_s=timeout_s,
     )
+
+
+def ezt_prefetch_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`PECmd -f <extracted-pf> --json <out>` — Windows Prefetch parser.
+
+    Pre-req: extract a single `.pf` file from
+    `Windows\\Prefetch\\<NAME>-<HASH>.pf` via `tsk_icat_extract`.
+
+    Per-binary execution evidence: ExecutableName + Hash, RunCount, LastRun
+    + 7 PreviousRun timestamps, list of files / directories the binary
+    referenced. Survives binary deletion. The Win10/Win11 program-execution
+    gold standard.
+    """
+    return _run_ez_tool(
+        audit=audit, agent=agent,
+        tool_name="ezt_prefetch_parse",
+        dll_path=_check_dll("PECmd.dll"),
+        extract_exec_id=extract_exec_id,
+        output_format="json",
+        output_glob="*_PECmd_Output.json",
+        parser=parse_prefetch,
+        summariser=summarise_prefetch,
+        timeout_s=timeout_s,
+    )
+
+
+def ezt_jumplist_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`JLECmd -f <extracted-jumplist> --json <out>` — Jump List parser.
+
+    Pre-req: extract a single `.automaticDestinations-ms` or
+    `.customDestinations-ms` file from
+    `\\Users\\<u>\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\
+    {Automatic,Custom}Destinations\\` via `tsk_icat_extract`.
+
+    Per-DestList entry: AppId + AppIDDescription, target Path, hostname,
+    drive type + serial, MFT entry, MAC address of the originating
+    machine (link-tracker creator). Strong "what did the user open" signal
+    that survives even after external drives are detached.
+    """
+    return _run_ez_tool(
+        audit=audit, agent=agent,
+        tool_name="ezt_jumplist_parse",
+        dll_path=_check_dll("JLECmd.dll"),
+        extract_exec_id=extract_exec_id,
+        output_format="json",
+        output_glob="*_JLECmd_*.json",
+        parser=parse_jumplist,
+        summariser=summarise_jumplist,
+        timeout_s=timeout_s,
+    )
+
+
+def ezt_recyclebin_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 300,
+) -> dict[str, Any]:
+    """`RBCmd -f <extracted-$I> --json <out>` — Recycle Bin parser.
+
+    Pre-req: extract a single `$Recycle.Bin\\S-<SID>\\$I*` record (Win10)
+    or `INFO2` (XP) via `tsk_icat_extract`.
+
+    Per record: SourceName (original full path), FileSize, DeletedOn
+    timestamp, FileName. Strong "user deleted X" evidence; the deleted
+    file body is in the paired `$R*`.
+    """
+    return _run_ez_tool(
+        audit=audit, agent=agent,
+        tool_name="ezt_recyclebin_parse",
+        dll_path=_check_dll("RBCmd.dll"),
+        extract_exec_id=extract_exec_id,
+        output_format="json",
+        output_glob="*_RBCmd_*.json",
+        parser=parse_recyclebin,
+        summariser=summarise_recyclebin,
+        timeout_s=timeout_s,
+    )
+
+
+# Default per-section row cap on the wire for SRUM. Same shape as Amcache.
+_SRUM_SECTION_ROW_LIMIT = 50
+
+
+def _truncate_srum(
+    parsed: dict[str, Any], limit: int = _SRUM_SECTION_ROW_LIMIT,
+) -> dict[str, Any]:
+    """Cap each SRUM section's row list independently (mirrors `_truncate_amcache`)."""
+    out = {k: v for k, v in parsed.items() if k != "sections"}
+    out_sections: dict[str, Any] = {}
+    for sec_key, sec in (parsed.get("sections") or {}).items():
+        rows = sec.get("rows") or []
+        truncated = len(rows) > limit
+        out_sections[sec_key] = {
+            "count":          sec.get("count", len(rows)),
+            "rows":           rows[:limit],
+            "rows_truncated": truncated,
+            "rows_total":     len(rows),
+        }
+    out["sections"] = out_sections
+    return out
+
+
+def ezt_srum_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 900,
+) -> dict[str, Any]:
+    """`SrumECmd -f <extracted-SRUDB> --csv <out>` — System Resource Usage Monitor.
+
+    Pre-req: extract `Windows\\System32\\sru\\SRUDB.dat` via `tsk_icat_extract`.
+    SRUM is Win8+ — XP/Win7 hosts will not have this file.
+
+    Returns multiple sections (AppResourceUseInfo, NetworkUsages,
+    NetworkConnections, PushNotificationData, EnergyUsage). The killer
+    section for exfil detection is **NetworkUsages**: per-app per-interface
+    accumulated bytes-in / bytes-out by hour. Each section's rows are
+    truncated to 50 on the wire.
+    """
+    extract_path = _resolve_extract(audit, extract_exec_id)
+    exec_id = audit.new_exec_id()
+    out_subdir = audit.raw_output_dir / "ez_tools" / exec_id
+    out_subdir.mkdir(parents=True, exist_ok=True)
+    sub_dir = audit.raw_output_dir / "subprocess"
+
+    dll = _check_dll("SrumECmd.dll")
+    argv = [
+        _check_dotnet(), str(dll),
+        "-f", str(extract_path),
+        "--csv", str(out_subdir),
+    ]
+
+    rr = run_subprocess(argv, output_dir=sub_dir, name=exec_id, timeout_s=timeout_s)
+
+    if not rr.ok:
+        raw_capture = audit.write_raw(
+            exec_id, f"FAILED ({rr.error}). stderr: {rr.stderr_path}\n",
+        )
+        audit.record(
+            exec_id=exec_id, agent=agent, tool="ezt_srum_parse",
+            args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+            raw_output_path=raw_capture,
+            exit_code=rr.exit_code, wall_ms=rr.wall_ms,
+            summary=f"FAILED: {rr.error or 'non-zero exit'}",
+            error=rr.error or f"exit {rr.exit_code}",
+        )
+        raise ToolError(
+            f"ezt_srum_parse failed (exit {rr.exit_code}, "
+            f"timed_out={rr.timed_out}): {rr.error}. "
+            f"stderr at {rr.stderr_path}"
+        )
+
+    parsed = parse_srum_from_dir(out_subdir)
+
+    # Persist combined dict as JSON to raw_output for query_rows compat.
+    raw_text = json.dumps(parsed, default=str)
+    raw_path = audit.write_raw(exec_id, raw_text)
+    summary = summarise_srum(parsed)
+
+    parsed_summary_compact = {
+        "total_count":    parsed.get("total_count"),
+        "section_counts": parsed.get("section_counts"),
+        "unknown_files":  parsed.get("unknown_files"),
+    }
+
+    audit.record(
+        exec_id=exec_id, agent=agent, tool="ezt_srum_parse",
+        args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+        raw_output_path=raw_path,
+        exit_code=0, wall_ms=rr.wall_ms,
+        summary=summary,
+        parsed_summary=parsed_summary_compact,
+    )
+
+    truncated = _truncate_srum(parsed)
+    return {"exec_id": exec_id, **truncated}

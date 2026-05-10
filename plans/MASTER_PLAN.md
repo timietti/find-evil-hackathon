@@ -12,7 +12,7 @@
 
 | Track | Status |
 |---|---|
-| MCP server | **20 typed read-only tools** (9 vol3 + 6 disk + 4 EZ Tools + query_rows). 173 unit tests green. |
+| MCP server | **26 typed read-only tools** (11 vol3 + 6 disk + 8 EZ Tools + query_rows). 198 unit tests green. |
 | Agents | v0 / v1 single-pass + **v2 self-correction loop** all shipped under `eval/agents/`. |
 | Validator | v0..v4 shipped. v4 adds LLM-based prose check (Haiku 4.5; opt-in via `--llm-check`). |
 | Datasets | ROCBA-001 + STARK-APT-001 in active dev. **SHIELDBASE held out** for the final eval. |

@@ -37,7 +37,9 @@ from mcp_server.audit import AuditLogger
 from mcp_server.tools.memory import (
     query_rows as _query_rows,
     vol3_cmdline as _cmdline,
+    vol3_dlllist as _dlllist,
     vol3_filescan as _filescan,
+    vol3_handles as _handles,
     vol3_image_info as _image_info,
     vol3_malfind as _malfind,
     vol3_netscan as _netscan,
@@ -57,8 +59,12 @@ from mcp_server.tools.disk import (
 from mcp_server.tools.ez_tools import (
     ezt_amcache_parse as _ezt_amcache_parse,
     ezt_evtx_parse as _ezt_evtx_parse,
+    ezt_jumplist_parse as _ezt_jumplist_parse,
     ezt_mft_parse as _ezt_mft_parse,
+    ezt_prefetch_parse as _ezt_prefetch_parse,
+    ezt_recyclebin_parse as _ezt_recyclebin_parse,
     ezt_shimcache_parse as _ezt_shimcache_parse,
+    ezt_srum_parse as _ezt_srum_parse,
 )
 
 
@@ -177,6 +183,39 @@ def vol3_userassist(image: str) -> dict[str, Any]:
     per user hive. Strong indicator for hands-on-keyboard activity (programs
     launched via Explorer/Start menu)."""
     return _userassist({"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS)
+
+
+@mcp.tool()
+def vol3_dlllist(image: str, pid: int | None = None) -> dict[str, Any]:
+    """`windows.dlllist [--pid PID]` — DLLs loaded per process.
+
+    Returns per-DLL records: pid, process, base, size, name, path, load_time.
+    Aggregates by_process count, by_path_top (top-20 directories), unbacked
+    count (DLLs with no on-disk path — in-memory injected modules).
+
+    Pass `pid` to narrow to a single process (much faster + smaller). Without
+    pid, enumerates all processes — use only if you need the full picture."""
+    return _dlllist(
+        {"image": image, "pid": pid},
+        audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def vol3_handles(image: str, pid: int) -> dict[str, Any]:
+    """`windows.handles --pid PID` — process open handles.
+
+    Per-PID required: scanning all processes is multi-hour on big images.
+    Returns per-handle records (type, name, granted_access) and curated
+    high-signal lists: mutexes_top (malware-family fingerprint),
+    file_handles_top, key_handles_top.
+
+    Mutex name conventions reveal malware families (e.g.
+    `Global\\rundll32.exe` is a known APT marker)."""
+    return _handles(
+        {"image": image, "pid": pid},
+        audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -299,6 +338,58 @@ def ezt_evtx_parse(extract_exec_id: str) -> dict[str, Any]:
     4688 (process create), 4768/4769 (Kerberos), 4720 (account create),
     4732/4756 (group membership), 7045 (service install), 1102 (log clear)."""
     return _ezt_evtx_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_prefetch_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`PECmd --json` on an extracted Prefetch (.pf) file — Win10/Win11
+    program-execution gold standard.
+
+    Pre-req: extract a single `.pf` file from `Windows\\Prefetch\\` via
+    `tsk_icat_extract`. Returns ExecutableName + Hash, RunCount, LastRun
+    + 7 PreviousRun timestamps, plus directories + files_loaded the
+    binary referenced. Survives binary deletion."""
+    return _ezt_prefetch_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_jumplist_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`JLECmd --json` on an extracted Jump List file —
+    `.automaticDestinations-ms` or `.customDestinations-ms`.
+
+    Pre-req: extract one Jump List file from
+    `\\Users\\<u>\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\
+    {Automatic,Custom}Destinations\\` via `tsk_icat_extract`. Returns
+    per-DestList entry: AppId + AppIDDescription, target Path, hostname,
+    drive type + serial, MFT entry + sequence. Strong "what did the user
+    open in app X" evidence — survives external-drive detachment."""
+    return _ezt_jumplist_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_recyclebin_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`RBCmd --json` on an extracted Recycle Bin record (`$I*` on Win10,
+    `INFO2` on XP).
+
+    Pre-req: extract one `$I*` file from `$Recycle.Bin\\S-<SID>\\` via
+    `tsk_icat_extract`. Returns per record: SourceName (original full
+    path), FileSize, DeletedOn timestamp, FileName. The deleted file's
+    body lives in the paired `$R*`."""
+    return _ezt_recyclebin_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_srum_parse(extract_exec_id: str) -> dict[str, Any]:
+    """`SrumECmd --csv` on an extracted SRUDB.dat — System Resource Usage
+    Monitor (Win8+).
+
+    Pre-req: extract `Windows\\System32\\sru\\SRUDB.dat` via `tsk_icat_extract`.
+    Returns multiple sections; the killer one is **NetworkUsages** — per-app
+    accumulated bytes-in / bytes-out by hour and interface. Strong **exfil
+    detector**: the largest outbound bytes-out per process per hour.
+
+    XP/Win7 hosts will not have SRUDB.dat — call only on Win8+ images."""
+    return _ezt_srum_parse(extract_exec_id, audit=_audit())
 
 
 @mcp.tool()

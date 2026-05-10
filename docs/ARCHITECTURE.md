@@ -82,7 +82,7 @@ After each iteration, a non-LLM validator pass runs:
 
 ## MCP server function inventory (implemented)
 
-The MCP server exposes **20 typed functions**. Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
+The MCP server exposes **26 typed functions**. Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
 
 ```jsonc
 { "exec_id": "01H...UUIDv7",
@@ -101,7 +101,7 @@ The MCP server exposes **20 typed functions**. Every function returns `{exec_id,
 
 The agent sees `exec_id + summary + first 50 rows`. The full row list stays on disk and is reachable via `query_rows(exec_id, filter_field, filter_value, limit, offset)`.
 
-### Memory (Volatility 3) — 9
+### Memory (Volatility 3) — 11
 
 | Function | Wraps | Notes |
 |---|---|---|
@@ -114,6 +114,8 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 | `vol3_malfind(image)` | `windows.malfind` | RWX / MZ-headed VAD regions |
 | `vol3_svcscan(image)` | `windows.svcscan` | Service Control Manager |
 | `vol3_userassist(image)` | `windows.registry.userassist` | Per-user Explorer-driven program execution |
+| `vol3_dlllist(image, pid?)` | `windows.dlllist` | DLLs per process; flag in-memory injected modules |
+| `vol3_handles(image, pid)` | `windows.handles --pid` | Per-PID handles; mutex names = malware-family fingerprints |
 
 ### Disk (Sleuth Kit + EWF) — 6
 
@@ -128,7 +130,7 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 
 `tsk_icat_extract` is **the only path into EZ Tools** — they take the resulting `exec_id`, never a filesystem path. This is TB4.
 
-### Windows artifacts (EZ Tools) — 4
+### Windows artifacts (EZ Tools) — 8
 
 | Function | Wraps | Pre-req |
 |---|---|---|
@@ -136,6 +138,10 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 | `ezt_shimcache_parse(extract_exec_id)` | `AppCompatCacheParser --csv` | extract `Windows\System32\config\SYSTEM` |
 | `ezt_evtx_parse(extract_exec_id)` | `EvtxECmd --json` | extract a single `.evtx` file |
 | `ezt_amcache_parse(extract_exec_id)` | `AmcacheParser -i --csv` | extract `Windows\AppCompat\Programs\Amcache.hve` |
+| `ezt_prefetch_parse(extract_exec_id)` | `PECmd --json` | extract a single `.pf` file |
+| `ezt_jumplist_parse(extract_exec_id)` | `JLECmd --json` | extract a `.automaticDestinations-ms` / `.customDestinations-ms` |
+| `ezt_recyclebin_parse(extract_exec_id)` | `RBCmd --json` | extract a `$Recycle.Bin\S-*\$I*` record |
+| `ezt_srum_parse(extract_exec_id)` | `SrumECmd --csv` | extract `Windows\System32\sru\SRUDB.dat` (Win8+) |
 
 ### Drill helper — 1
 

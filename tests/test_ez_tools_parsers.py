@@ -10,12 +10,21 @@ from mcp_server.parsers.ez_tools import (
     parse_amcache,
     parse_amcache_from_dir,
     parse_evtx,
+    parse_jumplist,
     parse_mft,
+    parse_prefetch,
+    parse_recyclebin,
     parse_shimcache,
+    parse_srum,
+    parse_srum_from_dir,
     summarise_amcache,
     summarise_evtx,
+    summarise_jumplist,
     summarise_mft,
+    summarise_prefetch,
+    summarise_recyclebin,
     summarise_shimcache,
+    summarise_srum,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -234,3 +243,149 @@ def test_summarise_amcache_includes_program_exec_total() -> None:
     # Should mention sections + program-exec record count
     assert "sections" in s
     assert "program-exec" in s
+
+
+# ---- PECmd (Prefetch) -------------------------------------------------------
+
+
+def test_parse_prefetch_extracts_per_binary_records() -> None:
+    out = parse_prefetch(_fixture("prefetch_head.json"))
+    assert out["count"] >= 1
+    notepad = next((r for r in out["rows"] if r["executable_name"] == "NOTEPAD.EXE"), None)
+    assert notepad is not None
+    assert notepad["run_count"] == 12
+    assert notepad["last_run"].endswith("Z")
+    # PreviousRun list captures only non-null entries
+    assert isinstance(notepad["previous_runs"], list)
+    assert len(notepad["previous_runs"]) >= 2
+
+
+def test_parse_prefetch_aggregates_by_executable_and_total_runs() -> None:
+    out = parse_prefetch(_fixture("prefetch_head.json"))
+    assert "by_executable" in out
+    assert out["total_runs"] >= 12  # NOTEPAD has RunCount 12
+    assert "notepad.exe" in out["by_executable"]
+
+
+def test_parse_prefetch_handles_empty() -> None:
+    out = parse_prefetch("")
+    assert out["count"] == 0
+    assert out["rows"] == []
+
+
+def test_summarise_prefetch_includes_run_total() -> None:
+    out = parse_prefetch(_fixture("prefetch_head.json"))
+    s = summarise_prefetch(out)
+    assert "Prefetch records" in s
+    assert "cumulative runs" in s
+
+
+# ---- JLECmd (Jump Lists) ----------------------------------------------------
+
+
+def test_parse_jumplist_extracts_destlist_entries() -> None:
+    out = parse_jumplist(_fixture("jumplist_head.json"))
+    assert out["count"] >= 3
+    starfury = next(
+        (r for r in out["rows"] if "StarFury" in (r.get("path") or "")), None,
+    )
+    assert starfury is not None
+    assert starfury["appid_description"] == "Microsoft Word 2016"
+    # Removable drive should appear in by_drive aggregate
+    assert "Removable" in out.get("by_drive", {}) or "Fixed" in out.get("by_drive", {})
+
+
+def test_parse_jumplist_aggregates_by_appid() -> None:
+    out = parse_jumplist(_fixture("jumplist_head.json"))
+    assert "by_appid" in out
+    # Word app id appears 2x (the two .docx entries)
+    word_id = "a52cba65b4b7e2a9"
+    assert out["by_appid"].get(word_id) == 2
+
+
+def test_parse_jumplist_handles_empty() -> None:
+    assert parse_jumplist("").get("count") == 0
+
+
+def test_summarise_jumplist_mentions_apps_count() -> None:
+    out = parse_jumplist(_fixture("jumplist_head.json"))
+    s = summarise_jumplist(out)
+    assert "Jump List" in s and "apps" in s
+
+
+# ---- RBCmd (Recycle Bin) ----------------------------------------------------
+
+
+def test_parse_recyclebin_extracts_records() -> None:
+    out = parse_recyclebin(_fixture("recyclebin_head.json"))
+    assert out["count"] >= 3
+    pst = next((r for r in out["rows"] if r["file_name"].endswith(".pst")), None)
+    assert pst is not None
+    assert pst["file_size"] == 15728640
+    assert pst["deleted_on"].endswith("Z")
+
+
+def test_parse_recyclebin_aggregates_by_extension() -> None:
+    out = parse_recyclebin(_fixture("recyclebin_head.json"))
+    assert "pst" in out["by_extension"]
+    assert "zip" in out["by_extension"]
+
+
+def test_parse_recyclebin_handles_empty() -> None:
+    assert parse_recyclebin("").get("count") == 0
+
+
+def test_summarise_recyclebin_mentions_count() -> None:
+    out = parse_recyclebin(_fixture("recyclebin_head.json"))
+    s = summarise_recyclebin(out)
+    assert "Recycle Bin records" in s
+
+
+# ---- SrumECmd (System Resource Usage Monitor) -------------------------------
+
+
+SRUM_FIXTURE_DIR = FIXTURES / "srum_sample"
+
+
+def test_parse_srum_from_dir_finds_sections() -> None:
+    if not SRUM_FIXTURE_DIR.exists():
+        pytest.skip("missing srum fixture dir")
+    out = parse_srum_from_dir(SRUM_FIXTURE_DIR)
+    assert "network_usage" in out["section_counts"]
+    assert "app_resource_use" in out["section_counts"]
+    assert out["unknown_files"] == []
+    assert out["total_count"] == sum(out["section_counts"].values())
+
+
+def test_parse_srum_network_usage_normalises_columns() -> None:
+    out = parse_srum_from_dir(SRUM_FIXTURE_DIR)
+    rows = out["sections"]["network_usage"]["rows"]
+    assert len(rows) >= 3
+    # CSV column "BytesSent" should be lower-cased to "bytessent"
+    r = rows[0]
+    assert "bytessent" in r
+    assert "bytesreceived" in r
+    # ExeInfo retained
+    assert "exeinfo" in r
+
+
+def test_parse_srum_round_trip() -> None:
+    """parse_srum(json_text) re-hydrates parse_srum_from_dir output."""
+    import json
+    parsed = parse_srum_from_dir(SRUM_FIXTURE_DIR)
+    text = json.dumps(parsed)
+    rehydrated = parse_srum(text)
+    assert rehydrated["section_counts"] == parsed["section_counts"]
+
+
+def test_parse_srum_empty_text() -> None:
+    out = parse_srum("")
+    assert out["total_count"] == 0
+    assert out["section_counts"] == {}
+
+
+def test_summarise_srum_includes_network_usage_when_present() -> None:
+    parsed = parse_srum_from_dir(SRUM_FIXTURE_DIR)
+    s = summarise_srum(parsed)
+    assert "SRUM rows" in s
+    assert "network-usage" in s.lower() or "network_usage" in s.lower() or "network" in s.lower()

@@ -25,7 +25,9 @@ from typing import Any
 from mcp_server.audit import AuditLogger
 from mcp_server.parsers.vol3 import (
     parse_cmdline,
+    parse_dlllist,
     parse_filescan,
+    parse_handles,
     parse_image_info,
     parse_malfind,
     parse_netscan,
@@ -34,7 +36,9 @@ from mcp_server.parsers.vol3 import (
     parse_svcscan,
     parse_userassist,
     summarise_cmdline,
+    summarise_dlllist,
     summarise_filescan,
+    summarise_handles,
     summarise_image_info,
     summarise_malfind,
     summarise_netscan,
@@ -46,7 +50,9 @@ from mcp_server.parsers.vol3 import (
 from mcp_server.tools._common import (
     DEFAULT_EVIDENCE_ROOTS,
     CmdlineArgs,
+    DllListArgs,
     FileScanArgs,
+    HandlesArgs,
     ImageInfoArgs,
     MalfindArgs,
     NetScanArgs,
@@ -168,11 +174,18 @@ _ROWS_KEY: dict[str, str] = {
     "vol3_malfind":        "findings",
     "vol3_svcscan":        "services",
     "vol3_userassist":     "entries",
+    "vol3_dlllist":        "rows",
+    "vol3_handles":        "rows",
     "tsk_partition_table": "partitions",
     "tsk_fls_list":        "files",
     "ezt_mft_parse":       "rows",
     "ezt_shimcache_parse": "entries",
     "ezt_evtx_parse":      "events",
+    "ezt_prefetch_parse":  "rows",
+    "ezt_jumplist_parse":  "rows",
+    "ezt_recyclebin_parse": "rows",
+    # ezt_amcache_parse / ezt_srum_parse have nested-section layout — query_rows
+    # not registered (per-section truncation already returns 50 rows each).
     # ewf_info / ewf_verify / tsk_fs_stat have no row list — n/a
     # tsk_icat_extract has no parsed-text output — n/a
 }
@@ -199,6 +212,8 @@ def _register_parsers() -> None:
         "vol3_malfind":    parse_malfind,
         "vol3_svcscan":    parse_svcscan,
         "vol3_userassist": parse_userassist,
+        "vol3_dlllist":    parse_dlllist,
+        "vol3_handles":    parse_handles,
     })
     # Disk-side parsers — registered lazily here to avoid a circular import
     # at module-load time (tools.disk imports from tools.memory).
@@ -219,10 +234,20 @@ def _register_parsers() -> None:
         parse_amcache, parse_evtx, parse_mft, parse_shimcache,
     )
     _PARSERS.update({
-        "ezt_mft_parse":       parse_mft,
-        "ezt_shimcache_parse": parse_shimcache,
-        "ezt_evtx_parse":      parse_evtx,
-        "ezt_amcache_parse":   parse_amcache,
+        "ezt_mft_parse":        parse_mft,
+        "ezt_shimcache_parse":  parse_shimcache,
+        "ezt_evtx_parse":       parse_evtx,
+        "ezt_amcache_parse":    parse_amcache,
+    })
+    # Phase 1 EZ Tools (Prefetch, JumpList, RecycleBin, SRUM).
+    from mcp_server.parsers.ez_tools import (
+        parse_prefetch, parse_jumplist, parse_recyclebin, parse_srum,
+    )
+    _PARSERS.update({
+        "ezt_prefetch_parse":   parse_prefetch,
+        "ezt_jumplist_parse":   parse_jumplist,
+        "ezt_recyclebin_parse": parse_recyclebin,
+        "ezt_srum_parse":       parse_srum,
     })
 
 
@@ -267,16 +292,29 @@ def _run_jsonl_plugin(
     audit: AuditLogger,
     agent: str,
     timeout_s: float,
+    extra_plugin_args: list[str] | None = None,
+    extra_audit_args: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run a Vol3 plugin with `-r jsonl`, parse its output, audit-log the call.
 
     Same pre/post pattern as `vol3_image_info` but uses jsonl renderer so the
     parser doesn't have to deal with tab-separated text. Used by every
-    row-oriented Vol3 wrapper (psscan / pstree / cmdline / netscan / filescan).
+    row-oriented Vol3 wrapper (psscan / pstree / cmdline / netscan / filescan /
+    dlllist / handles).
+
+    `extra_plugin_args` are appended after the plugin name (e.g. ["--pid", "1912"]).
+    `extra_audit_args` extends the audit row's `args` dict so per-PID calls are
+    distinguishable in the log.
     """
     exec_id = audit.new_exec_id()
     raw_dir = audit.raw_output_dir / "subprocess"
     argv = [_vol_executable(), "-q", "-r", "jsonl", "-f", str(image_path), plugin]
+    if extra_plugin_args:
+        argv.extend(extra_plugin_args)
+
+    audit_args: dict[str, Any] = {"image": str(image_path)}
+    if extra_audit_args:
+        audit_args.update(extra_audit_args)
 
     rr = run_subprocess(argv, output_dir=raw_dir, name=exec_id, timeout_s=timeout_s)
 
@@ -289,7 +327,7 @@ def _run_jsonl_plugin(
             exec_id=exec_id,
             agent=agent,
             tool=tool_name,
-            args={"image": str(image_path)},
+            args=audit_args,
             raw_output_path=raw_path,
             exit_code=rr.exit_code,
             wall_ms=rr.wall_ms,
@@ -323,7 +361,7 @@ def _run_jsonl_plugin(
         exec_id=exec_id,
         agent=agent,
         tool=tool_name,
-        args={"image": str(image_path)},
+        args=audit_args,
         raw_output_path=raw_path,
         exit_code=0,
         wall_ms=rr.wall_ms,
@@ -547,6 +585,70 @@ def vol3_userassist(
         audit=audit,
         agent=agent,
         timeout_s=timeout_s,
+    )
+
+
+def vol3_dlllist(
+    args: DllListArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 1800,
+) -> dict[str, Any]:
+    """`windows.dlllist` — DLLs loaded per process.
+
+    Optional pid filter narrows to a single process (much faster + smaller).
+    Catch unsigned DLLs in lsass / svchost (credential stealers, sideloaded
+    DLLs adjacent to LOLBins, in-memory injected modules with no on-disk path).
+    """
+    if isinstance(args, dict):
+        args = DllListArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    extra_plugin = ["--pid", str(args.pid)] if args.pid is not None else None
+    extra_audit = {"pid": args.pid} if args.pid is not None else None
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.dlllist",
+        tool_name="vol3_dlllist",
+        parser=parse_dlllist,
+        summariser=summarise_dlllist,
+        audit=audit,
+        agent=agent,
+        timeout_s=timeout_s,
+        extra_plugin_args=extra_plugin,
+        extra_audit_args=extra_audit,
+    )
+
+
+def vol3_handles(
+    args: HandlesArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`windows.handles --pid <PID>` — process open handles.
+
+    Per-PID required: enumerating all processes' handles is multi-hour on
+    big images. Mutexes are malware-family fingerprints; file/key/section
+    handles reveal what the process held open at capture time.
+    """
+    if isinstance(args, dict):
+        args = HandlesArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.handles",
+        tool_name="vol3_handles",
+        parser=parse_handles,
+        summariser=summarise_handles,
+        audit=audit,
+        agent=agent,
+        timeout_s=timeout_s,
+        extra_plugin_args=["--pid", str(args.pid)],
+        extra_audit_args={"pid": args.pid},
     )
 
 

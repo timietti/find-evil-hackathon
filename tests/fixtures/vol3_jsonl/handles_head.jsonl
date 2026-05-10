@@ -1,0 +1,5 @@
+{"PID": 1912, "Process": "stun.exe", "Offset": "0xfffffa8001234567", "HandleValue": "0x4", "Type": "Mutant", "GrantedAccess": "0x1f0001", "Name": "Global\\stun-singleton-mutex"}
+{"PID": 1912, "Process": "stun.exe", "Offset": "0xfffffa8001234568", "HandleValue": "0x8", "Type": "File", "GrantedAccess": "0x100020", "Name": "\\Device\\HarddiskVolume2\\Users\\frocba\\AppData\\Local\\Temp\\stun.exe"}
+{"PID": 1912, "Process": "stun.exe", "Offset": "0xfffffa800123456c", "HandleValue": "0xc", "Type": "Key", "GrantedAccess": "0x20019", "Name": "\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"}
+{"PID": 1912, "Process": "stun.exe", "Offset": "0xfffffa8001234570", "HandleValue": "0x10", "Type": "Section", "GrantedAccess": "0xf001f", "Name": ""}
+{"PID": 1912, "Process": "stun.exe", "Offset": "0xfffffa8001234574", "HandleValue": "0x14", "Type": "Mutant", "GrantedAccess": "0x1f0001", "Name": "Global\\STUN-C2-CONFIG"}

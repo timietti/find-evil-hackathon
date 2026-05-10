@@ -209,6 +209,24 @@ class UserAssistArgs(_ImageOnlyArgs):
     pass
 
 
+class DllListArgs(_ImageOnlyArgs):
+    """Optional pid filter — narrowing to one PID is much faster + smaller."""
+
+    pid: int | None = Field(
+        default=None, ge=0,
+        description="Optional PID to narrow to. Omit to enumerate all processes.",
+    )
+
+
+class HandlesArgs(_ImageOnlyArgs):
+    """Per-PID required. Scanning all procs is multi-hour on big images."""
+
+    pid: int = Field(
+        ge=0,
+        description="PID to enumerate handles for. Required — full-system scan is too slow.",
+    )
+
+
 # ---------------------------------------------------------------------------
 # Disk-side args.
 # ---------------------------------------------------------------------------

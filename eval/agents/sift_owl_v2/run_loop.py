@@ -76,6 +76,8 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__vol3_malfind",
     "mcp__sift-owl__vol3_svcscan",
     "mcp__sift-owl__vol3_userassist",
+    "mcp__sift-owl__vol3_dlllist",
+    "mcp__sift-owl__vol3_handles",
     # disk (TSK + EWF)
     "mcp__sift-owl__ewf_info",
     "mcp__sift-owl__ewf_verify",
@@ -88,6 +90,10 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__ezt_shimcache_parse",
     "mcp__sift-owl__ezt_evtx_parse",
     "mcp__sift-owl__ezt_amcache_parse",
+    "mcp__sift-owl__ezt_prefetch_parse",
+    "mcp__sift-owl__ezt_jumplist_parse",
+    "mcp__sift-owl__ezt_recyclebin_parse",
+    "mcp__sift-owl__ezt_srum_parse",
     # drill helper
     "mcp__sift-owl__query_rows",
 ])

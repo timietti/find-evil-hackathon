@@ -15,7 +15,9 @@ import pytest
 from mcp_server.parsers.vol3 import (
     _normalise_dt,
     parse_cmdline,
+    parse_dlllist,
     parse_filescan,
+    parse_handles,
     parse_jsonl_rows,
     parse_malfind,
     parse_netscan,
@@ -24,7 +26,9 @@ from mcp_server.parsers.vol3 import (
     parse_svcscan,
     parse_userassist,
     summarise_cmdline,
+    summarise_dlllist,
     summarise_filescan,
+    summarise_handles,
     summarise_malfind,
     summarise_netscan,
     summarise_psscan,
@@ -301,3 +305,72 @@ def test_summarise_userassist() -> None:
     })
     assert "42 program-execution" in s
     assert "1 user hives" in s
+
+
+# ---- dlllist ---------------------------------------------------------------
+
+
+def test_parse_dlllist_extracts_per_dll_records() -> None:
+    out = parse_dlllist(_read_fixture("dlllist_head.jsonl"))
+    assert out["count"] >= 5
+    # The injected DLL with empty Path should be flagged as unbacked
+    assert out["unbacked"] >= 1
+    # by_process aggregates correctly: lsass.exe has 3 entries
+    assert out["by_process"].get("lsass.exe") == 3
+
+
+def test_parse_dlllist_normalises_load_time_and_keeps_path() -> None:
+    out = parse_dlllist(_read_fixture("dlllist_head.jsonl"))
+    rows = out["rows"]
+    stun_row = next((r for r in rows if r["name"] == "stun.exe"), None)
+    assert stun_row is not None
+    assert stun_row["load_time"].endswith("Z")
+    assert "frocba" in (stun_row["path"] or "").lower()
+
+
+def test_summarise_dlllist_includes_unbacked_count() -> None:
+    out = parse_dlllist(_read_fixture("dlllist_head.jsonl"))
+    s = summarise_dlllist(out)
+    assert "DLLs" in s
+    assert "unbacked" in s
+
+
+def test_parse_dlllist_handles_empty() -> None:
+    out = parse_dlllist("")
+    assert out["count"] == 0
+    assert out["rows"] == []
+
+
+# ---- handles ---------------------------------------------------------------
+
+
+def test_parse_handles_extracts_per_handle_records() -> None:
+    out = parse_handles(_read_fixture("handles_head.jsonl"))
+    assert out["count"] >= 5
+    by_type = out["by_type"]
+    # We have 2 Mutant + 1 File + 1 Key + 1 Section in the fixture
+    assert by_type.get("Mutant") == 2
+    assert by_type.get("File") == 1
+    assert by_type.get("Key") == 1
+
+
+def test_parse_handles_curates_high_signal_lists() -> None:
+    out = parse_handles(_read_fixture("handles_head.jsonl"))
+    assert any("stun-singleton-mutex" in m for m in out["mutexes_top"])
+    assert any("STUN-C2-CONFIG" in m for m in out["mutexes_top"])
+    assert any("stun.exe" in f.lower() for f in out["file_handles_top"])
+    assert any("Microsoft" in k for k in out["key_handles_top"])
+
+
+def test_summarise_handles_lists_top_types() -> None:
+    out = parse_handles(_read_fixture("handles_head.jsonl"))
+    s = summarise_handles(out)
+    assert "handles" in s
+    # top types include Mutant
+    assert "Mutant" in s
+
+
+def test_parse_handles_handles_empty() -> None:
+    out = parse_handles("")
+    assert out["count"] == 0
+    assert out["rows"] == []

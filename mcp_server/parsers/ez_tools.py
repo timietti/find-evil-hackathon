@@ -452,6 +452,293 @@ def summarise_amcache(parsed: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
+# PECmd — Windows Prefetch (.pf) parser.
+#
+# Output format: line-delimited JSON per .pf file with fields like
+# SourceFilename, SourceCreated, SourceModified, SourceAccessed, ExecutableName,
+# Hash, Size, Version, RunCount, LastRun, PreviousRun0..6, Volume0Name,
+# Volume0Serial, Volume0Created, Directories, FilesLoaded.
+# ---------------------------------------------------------------------------
+
+
+def parse_prefetch(stdout: str) -> dict[str, Any]:
+    """Parse PECmd JSON output (one .pf record per line).
+
+    Prefetch is the Win10/Win11 program-execution gold standard: per-binary
+    last-run + 7 previous runs, plus the list of files loaded (libraries,
+    config files) by the binary.
+    """
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_executable: dict[str, int] = {}
+    total_runs = 0
+    for r in rows:
+        exe = (r.get("ExecutableName") or "").lower()
+        run_count = r.get("RunCount") or 0
+        if exe:
+            by_executable[exe] = by_executable.get(exe, 0) + 1
+        try:
+            total_runs += int(run_count)
+        except (TypeError, ValueError):
+            pass
+        out_rows.append({
+            "source_filename":  r.get("SourceFilename"),
+            "executable_name":  r.get("ExecutableName"),
+            "hash":             r.get("Hash"),
+            "size":             r.get("Size"),
+            "version":          r.get("Version"),
+            "run_count":        run_count,
+            "last_run":         _normalise_dt(r.get("LastRun")),
+            "previous_runs":    [
+                _normalise_dt(r.get(f"PreviousRun{i}")) for i in range(7)
+                if r.get(f"PreviousRun{i}")
+            ],
+            "source_created":   _normalise_dt(r.get("SourceCreated")),
+            "source_modified":  _normalise_dt(r.get("SourceModified")),
+            "source_accessed":  _normalise_dt(r.get("SourceAccessed")),
+            "volume_name":      r.get("Volume0Name"),
+            "volume_serial":    r.get("Volume0Serial"),
+            "volume_created":   _normalise_dt(r.get("Volume0Created")),
+            "directories":      r.get("Directories"),
+            "files_loaded":     r.get("FilesLoaded"),
+        })
+    return {
+        "count":         len(out_rows),
+        "total_runs":    total_runs,
+        "by_executable": dict(sorted(by_executable.items(), key=lambda kv: -kv[1])[:30]),
+        "rows":          out_rows,
+    }
+
+
+def summarise_prefetch(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    if n == 0:
+        return "no Prefetch records"
+    runs = parsed.get("total_runs", 0)
+    return f"{n} Prefetch records ({runs} cumulative runs)"
+
+
+# ---------------------------------------------------------------------------
+# JLECmd — Jump Lists parser (.automaticDestinations-ms / .customDestinations-ms).
+#
+# Each Jump List file is per-application (the filename is a CRC-32 of the
+# appid). JLECmd emits one JSON object per DestList entry: AppId, EntryNumber,
+# CreationTime, LastModified, Hostname, Path, Arguments, IconLocation,
+# DriveType, VolumeSerialNumber, VolumeLabel, FileSize, MFTEntryNumber, etc.
+# ---------------------------------------------------------------------------
+
+
+def parse_jumplist(stdout: str) -> dict[str, Any]:
+    """Parse JLECmd JSON output (one DestList entry per line).
+
+    Jump Lists answer "what did the user open in app X". Recent files,
+    pinned files, target paths (incl. external-drive paths even after the
+    drive is detached). Critical for hands-on-keyboard investigation.
+    """
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_appid: dict[str, int] = {}
+    by_drive: dict[str, int] = {}
+    for r in rows:
+        appid = (r.get("AppId") or r.get("AppIDDescription") or "").lower()
+        drive = r.get("DriveType") or ""
+        if appid:
+            by_appid[appid] = by_appid.get(appid, 0) + 1
+        if drive:
+            by_drive[drive] = by_drive.get(drive, 0) + 1
+        out_rows.append({
+            "appid":           appid,
+            "appid_description": r.get("AppIDDescription"),
+            "entry_number":    r.get("EntryNumber"),
+            "creation_time":   _normalise_dt(r.get("CreationTime")),
+            "last_modified":   _normalise_dt(r.get("LastModified")),
+            "hostname":        r.get("Hostname"),
+            "path":            r.get("Path"),
+            "arguments":       r.get("Arguments"),
+            "drive_type":      drive,
+            "volume_serial":   r.get("VolumeSerialNumber"),
+            "volume_label":    r.get("VolumeLabel"),
+            "mft_entry":       r.get("MFTEntryNumber"),
+            "mft_sequence":    r.get("MFTSequenceNumber"),
+            "file_size":       r.get("FileSize"),
+            "tracker_mac":     r.get("MachineID") or r.get("TrackerCreatedOn"),
+        })
+    return {
+        "count":      len(out_rows),
+        "by_appid":   dict(sorted(by_appid.items(), key=lambda kv: -kv[1])[:30]),
+        "by_drive":   by_drive,
+        "rows":       out_rows,
+    }
+
+
+def summarise_jumplist(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    if n == 0:
+        return "no Jump List entries"
+    appid_count = len(parsed.get("by_appid") or {})
+    return f"{n} Jump List entries across {appid_count} apps"
+
+
+# ---------------------------------------------------------------------------
+# RBCmd — Recycle Bin parser ($I records on Win10, INFO2 on XP).
+#
+# Output (JSON): SourceName, FileSize, DeletedOn, FileName.
+# ---------------------------------------------------------------------------
+
+
+def parse_recyclebin(stdout: str) -> dict[str, Any]:
+    """Parse RBCmd JSON output (one record per deleted file)."""
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_extension: dict[str, int] = {}
+    for r in rows:
+        fn = r.get("FileName") or ""
+        ext = ""
+        if "." in fn:
+            ext = fn.rsplit(".", 1)[-1].lower()
+            if ext.isalnum() and len(ext) <= 8:
+                by_extension[ext] = by_extension.get(ext, 0) + 1
+        out_rows.append({
+            "source_name": r.get("SourceName"),
+            "file_size":   r.get("FileSize"),
+            "deleted_on":  _normalise_dt(r.get("DeletedOn")),
+            "file_name":   fn,
+        })
+    return {
+        "count":        len(out_rows),
+        "by_extension": dict(sorted(by_extension.items(), key=lambda kv: -kv[1])[:20]),
+        "rows":         out_rows,
+    }
+
+
+def summarise_recyclebin(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    if n == 0:
+        return "no Recycle Bin records"
+    return f"{n} Recycle Bin records"
+
+
+# ---------------------------------------------------------------------------
+# SrumECmd — System Resource Usage Monitor (Win8+).
+#
+# SRUDB.dat tracks, per process+user+app, accumulated network bytes
+# in/out, wall-clock time used, push notifications, etc. Killer for
+# exfil detection: "what process moved the most outbound bytes this hour".
+# Output: multi-CSV directory (one per ESE table). Sections we care about:
+#   - SrumECmd_AppResourceUseInfo.csv      (CPU + bytes per app per session)
+#   - SrumECmd_NetworkUsages.csv           (bytes in/out per app + interface)
+#   - SrumECmd_NetworkConnections.csv      (per-connection metadata)
+#   - SrumECmd_PushNotificationData.csv    (toast / WNS pushes)
+#   - SrumECmd_EnergyUsage.csv             (battery state)
+# ---------------------------------------------------------------------------
+
+
+_SRUM_SECTION_FROM_SUFFIX: dict[str, str] = {
+    "AppResourceUseInfo":   "app_resource_use",
+    "NetworkUsages":        "network_usage",
+    "NetworkConnections":   "network_connections",
+    "PushNotificationData": "push_notifications",
+    "EnergyUsage":          "energy_usage",
+    "EnergyUsageLT":        "energy_usage_lt",
+    "vfuprov":              "vfuprov",
+    "Unknown312":           "unknown_312",
+    "Unknown313":           "unknown_313",
+    "Unknown314":           "unknown_314",
+}
+
+
+def _srum_section_for(csv_filename: str) -> str | None:
+    """Map a `<ts>_SrumECmd_<Suffix>.csv` filename to a section key."""
+    m = re.search(r"_SrumECmd_([A-Za-z0-9]+)\.csv$", csv_filename)
+    if not m:
+        return None
+    return _SRUM_SECTION_FROM_SUFFIX.get(m.group(1))
+
+
+def parse_srum_from_dir(out_dir: Path) -> dict[str, Any]:
+    """Walk a SrumECmd output directory; build per-section row lists.
+
+    Mirrors `parse_amcache_from_dir`'s shape so the wrapper can reuse the
+    multi-file runner pattern.
+    """
+    sections: dict[str, dict[str, Any]] = {}
+    unknown_files: list[str] = []
+    for csv_path in sorted(out_dir.glob("*_SrumECmd_*.csv")):
+        section = _srum_section_for(csv_path.name)
+        if section is None:
+            unknown_files.append(csv_path.name)
+            continue
+        rows: list[dict[str, Any]] = []
+        try:
+            text = csv_path.read_text(errors="replace")
+        except OSError:
+            continue
+        if not text.strip():
+            sections[section] = {"count": 0, "rows": []}
+            continue
+        reader = csv.DictReader(io.StringIO(text))
+        for row in reader:
+            normalised: dict[str, Any] = {}
+            for k, v in row.items():
+                if k is None:
+                    continue
+                normalised[k.replace(" ", "_").lower()] = v
+            # Normalise common timestamp columns
+            for ts_field in ("timestamp", "event_timestamp", "connectstarttime", "endtime"):
+                if ts_field in normalised and normalised[ts_field]:
+                    normalised[ts_field] = _normalise_dt(normalised[ts_field])
+            rows.append(normalised)
+        sections[section] = {"count": len(rows), "rows": rows}
+
+    section_counts = {k: v["count"] for k, v in sections.items()}
+    return {
+        "total_count":    sum(section_counts.values()),
+        "section_counts": section_counts,
+        "sections":       sections,
+        "unknown_files":  unknown_files,
+    }
+
+
+def parse_srum(text: str) -> dict[str, Any]:
+    """Re-hydrate a previously-serialised parse_srum_from_dir result.
+
+    Same pattern as parse_amcache: wrapper writes JSON to raw_output,
+    parser is `json.loads` so query_rows works even for nested-section
+    layouts.
+    """
+    if not text.strip():
+        return {
+            "total_count": 0,
+            "section_counts": {},
+            "sections": {},
+            "unknown_files": [],
+        }
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return {
+            "total_count": 0,
+            "section_counts": {},
+            "sections": {},
+            "unknown_files": [],
+            "_parse_error": "raw_output is not valid JSON",
+        }
+
+
+def summarise_srum(parsed: dict[str, Any]) -> str:
+    sc = parsed.get("section_counts") or {}
+    if not sc:
+        return "no SRUM sections parsed"
+    total = parsed.get("total_count", 0)
+    n_sections = len(sc)
+    bits = [f"{total} SRUM rows across {n_sections} sections"]
+    netu = sc.get("network_usage", 0)
+    if netu:
+        bits.append(f"{netu} network-usage rows (per-process bytes)")
+    return "; ".join(bits)
+
+
+# ---------------------------------------------------------------------------
 # helpers
 # ---------------------------------------------------------------------------
 

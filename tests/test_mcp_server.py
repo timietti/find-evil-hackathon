@@ -47,6 +47,8 @@ EXPECTED_TOOLS = {
     "vol3_malfind",
     "vol3_svcscan",
     "vol3_userassist",
+    "vol3_dlllist",
+    "vol3_handles",
     # disk (TSK + EWF)
     "ewf_verify",
     "ewf_info",
@@ -59,6 +61,10 @@ EXPECTED_TOOLS = {
     "ezt_shimcache_parse",
     "ezt_evtx_parse",
     "ezt_amcache_parse",
+    "ezt_prefetch_parse",
+    "ezt_jumplist_parse",
+    "ezt_recyclebin_parse",
+    "ezt_srum_parse",
     # query helper
     "query_rows",
 }
@@ -71,12 +77,20 @@ TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {
     "ezt_shimcache_parse",
     "ezt_evtx_parse",
     "ezt_amcache_parse",
+    "ezt_prefetch_parse",
+    "ezt_jumplist_parse",
+    "ezt_recyclebin_parse",
+    "ezt_srum_parse",
 }
 TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_mft_parse",
     "ezt_shimcache_parse",
     "ezt_evtx_parse",
     "ezt_amcache_parse",
+    "ezt_prefetch_parse",
+    "ezt_jumplist_parse",
+    "ezt_recyclebin_parse",
+    "ezt_srum_parse",
 }
 
 
