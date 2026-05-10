@@ -137,9 +137,18 @@ class AuditLogger:
         per-case run sizes are bounded (~tens to low-hundreds of rows). If
         runs ever grow into the thousands we'll add an index, but profile
         before optimising.
+
+        Match policy:
+        1. Exact match (full UUIDv7).
+        2. Prefix match (truncated UUID — agents sometimes cite a
+           short form like `019e1372-401b` in MITRE-style tables).
+           Only resolves if the prefix is unambiguous (matches exactly
+           one full exec_id in the log).
         """
         if not self.exec_log_path.exists():
             return None
+
+        all_rows: list[dict[str, Any]] = []
         with self.exec_log_path.open() as fh:
             for line in fh:
                 line = line.strip()
@@ -149,8 +158,22 @@ class AuditLogger:
                     row = json.loads(line)
                 except json.JSONDecodeError:
                     continue
-                if row.get("exec_id") == exec_id:
-                    return row
+                all_rows.append(row)
+
+        # 1. Exact match
+        for row in all_rows:
+            if row.get("exec_id") == exec_id:
+                return row
+
+        # 2. Unambiguous prefix match — only fire if the input is at least
+        #    a full UUID's leading dash-group (8 hex + dash + 4 hex = 13 chars)
+        #    so we don't resolve random short tokens.
+        if len(exec_id) >= 13 and "-" in exec_id:
+            matches = [r for r in all_rows
+                       if (r.get("exec_id") or "").startswith(exec_id)]
+            if len(matches) == 1:
+                return matches[0]
+
         return None
 
     @contextmanager

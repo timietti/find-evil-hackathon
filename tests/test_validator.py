@@ -15,6 +15,7 @@ from agents.validator.extract import (
 )
 from agents.validator.validate import (
     Claim,
+    _extract_exec_ids_from_prose,
     parse_claims,
     validate_run,
     verify_claim_against_parsed,
@@ -842,3 +843,99 @@ def test_validator_runs_against_real_rocba_v1_run(tmp_path: Path) -> None:
     assert rv.confirmation_score > 0.0, (
         "no CONFIRMED claims verified at all — likely a validator bug"
     )
+
+
+# ---- v5: prose-style exec_id extraction ------------------------------------
+
+
+def test_extract_exec_ids_from_prose_single() -> None:
+    text = "STUN.exe (PID 1912) ran at 03:42 (vol3_psscan exec_id=019e1372-f51a-7ba3-9b97-aad1927eab3f)"
+    ids = _extract_exec_ids_from_prose(text)
+    assert ids == ["019e1372-f51a-7ba3-9b97-aad1927eab3f"]
+
+
+def test_extract_exec_ids_from_prose_multi_cite_comma() -> None:
+    text = (
+        "C2 relay confirmed (vol3_netscan exec_ids 019e1372-d58b-7042-bfd9-849d9fd58cba, "
+        "019e137e-1df0-74b3-8e18-c2657c847d24)"
+    )
+    ids = _extract_exec_ids_from_prose(text)
+    assert "019e1372-d58b-7042-bfd9-849d9fd58cba" in ids
+    assert "019e137e-1df0-74b3-8e18-c2657c847d24" in ids
+
+
+def test_extract_exec_ids_from_prose_two_separate_markers() -> None:
+    text = (
+        "p.exe at c:\\windows\\temp\\p.exe (vol3_psscan exec_id=019e1372-f51a-7ba3-9b97-aad1927eab3f). "
+        "Also seen on file01 (vol3_netscan exec_id=019e137e-1df0-74b3-8e18-c2657c847d24)."
+    )
+    ids = _extract_exec_ids_from_prose(text)
+    assert "019e1372-f51a-7ba3-9b97-aad1927eab3f" in ids
+    assert "019e137e-1df0-74b3-8e18-c2657c847d24" in ids
+
+
+def test_extract_exec_ids_from_prose_ignores_sha256_far_from_marker() -> None:
+    """SHA-256 hashes elsewhere in the prose must not be mistaken for exec_ids."""
+    text = (
+        "p.exe SHA256 7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c "
+        "is a known implant. Detected via vol3_psscan exec_id=019e1372-f51a-7ba3-9b97-aad1927eab3f."
+    )
+    ids = _extract_exec_ids_from_prose(text)
+    # The SHA-256 must not be returned. Only the actual exec_id.
+    assert "019e1372-f51a-7ba3-9b97-aad1927eab3f" in ids
+    assert "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c" not in ids
+
+
+def test_extract_exec_ids_from_prose_handles_no_marker() -> None:
+    text = "claim with no citation at all"
+    assert _extract_exec_ids_from_prose(text) == []
+
+
+def test_parse_claims_picks_up_prose_citation() -> None:
+    """[CONFIRMED] ... (tool exec_id=X) — the SHIELDBASE format."""
+    md = (
+        "Some context.\n\n"
+        "[CONFIRMED] STUN.exe (PID 1912) running on rd01 with 3 ESTABLISHED "
+        "connections to external C2 (vol3_psscan exec_id=019e1372-f51a-7ba3-9b97-aad1927eab3f).\n\n"
+        "More context."
+    )
+    claims = parse_claims(md)
+    assert len(claims) == 1
+    assert claims[0].tag == "CONFIRMED"
+    assert claims[0].exec_ids == ["019e1372-f51a-7ba3-9b97-aad1927eab3f"]
+    assert claims[0].exec_id == "019e1372-f51a-7ba3-9b97-aad1927eab3f"
+
+
+def test_parse_claims_inside_brackets_still_works() -> None:
+    """Existing format [CONFIRMED — exec_id X] continues to work — no regression."""
+    md = "[CONFIRMED — exec_id 019e0dd9-acd5-7651-9a30-ca3ed66e47c7]\nclaim text"
+    claims = parse_claims(md)
+    assert len(claims) == 1
+    assert claims[0].exec_id == "019e0dd9-acd5-7651-9a30-ca3ed66e47c7"
+
+
+def test_parse_claims_prefers_inside_brackets_over_prose() -> None:
+    """If both formats appear, the inside-bracket form wins (more explicit)."""
+    md = (
+        "[CONFIRMED — exec_id 019eaaaa-1111] something happened "
+        "(vol3_psscan exec_id=019ebbbb-2222)"
+    )
+    claims = parse_claims(md)
+    assert len(claims) == 1
+    # exec_ids list should reflect what the brackets had
+    assert "019eaaaa-1111" in claims[0].exec_ids
+    # Prose-fallback only kicks in when brackets had no IDs
+    assert "019ebbbb-2222" not in claims[0].exec_ids
+
+
+def test_parse_claims_multi_cite_in_prose() -> None:
+    """[CONFIRMED] ... (tool exec_ids X, Y, Z) — multi-cite in prose."""
+    md = (
+        "[CONFIRMED] Cross-host correlation: file01 ↔ rd01 "
+        "(vol3_netscan exec_ids 019e1372-d58b-7042-bfd9-849d9fd58cba, "
+        "019e137e-1df0-74b3-8e18-c2657c847d24)."
+    )
+    claims = parse_claims(md)
+    assert len(claims) == 1
+    assert "019e1372-d58b-7042-bfd9-849d9fd58cba" in claims[0].exec_ids
+    assert "019e137e-1df0-74b3-8e18-c2657c847d24" in claims[0].exec_ids

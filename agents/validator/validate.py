@@ -69,6 +69,60 @@ _RE_TAG = re.compile(
 # Restricted to >=8 hex chars to avoid catching 4-digit room numbers etc.
 _RE_EXEC_ID = re.compile(r"\b([0-9a-fA-F]{8,}(?:-[0-9a-fA-F]+)*)\b")
 
+# Validator v5: also detect prose-style citations.
+#
+# Three observed agent formats:
+#   1. `[CONFIRMED — exec_id X]`        (inside brackets — historic)
+#   2. `[CONFIRMED] ... (vol3_psscan exec_id=X)`  (prose, with marker)
+#   3. `vol3_psscan 019e1372-401b`      (prose, marker = tool name only,
+#                                        often in MITRE-style tables)
+#
+# Strategy: scan around any "exec_id" marker OR any registered MCP tool
+# name for UUID-shaped tokens. UUID-shape is strict (`8-4-...` with dashes)
+# so SHA-256 hashes (64 hex no dashes) and file offsets do not false-match.
+
+_RE_TOOL_OR_MARKER = re.compile(
+    r"\b("
+    r"exec[_ ]?ids?"
+    r"|vol3_\w+"
+    r"|ezt_\w+"
+    r"|tsk_\w+"
+    r"|ewf_\w+"
+    r"|query_rows"
+    r")\b",
+    re.IGNORECASE,
+)
+
+# Strict UUID-shape: at least 8-hex + dash + 4+ hex. This deliberately
+# rejects bare 8+hex tokens (which would catch SHA-256 fragments) and
+# requires the dash-separated structure UUIDv7 emits.
+_RE_UUID_LIKE = re.compile(
+    r"\b([0-9a-fA-F]{8}-[0-9a-fA-F]{4,}(?:-[0-9a-fA-F]+)*)\b"
+)
+
+
+def _extract_exec_ids_from_prose(text: str) -> list[str]:
+    """Find exec_ids that follow a marker (`exec_id`, `exec_ids`, or any
+    SIFT-OWL MCP tool name) in prose.
+
+    Used as a fallback when the tag body itself has no exec_ids. Scans only
+    tokens NEAR a marker so that SHA-256 hashes elsewhere in the prose
+    don't get misclassified, and uses a UUID-shape regex (requires at
+    least one `-`) so 64-hex SHA tokens are rejected.
+    """
+    out: list[str] = []
+    seen: set[str] = set()
+    for m in _RE_TOOL_OR_MARKER.finditer(text):
+        # Look ahead up to ~200 chars; stop at a sentence/clause boundary
+        # so we don't pull in IDs from the next claim.
+        tail = text[m.end() : m.end() + 200]
+        chunk = re.split(r"\.\s|\)\s|\;\s|\n\s*\n", tail, maxsplit=1)[0]
+        for eid in _RE_UUID_LIKE.findall(chunk):
+            if eid not in seen:
+                seen.add(eid)
+                out.append(eid)
+    return out
+
 
 @dataclass
 class Claim:
@@ -126,12 +180,18 @@ def parse_claims(report_text: str) -> list[Claim]:
             tag = m.group(1).upper()
             body = m.group(2) or ""
             exec_ids = _RE_EXEC_ID.findall(body)
-            primary = exec_ids[0] if exec_ids else None
 
             if is_multi_tag:
                 claim_text = para[prev_end : m.end()].strip()
             else:
                 claim_text = para
+            # Validator v5: if no exec_ids in the tag body, scan the claim
+            # prose for marker-anchored citations like "(tool exec_id=X)".
+            if not exec_ids:
+                exec_ids = _extract_exec_ids_from_prose(claim_text)
+
+            primary = exec_ids[0] if exec_ids else None
+
             offset_lines = para[: m.start()].count("\n")
             claims.append(Claim(
                 tag=tag,
