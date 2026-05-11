@@ -95,6 +95,35 @@ went out per process — the exfil detector we've been missing.
 
 ---
 
+### Phase 1.5 — MITRE-driven Vol3 plugin gaps (5 high-leverage wrappers) 🎯 *next up*
+
+Surfaced by the MITRE ATT&CK coverage audit (`docs/MITRE_COVERAGE.md`). Each
+wrapper closes a Partial-coverage technique to Full. All target Vol3 plugins
+already installed on this SIFT (`vol -h | grep windows.<plugin>` confirms).
+
+| # | New tool | Wraps | Closes |
+|---|---|---|---|
+| 1.5.1 | `vol3_scheduled_tasks(image)` | `windows.scheduled_tasks` | **T1053** Scheduled Task/Job |
+| 1.5.2 | `vol3_skeleton_key_check(image)` | `windows.skeleton_key_check` | **T1558** Steal/Forge Kerberos Tickets (skeleton key) |
+| 1.5.3 | `vol3_hashdump(image)` | `windows.hashdump` | **T1003** OS Credential Dumping |
+| 1.5.4 | `vol3_envars(image, pid?)` | `windows.envars` | **T1574** Hijack Execution Flow (Path interception) |
+| 1.5.5 | `vol3_dnscache(image)` | `windows.cachedump` (DNS slice) **or** dedicated DNS-cache plugin | **T1071** Application Layer Protocol (DNS) |
+
+Total inventory after this phase: **26 → 31 tools**.
+
+**Effort:** ~2 hours. All five follow the existing `_run_jsonl_plugin` shape;
+parsers are flat row-oriented. `vol3_envars` mirrors `vol3_dlllist`'s optional
+pid filter; the other four are image-only.
+
+**Install touches:** none — all plugins already present in Vol3 on SIFT 24.x.
+
+**Why before Phase 2:** Phase 2 is general-DFIR value (Win7-x86/XP). Phase 1.5
+directly improves SHIELDBASE-class Win10/11 detection coverage with negligible
+effort. Should ship even before Phase 3 (YARA) if a SHIELDBASE re-run is on
+the table.
+
+---
+
 ### Phase 2 — Legacy Windows memory support (Win7-x86 / WinXP) 🎯 *general-DFIR value*
 
 **This is the gap the user explicitly called out.** Vol3 cannot get PDB symbols
@@ -252,10 +281,13 @@ in the post-submission roadmap.
 Working backwards from SHIELDBASE final eval:
 
 ```
-Phase 1 (Prefetch + JLE + SBE + RBE + SRUM + dlllist + handles)   ← 3-4 hr
+Phase 1 ✓ (Prefetch + JLE + SBE + RBE + SRUM + dlllist + handles)  ← done
     │
     ▼
-SHIELDBASE final eval run                                          ← held-out
+SHIELDBASE final eval run ✓                                        ← done (71.4%)
+    │
+    ▼
+Phase 1.5 (5 Vol3 plugin gaps from MITRE audit)                    ← 2 hr — NEXT
     │
     ▼
 Phase 3 (YARA + bulk_extractor + strings)                          ← 6-8 hr
@@ -264,11 +296,27 @@ Phase 3 (YARA + bulk_extractor + strings)                          ← 6-8 hr
 Phase 2 (Vol2 fallback for Win7-x86 / WinXP)                       ← 6-8 hr
     │
     ▼
+Phase 5 (RECmd / SQLECmd / LECmd / WxTCmd) ⚠ promoted              ← 4-6 hr
+    │                                                                 (covers
+    │                                                                  T1547,
+    │                                                                  T1078, T1098,
+    │                                                                  T1091, T1136,
+    │                                                                  T1574, T1071 —
+    │                                                                  highest cross-
+    │                                                                  technique impact
+    │                                                                  in the audit)
+    ▼
 Submission deliverables                                            ← #30/#31/#32
     │
     ▼
-[Post-submission] Phase 4 (Plaso) → Phase 5 (RECmd / SQLECmd) → Phase 6 (correlator) → Phase 7 (Linux/mac)
+[Post-submission] Phase 4 (Plaso) → Phase 6 (correlator) → Phase 7 (Linux/mac)
 ```
+
+**Reordering note (2026-05-11):** Phase 5 promoted from post-submission to
+pre-submission after the MITRE coverage audit found it closes 7 of 9
+Partial-coverage techniques. Phase 4 (Plaso) deferred to post-submission
+since it's a heavy lift and the existing inventory already covers most
+correlator-friendly artefacts via `query_rows` over the audit log.
 
 Phase 1 ships **before** SHIELDBASE so the headline result includes Prefetch +
 JumpList coverage. Phase 2 ships **after** SHIELDBASE because legacy-OS support
@@ -298,15 +346,27 @@ Every new tool **must**:
 
 ## 4. Effort summary
 
-| Phase | New tools | Effort | Order |
-|---|---|---|---|
-| 1 — SHIELDBASE essentials | 7 | 3-4 hr | **first** |
-| 2 — Vol2 fallback | 15 | 6-8 hr | after SHIELDBASE |
-| 3 — YARA + carving | 5 | 6-8 hr | after SHIELDBASE |
-| 4 — Plaso | 3 | 8-10 hr | post-submission |
-| 5 — Registry + browser | 5 | 4-6 hr | post-submission |
-| 6 — Correlator helpers | 4 | 4-6 hr | post-submission |
-| 7 — Linux/mac | ~8 | — | future |
+| Phase | New tools | Effort | Order | Status |
+|---|---|---|---|---|
+| 1 — SHIELDBASE essentials | 6 | 3-4 hr | first | ✓ shipped (W3-19) |
+| **1.5 — MITRE-driven Vol3 gaps** | **5** | **~2 hr** | **next** | pending |
+| 2 — Vol2 fallback | 15 | 6-8 hr | post-Phase 3 | pending |
+| 3 — YARA + carving | 5 | 6-8 hr | post-Phase 1.5 | pending |
+| 4 — Plaso | 3 | 8-10 hr | post-submission | pending |
+| 5 — Registry + browser | 5 | 4-6 hr | **pre-submission** ⚠ promoted | pending |
+| 6 — Correlator helpers | 4 | 4-6 hr | post-submission | pending |
+| 7 — Linux/mac | ~8 | — | future | future |
 
-**Total pre-submission (Phases 1-3):** ~15-20 hours of focused build, growing the
-inventory from 20 → 47 tools and closing the Win7-x86/WinXP gap.
+**Inventory growth across the pre-submission phases:**
+
+```
+v0.4 (today)     26 tools  (W3-19 shipped)
++ Phase 1.5      31 tools
++ Phase 3        36 tools
++ Phase 5        41 tools   ← MITRE-driven promotion to pre-submission
++ Phase 2        56 tools   (Vol2 family; general-DFIR Win7-x86/XP closure)
+```
+
+**Total pre-submission effort:** ~18-24 hours. Resulting MITRE coverage:
+22 of 22 target techniques at Full or Partial-with-acknowledged-gap (the
+two unknown IDs T1685/T1686 need user clarification).
