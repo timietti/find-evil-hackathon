@@ -1,0 +1,47 @@
+{
+  "run_id": "20260511T201634Z-sonnet",
+  "case": "test2-stark-apt",
+  "model": "sonnet",
+  "max_budget_usd": 6.0,
+  "max_iterations": 3,
+  "started_utc": "2026-05-11T20:16:34Z",
+  "evidence_dir": "/cases/find-evil-test2",
+  "pre_run_hashes": {},
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v2/prompt-test2-stark-apt-v3.md",
+  "claude_version": "2.1.137 (Claude Code)",
+  "harness_git_rev": "fd148188e23dfbe1b1b9ef5788bfe79561cd8375",
+  "finished_utc": "2026-05-11T20:43:45Z",
+  "total_cost_usd": 3.2732588500000004,
+  "iterations": [
+    {
+      "iteration": 1,
+      "exit_code": 0,
+      "wall_seconds": 579.9570393562317,
+      "cost_usd": 1.9129315500000001,
+      "tool_use_count": 73,
+      "confirmed_count": 34,
+      "verified_count": 9,
+      "demoted_count": 17
+    },
+    {
+      "iteration": 2,
+      "exit_code": 0,
+      "wall_seconds": 579.3223066329956,
+      "cost_usd": 0.8746500500000001,
+      "tool_use_count": 32,
+      "confirmed_count": 35,
+      "verified_count": 25,
+      "demoted_count": 3
+    },
+    {
+      "iteration": 3,
+      "exit_code": 0,
+      "wall_seconds": 456.8885815143585,
+      "cost_usd": 0.48567725,
+      "tool_use_count": 0,
+      "confirmed_count": 40,
+      "verified_count": 27,
+      "demoted_count": 6
+    }
+  ]
+}
