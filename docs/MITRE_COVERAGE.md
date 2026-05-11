@@ -31,8 +31,8 @@
 | **T1140** | Deobfuscate/Decode Files or Information | 🟡 Partial | `vol3_cmdline` (encoded args), `vol3_filescan` (dropped tmp files), `ezt_evtx_parse` (4104) | strings extraction over dropped binaries | Phase 3 (`strings_extract`) |
 | **T1574** | Hijack Execution Flow (DLL sideload / IFEO / Path) | 🟡 Partial | `vol3_dlllist` (unbacked + sideloaded), `tsk_icat_extract` on SOFTWARE hive | IFEO registry plugin; Path env var | **Phase 1.5** (`vol3_envars`) + Phase 5 (RECmd IFEO) |
 | **T1218** | System Binary Proxy Execution (LOLBins) | ✅ Full | `vol3_cmdline`, `vol3_psscan/pstree`, `ezt_prefetch_parse`, `ezt_shimcache_parse`, `ezt_amcache_parse`, `ezt_evtx_parse` (4688) | None significant | — |
-| **T1686** | (not a standard ATT&CK ID) | ❓ Unknown | — | Please verify the ID — `T1686` is not in MITRE ATT&CK Enterprise. Closest candidates: T1056 (Input Capture) or T1656 (Impersonation). | (clarify) |
-| **T1685** | (not a standard ATT&CK ID) | ❓ Unknown | — | Please verify — `T1685` is not in MITRE ATT&CK Enterprise. Closest: T1556 (Modify Authentication Process) or T1657 (Financial Theft). | (clarify) |
+| **T1685** | Disable or Modify Tools | ✅ Full | `ezt_evtx_parse` (7036 / 7045 / 1102 + Defender Operational channel), `vol3_svcscan` (service state), `vol3_cmdline` (`taskkill` / `Stop-Service` / `sc stop` / `net stop` args), `vol3_dlllist` (sideloaded DLL inside AV process) | Registry killswitches (`DisableAntiSpyware`, `DisableRealtimeMonitoring`) — secondary | Phase 5 (RECmd `triage_basic.reb`) |
+| **T1686** | Disable or Modify System Firewall | ✅ Full | `ezt_evtx_parse` (Microsoft-Windows-Windows-Firewall-With-Advanced-Security/Firewall channel), `vol3_cmdline` (`netsh advfirewall` args), `vol3_psscan/pstree` (netsh parent), `vol3_svcscan` (`mpssvc` state) | Firewall registry policy (`HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\...`) — secondary | Phase 5 (RECmd) |
 | **T1110** | Brute Force | ✅ Full | `ezt_evtx_parse` (4625 / 4771 volume) | Threshold aggregation helper (account-level) | Phase 6 (correlator) |
 | **T1003** | OS Credential Dumping (LSASS / NTDS / SAM) | 🟡 Partial | `vol3_handles(pid=lsass)`, `vol3_dlllist(pid=lsass)`, `vol3_filescan` (lsass.dmp), `ezt_evtx_parse` (4663 NTDS) | No dedicated SAM dumper, no Mimikatz signatures | **Phase 1.5** (`vol3_hashdump`) + Phase 3 (Mimikatz YARA) |
 | **T1558** | Steal/Forge Kerberos Tickets (Kerberoasting, Golden/Silver) | 🟡 Partial | `ezt_evtx_parse` (4768 / 4769 with TicketEncryptionType), `vol3_handles` | RC4_HMAC anomaly aggregation; skeleton-key detection | **Phase 1.5** (`vol3_skeleton_key_check`) + Phase 6 (correlator) |
@@ -44,13 +44,14 @@
 
 | Status | Count | % |
 |---|---|---|
-| ✅ Full | 11 | 50% |
+| ✅ Full | 13 | 59% |
 | 🟡 Partial | 9 | 41% |
 | 🟠 Indirect | 0 | 0% |
 | ❌ Missing | 0 | 0% |
-| ❓ Unknown ID | 2 | 9% |
 
-**No technique in this list has zero detection capability.** Every partial-coverage technique is closed by a planned tool addition. The two unknown IDs (T1685, T1686) need user clarification before they can be mapped.
+**No technique in this list has zero detection capability.** Every partial-coverage technique is closed by a planned tool addition.
+
+> Note on IDs: T1685 (Disable or Modify Tools) and T1686 (Disable or Modify System Firewall) appear in some published technique lists. As of the writer's training cutoff these were canonically tracked as the **T1562.001** and **T1562.004** sub-techniques of T1562 Impair Defenses; MITRE may have promoted them to top-level IDs since. Detection semantics are identical — IDs preserved as the user supplied them.
 
 ## Highest-leverage additions (cross-technique impact)
 

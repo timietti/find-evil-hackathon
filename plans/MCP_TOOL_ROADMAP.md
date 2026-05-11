@@ -368,5 +368,6 @@ v0.4 (today)     26 tools  (W3-19 shipped)
 ```
 
 **Total pre-submission effort:** ~18-24 hours. Resulting MITRE coverage:
-22 of 22 target techniques at Full or Partial-with-acknowledged-gap (the
-two unknown IDs T1685/T1686 need user clarification).
+22 of 22 target techniques at Full or Partial-with-acknowledged-gap.
+Current breakdown (per `docs/MITRE_COVERAGE.md`): 13 Full, 9 Partial,
+0 Missing. Phase 5 closes 7 of the 9 Partials to Full.
