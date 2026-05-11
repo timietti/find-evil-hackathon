@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <URI>\Microsoft\Windows\spinlock-persist</URI>
+    <Author>SHIELDBASE\rsydow-a</Author>
+    <Description>Spinlock email harvester scheduled trigger</Description>
+    <Source>SIFT-OWL synthetic fixture</Source>
+    <Date>2018-08-30T13:50:00.0000000</Date>
+    <Version>1.0</Version>
+  </RegistrationInfo>
+  <Triggers>
+    <BootTrigger>
+      <Enabled>true</Enabled>
+      <Delay>PT2M</Delay>
+    </BootTrigger>
+    <LogonTrigger>
+      <Enabled>true</Enabled>
+      <UserId>SHIELDBASE\rsydow-a</UserId>
+    </LogonTrigger>
+  </Triggers>
+  <Principals>
+    <Principal id="Author">
+      <UserId>S-1-5-18</UserId>
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>HighestAvailable</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <Enabled>true</Enabled>
+    <Hidden>true</Hidden>
+    <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+    <AllowStartOnDemand>true</AllowStartOnDemand>
+    <WakeToRun>false</WakeToRun>
+    <Priority>7</Priority>
+  </Settings>
+  <Actions Context="Author">
+    <Exec>
+      <Command>C:\Windows\System32\spinlock.exe</Command>
+      <Arguments>-q -o C:\Windows\Temp\out.log</Arguments>
+      <WorkingDirectory>C:\Windows\System32</WorkingDirectory>
+    </Exec>
+  </Actions>
+</Task>

@@ -1,0 +1,5 @@
+{"Block": "0x1c8a0602900", "PID": 440, "Process": "smss.exe", "Value": "C:\\WINDOWS\\System32", "Variable": "Path"}
+{"Block": "0x1c8a0602900", "PID": 440, "Process": "smss.exe", "Value": "C:", "Variable": "SystemDrive"}
+{"Block": "0x2c1b1234567", "PID": 1912, "Process": "stun.exe", "Value": "C:\\Users\\frocba\\AppData\\Local\\Temp;C:\\WINDOWS\\System32", "Variable": "Path"}
+{"Block": "0x2c1b1234567", "PID": 1912, "Process": "stun.exe", "Value": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC", "Variable": "PATHEXT"}
+{"Block": "0x2c1b1234567", "PID": 1912, "Process": "stun.exe", "Value": "frocba", "Variable": "USERNAME"}

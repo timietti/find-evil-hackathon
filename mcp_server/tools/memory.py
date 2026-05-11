@@ -24,41 +24,56 @@ from typing import Any
 
 from mcp_server.audit import AuditLogger
 from mcp_server.parsers.vol3 import (
+    parse_cachedump,
     parse_cmdline,
     parse_dlllist,
+    parse_envars,
     parse_filescan,
     parse_handles,
+    parse_hashdump,
     parse_image_info,
     parse_malfind,
     parse_netscan,
     parse_psscan,
     parse_pstree,
+    parse_scheduled_tasks,
+    parse_skeleton_key,
     parse_svcscan,
     parse_userassist,
+    summarise_cachedump,
     summarise_cmdline,
     summarise_dlllist,
+    summarise_envars,
     summarise_filescan,
     summarise_handles,
+    summarise_hashdump,
     summarise_image_info,
     summarise_malfind,
     summarise_netscan,
     summarise_psscan,
     summarise_pstree,
+    summarise_scheduled_tasks,
+    summarise_skeleton_key,
     summarise_svcscan,
     summarise_userassist,
 )
 from mcp_server.tools._common import (
     DEFAULT_EVIDENCE_ROOTS,
+    CachedumpArgs,
     CmdlineArgs,
     DllListArgs,
+    EnvarsArgs,
     FileScanArgs,
     HandlesArgs,
+    HashdumpArgs,
     ImageInfoArgs,
     MalfindArgs,
     NetScanArgs,
     PathValidationError,
     PsScanArgs,
     PsTreeArgs,
+    ScheduledTasksArgs,
+    SkeletonKeyArgs,
     SvcScanArgs,
     ToolError,
     UserAssistArgs,
@@ -176,6 +191,11 @@ _ROWS_KEY: dict[str, str] = {
     "vol3_userassist":     "entries",
     "vol3_dlllist":        "rows",
     "vol3_handles":        "rows",
+    "vol3_scheduled_tasks":   "rows",
+    "vol3_hashdump":          "rows",
+    "vol3_cachedump":         "rows",
+    "vol3_skeleton_key_check": "rows",
+    "vol3_envars":            "rows",
     "tsk_partition_table": "partitions",
     "tsk_fls_list":        "files",
     "ezt_mft_parse":       "rows",
@@ -184,8 +204,10 @@ _ROWS_KEY: dict[str, str] = {
     "ezt_prefetch_parse":  "rows",
     "ezt_jumplist_parse":  "rows",
     "ezt_recyclebin_parse": "rows",
-    # ezt_amcache_parse / ezt_srum_parse have nested-section layout — query_rows
-    # not registered (per-section truncation already returns 50 rows each).
+    "ezt_task_xml_parse":  "rows",
+    # ezt_amcache_parse / ezt_srum_parse / ezt_persistence_keys_parse have
+    # nested-section layout — query_rows not registered (per-section
+    # truncation already returns 50 rows each).
     # ewf_info / ewf_verify / tsk_fs_stat have no row list — n/a
     # tsk_icat_extract has no parsed-text output — n/a
 }
@@ -203,17 +225,22 @@ def _register_parsers() -> None:
     if _PARSERS:
         return
     _PARSERS.update({
-        "vol3_image_info": parse_image_info,
-        "vol3_psscan":     parse_psscan,
-        "vol3_pstree":     parse_pstree,
-        "vol3_cmdline":    parse_cmdline,
-        "vol3_netscan":    parse_netscan,
-        "vol3_filescan":   parse_filescan,
-        "vol3_malfind":    parse_malfind,
-        "vol3_svcscan":    parse_svcscan,
-        "vol3_userassist": parse_userassist,
-        "vol3_dlllist":    parse_dlllist,
-        "vol3_handles":    parse_handles,
+        "vol3_image_info":         parse_image_info,
+        "vol3_psscan":             parse_psscan,
+        "vol3_pstree":             parse_pstree,
+        "vol3_cmdline":            parse_cmdline,
+        "vol3_netscan":            parse_netscan,
+        "vol3_filescan":           parse_filescan,
+        "vol3_malfind":            parse_malfind,
+        "vol3_svcscan":            parse_svcscan,
+        "vol3_userassist":         parse_userassist,
+        "vol3_dlllist":            parse_dlllist,
+        "vol3_handles":            parse_handles,
+        "vol3_scheduled_tasks":    parse_scheduled_tasks,
+        "vol3_hashdump":           parse_hashdump,
+        "vol3_cachedump":          parse_cachedump,
+        "vol3_skeleton_key_check": parse_skeleton_key,
+        "vol3_envars":             parse_envars,
     })
     # Disk-side parsers — registered lazily here to avoid a circular import
     # at module-load time (tools.disk imports from tools.memory).
@@ -248,6 +275,14 @@ def _register_parsers() -> None:
         "ezt_jumplist_parse":   parse_jumplist,
         "ezt_recyclebin_parse": parse_recyclebin,
         "ezt_srum_parse":       parse_srum,
+    })
+    # Phase 1.5 disk-side parsers (Task XML, persistence registry keys).
+    from mcp_server.parsers.ez_tools import (
+        parse_task_xml, parse_persistence_keys,
+    )
+    _PARSERS.update({
+        "ezt_task_xml_parse":          parse_task_xml,
+        "ezt_persistence_keys_parse":  parse_persistence_keys,
     })
 
 
@@ -616,6 +651,144 @@ def vol3_dlllist(
         audit=audit,
         agent=agent,
         timeout_s=timeout_s,
+        extra_plugin_args=extra_plugin,
+        extra_audit_args=extra_audit,
+    )
+
+
+def vol3_scheduled_tasks(
+    args: ScheduledTasksArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 1200,
+) -> dict[str, Any]:
+    """`windows.scheduled_tasks` — Task Scheduler entries from registry-in-memory.
+
+    Per-task: Task Name, Action + Arguments + Context + Type, Principal ID,
+    Trigger Description + Type, Working Directory, Creation/LastRun/
+    LastSuccessfulRun timestamps, Enabled. Critical for T1053 persistence.
+    """
+    if isinstance(args, dict):
+        args = ScheduledTasksArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.scheduled_tasks",
+        tool_name="vol3_scheduled_tasks",
+        parser=parse_scheduled_tasks,
+        summariser=summarise_scheduled_tasks,
+        audit=audit, agent=agent, timeout_s=timeout_s,
+    )
+
+
+def vol3_hashdump(
+    args: HashdumpArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`windows.hashdump` — local SAM hashes (T1003.002 OS Credential Dumping).
+
+    Per-account: User, RID, LM Hash, NT Hash. Empty NT hashes
+    (`31d6cfe0d16ae931b73c59d7e0c089c0`) flagged as blank-password accounts.
+    """
+    if isinstance(args, dict):
+        args = HashdumpArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.hashdump",
+        tool_name="vol3_hashdump",
+        parser=parse_hashdump,
+        summariser=summarise_hashdump,
+        audit=audit, agent=agent, timeout_s=timeout_s,
+    )
+
+
+def vol3_cachedump(
+    args: CachedumpArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`windows.cachedump` — LSA cached domain credentials (T1003.005, DCC2/MSCASH).
+
+    Per-cached-account: Username, Domain Name, Domain Hash, Hash. Domain
+    hashes here are MSCASH/DCC2 — strong target for offline cracking.
+    """
+    if isinstance(args, dict):
+        args = CachedumpArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.cachedump",
+        tool_name="vol3_cachedump",
+        parser=parse_cachedump,
+        summariser=summarise_cachedump,
+        audit=audit, agent=agent, timeout_s=timeout_s,
+    )
+
+
+def vol3_skeleton_key_check(
+    args: SkeletonKeyArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`windows.skeleton_key_check` — Mimikatz skeleton-key patch detection
+    (T1558 Steal/Forge Kerberos Tickets).
+
+    Inspects lsass.exe in-memory for the Mimikatz skeleton-key patch that
+    forces all Kerberos authentications to accept a master password.
+    Negative result is normal and expected; positive = critical finding.
+    """
+    if isinstance(args, dict):
+        args = SkeletonKeyArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.skeleton_key_check",
+        tool_name="vol3_skeleton_key_check",
+        parser=parse_skeleton_key,
+        summariser=summarise_skeleton_key,
+        audit=audit, agent=agent, timeout_s=timeout_s,
+    )
+
+
+def vol3_envars(
+    args: EnvarsArgs | dict,
+    *,
+    audit: AuditLogger,
+    agent: str = "memory_agent",
+    evidence_roots: tuple[Path, ...] = DEFAULT_EVIDENCE_ROOTS,
+    timeout_s: float = 1200,
+) -> dict[str, Any]:
+    """`windows.envars [--pid PID]` — per-process environment variables.
+
+    T1574 Hijack Execution Flow: attacker Path prepends, PSModulePath
+    injection, or LD_PRELOAD-style hijacks all surface here. Surfaces
+    `path_like_rows` (PATH / PATHEXT / PSModulePath) for triage.
+    """
+    if isinstance(args, dict):
+        args = EnvarsArgs(**args)
+    image_path = validate_evidence_path(args.image, allowed_roots=evidence_roots)
+    extra_plugin = ["--pid", str(args.pid)] if args.pid is not None else None
+    extra_audit = {"pid": args.pid} if args.pid is not None else None
+    return _run_jsonl_plugin(
+        image_path=image_path,
+        plugin="windows.envars",
+        tool_name="vol3_envars",
+        parser=parse_envars,
+        summariser=summarise_envars,
+        audit=audit, agent=agent, timeout_s=timeout_s,
         extra_plugin_args=extra_plugin,
         extra_audit_args=extra_audit,
     )

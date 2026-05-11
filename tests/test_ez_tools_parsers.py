@@ -12,19 +12,24 @@ from mcp_server.parsers.ez_tools import (
     parse_evtx,
     parse_jumplist,
     parse_mft,
+    parse_persistence_keys,
+    parse_persistence_keys_from_csv,
     parse_prefetch,
     parse_recyclebin,
     parse_shimcache,
     parse_srum,
     parse_srum_from_dir,
+    parse_task_xml,
     summarise_amcache,
     summarise_evtx,
     summarise_jumplist,
     summarise_mft,
+    summarise_persistence_keys,
     summarise_prefetch,
     summarise_recyclebin,
     summarise_shimcache,
     summarise_srum,
+    summarise_task_xml,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -389,3 +394,108 @@ def test_summarise_srum_includes_network_usage_when_present() -> None:
     s = summarise_srum(parsed)
     assert "SRUM rows" in s
     assert "network-usage" in s.lower() or "network_usage" in s.lower() or "network" in s.lower()
+
+
+# ---- Task XML parser (Phase 1.5, T1053 disk-side) --------------------------
+
+
+def test_parse_task_xml_extracts_principal_and_actions() -> None:
+    text = _fixture("task_xml_sample.xml")
+    out = parse_task_xml(text)
+    assert out["count"] == 1
+    rec = out["rows"][0]
+    assert rec["task_name"] == r"\Microsoft\Windows\spinlock-persist"
+    assert rec["author"] == r"SHIELDBASE\rsydow-a"
+    # Principal
+    p = rec["principal"]
+    assert p["user_id"] == "S-1-5-18"
+    assert p["logon_type"] == "InteractiveToken"
+    assert p["run_level"] == "HighestAvailable"
+
+
+def test_parse_task_xml_extracts_triggers() -> None:
+    out = parse_task_xml(_fixture("task_xml_sample.xml"))
+    triggers = out["rows"][0]["triggers"]
+    types = {t["type"] for t in triggers}
+    assert "BootTrigger" in types
+    assert "LogonTrigger" in types
+    # LogonTrigger should have user_id
+    logon = next(t for t in triggers if t["type"] == "LogonTrigger")
+    assert logon["user_id"] == r"SHIELDBASE\rsydow-a"
+
+
+def test_parse_task_xml_extracts_actions_with_command_args() -> None:
+    out = parse_task_xml(_fixture("task_xml_sample.xml"))
+    actions = out["rows"][0]["actions"]
+    assert len(actions) == 1
+    assert actions[0]["type"] == "Exec"
+    assert actions[0]["command"].endswith("spinlock.exe")
+    assert "-q" in (actions[0]["arguments"] or "")
+
+
+def test_parse_task_xml_handles_invalid_xml() -> None:
+    out = parse_task_xml("<<NOT XML>>")
+    assert out["count"] == 0
+    assert "_parse_error" in out
+
+
+def test_parse_task_xml_handles_empty() -> None:
+    out = parse_task_xml("")
+    assert out["count"] == 0
+
+
+def test_summarise_task_xml_includes_triggers_and_actions() -> None:
+    out = parse_task_xml(_fixture("task_xml_sample.xml"))
+    s = summarise_task_xml(out)
+    assert "task" in s
+    assert "trigger" in s
+    assert "action" in s
+
+
+# ---- Persistence keys (Phase 1.5, T1547 / T1574 disk-side) -----------------
+
+
+def test_parse_persistence_keys_from_csv_groups_by_category() -> None:
+    text = _fixture("persistence_keys_sample.csv")
+    out = parse_persistence_keys_from_csv(text)
+    sc = out["section_counts"]
+    assert "run_keys" in sc
+    assert "winlogon" in sc
+    assert "ifeo" in sc
+    assert "dll_hijack" in sc
+    assert "services" in sc
+    assert sc["run_keys"] == 3  # 3 HKLM Run rows in the fixture
+
+
+def test_parse_persistence_keys_preserves_value_data() -> None:
+    out = parse_persistence_keys_from_csv(_fixture("persistence_keys_sample.csv"))
+    run_keys = out["sections"]["run_keys"]["rows"]
+    # The suspicious "p.exe" Run entry should be present
+    sus = next((r for r in run_keys if r["value_name"] == "p.exe"), None)
+    assert sus is not None
+    assert "temp" in (sus["value_data"] or "").lower()
+
+
+def test_parse_persistence_keys_total_equals_section_sum() -> None:
+    out = parse_persistence_keys_from_csv(_fixture("persistence_keys_sample.csv"))
+    assert out["total_count"] == sum(out["section_counts"].values())
+
+
+def test_parse_persistence_keys_round_trip() -> None:
+    """parse_persistence_keys(json_text) re-hydrates the from_csv output."""
+    import json
+    parsed = parse_persistence_keys_from_csv(_fixture("persistence_keys_sample.csv"))
+    text = json.dumps(parsed)
+    rehydrated = parse_persistence_keys(text)
+    assert rehydrated["section_counts"] == parsed["section_counts"]
+
+
+def test_parse_persistence_keys_empty_text() -> None:
+    assert parse_persistence_keys("").get("total_count") == 0
+
+
+def test_summarise_persistence_keys_mentions_top_category() -> None:
+    out = parse_persistence_keys_from_csv(_fixture("persistence_keys_sample.csv"))
+    s = summarise_persistence_keys(out)
+    assert "persistence values" in s
+    assert "run_keys" in s

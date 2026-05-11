@@ -36,15 +36,20 @@ from mcp.server.fastmcp import FastMCP
 from mcp_server.audit import AuditLogger
 from mcp_server.tools.memory import (
     query_rows as _query_rows,
+    vol3_cachedump as _cachedump,
     vol3_cmdline as _cmdline,
     vol3_dlllist as _dlllist,
+    vol3_envars as _envars,
     vol3_filescan as _filescan,
     vol3_handles as _handles,
+    vol3_hashdump as _hashdump,
     vol3_image_info as _image_info,
     vol3_malfind as _malfind,
     vol3_netscan as _netscan,
     vol3_psscan as _psscan,
     vol3_pstree as _pstree,
+    vol3_scheduled_tasks as _scheduled_tasks,
+    vol3_skeleton_key_check as _skeleton_key,
     vol3_svcscan as _svcscan,
     vol3_userassist as _userassist,
 )
@@ -61,10 +66,12 @@ from mcp_server.tools.ez_tools import (
     ezt_evtx_parse as _ezt_evtx_parse,
     ezt_jumplist_parse as _ezt_jumplist_parse,
     ezt_mft_parse as _ezt_mft_parse,
+    ezt_persistence_keys_parse as _ezt_persistence_keys_parse,
     ezt_prefetch_parse as _ezt_prefetch_parse,
     ezt_recyclebin_parse as _ezt_recyclebin_parse,
     ezt_shimcache_parse as _ezt_shimcache_parse,
     ezt_srum_parse as _ezt_srum_parse,
+    ezt_task_xml_parse as _ezt_task_xml_parse,
 )
 
 
@@ -213,6 +220,70 @@ def vol3_handles(image: str, pid: int) -> dict[str, Any]:
     Mutex name conventions reveal malware families (e.g.
     `Global\\rundll32.exe` is a known APT marker)."""
     return _handles(
+        {"image": image, "pid": pid},
+        audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def vol3_scheduled_tasks(image: str) -> dict[str, Any]:
+    """`windows.scheduled_tasks` — Task Scheduler entries from in-memory registry.
+
+    T1053 — Scheduled Task/Job. Per-task: Task Name, Action + Arguments +
+    Context + Type, Principal ID, Trigger Description/Type, Working Directory,
+    Creation/LastRun/LastSuccessful timestamps, Enabled flag. Live in-memory
+    state; pair with `ezt_task_xml_parse` on disk for full T1053 closure."""
+    return _scheduled_tasks(
+        {"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def vol3_hashdump(image: str) -> dict[str, Any]:
+    """`windows.hashdump` — local SAM hashes (T1003.002 OS Credential Dumping).
+
+    Per-account: User, RID, LM Hash, NT Hash. Empty NT hashes flagged as
+    blank-password accounts (a security-policy red flag and a credential-
+    theft prerequisite the agent should call out)."""
+    return _hashdump(
+        {"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def vol3_cachedump(image: str) -> dict[str, Any]:
+    """`windows.cachedump` — LSA cached domain credentials (T1003.005 DCC2/MSCASH).
+
+    Per-cached-account: Username, Domain Name, Domain Hash, Hash.
+    MSCASH/DCC2 hashes here are strong offline-cracking targets — surface
+    these to flag credential exposure even from offline images."""
+    return _cachedump(
+        {"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def vol3_skeleton_key_check(image: str) -> dict[str, Any]:
+    """`windows.skeleton_key_check` — Mimikatz skeleton-key patch detection
+    (T1558 Steal/Forge Kerberos Tickets).
+
+    Inspects lsass.exe in-memory for the Mimikatz skeleton-key patch that
+    forces Kerberos to accept a single master password for all accounts.
+    Negative result is normal; positive = critical finding."""
+    return _skeleton_key(
+        {"image": image}, audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def vol3_envars(image: str, pid: int | None = None) -> dict[str, Any]:
+    """`windows.envars [--pid PID]` — per-process environment variables.
+
+    T1574 Hijack Execution Flow (Path interception). Returns full env-var
+    list with a curated `path_like_rows` slice (PATH / PATHEXT /
+    PSModulePath / INCLUDE / LIB) — attacker prepends or PSModulePath
+    injection surface here."""
+    return _envars(
         {"image": image, "pid": pid},
         audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
     )
@@ -390,6 +461,44 @@ def ezt_srum_parse(extract_exec_id: str) -> dict[str, Any]:
 
     XP/Win7 hosts will not have SRUDB.dat — call only on Win8+ images."""
     return _ezt_srum_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_task_xml_parse(extract_exec_id: str) -> dict[str, Any]:
+    """Parse a Windows Task Scheduler XML file from disk (T1053).
+
+    Pre-req: extract one task file from `\\Windows\\System32\\Tasks\\<folder>\\
+    <TaskName>` via `tsk_icat_extract`. The files are well-formed XML;
+    this parser surfaces task_name, author, principal (UserId + RunLevel +
+    LogonType), triggers (Calendar/Boot/Logon/Time/Event/Registration),
+    actions (Exec command + arguments, ComHandler ClassId), settings
+    (Enabled, Hidden, RunOnlyIfNetworkAvailable).
+
+    Cross-source: corroborates `vol3_scheduled_tasks` (live memory state)
+    and `ezt_evtx_parse` on Microsoft-Windows-TaskScheduler/Operational
+    (events 106 / 140 / 141 / 200)."""
+    return _ezt_task_xml_parse(extract_exec_id, audit=_audit())
+
+
+@mcp.tool()
+def ezt_persistence_keys_parse(extract_exec_id: str) -> dict[str, Any]:
+    """RECmd persistence-triage batch on an extracted registry hive.
+
+    Pre-req: extract a registry hive via `tsk_icat_extract`:
+      - `\\Windows\\System32\\config\\SOFTWARE` (HKLM Run / Winlogon / IFEO / AppInit)
+      - `\\Windows\\System32\\config\\SYSTEM` (Services)
+      - `\\Users\\<u>\\NTUSER.DAT` (HKCU Run / RunOnce)
+
+    Returns sections grouped by Category:
+      * run_keys — HKLM/HKCU Run, RunOnce, RunOnceEx, Policies-Explorer-Run (T1547.001)
+      * winlogon — Shell, Userinit, Notify (T1547.004)
+      * ifeo     — Image File Execution Options Debugger / GlobalFlag /
+                   SilentProcessExit (T1574.012)
+      * dll_hijack — AppInit_DLLs, AppCertDlls (T1574.001)
+      * services — ServiceDll + ImagePath (T1543.003)
+
+    Each section's rows are truncated to 50 on the wire."""
+    return _ezt_persistence_keys_parse(extract_exec_id, audit=_audit())
 
 
 @mcp.tool()

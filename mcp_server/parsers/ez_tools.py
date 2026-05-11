@@ -739,6 +739,240 @@ def summarise_srum(parsed: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Task XML parser (Windows Task Scheduler, T1053 disk-side).
+#
+# `\Windows\System32\Tasks\<folder>\<TaskName>` files are well-formed XML.
+# The Task Scheduler 1.0 / 2.0 schemas are stable; we extract the
+# high-signal fields and pass through unknown elements.
+#
+# Pure Python — no EZ Tool dependency.
+# ---------------------------------------------------------------------------
+
+
+import xml.etree.ElementTree as _ET
+
+
+_TS_NS = "{http://schemas.microsoft.com/windows/2004/02/mit/task}"
+
+
+def _ts_text(el: _ET.Element | None, tag: str) -> str | None:
+    """Look up <tag>...</tag> under `el`, namespace-tolerant."""
+    if el is None:
+        return None
+    for candidate in (_TS_NS + tag, tag):
+        node = el.find(candidate)
+        if node is not None and node.text is not None:
+            return node.text.strip() or None
+    return None
+
+
+def _ts_findall(el: _ET.Element | None, tag: str) -> list[_ET.Element]:
+    if el is None:
+        return []
+    for candidate in (_TS_NS + tag, tag):
+        found = el.findall(candidate)
+        if found:
+            return found
+    return []
+
+
+def parse_task_xml(stdout: str) -> dict[str, Any]:
+    """Parse a single Task Scheduler XML file.
+
+    Returns a dict shaped like other ez_tools parsers (with a `rows` list
+    so query_rows registration works), even though a Task XML is a single
+    record. The single-task case still benefits from the structured fields
+    (Triggers / Actions / Principal / Settings).
+    """
+    if not stdout.strip():
+        return {"count": 0, "rows": [], "_parse_error": "empty input"}
+    try:
+        root = _ET.fromstring(stdout)
+    except _ET.ParseError as e:
+        return {"count": 0, "rows": [], "_parse_error": f"XML parse failed: {e}"}
+
+    def _first_present(*tags: str) -> _ET.Element | None:
+        for t in tags:
+            el = root.find(t)
+            if el is not None:
+                return el
+        return None
+
+    reg_info     = _first_present(_TS_NS + "RegistrationInfo", "RegistrationInfo")
+    triggers_el  = _first_present(_TS_NS + "Triggers",         "Triggers")
+    actions_el   = _first_present(_TS_NS + "Actions",          "Actions")
+    principals_el = _first_present(_TS_NS + "Principals",      "Principals")
+    settings_el  = _first_present(_TS_NS + "Settings",         "Settings")
+
+    # Triggers: each child element is a trigger type
+    triggers: list[dict[str, Any]] = []
+    for trig in (list(triggers_el) if triggers_el is not None else []):
+        trig_type = (trig.tag.split("}")[-1] if "}" in trig.tag else trig.tag)
+        triggers.append({
+            "type":          trig_type,
+            "enabled":       _ts_text(trig, "Enabled"),
+            "start_boundary": _ts_text(trig, "StartBoundary"),
+            "end_boundary":  _ts_text(trig, "EndBoundary"),
+            "user_id":       _ts_text(trig, "UserId"),
+            "subscription":  _ts_text(trig, "Subscription"),  # EventTrigger XML query
+            "delay":         _ts_text(trig, "Delay"),
+        })
+
+    # Actions: typically <Exec><Command>X</Command><Arguments>Y</Arguments></Exec>
+    actions: list[dict[str, Any]] = []
+    for act in (list(actions_el) if actions_el is not None else []):
+        act_type = (act.tag.split("}")[-1] if "}" in act.tag else act.tag)
+        actions.append({
+            "type":         act_type,
+            "command":      _ts_text(act, "Command"),
+            "arguments":    _ts_text(act, "Arguments"),
+            "working_dir":  _ts_text(act, "WorkingDirectory"),
+            # ComHandler action
+            "class_id":     _ts_text(act, "ClassId"),
+            "data":         _ts_text(act, "Data"),
+        })
+
+    # Principal: <Principal id="Author"><UserId>...</UserId><RunLevel>...</RunLevel></Principal>
+    principal: dict[str, Any] = {}
+    if principals_el is not None:
+        for p in list(principals_el):
+            principal = {
+                "id":          p.attrib.get("id"),
+                "user_id":     _ts_text(p, "UserId"),
+                "logon_type":  _ts_text(p, "LogonType"),
+                "run_level":   _ts_text(p, "RunLevel"),
+                "group_id":    _ts_text(p, "GroupId"),
+            }
+            break  # only inspect the first principal
+
+    record: dict[str, Any] = {
+        "uri":          _ts_text(reg_info, "URI"),
+        "task_name":    _ts_text(reg_info, "URI") or root.attrib.get("name"),
+        "author":       _ts_text(reg_info, "Author"),
+        "description":  _ts_text(reg_info, "Description"),
+        "source":       _ts_text(reg_info, "Source"),
+        "date":         _normalise_dt(_ts_text(reg_info, "Date")),
+        "version":      _ts_text(reg_info, "Version"),
+        "principal":    principal,
+        "triggers":     triggers,
+        "actions":      actions,
+        "settings": {
+            "enabled":           _ts_text(settings_el, "Enabled"),
+            "hidden":            _ts_text(settings_el, "Hidden"),
+            "run_only_if_idle":  _ts_text(settings_el, "RunOnlyIfIdle"),
+            "run_only_if_net":   _ts_text(settings_el, "RunOnlyIfNetworkAvailable"),
+            "allow_start_on_demand": _ts_text(settings_el, "AllowStartOnDemand"),
+            "wake_to_run":       _ts_text(settings_el, "WakeToRun"),
+            "priority":          _ts_text(settings_el, "Priority"),
+        },
+    }
+    return {
+        "count":   1,
+        "rows":    [record],
+    }
+
+
+def summarise_task_xml(parsed: dict[str, Any]) -> str:
+    if parsed.get("_parse_error"):
+        return f"task XML parse error: {parsed['_parse_error']}"
+    rows = parsed.get("rows") or []
+    if not rows:
+        return "no task XML records"
+    t = rows[0]
+    bits = [f"task '{t.get('task_name') or '<unnamed>'}'"]
+    principal = t.get("principal") or {}
+    if principal.get("run_level"):
+        bits.append(f"runlevel={principal['run_level']}")
+    n_triggers = len(t.get("triggers") or [])
+    n_actions = len(t.get("actions") or [])
+    if n_triggers:
+        bits.append(f"{n_triggers} trigger(s)")
+    if n_actions:
+        bits.append(f"{n_actions} action(s)")
+    return "; ".join(bits)
+
+
+# ---------------------------------------------------------------------------
+# Persistence-keys parser (RECmd output → grouped by Category).
+#
+# Wrapper runs RECmd with mcp_server/recmd_batches/triage_persistence.reb
+# against an extracted SOFTWARE / NTUSER.DAT / SYSTEM hive. RECmd emits a
+# single CSV with a Category column; we group rows by Category into the
+# usual `sections` shape (mirrors Amcache + SRUM).
+# ---------------------------------------------------------------------------
+
+
+def _persistence_category_key(raw: str) -> str:
+    """Normalize RECmd Category to a stable section key."""
+    return (raw or "").strip().replace(" ", "_").lower() or "other"
+
+
+def parse_persistence_keys_from_csv(text: str) -> dict[str, Any]:
+    """Parse the single RECmd batch-output CSV into per-category sections."""
+    if not text.strip():
+        return {
+            "total_count":    0,
+            "section_counts": {},
+            "sections":       {},
+        }
+    reader = csv.DictReader(io.StringIO(text))
+    sections: dict[str, dict[str, Any]] = {}
+    for row in reader:
+        cat_key = _persistence_category_key(row.get("Category", ""))
+        out_row = {
+            "category":       row.get("Category"),
+            "description":    row.get("Description"),
+            "hive_path":      row.get("HivePath"),
+            "key_path":       row.get("KeyPath"),
+            "value_name":     row.get("ValueName"),
+            "value_data":     row.get("ValueData"),
+            "value_data2":    row.get("ValueData2"),
+            "value_data3":    row.get("ValueData3"),
+            "key_timestamp":  _normalise_dt(row.get("KeyTimestamp") or row.get("Timestamp")),
+            "comment":        row.get("Comment"),
+            "deleted":        (row.get("Deleted") or "").lower() == "true",
+            "recursive":      (row.get("Recursive") or "").lower() == "true",
+        }
+        section = sections.setdefault(cat_key, {"count": 0, "rows": []})
+        section["rows"].append(out_row)
+        section["count"] += 1
+    section_counts = {k: v["count"] for k, v in sections.items()}
+    return {
+        "total_count":    sum(section_counts.values()),
+        "section_counts": section_counts,
+        "sections":       sections,
+    }
+
+
+def parse_persistence_keys(text: str) -> dict[str, Any]:
+    """Re-hydrate a persistence-keys dict from JSON-encoded raw_output.
+
+    Mirrors `parse_amcache` / `parse_srum`: the wrapper writes the combined
+    dict as JSON to audit raw_output; this parser is the query_rows-compat
+    deserialiser.
+    """
+    if not text.strip():
+        return {"total_count": 0, "section_counts": {}, "sections": {}}
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return {
+            "total_count": 0, "section_counts": {}, "sections": {},
+            "_parse_error": "raw_output is not valid JSON",
+        }
+
+
+def summarise_persistence_keys(parsed: dict[str, Any]) -> str:
+    sc = parsed.get("section_counts") or {}
+    if not sc:
+        return "no persistence keys present in hive"
+    total = parsed.get("total_count", 0)
+    n_cats = len(sc)
+    top = sorted(sc.items(), key=lambda kv: -kv[1])[:4]
+    return f"{total} persistence values across {n_cats} categories; top: " + ", ".join(f"{k}×{v}" for k, v in top)
+
+
+# ---------------------------------------------------------------------------
 # helpers
 # ---------------------------------------------------------------------------
 

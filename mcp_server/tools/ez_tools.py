@@ -29,6 +29,8 @@ Tool inventory:
   ezt_jumplist_parse(extract_exec_id)   — JLECmd on extracted Jump List
   ezt_recyclebin_parse(extract_exec_id) — RBCmd on extracted $I record
   ezt_srum_parse(extract_exec_id)       — SrumECmd on extracted SRUDB.dat
+  ezt_task_xml_parse(extract_exec_id)   — Python XML parser on \\Windows\\System32\\Tasks\\<name>
+  ezt_persistence_keys_parse(extract_exec_id) — RECmd persistence triage batch
 """
 
 from __future__ import annotations
@@ -45,18 +47,22 @@ from mcp_server.parsers.ez_tools import (
     parse_evtx,
     parse_jumplist,
     parse_mft,
+    parse_persistence_keys_from_csv,
     parse_prefetch,
     parse_recyclebin,
     parse_shimcache,
     parse_srum_from_dir,
+    parse_task_xml,
     summarise_amcache,
     summarise_evtx,
     summarise_jumplist,
     summarise_mft,
+    summarise_persistence_keys,
     summarise_prefetch,
     summarise_recyclebin,
     summarise_shimcache,
     summarise_srum,
+    summarise_task_xml,
 )
 from mcp_server.tools._common import (
     DEFAULT_EVIDENCE_ROOTS,
@@ -585,4 +591,173 @@ def ezt_srum_parse(
     )
 
     truncated = _truncate_srum(parsed)
+    return {"exec_id": exec_id, **truncated}
+
+
+# ---------------------------------------------------------------------------
+# Phase 1.5 disk-side parsers (no EZ Tool DLL — pure Python for task XML,
+# RECmd batch for persistence keys).
+# ---------------------------------------------------------------------------
+
+
+def ezt_task_xml_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 60,  # noqa: ARG001 — XML parse is in-process
+) -> dict[str, Any]:
+    """Parse a single Windows Task Scheduler XML file (T1053 disk-side).
+
+    Pre-req: extract one task file from
+    `\\Windows\\System32\\Tasks\\<folder>\\<TaskName>` via
+    `tsk_icat_extract`. Returns a structured dict with: task_name, author,
+    description, principal (UserId, RunLevel, LogonType), triggers
+    (CalendarTrigger / BootTrigger / LogonTrigger / TimeTrigger / EventTrigger),
+    actions (Exec command + arguments, or ComHandler ClassId), settings
+    (Enabled, Hidden, RunOnlyIfNetworkAvailable), creation date.
+
+    Corroborates `vol3_scheduled_tasks` (live in-memory state) and
+    TaskScheduler EVTX events (106 / 140 / 141 / 200) — full T1053 closure.
+    """
+    extract_path = _resolve_extract(audit, extract_exec_id)
+    exec_id = audit.new_exec_id()
+    try:
+        xml_text = extract_path.read_text(errors="replace")
+    except OSError as e:
+        raise ToolError(f"failed to read extracted XML at {extract_path}: {e}") from e
+
+    parsed = parse_task_xml(xml_text)
+    raw_path = audit.write_raw(exec_id, xml_text)
+    summary = summarise_task_xml(parsed)
+
+    parsed_summary_compact = {k: v for k, v in parsed.items() if k != "rows"}
+    audit.record(
+        exec_id=exec_id, agent=agent, tool="ezt_task_xml_parse",
+        args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+        raw_output_path=raw_path,
+        exit_code=0, wall_ms=0,
+        summary=summary,
+        parsed_summary=parsed_summary_compact,
+    )
+
+    # Task XML is a single record — no truncation needed.
+    return {"exec_id": exec_id, **parsed}
+
+
+# Persistence keys: per-section row cap (mirrors Amcache / SRUM patterns).
+_PERSISTENCE_SECTION_ROW_LIMIT = 50
+
+
+def _truncate_persistence(
+    parsed: dict[str, Any], limit: int = _PERSISTENCE_SECTION_ROW_LIMIT,
+) -> dict[str, Any]:
+    out = {k: v for k, v in parsed.items() if k != "sections"}
+    out_sections: dict[str, Any] = {}
+    for sec_key, sec in (parsed.get("sections") or {}).items():
+        rows = sec.get("rows") or []
+        out_sections[sec_key] = {
+            "count":          sec.get("count", len(rows)),
+            "rows":           rows[:limit],
+            "rows_truncated": len(rows) > limit,
+            "rows_total":     len(rows),
+        }
+    out["sections"] = out_sections
+    return out
+
+
+def ezt_persistence_keys_parse(
+    extract_exec_id: str,
+    *,
+    audit: AuditLogger,
+    agent: str = "disk_agent",
+    timeout_s: float = 600,
+) -> dict[str, Any]:
+    """`RECmd --bn triage_persistence.reb --csv` on an extracted registry hive.
+
+    Pre-req: extract `\\Windows\\System32\\config\\SOFTWARE` (HKLM autostart),
+    `\\Windows\\System32\\config\\SYSTEM` (services), or
+    `\\Users\\<u>\\NTUSER.DAT` (HKCU autostart) via `tsk_icat_extract`.
+
+    Curated batch (`mcp_server/recmd_batches/triage_persistence.reb`)
+    extracts: Run / RunOnce / RunOnceEx / Policies-Explorer-Run (T1547.001),
+    Winlogon Shell / Userinit / Notify (T1547.004),
+    IFEO Debugger + GlobalFlag + SilentProcessExit (T1574.012),
+    AppInit_DLLs + AppCertDlls (T1574.001),
+    Services ImagePath + ServiceDll (T1543.003).
+
+    Returns sections grouped by Category (run_keys / winlogon / ifeo /
+    dll_hijack / services). Each section's rows are truncated to 50.
+    """
+    extract_path = _resolve_extract(audit, extract_exec_id)
+    exec_id = audit.new_exec_id()
+    out_subdir = audit.raw_output_dir / "ez_tools" / exec_id
+    out_subdir.mkdir(parents=True, exist_ok=True)
+    sub_dir = audit.raw_output_dir / "subprocess"
+
+    dll = _check_dll("RECmd.dll", subdir="RECmd")
+    batch_file = Path(__file__).resolve().parents[1] / "recmd_batches" / "triage_persistence.reb"
+    if not batch_file.exists():
+        raise ToolError(f"persistence batch file missing at {batch_file}")
+
+    argv = [
+        _check_dotnet(), str(dll),
+        "-f", str(extract_path),
+        "--bn", str(batch_file),
+        "--csv", str(out_subdir),
+        "--nl",  # ignore transaction logs (we already extracted a quiesced hive)
+    ]
+
+    rr = run_subprocess(argv, output_dir=sub_dir, name=exec_id, timeout_s=timeout_s)
+
+    if not rr.ok:
+        raw_capture = audit.write_raw(
+            exec_id, f"FAILED ({rr.error}). stderr: {rr.stderr_path}\n",
+        )
+        audit.record(
+            exec_id=exec_id, agent=agent, tool="ezt_persistence_keys_parse",
+            args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+            raw_output_path=raw_capture,
+            exit_code=rr.exit_code, wall_ms=rr.wall_ms,
+            summary=f"FAILED: {rr.error or 'non-zero exit'}",
+            error=rr.error or f"exit {rr.exit_code}",
+        )
+        raise ToolError(
+            f"ezt_persistence_keys_parse failed (exit {rr.exit_code}, "
+            f"timed_out={rr.timed_out}): {rr.error}. stderr at {rr.stderr_path}"
+        )
+
+    # RECmd writes a single CSV with the batch name embedded.
+    matches = sorted(out_subdir.glob("*_RECmd_Batch_*Output.csv"))
+    if not matches:
+        # Fall back: any CSV at all
+        matches = sorted(out_subdir.glob("*.csv"))
+    if not matches:
+        raise ToolError(
+            f"ezt_persistence_keys_parse: RECmd produced no CSV in {out_subdir}"
+        )
+
+    csv_text = matches[0].read_text(errors="replace")
+    parsed = parse_persistence_keys_from_csv(csv_text)
+
+    # Persist as JSON for query_rows compat.
+    raw_text = json.dumps(parsed, default=str)
+    raw_path = audit.write_raw(exec_id, raw_text)
+    summary = summarise_persistence_keys(parsed)
+
+    parsed_summary_compact = {
+        "total_count":    parsed.get("total_count"),
+        "section_counts": parsed.get("section_counts"),
+    }
+
+    audit.record(
+        exec_id=exec_id, agent=agent, tool="ezt_persistence_keys_parse",
+        args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+        raw_output_path=raw_path,
+        exit_code=0, wall_ms=rr.wall_ms,
+        summary=summary,
+        parsed_summary=parsed_summary_compact,
+    )
+
+    truncated = _truncate_persistence(parsed)
     return {"exec_id": exec_id, **truncated}

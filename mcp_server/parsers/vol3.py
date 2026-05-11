@@ -673,6 +673,240 @@ def summarise_handles(parsed: dict[str, Any]) -> str:
     return "; ".join(parts)
 
 
+# ---------------------------------------------------------------------------
+# windows.scheduled_tasks — Task Scheduler tasks from registry-in-memory.
+#
+# JSONL fields (Vol3 2.28): "Task Name", "Action", "Action Arguments",
+# "Action Context", "Action Type", "Creation Time", "Display Name",
+# "Enabled", "Key Name", "Last Run Time", "Last Successful Run Time",
+# "Principal ID", "Trigger Description", "Trigger Type", "Working Directory".
+# ---------------------------------------------------------------------------
+
+
+def parse_scheduled_tasks(stdout: str) -> dict[str, Any]:
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_principal: dict[str, int] = {}
+    by_action_type: dict[str, int] = {}
+    enabled_count = 0
+    for r in rows:
+        principal = r.get("Principal ID") or ""
+        action_type = r.get("Action Type") or ""
+        action_args = r.get("Action Arguments") or ""
+        action = r.get("Action") or ""
+        if r.get("Enabled"):
+            enabled_count += 1
+        if principal:
+            by_principal[principal] = by_principal.get(principal, 0) + 1
+        if action_type:
+            by_action_type[action_type] = by_action_type.get(action_type, 0) + 1
+        out_rows.append({
+            "task_name":               r.get("Task Name"),
+            "display_name":            r.get("Display Name"),
+            "key_name":                r.get("Key Name"),
+            "action":                  action,
+            "action_type":             action_type,
+            "action_arguments":        action_args,
+            "action_context":          r.get("Action Context"),
+            "principal_id":            principal,
+            "trigger_description":     r.get("Trigger Description"),
+            "trigger_type":            r.get("Trigger Type"),
+            "working_directory":       r.get("Working Directory"),
+            "creation_time":           _normalise_dt(r.get("Creation Time")),
+            "last_run_time":           _normalise_dt(r.get("Last Run Time")),
+            "last_successful_run":     _normalise_dt(r.get("Last Successful Run Time")),
+            "enabled":                 r.get("Enabled"),
+        })
+    return {
+        "count":          len(out_rows),
+        "enabled_count":  enabled_count,
+        "by_principal":   dict(sorted(by_principal.items(),   key=lambda kv: -kv[1])[:15]),
+        "by_action_type": dict(sorted(by_action_type.items(), key=lambda kv: -kv[1])),
+        "rows":           out_rows,
+    }
+
+
+def summarise_scheduled_tasks(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    if n == 0:
+        return "no scheduled tasks found"
+    enabled = parsed.get("enabled_count", 0)
+    parts = [f"{n} scheduled tasks"]
+    if enabled:
+        parts.append(f"{enabled} enabled")
+    bp = parsed.get("by_principal") or {}
+    if bp:
+        parts.append(f"top principal: {next(iter(bp.keys()))}×{next(iter(bp.values()))}")
+    return "; ".join(parts)
+
+
+# ---------------------------------------------------------------------------
+# windows.hashdump — local SAM hashes (T1003.002).
+#
+# JSONL fields: "User", "RID", "LM Hash", "NT Hash".
+# (Empty NT hashes = "31d6cfe0d16ae931b73c59d7e0c089c0" = empty-string hash;
+#  flagged so the agent can spot blank-password accounts.)
+# ---------------------------------------------------------------------------
+
+
+_BLANK_NT_HASH = "31d6cfe0d16ae931b73c59d7e0c089c0"
+
+
+def parse_hashdump(stdout: str) -> dict[str, Any]:
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    blank_password_users: list[str] = []
+    for r in rows:
+        user = r.get("User") or ""
+        nt = (r.get("NT Hash") or "").lower()
+        if nt == _BLANK_NT_HASH:
+            blank_password_users.append(user)
+        out_rows.append({
+            "user":     user,
+            "rid":      r.get("RID"),
+            "lm_hash":  r.get("LM Hash"),
+            "nt_hash":  r.get("NT Hash"),
+        })
+    return {
+        "count":                  len(out_rows),
+        "blank_password_users":   blank_password_users,
+        "rows":                   out_rows,
+    }
+
+
+def summarise_hashdump(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    if n == 0:
+        return "no SAM accounts parsed (likely missing SYSTEM bootkey)"
+    blanks = parsed.get("blank_password_users") or []
+    parts = [f"{n} local accounts"]
+    if blanks:
+        parts.append(f"{len(blanks)} blank-password: {','.join(blanks[:3])}")
+    return "; ".join(parts)
+
+
+# ---------------------------------------------------------------------------
+# windows.cachedump — LSA cached domain credentials (MSCASH/DCC2, T1003.005).
+#
+# JSONL fields: "Username", "Domain Name", "Domain Hash", "Hash".
+# ---------------------------------------------------------------------------
+
+
+def parse_cachedump(stdout: str) -> dict[str, Any]:
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_domain: dict[str, int] = {}
+    for r in rows:
+        dom = r.get("Domain Name") or ""
+        if dom:
+            by_domain[dom] = by_domain.get(dom, 0) + 1
+        out_rows.append({
+            "username":     r.get("Username"),
+            "domain":       dom,
+            "domain_hash":  r.get("Domain Hash"),
+            "hash":         r.get("Hash"),
+        })
+    return {
+        "count":     len(out_rows),
+        "by_domain": dict(sorted(by_domain.items(), key=lambda kv: -kv[1])),
+        "rows":      out_rows,
+    }
+
+
+def summarise_cachedump(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    if n == 0:
+        return "no cached domain credentials (machine is workgroup-only or LSA secret missing)"
+    bd = parsed.get("by_domain") or {}
+    return f"{n} cached domain credentials across {len(bd)} domain(s)"
+
+
+# ---------------------------------------------------------------------------
+# windows.skeleton_key_check — Mimikatz skeleton-key detection (T1558).
+#
+# Output is usually empty (negative result). When the skeleton-key patch is
+# present, fields are: "PID", "Process", "Skeleton Key Found".
+# ---------------------------------------------------------------------------
+
+
+def parse_skeleton_key(stdout: str) -> dict[str, Any]:
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    found_count = 0
+    for r in rows:
+        skeleton = r.get("Skeleton Key Found") or r.get("skeleton_key_found") or False
+        if skeleton:
+            found_count += 1
+        out_rows.append({
+            "pid":                  r.get("PID"),
+            "process":              r.get("Process"),
+            "skeleton_key_found":   bool(skeleton),
+        })
+    return {
+        "count":       len(out_rows),
+        "found_count": found_count,
+        "rows":        out_rows,
+    }
+
+
+def summarise_skeleton_key(parsed: dict[str, Any]) -> str:
+    found = parsed.get("found_count", 0)
+    n = parsed.get("count", 0)
+    if found:
+        return f"⚠ skeleton-key Mimikatz patch detected ({found} of {n} lsass instances)"
+    return f"no skeleton-key patch detected ({n} lsass instance(s) scanned)"
+
+
+# ---------------------------------------------------------------------------
+# windows.envars — per-process environment variables (T1574 Path interception).
+#
+# JSONL fields: "Block", "PID", "Process", "Value", "Variable".
+# Most useful: rows where Variable == "Path" or "PATHEXT" — attacker Path
+# prepends would show up here.
+# ---------------------------------------------------------------------------
+
+
+_PATH_LIKE_VARS = {"path", "pathext", "psmodulepath", "include", "lib"}
+
+
+def parse_envars(stdout: str) -> dict[str, Any]:
+    rows = parse_jsonl_rows(stdout)
+    out_rows: list[dict[str, Any]] = []
+    by_variable: dict[str, int] = {}
+    path_like_rows: list[dict[str, Any]] = []
+    for r in rows:
+        var = (r.get("Variable") or "").strip()
+        proc = r.get("Process") or ""
+        value = r.get("Value") or ""
+        if var:
+            by_variable[var] = by_variable.get(var, 0) + 1
+        row = {
+            "pid":      r.get("PID"),
+            "process":  proc,
+            "variable": var,
+            "value":    value,
+            "block":    r.get("Block"),
+        }
+        out_rows.append(row)
+        if var.lower() in _PATH_LIKE_VARS:
+            path_like_rows.append(row)
+    return {
+        "count":          len(out_rows),
+        "by_variable":    dict(sorted(by_variable.items(), key=lambda kv: -kv[1])[:25]),
+        "path_like_rows": path_like_rows,
+        "rows":           out_rows,
+    }
+
+
+def summarise_envars(parsed: dict[str, Any]) -> str:
+    n = parsed.get("count", 0)
+    pl = len(parsed.get("path_like_rows") or [])
+    parts = [f"{n} env-var entries"]
+    if pl:
+        parts.append(f"{pl} Path-like (PATH/PATHEXT/PSModulePath)")
+    return "; ".join(parts)
+
+
 def _parse_system_time(raw: str) -> str | None:
     """Convert Vol3's `SystemTime` field to an ISO-8601 UTC timestamp.
 

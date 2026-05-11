@@ -78,6 +78,11 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__vol3_userassist",
     "mcp__sift-owl__vol3_dlllist",
     "mcp__sift-owl__vol3_handles",
+    "mcp__sift-owl__vol3_scheduled_tasks",
+    "mcp__sift-owl__vol3_hashdump",
+    "mcp__sift-owl__vol3_cachedump",
+    "mcp__sift-owl__vol3_skeleton_key_check",
+    "mcp__sift-owl__vol3_envars",
     # disk (TSK + EWF)
     "mcp__sift-owl__ewf_info",
     "mcp__sift-owl__ewf_verify",
@@ -94,6 +99,8 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__ezt_jumplist_parse",
     "mcp__sift-owl__ezt_recyclebin_parse",
     "mcp__sift-owl__ezt_srum_parse",
+    "mcp__sift-owl__ezt_task_xml_parse",
+    "mcp__sift-owl__ezt_persistence_keys_parse",
     # drill helper
     "mcp__sift-owl__query_rows",
 ])

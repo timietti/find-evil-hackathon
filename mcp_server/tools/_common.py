@@ -227,6 +227,31 @@ class HandlesArgs(_ImageOnlyArgs):
     )
 
 
+class EnvarsArgs(_ImageOnlyArgs):
+    """Environment variables per process. Optional pid filter."""
+
+    pid: int | None = Field(
+        default=None, ge=0,
+        description="Optional PID to narrow to. Omit to enumerate all processes.",
+    )
+
+
+class ScheduledTasksArgs(_ImageOnlyArgs):
+    pass
+
+
+class HashdumpArgs(_ImageOnlyArgs):
+    pass
+
+
+class CachedumpArgs(_ImageOnlyArgs):
+    pass
+
+
+class SkeletonKeyArgs(_ImageOnlyArgs):
+    pass
+
+
 # ---------------------------------------------------------------------------
 # Disk-side args.
 # ---------------------------------------------------------------------------

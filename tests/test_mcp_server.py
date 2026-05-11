@@ -49,6 +49,11 @@ EXPECTED_TOOLS = {
     "vol3_userassist",
     "vol3_dlllist",
     "vol3_handles",
+    "vol3_scheduled_tasks",
+    "vol3_hashdump",
+    "vol3_cachedump",
+    "vol3_skeleton_key_check",
+    "vol3_envars",
     # disk (TSK + EWF)
     "ewf_verify",
     "ewf_info",
@@ -65,6 +70,8 @@ EXPECTED_TOOLS = {
     "ezt_jumplist_parse",
     "ezt_recyclebin_parse",
     "ezt_srum_parse",
+    "ezt_task_xml_parse",
+    "ezt_persistence_keys_parse",
     # query helper
     "query_rows",
 }
@@ -81,6 +88,8 @@ TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {
     "ezt_jumplist_parse",
     "ezt_recyclebin_parse",
     "ezt_srum_parse",
+    "ezt_task_xml_parse",
+    "ezt_persistence_keys_parse",
 }
 TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_mft_parse",
@@ -91,6 +100,8 @@ TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_jumplist_parse",
     "ezt_recyclebin_parse",
     "ezt_srum_parse",
+    "ezt_task_xml_parse",
+    "ezt_persistence_keys_parse",
 }
 
 

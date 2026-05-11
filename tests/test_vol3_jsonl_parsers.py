@@ -14,25 +14,35 @@ import pytest
 
 from mcp_server.parsers.vol3 import (
     _normalise_dt,
+    parse_cachedump,
     parse_cmdline,
     parse_dlllist,
+    parse_envars,
     parse_filescan,
     parse_handles,
+    parse_hashdump,
     parse_jsonl_rows,
     parse_malfind,
     parse_netscan,
     parse_psscan,
     parse_pstree,
+    parse_scheduled_tasks,
+    parse_skeleton_key,
     parse_svcscan,
     parse_userassist,
+    summarise_cachedump,
     summarise_cmdline,
     summarise_dlllist,
+    summarise_envars,
     summarise_filescan,
     summarise_handles,
+    summarise_hashdump,
     summarise_malfind,
     summarise_netscan,
     summarise_psscan,
     summarise_pstree,
+    summarise_scheduled_tasks,
+    summarise_skeleton_key,
     summarise_svcscan,
     summarise_userassist,
 )
@@ -374,3 +384,141 @@ def test_parse_handles_handles_empty() -> None:
     out = parse_handles("")
     assert out["count"] == 0
     assert out["rows"] == []
+
+
+# ---- scheduled_tasks (Phase 1.5, T1053) ------------------------------------
+
+
+def test_parse_scheduled_tasks_extracts_actions_and_principals() -> None:
+    out = parse_scheduled_tasks(_read_fixture("scheduled_tasks_head.jsonl"))
+    assert out["count"] >= 2
+    # spinlock-persist (the suspicious one)
+    spin = next((r for r in out["rows"] if r["task_name"] == "spinlock-persist"), None)
+    assert spin is not None
+    assert spin["action_type"] == "Exec"
+    assert "spinlock" in (spin["action_arguments"] or "")
+    assert spin["enabled"] is True
+    assert spin["principal_id"] == "LocalSystem"
+
+
+def test_parse_scheduled_tasks_aggregates_principal_and_action() -> None:
+    out = parse_scheduled_tasks(_read_fixture("scheduled_tasks_head.jsonl"))
+    assert "by_principal" in out
+    assert "by_action_type" in out
+    assert out["by_action_type"].get("Exec") == 1
+    assert out["by_action_type"].get("ComHandler") == 1
+
+
+def test_parse_scheduled_tasks_handles_empty() -> None:
+    out = parse_scheduled_tasks("")
+    assert out["count"] == 0
+
+
+def test_summarise_scheduled_tasks_mentions_enabled() -> None:
+    out = parse_scheduled_tasks(_read_fixture("scheduled_tasks_head.jsonl"))
+    s = summarise_scheduled_tasks(out)
+    assert "scheduled tasks" in s
+
+
+# ---- hashdump (Phase 1.5, T1003.002) ---------------------------------------
+
+
+def test_parse_hashdump_extracts_users_and_rids() -> None:
+    out = parse_hashdump(_read_fixture("hashdump_head.jsonl"))
+    assert out["count"] >= 3
+    admin = next((r for r in out["rows"] if r["user"] == "Administrator"), None)
+    assert admin is not None
+    assert admin["rid"] == 500
+
+
+def test_parse_hashdump_flags_blank_passwords() -> None:
+    out = parse_hashdump(_read_fixture("hashdump_head.jsonl"))
+    # Guest has blank-password hash (31d6cfe0…)
+    assert "Guest" in out["blank_password_users"]
+    # Administrator does not
+    assert "Administrator" not in out["blank_password_users"]
+
+
+def test_summarise_hashdump_flags_blank_password_users() -> None:
+    out = parse_hashdump(_read_fixture("hashdump_head.jsonl"))
+    s = summarise_hashdump(out)
+    assert "blank-password" in s
+    assert "Guest" in s
+
+
+def test_parse_hashdump_handles_empty() -> None:
+    out = parse_hashdump("")
+    assert out["count"] == 0
+    assert out["blank_password_users"] == []
+
+
+# ---- cachedump (Phase 1.5, T1003.005) --------------------------------------
+
+
+def test_parse_cachedump_extracts_domain_credentials() -> None:
+    out = parse_cachedump(_read_fixture("cachedump_head.jsonl"))
+    assert out["count"] >= 2
+    assert "SHIELDBASE" in out["by_domain"]
+    rsydow = next((r for r in out["rows"] if r["username"] == "rsydow-a"), None)
+    assert rsydow is not None
+    assert rsydow["domain"] == "SHIELDBASE"
+
+
+def test_summarise_cachedump_mentions_domain_count() -> None:
+    out = parse_cachedump(_read_fixture("cachedump_head.jsonl"))
+    s = summarise_cachedump(out)
+    assert "cached domain credentials" in s
+
+
+# ---- skeleton_key_check (Phase 1.5, T1558) ---------------------------------
+
+
+def test_parse_skeleton_key_no_patch() -> None:
+    out = parse_skeleton_key(_read_fixture("skeleton_key_head.jsonl"))
+    assert out["count"] == 1
+    assert out["found_count"] == 0
+
+
+def test_parse_skeleton_key_positive_finding() -> None:
+    text = '{"PID": 664, "Process": "lsass.exe", "Skeleton Key Found": true}\n'
+    out = parse_skeleton_key(text)
+    assert out["found_count"] == 1
+
+
+def test_summarise_skeleton_key_negative_vs_positive() -> None:
+    out_neg = parse_skeleton_key(_read_fixture("skeleton_key_head.jsonl"))
+    assert "no skeleton-key" in summarise_skeleton_key(out_neg)
+    text = '{"PID": 664, "Process": "lsass.exe", "Skeleton Key Found": true}\n'
+    out_pos = parse_skeleton_key(text)
+    assert "detected" in summarise_skeleton_key(out_pos)
+
+
+# ---- envars (Phase 1.5, T1574) ---------------------------------------------
+
+
+def test_parse_envars_extracts_per_process_vars() -> None:
+    out = parse_envars(_read_fixture("envars_head.jsonl"))
+    assert out["count"] >= 5
+    # PATH appears for two processes (smss.exe + stun.exe) → by_variable[Path]=2
+    assert out["by_variable"].get("Path") == 2
+
+
+def test_parse_envars_path_like_curation() -> None:
+    out = parse_envars(_read_fixture("envars_head.jsonl"))
+    # path_like_rows should include the two Path entries + one PATHEXT
+    assert len(out["path_like_rows"]) == 3
+    # The stun.exe Path has the suspicious Temp directory prefix
+    stun_path = next(
+        (r for r in out["path_like_rows"]
+         if r["process"] == "stun.exe" and r["variable"] == "Path"),
+        None,
+    )
+    assert stun_path is not None
+    assert "Temp" in stun_path["value"]
+
+
+def test_summarise_envars_flags_path_like_count() -> None:
+    out = parse_envars(_read_fixture("envars_head.jsonl"))
+    s = summarise_envars(out)
+    assert "env-var entries" in s
+    assert "Path-like" in s

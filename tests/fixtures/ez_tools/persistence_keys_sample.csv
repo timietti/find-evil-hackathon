@@ -1,0 +1,8 @@
+HivePath,Description,Category,KeyPath,ValueName,ValueData,ValueData2,ValueData3,KeyTimestamp,Recursive,Deleted,Comment
+SOFTWARE,HKLM Run,Run keys,Microsoft\Windows\CurrentVersion\Run,OneDriveStandalone,"C:\Program Files\Microsoft OneDrive\OneDrive.exe /background",,,2020-11-13 22:30:42,false,false,
+SOFTWARE,HKLM Run,Run keys,Microsoft\Windows\CurrentVersion\Run,SecurityHealth,"%windir%\system32\SecurityHealthSystray.exe",,,2020-11-13 22:30:42,false,false,
+SOFTWARE,HKLM Run,Run keys,Microsoft\Windows\CurrentVersion\Run,p.exe,"C:\windows\temp\perfmon\p.exe",,,2020-11-14 03:42:55,false,false,Suspicious — temp path
+SOFTWARE,Winlogon Userinit,Winlogon,Microsoft\Windows NT\CurrentVersion\Winlogon,Userinit,"C:\Windows\system32\userinit.exe,",,,2020-11-13 22:00:00,false,false,
+SOFTWARE,IFEO Debugger,IFEO,"Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe",Debugger,"C:\Windows\System32\cmd.exe",,,2020-11-14 03:42:00,true,false,Sticky-keys backdoor
+SOFTWARE,AppInit_DLLs,DLL hijack,Microsoft\Windows NT\CurrentVersion\Windows,AppInit_DLLs,"",,,2020-11-13 22:00:00,false,false,Empty by default
+SYSTEM,Services ImagePath,Services,"ControlSet001\Services\WinDefend",ImagePath,"%ProgramFiles%\Windows Defender\MsMpEng.exe",,,2020-11-13 22:00:00,true,false,
