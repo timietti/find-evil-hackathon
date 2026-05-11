@@ -1,0 +1,16 @@
+!This program cannot be run in DOS mode.
+.text
+.rdata
+.data
+.rsrc
+LoadLibraryA
+GetProcAddress
+sleep
+hxxps://evil-c2.example.com/beacon
+fhsvc-b378
+Global\StunSingletonMutex
+ReflectiveLoader
+_MEIPASS2
+C:\Users\malware-dev\Desktop\beacon\Release\beacon.pdb
+qX
+abc

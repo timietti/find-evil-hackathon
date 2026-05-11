@@ -1,0 +1,4 @@
+# Banner: bulk_extractor 2.0.3
+# Feature-Recorder: winpe
+1234567	pe_header	"MZ\x90\x00\x03...PE\x00\x00L\x01..."
+2345678	pe_header	"MZ\x90\x00\x03...PE\x00\x00d\x86..."

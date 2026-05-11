@@ -27,35 +27,38 @@
 | **T1547** | Boot/Logon Autostart Execution | ✅ Full | `vol3_svcscan`, `vol3_userassist`, `ezt_persistence_keys_parse` (Run/RunOnce/RunOnceEx/Policies-Run/Winlogon Shell+Userinit+Notify) | None significant | — *(closed by Phase 1.5)* |
 | **T1136** | Create Account | ✅ Full | `ezt_evtx_parse` (4720), `vol3_userassist` (per-user hive presence in memory) | SAM-hive parser | Phase 5 |
 | **T1543** | Create/Modify System Process (.003 Windows Service) | ✅ Full | `vol3_svcscan`, `ezt_evtx_parse` (7045 install, 7036 state change), `ezt_amcache_parse`, `ezt_shimcache_parse` | None significant | — |
-| **T1055** | Process Injection | ✅ Full | `vol3_malfind` (RWX VAD), `vol3_dlllist` (unbacked DLLs — Phase 1), `vol3_handles` (named pipes — Phase 1) | Targeted YARA in process memory | Phase 3 (`vol3_vadyarascan`) |
-| **T1140** | Deobfuscate/Decode Files or Information | 🟡 Partial | `vol3_cmdline` (encoded args), `vol3_filescan` (dropped tmp files), `ezt_evtx_parse` (4104) | strings extraction over dropped binaries | Phase 3 (`strings_extract`) |
+| **T1055** | Process Injection | ✅ Full | `vol3_malfind` (RWX VAD), `vol3_dlllist` (unbacked DLLs), `vol3_handles` (named pipes), `vol3_vadyarascan` (Cobalt Strike / Mimikatz / PyInstaller signatures in process memory), `yara_scan_extract` (extracted binary signatures) | None significant | — *(closed by Phase 3)* |
+| **T1140** | Deobfuscate/Decode Files or Information | ✅ Full | `vol3_cmdline` (encoded args), `vol3_filescan` (dropped tmp files), `ezt_evtx_parse` (4104 ScriptBlock), `strings_extract` (decoded payload remnants from extracted binaries), `bulk_extract` (base64-decoded content in raw bytes) | None significant | — *(closed by Phase 3)* |
 | **T1574** | Hijack Execution Flow (DLL sideload / IFEO / Path) | ✅ Full | `vol3_dlllist` (unbacked / sideloaded), `vol3_envars` (Path / PSModulePath interception), `ezt_persistence_keys_parse` (IFEO Debugger + SilentProcessExit + AppInit_DLLs + AppCertDlls) | None significant | — *(closed by Phase 1.5)* |
 | **T1218** | System Binary Proxy Execution (LOLBins) | ✅ Full | `vol3_cmdline`, `vol3_psscan/pstree`, `ezt_prefetch_parse`, `ezt_shimcache_parse`, `ezt_amcache_parse`, `ezt_evtx_parse` (4688) | None significant | — |
 | **T1685** | Disable or Modify Tools | ✅ Full | `ezt_evtx_parse` (7036 / 7045 / 1102 + Defender Operational channel), `vol3_svcscan` (service state), `vol3_cmdline` (`taskkill` / `Stop-Service` / `sc stop` / `net stop` args), `vol3_dlllist` (sideloaded DLL inside AV process) | Registry killswitches (`DisableAntiSpyware`, `DisableRealtimeMonitoring`) — secondary | Phase 5 (RECmd `triage_basic.reb`) |
 | **T1686** | Disable or Modify System Firewall | ✅ Full | `ezt_evtx_parse` (Microsoft-Windows-Windows-Firewall-With-Advanced-Security/Firewall channel), `vol3_cmdline` (`netsh advfirewall` args), `vol3_psscan/pstree` (netsh parent), `vol3_svcscan` (`mpssvc` state) | Firewall registry policy (`HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\...`) — secondary | Phase 5 (RECmd) |
 | **T1110** | Brute Force | ✅ Full | `ezt_evtx_parse` (4625 / 4771 volume) | Threshold aggregation helper (account-level) | Phase 6 (correlator) |
-| **T1003** | OS Credential Dumping (LSASS / NTDS / SAM) | ✅ Full | `vol3_hashdump` (SAM local hashes — T1003.002), `vol3_cachedump` (LSA cached domain creds / MSCASH — T1003.005), `vol3_handles(pid=lsass)`, `vol3_dlllist(pid=lsass)`, `vol3_filescan` (lsass.dmp), `ezt_evtx_parse` (4663 NTDS) | Mimikatz YARA signatures for in-memory residue | Phase 3 (extends, not closes) |
+| **T1003** | OS Credential Dumping (LSASS / NTDS / SAM) | ✅ Full | `vol3_hashdump` (SAM local hashes — T1003.002), `vol3_cachedump` (LSA cached domain creds / MSCASH — T1003.005), `vol3_handles(pid=lsass)`, `vol3_dlllist(pid=lsass)`, `vol3_vadyarascan` (Mimikatz patterns in lsass memory), `yara_scan_extract` (LSASS-dump magic on extracted files), `vol3_filescan` (lsass.dmp), `ezt_evtx_parse` (4663 NTDS) | None significant | — |
 | **T1558** | Steal/Forge Kerberos Tickets (Kerberoasting, Golden/Silver) | ✅ Full | `vol3_skeleton_key_check` (Mimikatz skeleton key in lsass), `ezt_evtx_parse` (4768 / 4769 with TicketEncryptionType), `vol3_handles` | RC4_HMAC anomaly aggregation across many events | Phase 6 (correlator helper) |
 | **T1021** | Remote Services (RDP/SMB/WMI/WinRM) | ✅ Full | `ezt_evtx_parse` (4624 type 3/10, 5140), `vol3_netscan` (3389/445/5985), `ezt_jumplist_parse` (mstsc), `ezt_shimcache_parse` | RDP bitmap-cache reconstruction (specialised, out of scope) | — |
-| **T1071** | Application Layer Protocol (HTTP/DNS/SMTP) | 🟡 Partial | `vol3_netscan`, `vol3_filescan`, `ezt_evtx_parse` (DNS-Client/Operational) | DNS cache from memory, browser history, bulk-feature carving | **Phase 1.5** (`vol3_dnscache`) + Phase 3 (bulk_extractor URLs/IPs) + Phase 5 (SQLECmd browsers) |
-| **T1219** | Remote Access Software (TeamViewer / AnyDesk / Atera / ScreenConnect) | ✅ Full | `vol3_psscan/cmdline`, `ezt_amcache_parse`, `ezt_shimcache_parse`, `ezt_prefetch_parse`, `ezt_srum_parse` (bytes per process) | Signature-based detection of specific RAS families | Phase 3 (YARA rules for known RAS) |
+| **T1071** | Application Layer Protocol (HTTP/DNS/SMTP) | ✅ Full | `vol3_netscan`, `vol3_filescan`, `bulk_extract` (URL / domain / email / IP scanners over raw bytes anywhere in image), `ezt_evtx_parse` (DNS-Client/Operational) | Browser history (Phase 5 SQLECmd) extends but doesn't close | — *(closed by Phase 3 bulk_extractor)* |
+| **T1219** | Remote Access Software (TeamViewer / AnyDesk / Atera / ScreenConnect) | ✅ Full | `vol3_psscan/cmdline`, `ezt_amcache_parse`, `ezt_shimcache_parse`, `ezt_prefetch_parse`, `ezt_srum_parse` (bytes per process), `yara_scan_extract` (bundled SIFTOWL_RAS_Software_Common rule covers TeamViewer / AnyDesk / ScreenConnect / Atera) | None significant | — |
 
 ## Coverage tally
 
 | Status | Count | % |
 |---|---|---|
-| ✅ Full | 18 | 82% |
-| 🟡 Partial | 4 | 18% |
+| ✅ Full | 20 | 91% |
+| 🟡 Partial | 2 | 9% |
 | 🟠 Indirect | 0 | 0% |
 | ❌ Missing | 0 | 0% |
 
-**No technique in this list has zero detection capability.** Phase 1.5 (shipped 2026-05-11) closed 5 Partial → Full: T1003, T1053, T1547, T1558, T1574.
+**No technique in this list has zero detection capability.**
+
+Phase history:
+- **Phase 1** (2026-05-10) — Prefetch / JumpList / RecycleBin / SRUM / dlllist / handles
+- **Phase 1.5** (2026-05-11) — 5 Vol3 plugins + 2 disk-side parsers; closed T1003, T1053, T1547, T1558, T1574
+- **Phase 3** (2026-05-11) — YARA + bulk_extractor + strings + hashing; closed T1055, T1071, T1140, T1219 (extended) and added cross-cutting `yara_scan_extract` + `vol3_vadyarascan`
 
 Remaining Partial techniques and their closure phase:
 - **T1091** (Replication via USB) — Phase 5 RECmd USB devices + ShellBags (`ezt_shellbags_parse`)
-- **T1140** (Deobfuscate/Decode) — Phase 3 `strings_extract` over dropped temp files
-- **T1071** (Application Layer Protocol — DNS/HTTP slices) — Phase 3 bulk_extractor URLs/IPs + Phase 5 SQLECmd browser history
-- **T1110** (Brute Force aggregation) — Phase 6 correlator threshold helper
+- **T1110** (Brute Force volume aggregation) — Phase 6 correlator threshold helper
 
 > Note on IDs: T1685 (Disable or Modify Tools) and T1686 (Disable or Modify System Firewall) appear in some published technique lists. As of the writer's training cutoff these were canonically tracked as the **T1562.001** and **T1562.004** sub-techniques of T1562 Impair Defenses; MITRE may have promoted them to top-level IDs since. Detection semantics are identical — IDs preserved as the user supplied them.
 

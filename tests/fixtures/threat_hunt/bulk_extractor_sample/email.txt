@@ -1,0 +1,4 @@
+# Banner: bulk_extractor 2.0.3
+# Feature-Recorder: email
+54321	attacker@evil-c2.example.com	"From: attacker@evil-c2.example.com To:..."
+54322	victim@stark-research-labs.com	"To: victim@stark-research-labs.com From:..."

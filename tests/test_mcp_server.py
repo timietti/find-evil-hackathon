@@ -72,6 +72,12 @@ EXPECTED_TOOLS = {
     "ezt_srum_parse",
     "ezt_task_xml_parse",
     "ezt_persistence_keys_parse",
+    # threat hunt + carving + hashing (Phase 3)
+    "yara_scan_extract",
+    "vol3_vadyarascan",
+    "bulk_extract",
+    "strings_extract",
+    "hash_file",
     # query helper
     "query_rows",
 }
@@ -90,6 +96,9 @@ TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {
     "ezt_srum_parse",
     "ezt_task_xml_parse",
     "ezt_persistence_keys_parse",
+    "yara_scan_extract",
+    "strings_extract",
+    "hash_file",
 }
 TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_mft_parse",
@@ -102,6 +111,9 @@ TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_srum_parse",
     "ezt_task_xml_parse",
     "ezt_persistence_keys_parse",
+    "yara_scan_extract",
+    "strings_extract",
+    "hash_file",
 }
 
 

@@ -1,0 +1,6 @@
+# Banner: bulk_extractor 2.0.3
+# Filename: /cases/evidence/mem.img
+# Feature-Recorder: url
+12345	hxxps://evil-c2.example.com/beacon	"User-Agent: Mozilla/5.0 (compatible) hxxps://evil-c2.example.com/beacon HTTP/1.1"
+67890	hxxps://legit-update.microsoft.com/v3/update	"GET hxxps://legit-update.microsoft.com/v3/update HTTP/2"
+11111	hxxp://stage.attacker.org/exfil.php	"POST hxxp://stage.attacker.org/exfil.php"

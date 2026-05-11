@@ -1,0 +1,9 @@
+SIFTOWL_Mimikatz_Strings [author=sift-owl,description="Mimikatz string residue",mitre=T1003,severity=high] /audit/raw/extracts/01ab.bin
+0x12340:$m1: sekurlsa::logonpasswords
+0x12360:$m3: sekurlsa::tickets
+0x12400:$m10: mimikatz
+SIFTOWL_PowerShell_EncodedCommand [author=sift-owl,mitre=T1059.001,severity=medium] /audit/raw/extracts/01ab.bin
+0x44440:$a: -EncodedCommand
+SIFTOWL_CobaltStrike_Beacon_Indicators [author=sift-owl,mitre=T1055,severity=high] /audit/raw/extracts/01cd.bin
+0x88880:$p1: \\.\pipe\msagent_4a2f
+0x88900:$s1: ReflectiveLoader

@@ -73,6 +73,13 @@ from mcp_server.tools.ez_tools import (
     ezt_srum_parse as _ezt_srum_parse,
     ezt_task_xml_parse as _ezt_task_xml_parse,
 )
+from mcp_server.tools.threat_hunt import (
+    bulk_extract as _bulk_extract,
+    hash_file as _hash_file,
+    strings_extract as _strings_extract,
+    vol3_vadyarascan as _vadyarascan,
+    yara_scan_extract as _yara_scan_extract,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -568,6 +575,113 @@ def query_rows(
         },
         audit=_audit(),
     )
+
+
+# ---------------------------------------------------------------------------
+# Phase 3 — Threat hunt + carving + hashing.
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool()
+def yara_scan_extract(extract_exec_id: str, ruleset_path: str | None = None) -> dict[str, Any]:
+    """`yara -s -m -w <rules> <extracted_file>` — file-level YARA scan.
+
+    Pre-req: extract a binary (or hive / EVTX / any blob) via
+    `tsk_icat_extract`. Returns per-match: rule_name, matched_strings
+    (offset + bytes), rule metadata (mitre / severity tags).
+
+    Ruleset defaults to `mcp_server/yara_rules/sift_owl_starter.yar` —
+    curated set covering Mimikatz residue, Cobalt Strike beacons,
+    PowerShell encoded loaders, common webshells, RAS software,
+    PyInstaller packing, LSASS-dump magic. Override with
+    `SIFT_OWL_YARA_RULES=/path/to/rules.yar` env var or `ruleset_path`."""
+    return _yara_scan_extract(extract_exec_id, audit=_audit(), ruleset_path=ruleset_path)
+
+
+@mcp.tool()
+def vol3_vadyarascan(image: str, pid: int, ruleset_path: str | None = None) -> dict[str, Any]:
+    """`vol3 windows.vadyarascan --pid PID --yara-file <rules>` — per-process
+    memory YARA scan.
+
+    Pre-req: a specific PID identified via `vol3_psscan` / `vol3_malfind`.
+    Scans every committed VAD region in that process against the ruleset.
+    SLOW (multi-minute on a complex process); per-PID required.
+
+    Returns per-match: PID, Process, Rule, Offset, Value. Curated rules
+    catch in-memory Mimikatz patches, Cobalt Strike beacon residue,
+    PyInstaller-packed payloads."""
+    return _vadyarascan(
+        image, pid=pid, ruleset_path=ruleset_path,
+        audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+    )
+
+
+@mcp.tool()
+def bulk_extract(
+    image: str,
+    disable_scanners: list[str] | None = None,
+    enable_scanners: list[str] | None = None,
+    threads: int = 4,
+) -> dict[str, Any]:
+    """`bulk_extractor -j <n> -o <out> <image>` — multi-scanner feature
+    extraction over raw bytes.
+
+    Surfaces URLs / emails / IPs / domains / PE+ZIP+RAR signatures /
+    EXIF / GPS / phone numbers from anywhere in the image — including
+    unallocated space, pagefile fragments, kernel pool, allocator residue.
+    Crucial for **T1071** (URL/IP/DNS evidence beyond browser history)
+    and **T1140** (decoded payload remnants in raw memory).
+
+    SLOW: 5-15 min on a multi-GB image. Returns sections grouped by
+    scanner (url / email / ip / winpe / zip / rar / ...). Each section's
+    top 50 features land on the wire; full feature files stay on disk.
+
+    Defaults disable noisy `accts` / `httplogs` / `json` / `msxml` scanners.
+    Override `disable_scanners=[]` to enable them, or set
+    `enable_scanners=["xor","wordlist"]` for off-by-default scanners."""
+    return _bulk_extract(
+        image,
+        audit=_audit(), evidence_roots=_EVIDENCE_ROOTS,
+        disable_scanners=tuple(disable_scanners) if disable_scanners is not None else None,
+        enable_scanners=tuple(enable_scanners) if enable_scanners is not None else (),
+        threads=threads,
+    )
+
+
+@mcp.tool()
+def strings_extract(
+    extract_exec_id: str,
+    min_length: int = 6,
+    encoding: str = "all",
+) -> dict[str, Any]:
+    """`bstrings.dll -f <file> --ms <min>` — extract printable strings from a
+    previously-extracted file.
+
+    Pre-req: `tsk_icat_extract`. `encoding` ∈ {"ascii", "unicode", "all"}.
+    `min_length` defaults to 6 (filter out noise).
+
+    Triage use: hardcoded URLs / mutex names / anti-sandbox checks /
+    PDB paths / error messages in unknown binaries. Cheap — typically
+    <1 second per file. Truncated to 50 strings on the wire; full set
+    drillable via `query_rows(<exec_id>, "string", "<substr>")`."""
+    return _strings_extract(
+        extract_exec_id, audit=_audit(),
+        min_length=min_length, encoding=encoding,
+    )
+
+
+@mcp.tool()
+def hash_file(extract_exec_id: str) -> dict[str, Any]:
+    """Compute MD5 + SHA-1 + SHA-256 (+ optional ssdeep fuzzy hash) on a
+    previously-extracted file.
+
+    Pre-req: `tsk_icat_extract`. Returns size_bytes, md5, sha1, sha256
+    (+ ssdeep when the binary is installed). Useful for:
+      * Matching dropped binaries against external IOC lists (VirusTotal,
+        threat-intel feeds — agent does the matching offline).
+      * Chain-of-custody anchors for evidence sub-elements.
+      * Fuzzy similarity to known-malicious samples (ssdeep)."""
+    return _hash_file(extract_exec_id, audit=_audit())
 
 
 # ---------------------------------------------------------------------------

@@ -205,9 +205,13 @@ _ROWS_KEY: dict[str, str] = {
     "ezt_jumplist_parse":  "rows",
     "ezt_recyclebin_parse": "rows",
     "ezt_task_xml_parse":  "rows",
-    # ezt_amcache_parse / ezt_srum_parse / ezt_persistence_keys_parse have
-    # nested-section layout — query_rows not registered (per-section
-    # truncation already returns 50 rows each).
+    "yara_scan_extract":   "rows",
+    "vol3_vadyarascan":    "rows",
+    "strings_extract":     "rows",
+    # ezt_amcache_parse / ezt_srum_parse / ezt_persistence_keys_parse /
+    # bulk_extract have nested-section layout — query_rows not registered
+    # (per-section truncation already returns top 50 rows each).
+    # hash_file has no row list (single hash record) — n/a
     # ewf_info / ewf_verify / tsk_fs_stat have no row list — n/a
     # tsk_icat_extract has no parsed-text output — n/a
 }
@@ -283,6 +287,18 @@ def _register_parsers() -> None:
     _PARSERS.update({
         "ezt_task_xml_parse":          parse_task_xml,
         "ezt_persistence_keys_parse":  parse_persistence_keys,
+    })
+    # Phase 3 threat-hunt parsers (YARA, bulk_extractor, strings, hashes).
+    from mcp_server.parsers.threat_hunt import (
+        parse_bulk_extractor, parse_hash_result, parse_strings,
+        parse_vadyarascan, parse_yara,
+    )
+    _PARSERS.update({
+        "yara_scan_extract":  parse_yara,
+        "vol3_vadyarascan":   parse_vadyarascan,
+        "bulk_extract":       parse_bulk_extractor,
+        "strings_extract":    parse_strings,
+        "hash_file":          parse_hash_result,
     })
 
 

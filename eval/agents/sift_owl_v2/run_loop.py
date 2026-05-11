@@ -101,6 +101,12 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__ezt_srum_parse",
     "mcp__sift-owl__ezt_task_xml_parse",
     "mcp__sift-owl__ezt_persistence_keys_parse",
+    # threat hunt + carving + hashing (Phase 3)
+    "mcp__sift-owl__yara_scan_extract",
+    "mcp__sift-owl__vol3_vadyarascan",
+    "mcp__sift-owl__bulk_extract",
+    "mcp__sift-owl__strings_extract",
+    "mcp__sift-owl__hash_file",
     # drill helper
     "mcp__sift-owl__query_rows",
 ])

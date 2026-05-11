@@ -40,8 +40,11 @@ apt_install() {
     fi
 }
 
-# YARA — for Phase 3 (yara_scan_extract / vol3_vadyarascan).
+# YARA — Phase 3 (yara_scan_extract / vol3_vadyarascan). Required.
 apt_install yara
+
+# ssdeep — Phase 3 hash_file fuzzy-hash. Optional (hash_file works without it).
+apt_install ssdeep
 
 # Volatility 2 — for Phase 2 Win7-x86 PAE + WinXP memory analysis.
 # Ubuntu's `volatility` package ships v2.6 with Python 2 baked in.
