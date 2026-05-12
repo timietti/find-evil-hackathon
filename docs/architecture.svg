@@ -96,30 +96,30 @@
       <text x="530" y="336" class="small">Every call: validate args → run subprocess (argv-list)</text>
       <text x="530" y="352" class="small">→ parse → write audit row → return parsed dict</text>
 
-      <!-- Tool group boxes — height 54 each, 3 internal text lines fit cleanly -->
+      <!-- Tool group boxes — height 54, 3 lines each, text widths verified to fit -->
       <g>
         <rect x="530" y="362" width="178" height="54" rx="4" fill="#bae6fd"/>
         <text x="619" y="378" class="small" text-anchor="middle" font-weight="700">Memory · Vol3 (17)</text>
         <text x="619" y="394" class="small" text-anchor="middle">image_info, psscan, pstree,</text>
-        <text x="619" y="408" class="small" text-anchor="middle" font-size="10">cmdline, netscan, filescan, malfind, ...</text>
+        <text x="619" y="408" class="small" text-anchor="middle" font-size="10">netscan, filescan, malfind, ...</text>
       </g>
       <g>
         <rect x="720" y="362" width="190" height="54" rx="4" fill="#bbf7d0"/>
         <text x="815" y="378" class="small" text-anchor="middle" font-weight="700">Disk · Sleuth Kit + EWF (6)</text>
         <text x="815" y="394" class="small" text-anchor="middle">ewf_info, mmls, fsstat,</text>
-        <text x="815" y="408" class="small" text-anchor="middle" font-size="10">tsk_fls_list, tsk_icat_extract (→exec_id)</text>
+        <text x="815" y="408" class="small" text-anchor="middle" font-size="10">tsk_fls_list, tsk_icat_extract</text>
       </g>
       <g>
         <rect x="530" y="424" width="188" height="54" rx="4" fill="#fde68a"/>
         <text x="624" y="440" class="small" text-anchor="middle" font-weight="700">Windows artefacts · EZT (10)</text>
-        <text x="624" y="456" class="small" text-anchor="middle">MFT, ShimCache, EVTX, Amcache,</text>
-        <text x="624" y="470" class="small" text-anchor="middle" font-size="10">Prefetch, JumpList, RB, SRUM, Task XML, Run keys</text>
+        <text x="624" y="456" class="small" text-anchor="middle">MFT, ShimCache, EVTX,</text>
+        <text x="624" y="470" class="small" text-anchor="middle" font-size="10">Amcache, Prefetch, JLE, RB, SRUM, ...</text>
       </g>
       <g>
         <rect x="720" y="424" width="190" height="54" rx="4" fill="#fecaca"/>
         <text x="815" y="440" class="small" text-anchor="middle" font-weight="700">Threat hunt + hash (4)</text>
-        <text x="815" y="456" class="small" text-anchor="middle">yara_scan_extract, bulk_extract,</text>
-        <text x="815" y="470" class="small" text-anchor="middle" font-size="10">strings_extract, hash_file, vol3_vadyarascan</text>
+        <text x="815" y="456" class="small" text-anchor="middle">yara_scan, bulk_extract,</text>
+        <text x="815" y="470" class="small" text-anchor="middle" font-size="10">strings, hash_file, vadyarascan</text>
       </g>
       <g>
         <rect x="530" y="488" width="380" height="22" rx="3" fill="#e9d5ff"/>
@@ -170,7 +170,7 @@
   <g>
     <rect x="60" y="660" width="380" height="42" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
     <text x="250" y="678" class="small" text-anchor="middle" font-weight="700">final_response.md</text>
-    <text x="250" y="694" class="small" text-anchor="middle">tagged claims [CONFIRMED] / [INFERRED] / [HYPOTHESIS] / [GAP] + exec_id citations</text>
+    <text x="250" y="694" class="small" text-anchor="middle">tagged claims + exec_id citations  ·  validator scores</text>
   </g>
 
   <!-- ========== VALIDATOR (right column) ========== -->
