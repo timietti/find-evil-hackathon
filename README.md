@@ -53,6 +53,8 @@ An autonomous, agentic AI forensics investigator that runs on the SANS SIFT Work
 | Context bloat | Single agent reads all raw output | MCP server parses + truncates at the wire; full rows on disk, drillable via `query_rows` |
 | Self-correction | None | Persistent learning loop with validator feedback in the next iteration's prompt |
 
+![Architecture diagram](docs/architecture.png)
+
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the system design and trust boundaries.
 
 ## Quick start

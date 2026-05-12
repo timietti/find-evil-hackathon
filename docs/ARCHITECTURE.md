@@ -2,6 +2,11 @@
 
 **Status:** v0.4 (2026-05-10) — describes the system as implemented. Sections marked *deferred* are documented choices we explicitly did not build.
 
+![SIFT-OWL architecture](architecture.png)
+
+Source: [`architecture.svg`](architecture.svg). The diagram is normative —
+where it disagrees with prose below, file an issue.
+
 ## Goals
 
 1. **Architecturally enforce evidence integrity.** The agent must be unable to modify or read-side-channel evidence even if the model misbehaves — enforced by the MCP boundary, not by prompts.

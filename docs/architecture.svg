@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#374151"/>
+    </marker>
+    <marker id="arrow-loop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+    <style>
+      .h1     { font-size: 22px; font-weight: 700; fill: #111827; }
+      .h2     { font-size: 15px; font-weight: 700; fill: #111827; }
+      .label  { font-size: 13px; fill: #1f2937; }
+      .small  { font-size: 11px; fill: #4b5563; }
+      .mono   { font-family: 'SF Mono','Menlo','Consolas',monospace; font-size: 11px; fill: #1f2937; }
+      .denied { font-size: 11px; fill: #b91c1c; }
+      .ok     { font-size: 11px; fill: #047857; }
+      .tb     { font-size: 11px; fill: #b91c1c; font-weight: 700; }
+      .tbnote { font-size: 10px; fill: #991b1b; }
+      .meta   { font-size: 10px; fill: #6b7280; font-style: italic; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="900" fill="#f9fafb"/>
+
+  <!-- Title -->
+  <text x="700" y="35" class="h1" text-anchor="middle">SIFT-OWL — Architecture (v0.4, 38 typed MCP tools)</text>
+  <text x="700" y="55" class="meta" text-anchor="middle">Self-correcting DFIR loop on a typed read-only MCP boundary, with per-call audit anchoring every claim to a tool execution</text>
+
+  <!-- ========== ORCHESTRATOR ROW (top) ========== -->
+  <g>
+    <rect x="40" y="85" width="1320" height="100" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <text x="60" y="110" class="h2">v2 self-correction loop  ·  eval/agents/sift_owl_v2/run_loop.py</text>
+    <text x="60" y="130" class="small">For N iterations: build prompt → spawn investigator subprocess → run validator → if not converged + within budget, build follow-up prompt with flagged claims, loop</text>
+
+    <!-- Cap badges -->
+    <g transform="translate(60, 145)">
+      <rect width="170" height="28" rx="4" fill="#dbeafe" stroke="#3b82f6"/>
+      <text x="85" y="18" class="small" text-anchor="middle">max-iterations  ·  default 3</text>
+    </g>
+    <g transform="translate(245, 145)">
+      <rect width="170" height="28" rx="4" fill="#dbeafe" stroke="#3b82f6"/>
+      <text x="85" y="18" class="small" text-anchor="middle">max-budget-usd  ·  $5-30</text>
+    </g>
+    <g transform="translate(430, 145)">
+      <rect width="170" height="28" rx="4" fill="#dbeafe" stroke="#3b82f6"/>
+      <text x="85" y="18" class="small" text-anchor="middle">max-turns-per-iter  ·  120-200</text>
+    </g>
+    <g transform="translate(615, 145)">
+      <rect width="180" height="28" rx="4" fill="#dcfce7" stroke="#059669"/>
+      <text x="90" y="18" class="ok" text-anchor="middle">Terminate: converged / no-improve</text>
+    </g>
+    <g transform="translate(810, 145)">
+      <rect width="280" height="28" rx="4" fill="#fef3c7" stroke="#d97706"/>
+      <text x="140" y="18" class="small" text-anchor="middle" fill="#92400e">Replan: validator-flagged claims → next prompt</text>
+    </g>
+    <g transform="translate(1105, 145)">
+      <rect width="240" height="28" rx="4" fill="#fee2e2" stroke="#dc2626"/>
+      <text x="120" y="18" class="denied" text-anchor="middle">Hard caps enforced before each iter</text>
+    </g>
+  </g>
+
+  <!-- ========== ITERATION BOX ========== -->
+  <g>
+    <rect x="40" y="220" width="900" height="495" rx="8" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="60" y="245" class="h2">Per-iteration N</text>
+    <text x="60" y="263" class="meta">spawned as a subprocess; cannot read each other's state except via the shared audit log</text>
+
+    <!-- Investigator -->
+    <g>
+      <rect x="60" y="280" width="380" height="140" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/>
+      <text x="70" y="302" class="h2">Investigator subprocess</text>
+      <text x="70" y="319" class="mono">claude -p &lt;prompt&gt;  --model sonnet</text>
+      <text x="70" y="336" class="mono">  --mcp-config &lt;run-specific stdio cfg&gt;</text>
+      <text x="70" y="353" class="mono">  --allowed-tools "mcp__sift-owl__*"</text>
+      <text x="70" y="370" class="denied" font-family="'SF Mono','Menlo','Consolas',monospace">  --disallowed-tools Bash Edit Write Read</text>
+      <text x="70" y="385" class="denied" font-family="'SF Mono','Menlo','Consolas',monospace">                     NotebookEdit WebFetch</text>
+      <text x="70" y="400" class="denied" font-family="'SF Mono','Menlo','Consolas',monospace">                     WebSearch Agent Skill</text>
+      <text x="70" y="412" class="small">No shell. No filesystem-by-path. No web access. No sub-agent fan-out.</text>
+    </g>
+
+    <!-- MCP stdio arrows -->
+    <path d="M 440 350 L 520 350" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <text x="480" y="338" class="small" text-anchor="middle">MCP stdio</text>
+    <text x="480" y="368" class="small" text-anchor="middle">(JSON-RPC)</text>
+
+    <!-- MCP server box -->
+    <g>
+      <rect x="520" y="280" width="400" height="200" rx="6" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
+      <text x="530" y="302" class="h2">sift-mcp  ·  FastMCP stdio server</text>
+      <text x="530" y="320" class="small">38 typed read-only tools; Pydantic input schemas</text>
+      <text x="530" y="336" class="small">Every call: validate args → run subprocess (argv-list)</text>
+      <text x="530" y="352" class="small">→ parse → write audit row → return parsed dict</text>
+
+      <!-- Tool group boxes -->
+      <g>
+        <rect x="530" y="365" width="178" height="42" rx="4" fill="#bae6fd"/>
+        <text x="619" y="380" class="small" text-anchor="middle" font-weight="700">Memory · Vol3 (17)</text>
+        <text x="619" y="395" class="small" text-anchor="middle">image_info, psscan, pstree, cmdline,</text>
+        <text x="538" y="405" class="small" font-size="10">netscan, filescan, malfind, svcscan, ...</text>
+      </g>
+      <g>
+        <rect x="720" y="365" width="190" height="42" rx="4" fill="#bbf7d0"/>
+        <text x="815" y="380" class="small" text-anchor="middle" font-weight="700">Disk · Sleuth Kit + EWF (6)</text>
+        <text x="815" y="395" class="small" text-anchor="middle">ewf_info, ewf_verify, mmls, fsstat,</text>
+        <text x="725" y="405" class="small" font-size="10">tsk_fls_list, tsk_icat_extract (→exec_id)</text>
+      </g>
+      <g>
+        <rect x="530" y="415" width="188" height="42" rx="4" fill="#fde68a"/>
+        <text x="624" y="430" class="small" text-anchor="middle" font-weight="700">Windows artefacts · EZT (10)</text>
+        <text x="624" y="445" class="small" text-anchor="middle">MFT, ShimCache, EVTX, Amcache,</text>
+        <text x="538" y="455" class="small" font-size="10">Prefetch, JumpList, RB, SRUM, Task XML, Run keys</text>
+      </g>
+      <g>
+        <rect x="720" y="415" width="190" height="42" rx="4" fill="#fecaca"/>
+        <text x="815" y="430" class="small" text-anchor="middle" font-weight="700">Threat hunt + hash (4)</text>
+        <text x="815" y="445" class="small" text-anchor="middle">yara_scan_extract, bulk_extract,</text>
+        <text x="725" y="455" class="small" font-size="10">strings_extract, hash_file (+ vol3_vadyarascan)</text>
+      </g>
+      <g>
+        <rect x="530" y="460" width="380" height="14" rx="3" fill="#e9d5ff"/>
+        <text x="720" y="471" class="small" text-anchor="middle" font-weight="700">query_rows  ·  re-parse + filter any prior call's full row list by exec_id</text>
+      </g>
+    </g>
+
+    <!-- subprocess arrow -->
+    <path d="M 720 480 L 720 545" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <text x="730" y="515" class="small">subprocess (argv-list; no shell=True)</text>
+
+    <!-- Tools row -->
+    <g>
+      <rect x="520" y="555" width="400" height="78" rx="6" fill="#f3f4f6" stroke="#6b7280" stroke-width="1"/>
+      <text x="530" y="577" class="h2">SIFT tool executables</text>
+      <text x="530" y="595" class="mono">vol  ·  fls / icat / mmls / fsstat  ·  ewfinfo / ewfverify</text>
+      <text x="530" y="610" class="mono">MFTECmd  ·  EvtxECmd  ·  AmcacheParser  ·  PECmd  ·  ...</text>
+      <text x="530" y="625" class="mono">yara  ·  bulk_extractor  ·  bstrings  ·  hashlib + ssdeep</text>
+    </g>
+
+    <!-- Audit log -->
+    <g>
+      <rect x="60" y="455" width="380" height="178" rx="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+      <text x="70" y="477" class="h2">Per-call audit log</text>
+      <text x="70" y="495" class="mono">audit/exec_log.jsonl  (one row per MCP call)</text>
+      <text x="70" y="513" class="mono" font-size="10">{ exec_id: 019e1372-f51a-7ba3-9b97-...</text>
+      <text x="70" y="526" class="mono" font-size="10">  ts: "2026-05-10T18:00:00Z",</text>
+      <text x="70" y="539" class="mono" font-size="10">  tool: "vol3_psscan",</text>
+      <text x="70" y="552" class="mono" font-size="10">  args: { image: "/cases/..." },</text>
+      <text x="70" y="565" class="mono" font-size="10">  input_hash:  "sha256:...",</text>
+      <text x="70" y="578" class="mono" font-size="10">  output_hash: "sha256:...",</text>
+      <text x="70" y="591" class="mono" font-size="10">  raw_output_path: "audit/raw/...",</text>
+      <text x="70" y="604" class="mono" font-size="10">  exit_code: 0, wall_ms: 7820,</text>
+      <text x="70" y="617" class="mono" font-size="10">  summary: "112 procs; 0 hidden",</text>
+      <text x="70" y="630" class="mono" font-size="10">  parsed_summary: { ... } }</text>
+    </g>
+
+    <!-- MCP → audit arrow -->
+    <path d="M 520 472 L 445 472" stroke="#6d28d9" stroke-width="1.5" fill="none" marker-end="url(#arrow)" stroke-dasharray="3 2"/>
+    <text x="450" y="465" class="small" fill="#6d28d9">write_row</text>
+
+    <!-- final response (out of subprocess) -->
+    <path d="M 250 420 L 250 660" stroke="#1d4ed8" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <text x="260" y="655" class="small" fill="#1d4ed8">final_response.md</text>
+  </g>
+
+  <!-- final response box -->
+  <g>
+    <rect x="60" y="660" width="380" height="42" rx="6" fill="#dbeafe" stroke="#1d4ed8"/>
+    <text x="250" y="678" class="small" text-anchor="middle" font-weight="700">final_response.md</text>
+    <text x="250" y="694" class="small" text-anchor="middle">tagged claims [CONFIRMED] / [INFERRED] / [HYPOTHESIS] / [GAP] + exec_id citations</text>
+  </g>
+
+  <!-- ========== VALIDATOR (right column) ========== -->
+  <g>
+    <rect x="970" y="220" width="390" height="495" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="990" y="245" class="h2">Validator (after each iteration)</text>
+    <text x="990" y="263" class="meta">agents/validator/validate.py</text>
+
+    <!-- Steps -->
+    <g transform="translate(990, 285)">
+      <rect width="350" height="46" rx="4" fill="#ffedd5" stroke="#c2410c"/>
+      <text x="10" y="18" class="h2" font-size="13">① Segment claims</text>
+      <text x="10" y="34" class="small">parse_claims(final_response.md)</text>
+    </g>
+    <g transform="translate(990, 343)">
+      <rect width="350" height="46" rx="4" fill="#ffedd5" stroke="#c2410c"/>
+      <text x="10" y="18" class="h2" font-size="13">② Extract structured tokens</text>
+      <text x="10" y="34" class="small">PIDs, IPs, paths, ISO ts, hashes, inodes, emails</text>
+    </g>
+    <g transform="translate(990, 401)">
+      <rect width="350" height="46" rx="4" fill="#ffedd5" stroke="#c2410c"/>
+      <text x="10" y="18" class="h2" font-size="13">③ Resolve exec_id → parsed JSON</text>
+      <text x="10" y="34" class="small">v5: prose / tag / prefix-lookup; paren-aware negation</text>
+    </g>
+    <g transform="translate(990, 459)">
+      <rect width="350" height="46" rx="4" fill="#ffedd5" stroke="#c2410c"/>
+      <text x="10" y="18" class="h2" font-size="13">④ Structural verification</text>
+      <text x="10" y="34" class="small">every token must appear in parsed data (or be negated)</text>
+    </g>
+    <g transform="translate(990, 517)">
+      <rect width="350" height="46" rx="4" fill="#ffe4e6" stroke="#9f1239"/>
+      <text x="10" y="18" class="h2" font-size="13">⑤ v4 opt-in: LLM prose check</text>
+      <text x="10" y="34" class="small">Haiku 4.5 reads parsed JSON; verdict ∈ {V, X, R, ?}</text>
+    </g>
+
+    <!-- Verdicts -->
+    <g transform="translate(990, 580)">
+      <text x="0" y="14" class="h2" font-size="13">Per-claim verdict</text>
+    </g>
+    <g transform="translate(990, 595)">
+      <rect width="80" height="22" rx="4" fill="#bbf7d0" stroke="#047857"/>
+      <text x="40" y="15" class="ok" text-anchor="middle" font-weight="700">verified</text>
+    </g>
+    <g transform="translate(1080, 595)">
+      <rect width="74" height="22" rx="4" fill="#fde68a" stroke="#a16207"/>
+      <text x="37" y="15" class="small" text-anchor="middle" font-weight="700">partial</text>
+    </g>
+    <g transform="translate(1164, 595)">
+      <rect width="70" height="22" rx="4" fill="#fecaca" stroke="#b91c1c"/>
+      <text x="35" y="15" class="denied" text-anchor="middle" font-weight="700">failed</text>
+    </g>
+    <g transform="translate(1244, 595)">
+      <rect width="96" height="22" rx="4" fill="#e5e7eb" stroke="#6b7280"/>
+      <text x="48" y="15" class="small" text-anchor="middle" font-weight="700">unverifiable</text>
+    </g>
+    <g transform="translate(990, 625)">
+      <rect width="106" height="22" rx="4" fill="#fde2e2" stroke="#b91c1c"/>
+      <text x="53" y="15" class="denied" text-anchor="middle" font-weight="700">not_confirmed</text>
+    </g>
+    <g transform="translate(1106, 625)">
+      <rect width="128" height="22" rx="4" fill="#fde2e2" stroke="#b91c1c"/>
+      <text x="64" y="15" class="denied" text-anchor="middle" font-weight="700">exec_id_not_found</text>
+    </g>
+    <g transform="translate(1244, 625)">
+      <rect width="96" height="22" rx="4" fill="#fde2e2" stroke="#b91c1c"/>
+      <text x="48" y="15" class="denied" text-anchor="middle" font-weight="700">tool_unsupported</text>
+    </g>
+
+    <text x="990" y="668" class="small" font-style="italic" fill="#6b7280">strict-verified = verified / (verified + partial + failed + unverifiable)</text>
+    <text x="990" y="682" class="small" font-style="italic" fill="#6b7280">ROCBA-001: 91.7%  ·  STARK-APT: 86.1%  ·  SHIELDBASE: 71.4% (held-out)</text>
+    <text x="990" y="700" class="small" font-style="italic" fill="#ea580c">If not converged: flagged claims → next iteration's prompt</text>
+  </g>
+
+  <!-- final_response → validator arrow -->
+  <path d="M 440 681 L 985 681 L 985 460 L 985 460" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arrow-loop)"/>
+  <text x="700" y="675" class="small" fill="#ea580c" text-anchor="middle">claims + audit log → validator</text>
+
+  <!-- audit → validator -->
+  <path d="M 445 545 L 985 545" stroke="#6d28d9" stroke-width="1.5" fill="none" stroke-dasharray="3 2" marker-end="url(#arrow)"/>
+  <text x="700" y="540" class="small" fill="#6d28d9" text-anchor="middle">audit log read for exec_id → parsed JSON</text>
+
+  <!-- ========== EVIDENCE (bottom) ========== -->
+  <g>
+    <rect x="40" y="755" width="900" height="120" rx="8" fill="#f3f4f6" stroke="#374151" stroke-width="1.5"/>
+    <text x="60" y="780" class="h2">Evidence  ·  read-only</text>
+    <text x="60" y="800" class="small">/cases/&lt;CASE&gt;/  —  validated at every MCP call via validate_evidence_path() (allow-list resolver, symlink-safe)</text>
+
+    <g transform="translate(60, 815)">
+      <rect width="180" height="46" rx="4" fill="#e5e7eb"/>
+      <text x="10" y="18" class="small" font-weight="700">Disk images (E01)</text>
+      <text x="10" y="34" class="mono" font-size="10">  read via libewf  ·  no mount</text>
+    </g>
+    <g transform="translate(255, 815)">
+      <rect width="180" height="46" rx="4" fill="#e5e7eb"/>
+      <text x="10" y="18" class="small" font-weight="700">Memory images (.raw / .001)</text>
+      <text x="10" y="34" class="mono" font-size="10">  read via Vol3 mmap</text>
+    </g>
+    <g transform="translate(450, 815)">
+      <rect width="180" height="46" rx="4" fill="#e5e7eb"/>
+      <text x="10" y="18" class="small" font-weight="700">Extracted artefacts</text>
+      <text x="10" y="34" class="mono" font-size="10">  audit/raw/extracts/&lt;exec_id&gt;.bin</text>
+    </g>
+    <g transform="translate(645, 815)">
+      <rect width="280" height="46" rx="4" fill="#fee2e2" stroke="#b91c1c"/>
+      <text x="10" y="18" class="denied" font-weight="700">No write paths exposed</text>
+      <text x="10" y="34" class="mono" font-size="10">  agent has no way to modify /cases/</text>
+    </g>
+  </g>
+
+  <!-- subprocess → evidence arrow -->
+  <path d="M 720 633 L 720 755" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="730" y="700" class="small">read-only access  ·  paths validated</text>
+
+  <!-- ========== TRUST BOUNDARIES (right column) ========== -->
+  <g>
+    <rect x="970" y="735" width="390" height="140" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="990" y="758" class="h2">Trust boundaries (architecturally enforced)</text>
+    <text x="990" y="776" class="tbnote">tested in tests/test_mcp_server.py + tests/test_validator.py</text>
+
+    <text x="990" y="796" class="tb">TB1  Agent → Bash</text>
+    <text x="1090" y="796" class="small" fill="#7f1d1d">denied via --disallowed-tools; no Bash mcp tool</text>
+
+    <text x="990" y="810" class="tb">TB2  MCP → paths</text>
+    <text x="1090" y="810" class="small" fill="#7f1d1d">validate_evidence_path; resolves symlinks; allow-list</text>
+
+    <text x="990" y="824" class="tb">TB3  Subprocess shell</text>
+    <text x="1090" y="824" class="small" fill="#7f1d1d">argv-list only; shell=True never used</text>
+
+    <text x="990" y="838" class="tb">TB4  EZT input paths</text>
+    <text x="1090" y="838" class="small" fill="#7f1d1d">extract_exec_id chain only; no path arg</text>
+
+    <text x="990" y="852" class="tb">TB5  Network egress</text>
+    <text x="1090" y="852" class="small" fill="#7f1d1d">no http/curl/wget tools in MCP inventory</text>
+
+    <text x="990" y="866" class="tb">TB6  Claim ↔ evidence</text>
+    <text x="1090" y="866" class="small" fill="#7f1d1d">validator structural check + optional LLM</text>
+  </g>
+
+  <!-- Loop arrow -->
+  <g>
+    <path d="M 985 700 Q 1380 700 1380 175 Q 1380 100 935 100 L 935 100" stroke="#d97706" stroke-width="2.5" fill="none" stroke-dasharray="8 4" marker-end="url(#arrow-loop)"/>
+    <text x="1380" y="430" class="small" fill="#d97706" font-weight="700" transform="rotate(90 1380 430)" text-anchor="middle">loop: next iteration prompt = base + flagged claims</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="40" y="892" class="meta">
+    SIFT-OWL · find-evil-hackathon · 38 tools (Phase 1 + 1.5 + 3) · 258 unit tests · validator v0..v5 · MIT
+  </text>
+  <text x="1360" y="892" class="meta" text-anchor="end">
+    miettinen.timo@gmail.com  ·  2026-06-15 submission
+  </text>
+</svg>
