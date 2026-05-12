@@ -90,54 +90,54 @@
 
     <!-- MCP server box -->
     <g>
-      <rect x="520" y="280" width="400" height="200" rx="6" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
+      <rect x="520" y="280" width="400" height="240" rx="6" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
       <text x="530" y="302" class="h2">sift-mcp  ·  FastMCP stdio server</text>
       <text x="530" y="320" class="small">38 typed read-only tools; Pydantic input schemas</text>
       <text x="530" y="336" class="small">Every call: validate args → run subprocess (argv-list)</text>
       <text x="530" y="352" class="small">→ parse → write audit row → return parsed dict</text>
 
-      <!-- Tool group boxes -->
+      <!-- Tool group boxes — height 54 each, 3 internal text lines fit cleanly -->
       <g>
-        <rect x="530" y="365" width="178" height="42" rx="4" fill="#bae6fd"/>
-        <text x="619" y="380" class="small" text-anchor="middle" font-weight="700">Memory · Vol3 (17)</text>
-        <text x="619" y="395" class="small" text-anchor="middle">image_info, psscan, pstree, cmdline,</text>
-        <text x="538" y="405" class="small" font-size="10">netscan, filescan, malfind, svcscan, ...</text>
+        <rect x="530" y="362" width="178" height="54" rx="4" fill="#bae6fd"/>
+        <text x="619" y="378" class="small" text-anchor="middle" font-weight="700">Memory · Vol3 (17)</text>
+        <text x="619" y="394" class="small" text-anchor="middle">image_info, psscan, pstree,</text>
+        <text x="619" y="408" class="small" text-anchor="middle" font-size="10">cmdline, netscan, filescan, malfind, ...</text>
       </g>
       <g>
-        <rect x="720" y="365" width="190" height="42" rx="4" fill="#bbf7d0"/>
-        <text x="815" y="380" class="small" text-anchor="middle" font-weight="700">Disk · Sleuth Kit + EWF (6)</text>
-        <text x="815" y="395" class="small" text-anchor="middle">ewf_info, ewf_verify, mmls, fsstat,</text>
-        <text x="725" y="405" class="small" font-size="10">tsk_fls_list, tsk_icat_extract (→exec_id)</text>
+        <rect x="720" y="362" width="190" height="54" rx="4" fill="#bbf7d0"/>
+        <text x="815" y="378" class="small" text-anchor="middle" font-weight="700">Disk · Sleuth Kit + EWF (6)</text>
+        <text x="815" y="394" class="small" text-anchor="middle">ewf_info, mmls, fsstat,</text>
+        <text x="815" y="408" class="small" text-anchor="middle" font-size="10">tsk_fls_list, tsk_icat_extract (→exec_id)</text>
       </g>
       <g>
-        <rect x="530" y="415" width="188" height="42" rx="4" fill="#fde68a"/>
-        <text x="624" y="430" class="small" text-anchor="middle" font-weight="700">Windows artefacts · EZT (10)</text>
-        <text x="624" y="445" class="small" text-anchor="middle">MFT, ShimCache, EVTX, Amcache,</text>
-        <text x="538" y="455" class="small" font-size="10">Prefetch, JumpList, RB, SRUM, Task XML, Run keys</text>
+        <rect x="530" y="424" width="188" height="54" rx="4" fill="#fde68a"/>
+        <text x="624" y="440" class="small" text-anchor="middle" font-weight="700">Windows artefacts · EZT (10)</text>
+        <text x="624" y="456" class="small" text-anchor="middle">MFT, ShimCache, EVTX, Amcache,</text>
+        <text x="624" y="470" class="small" text-anchor="middle" font-size="10">Prefetch, JumpList, RB, SRUM, Task XML, Run keys</text>
       </g>
       <g>
-        <rect x="720" y="415" width="190" height="42" rx="4" fill="#fecaca"/>
-        <text x="815" y="430" class="small" text-anchor="middle" font-weight="700">Threat hunt + hash (4)</text>
-        <text x="815" y="445" class="small" text-anchor="middle">yara_scan_extract, bulk_extract,</text>
-        <text x="725" y="455" class="small" font-size="10">strings_extract, hash_file (+ vol3_vadyarascan)</text>
+        <rect x="720" y="424" width="190" height="54" rx="4" fill="#fecaca"/>
+        <text x="815" y="440" class="small" text-anchor="middle" font-weight="700">Threat hunt + hash (4)</text>
+        <text x="815" y="456" class="small" text-anchor="middle">yara_scan_extract, bulk_extract,</text>
+        <text x="815" y="470" class="small" text-anchor="middle" font-size="10">strings_extract, hash_file, vol3_vadyarascan</text>
       </g>
       <g>
-        <rect x="530" y="460" width="380" height="14" rx="3" fill="#e9d5ff"/>
-        <text x="720" y="471" class="small" text-anchor="middle" font-weight="700">query_rows  ·  re-parse + filter any prior call's full row list by exec_id</text>
+        <rect x="530" y="488" width="380" height="22" rx="3" fill="#e9d5ff"/>
+        <text x="720" y="503" class="small" text-anchor="middle" font-weight="700">query_rows  ·  re-parse + filter any prior call's full row list by exec_id</text>
       </g>
     </g>
 
-    <!-- subprocess arrow -->
-    <path d="M 720 480 L 720 545" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-    <text x="730" y="515" class="small">subprocess (argv-list; no shell=True)</text>
+    <!-- subprocess arrow — MCP-bottom (y=520) down to SIFT-tools-top (y=555) -->
+    <path d="M 720 520 L 720 555" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
 
-    <!-- Tools row -->
+    <!-- Tools row — subprocess subtitle absorbs the "argv-list; no shell=True" note that used to sit beside the arrow -->
     <g>
       <rect x="520" y="555" width="400" height="78" rx="6" fill="#f3f4f6" stroke="#6b7280" stroke-width="1"/>
-      <text x="530" y="577" class="h2">SIFT tool executables</text>
-      <text x="530" y="595" class="mono">vol  ·  fls / icat / mmls / fsstat  ·  ewfinfo / ewfverify</text>
-      <text x="530" y="610" class="mono">MFTECmd  ·  EvtxECmd  ·  AmcacheParser  ·  PECmd  ·  ...</text>
-      <text x="530" y="625" class="mono">yara  ·  bulk_extractor  ·  bstrings  ·  hashlib + ssdeep</text>
+      <text x="530" y="573" class="h2">SIFT tool executables</text>
+      <text x="530" y="588" class="small" fill="#6b7280">subprocess invocation  ·  argv-list only  ·  shell=True never used</text>
+      <text x="530" y="603" class="mono">vol  ·  fls / icat / mmls / fsstat  ·  ewfinfo / ewfverify</text>
+      <text x="530" y="616" class="mono">MFTECmd  ·  EvtxECmd  ·  AmcacheParser  ·  PECmd  ·  ...</text>
+      <text x="530" y="629" class="mono">yara  ·  bulk_extractor  ·  bstrings  ·  hashlib + ssdeep</text>
     </g>
 
     <!-- Audit log -->
@@ -244,13 +244,13 @@
     <text x="990" y="700" class="small" font-style="italic" fill="#ea580c">If not converged: flagged claims → next iteration's prompt</text>
   </g>
 
-  <!-- final_response → validator step ① — L-shape via the bottom band of the iteration box (y≈700, below the tools row at y=633), then up the right edge -->
-  <path d="M 440 690 L 950 690 L 950 308 L 970 308" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arrow-loop)"/>
-  <text x="690" y="708" class="small" fill="#ea580c" font-weight="700" text-anchor="middle">claims  →  validator</text>
+  <!-- final_response → validator step ① — exit final_response bottom-right, route via y=710 (clean band between final_response y=702 and iteration-bottom y=715), then up the right margin -->
+  <path d="M 440 702 L 440 710 L 955 710 L 955 308 L 970 308" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arrow-loop)"/>
+  <text x="690" y="725" class="small" fill="#ea580c" font-weight="700" text-anchor="middle">claims  →  validator</text>
 
-  <!-- audit → validator step ③ — L-shape via the gap between MCP (y=480) and SIFT tools (y=555), then up the right edge -->
-  <path d="M 440 510 L 950 510 L 950 425 L 970 425" stroke="#6d28d9" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-  <text x="690" y="503" class="small" fill="#6d28d9" font-weight="700" text-anchor="middle">audit/exec_log.jsonl  →  resolve exec_id</text>
+  <!-- audit → validator step ③ — L-shape via y=540 (clean gap between MCP-bottom y=520 and SIFT-tools-top y=555), up the right margin at x=945 -->
+  <path d="M 440 540 L 945 540 L 945 425 L 970 425" stroke="#6d28d9" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="560" y="533" class="small" fill="#6d28d9" font-weight="700">audit/exec_log.jsonl  →  resolve exec_id</text>
 
   <!-- ========== EVIDENCE (bottom) ========== -->
   <g>
