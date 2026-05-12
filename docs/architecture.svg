@@ -52,7 +52,7 @@
     </g>
     <g transform="translate(615, 145)">
       <rect width="180" height="28" rx="4" fill="#dcfce7" stroke="#059669"/>
-      <text x="90" y="18" class="ok" text-anchor="middle">Terminate: converged / no-improve</text>
+      <text x="90" y="18" class="ok" text-anchor="middle">Stop: converged / no-improve</text>
     </g>
     <g transform="translate(810, 145)">
       <rect width="280" height="28" rx="4" fill="#fef3c7" stroke="#d97706"/>
@@ -234,9 +234,9 @@
       <rect width="128" height="22" rx="4" fill="#fde2e2" stroke="#b91c1c"/>
       <text x="64" y="15" class="denied" text-anchor="middle" font-weight="700">exec_id_not_found</text>
     </g>
-    <g transform="translate(1244, 625)">
-      <rect width="96" height="22" rx="4" fill="#fde2e2" stroke="#b91c1c"/>
-      <text x="48" y="15" class="denied" text-anchor="middle" font-weight="700">tool_unsupported</text>
+    <g transform="translate(1234, 625)">
+      <rect width="116" height="22" rx="4" fill="#fde2e2" stroke="#b91c1c"/>
+      <text x="58" y="15" class="denied" text-anchor="middle" font-weight="700">tool_unsupported</text>
     </g>
 
     <text x="990" y="668" class="small" font-style="italic" fill="#6b7280">strict-verified = verified / (verified + partial + failed + unverifiable)</text>
