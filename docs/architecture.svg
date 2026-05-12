@@ -161,9 +161,9 @@
     <path d="M 520 472 L 445 472" stroke="#6d28d9" stroke-width="1.5" fill="none" marker-end="url(#arrow)" stroke-dasharray="3 2"/>
     <text x="450" y="465" class="small" fill="#6d28d9">write_row</text>
 
-    <!-- final response (out of subprocess) -->
-    <path d="M 250 420 L 250 660" stroke="#1d4ed8" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-    <text x="260" y="655" class="small" fill="#1d4ed8">final_response.md</text>
+    <!-- final response (out of subprocess) — route via the 20px left margin (between iteration box left x=40 and audit box left x=60) so we don't cut through the audit log -->
+    <path d="M 60 420 L 50 420 L 50 660 L 60 660" stroke="#1d4ed8" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <text x="22" y="540" class="small" fill="#1d4ed8" font-weight="700" transform="rotate(-90 22 540)" text-anchor="middle">final_response.md</text>
   </g>
 
   <!-- final response box -->
