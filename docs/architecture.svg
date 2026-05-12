@@ -244,13 +244,13 @@
     <text x="990" y="700" class="small" font-style="italic" fill="#ea580c">If not converged: flagged claims → next iteration's prompt</text>
   </g>
 
-  <!-- final_response → validator arrow -->
-  <path d="M 440 681 L 985 681 L 985 460 L 985 460" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arrow-loop)"/>
-  <text x="700" y="675" class="small" fill="#ea580c" text-anchor="middle">claims + audit log → validator</text>
+  <!-- final_response → validator step ① — L-shape via the bottom band of the iteration box (y≈700, below the tools row at y=633), then up the right edge -->
+  <path d="M 440 690 L 950 690 L 950 308 L 970 308" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arrow-loop)"/>
+  <text x="690" y="708" class="small" fill="#ea580c" font-weight="700" text-anchor="middle">claims  →  validator</text>
 
-  <!-- audit → validator -->
-  <path d="M 445 545 L 985 545" stroke="#6d28d9" stroke-width="1.5" fill="none" stroke-dasharray="3 2" marker-end="url(#arrow)"/>
-  <text x="700" y="540" class="small" fill="#6d28d9" text-anchor="middle">audit log read for exec_id → parsed JSON</text>
+  <!-- audit → validator step ③ — L-shape via the gap between MCP (y=480) and SIFT tools (y=555), then up the right edge -->
+  <path d="M 440 510 L 950 510 L 950 425 L 970 425" stroke="#6d28d9" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="690" y="503" class="small" fill="#6d28d9" font-weight="700" text-anchor="middle">audit/exec_log.jsonl  →  resolve exec_id</text>
 
   <!-- ========== EVIDENCE (bottom) ========== -->
   <g>
@@ -280,9 +280,9 @@
     </g>
   </g>
 
-  <!-- subprocess → evidence arrow -->
-  <path d="M 720 633 L 720 755" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-  <text x="730" y="700" class="small">read-only access  ·  paths validated</text>
+  <!-- subprocess (SIFT tools) → evidence — drop straight down from the right edge of the tools row -->
+  <path d="M 880 633 L 880 755" stroke="#374151" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="780" y="745" class="small">read-only  ·  validated paths</text>
 
   <!-- ========== TRUST BOUNDARIES (right column) ========== -->
   <g>
@@ -309,10 +309,10 @@
     <text x="1090" y="866" class="small" fill="#7f1d1d">validator structural check + optional LLM</text>
   </g>
 
-  <!-- Loop arrow -->
+  <!-- Loop arrow — validator output → next iteration's prompt (back into orchestrator) -->
   <g>
-    <path d="M 985 700 Q 1380 700 1380 175 Q 1380 100 935 100 L 935 100" stroke="#d97706" stroke-width="2.5" fill="none" stroke-dasharray="8 4" marker-end="url(#arrow-loop)"/>
-    <text x="1380" y="430" class="small" fill="#d97706" font-weight="700" transform="rotate(90 1380 430)" text-anchor="middle">loop: next iteration prompt = base + flagged claims</text>
+    <path d="M 1340 670 L 1385 670 L 1385 130 L 1360 130" stroke="#d97706" stroke-width="2.5" fill="none" stroke-dasharray="8 4" marker-end="url(#arrow-loop)"/>
+    <text x="1370" y="400" class="small" fill="#d97706" font-weight="700" transform="rotate(-90 1370 400)" text-anchor="middle">flagged claims → next iteration's prompt</text>
   </g>
 
   <!-- Footer -->
