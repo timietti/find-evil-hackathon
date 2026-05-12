@@ -290,23 +290,23 @@
     <text x="990" y="758" class="h2">Trust boundaries (architecturally enforced)</text>
     <text x="990" y="776" class="tbnote">tested in tests/test_mcp_server.py + tests/test_validator.py</text>
 
-    <text x="990" y="796" class="tb">TB1  Agent -> Bash</text>
-    <text x="1090" y="796" class="small" fill="#7f1d1d">denied via --disallowed-tools; no Bash mcp tool</text>
+    <text x="990" y="796" class="tb">TB1  Agent -&gt; Bash</text>
+    <text x="1140" y="796" class="small" fill="#7f1d1d">--disallowed-tools; no Bash MCP tool</text>
 
-    <text x="990" y="810" class="tb">TB2  MCP -> paths</text>
-    <text x="1090" y="810" class="small" fill="#7f1d1d">validate_evidence_path; resolves symlinks; allow-list</text>
+    <text x="990" y="810" class="tb">TB2  MCP -&gt; paths</text>
+    <text x="1140" y="810" class="small" fill="#7f1d1d">path allow-list + symlink-safe resolver</text>
 
     <text x="990" y="824" class="tb">TB3  Subprocess shell</text>
-    <text x="1090" y="824" class="small" fill="#7f1d1d">argv-list only; shell=True never used</text>
+    <text x="1140" y="824" class="small" fill="#7f1d1d">argv-list; no shell=True</text>
 
     <text x="990" y="838" class="tb">TB4  EZT input paths</text>
-    <text x="1090" y="838" class="small" fill="#7f1d1d">extract_exec_id chain only; no path arg</text>
+    <text x="1140" y="838" class="small" fill="#7f1d1d">extract_exec_id chain only</text>
 
     <text x="990" y="852" class="tb">TB5  Network egress</text>
-    <text x="1090" y="852" class="small" fill="#7f1d1d">no http/curl/wget tools in MCP inventory</text>
+    <text x="1140" y="852" class="small" fill="#7f1d1d">no network tools in MCP inventory</text>
 
     <text x="990" y="866" class="tb">TB6  Claim &lt;-&gt; evidence</text>
-    <text x="1090" y="866" class="small" fill="#7f1d1d">validator structural check + optional LLM</text>
+    <text x="1140" y="866" class="small" fill="#7f1d1d">validator structural + LLM check</text>
   </g>
 
   <!-- Loop arrow — validator output -> next iteration's prompt (back into orchestrator) -->
