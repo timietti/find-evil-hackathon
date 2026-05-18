@@ -77,9 +77,10 @@ schema:
 - **6 disk tools** wrapping Sleuth Kit + EWF (`ewf_info`, `ewf_verify`,
   `tsk_partition_table`, `tsk_fs_stat`, `tsk_fls_list`, `tsk_icat_extract`)
 - **10 Windows-artefact parsers** wrapping EZ Tools + custom Python +
-  libyal libscca: MFTECmd, AppCompatCacheParser, EvtxECmd, AmcacheParser,
-  Prefetch (via pyscca — PECmd is Linux-broken), JLECmd, RBCmd, SrumECmd,
-  a Task-XML parser, a Run-keys parser via RECmd
+  libyal libscca + libesedb: MFTECmd, AppCompatCacheParser, EvtxECmd,
+  AmcacheParser, Prefetch (via pyscca — PECmd is Linux-broken), JLECmd,
+  RBCmd, SRUM (via pyesedb — SrumECmd is Linux-broken), a Task-XML
+  parser, a Run-keys parser via RECmd
 - **4 threat-hunt + carving tools**: YARA file scan, bulk_extractor multi-
   scanner, bstrings, MD5+SHA-1+SHA-256+ssdeep hash
 - **1 drill helper** (`query_rows`) for re-parsing any prior call's full row
