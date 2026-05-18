@@ -55,7 +55,7 @@ report = [
 sift-owl = "agents.orchestrator:main"
 sift-mcp = "mcp_server.server:main"
 sift-validate = "agents.validator.validate:main"
-sift-owl-loop = "eval.agents.sift_owl_v2.run_loop:main"
+sift-owl-loop = "eval.agents.sift_owl_v2.run_loop:app"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
