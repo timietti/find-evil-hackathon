@@ -1,2 +1,0 @@
-Id,Timestamp,ExeInfo,SidType,Sid,UserName,AppId,ForegroundCycleTime,BackgroundCycleTime,ForegroundContextSwitches,BackgroundContextSwitches,ForegroundBytesRead,ForegroundBytesWritten,BackgroundBytesRead,BackgroundBytesWritten
-1,2020-11-13 22:00:00,C:\Users\frocba\AppData\Local\Temp\stun.exe,User,S-1-5-21,frocba,!!stun.exe,1000,500,100,50,1024,512,2048,1024

@@ -67,7 +67,7 @@ audit log.
 Replace the unrestricted shell with a **typed MCP server** that exposes only
 read-only forensic functions. The agent on the other side has **no `Bash`, no
 `Read`, no `Edit`, no `Write`, no `WebFetch`, no `Agent`, no `Skill`**. It can
-only call the 37 registered functions, each with a Pydantic-validated input
+only call the 38 registered functions, each with a Pydantic-validated input
 schema:
 
 - **17 memory tools** wrapping Volatility 3 (psscan, pstree, cmdline,
@@ -338,7 +338,7 @@ cd find-evil-hackathon
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 bash scripts/bootstrap_sift_tools.sh    # installs YARA, ssdeep, missing EZ tools
-sift-mcp inspect                        # prints the 37-tool inventory
+sift-mcp inspect                        # prints the 38-tool inventory
 pytest -x --deselect tests/test_disk_e2e.py \
           --deselect tests/test_vol3_memory_e2e.py \
           --deselect tests/test_ez_tools_e2e.py

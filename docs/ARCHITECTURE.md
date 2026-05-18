@@ -87,7 +87,7 @@ After each iteration, a non-LLM validator pass runs:
 
 ## MCP server function inventory (implemented)
 
-The MCP server exposes **37 typed functions** (a 38th, `ezt_srum_parse`, is registered in source but disabled at the MCP boundary — SrumECmd is Linux-broken pending a libesedb-based reimplementation; tracked in `plans/MCP_TOOL_ROADMAP.md`). Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
+The MCP server exposes **38 typed functions**. Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
 
 ```jsonc
 { "exec_id": "01H...UUIDv7",
@@ -146,7 +146,7 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 | `ezt_prefetch_parse(extract_exec_id)` | libyal `libscca` (pyscca) — *not* PECmd; PECmd refuses to run on Linux | extract a single `.pf` file |
 | `ezt_jumplist_parse(extract_exec_id)` | `JLECmd --json` | extract a `.automaticDestinations-ms` / `.customDestinations-ms` |
 | `ezt_recyclebin_parse(extract_exec_id)` | `RBCmd --json` | extract a `$Recycle.Bin\S-*\$I*` record |
-| `ezt_srum_parse(extract_exec_id)` | `SrumECmd --csv` | extract `Windows\System32\sru\SRUDB.dat` (Win8+) |
+| `ezt_srum_parse(extract_exec_id)` | libyal `libesedb` (pyesedb) — *not* SrumECmd; SrumECmd refuses to run on Linux | extract `Windows\System32\sru\SRUDB.dat` (Win8+) |
 
 ### Drill helper — 1
 

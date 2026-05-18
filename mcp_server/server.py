@@ -456,12 +456,27 @@ def ezt_recyclebin_parse(extract_exec_id: str) -> dict[str, Any]:
     return _ezt_recyclebin_parse(extract_exec_id, audit=_audit())
 
 
-# NOTE: ezt_srum_parse was previously registered here but disabled in
-# W3-42 — SrumECmd v2026.5.0 refuses to run on Linux with the same
-# "Non-Windows platforms not supported" guard that affected PECmd.
-# The fix needs a pyesedb-based SRUM parser; pending future work.
-# Code path retained in tools/ez_tools.py + parsers/ez_tools.py but
-# not exposed via MCP.
+@mcp.tool()
+def ezt_srum_parse(extract_exec_id: str) -> dict[str, Any]:
+    """In-process SRUM parser (libyal `libesedb`) over an extracted
+    `Windows\\System32\\sru\\SRUDB.dat`.
+
+    Pre-req: extract `SRUDB.dat` via `tsk_icat_extract`. SRUM is Win8+;
+    XP/Win7 hosts will not have this file. Returns 7 provider sections
+    keyed by GUID — `network_usage` (per-app per-interface bytes_sent /
+    bytes_recvd), `app_resource_use` (CPU + I/O counters per app per
+    hour), `network_connections` (per-app L2 profile + connected_time),
+    `push_notifications`, `energy_usage` + `energy_usage_lt`,
+    `app_timeline`. AppId / UserId integers are joined to
+    `SruDbIdMapTable` so each row carries `app_name` (program path /
+    service / AppX) and `user_sid`. Each section's rows truncated to 50
+    on the wire; full row lists on disk, drillable via `query_rows`.
+
+    Reimplemented in W3-43 — SrumECmd v2026.5.0 refuses to run on Linux
+    ("Non-Windows platforms not supported due to the need to load ESI
+    specific Windows libraries"). libesedb is portable; output is
+    functionally equivalent."""
+    return _ezt_srum_parse(extract_exec_id, audit=_audit())
 
 
 @mcp.tool()

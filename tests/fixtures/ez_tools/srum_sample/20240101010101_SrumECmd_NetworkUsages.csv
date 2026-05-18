@@ -1,4 +1,0 @@
-Id,Timestamp,ExeInfo,ExeInfoDescription,ExeTimestamp,SidType,Sid,UserName,UserSid,AppId,InterfaceLuid,L2ProfileFlags,L2ProfileId,BytesReceived,BytesSent
-1,2020-11-13 22:00:00,C:\Users\frocba\AppData\Local\Temp\stun.exe,STUN client,2020-10-01 12:34:56,User,S-1-5-21-1-2-3,frocba,S-1-5-21-1-2-3,!!stun.exe,123456,0,1,1024,524288
-2,2020-11-13 23:00:00,C:\Program Files (x86)\Microsoft\Edge\msedge.exe,Microsoft Edge,2019-05-15 10:11:12,User,S-1-5-21-1-2-3,frocba,S-1-5-21-1-2-3,!!msedge.exe,123456,0,1,524288,32768
-3,2020-11-14 00:00:00,C:\Windows\System32\OneDriveUpdate.exe,OneDrive,2019-12-01 00:00:00,User,S-1-5-21-1-2-3,frocba,S-1-5-21-1-2-3,!!onedrive.exe,123456,0,1,2048,1048576

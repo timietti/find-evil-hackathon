@@ -69,7 +69,7 @@ EXPECTED_TOOLS = {
     "ezt_prefetch_parse",
     "ezt_jumplist_parse",
     "ezt_recyclebin_parse",
-    # ezt_srum_parse: disabled in W3-42 (SrumECmd Linux-broken pending pyesedb)
+    "ezt_srum_parse",
     "ezt_task_xml_parse",
     "ezt_persistence_keys_parse",
     # threat hunt + carving + hashing (Phase 3)
@@ -93,6 +93,7 @@ TOOLS_WITH_IMAGE_ARG = EXPECTED_TOOLS - {
     "ezt_prefetch_parse",
     "ezt_jumplist_parse",
     "ezt_recyclebin_parse",
+    "ezt_srum_parse",
     "ezt_task_xml_parse",
     "ezt_persistence_keys_parse",
     "yara_scan_extract",
@@ -107,6 +108,7 @@ TOOLS_WITH_EXTRACT_EXEC_ID_ARG = {
     "ezt_prefetch_parse",
     "ezt_jumplist_parse",
     "ezt_recyclebin_parse",
+    "ezt_srum_parse",
     "ezt_task_xml_parse",
     "ezt_persistence_keys_parse",
     "yara_scan_extract",

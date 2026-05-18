@@ -695,92 +695,388 @@ def summarise_recyclebin(parsed: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# SrumECmd — System Resource Usage Monitor (Win8+).
+# SRUM — System Resource Usage Monitor (Win8+).
 #
-# SRUDB.dat tracks, per process+user+app, accumulated network bytes
-# in/out, wall-clock time used, push notifications, etc. Killer for
-# exfil detection: "what process moved the most outbound bytes this hour".
-# Output: multi-CSV directory (one per ESE table). Sections we care about:
-#   - SrumECmd_AppResourceUseInfo.csv      (CPU + bytes per app per session)
-#   - SrumECmd_NetworkUsages.csv           (bytes in/out per app + interface)
-#   - SrumECmd_NetworkConnections.csv      (per-connection metadata)
-#   - SrumECmd_PushNotificationData.csv    (toast / WNS pushes)
-#   - SrumECmd_EnergyUsage.csv             (battery state)
+# SRUDB.dat is an ESE database under `Windows\System32\sru\` that tracks,
+# per app+user, accumulated network bytes in/out, wall-clock time used,
+# push notifications, and energy state. Killer for exfil detection: "what
+# process moved the most outbound bytes this hour".
+#
+# We parse the ESE database directly with libyal `libesedb` (pyesedb)
+# because SrumECmd v2026.5.0 refuses to run on Linux ("Non-Windows
+# platforms not supported due to the need to load ESI specific Windows
+# libraries"). The provider tables (named by GUID inside the database):
+#
+#   {D10CA2FE-6FCF-4F6D-848E-B2E99266FA89}    App Resource Usage
+#   {973F5D5C-1D90-4944-BE8E-24B94231A174}    Network Data Usage
+#   {DD6636C4-8929-4683-974E-22C046A43763}    Network Connectivity
+#   {D10CA2FE-6FCF-4F6D-848E-B2E99266FA86}    Push Notifications
+#   {FEE4E14F-02A9-4550-B5CE-5FA2DA202E37}    Energy Usage
+#   {FEE4E14F-02A9-4550-B5CE-5FA2DA202E37}LT  Energy Usage (long-term)
+#   {5C8CF1C7-7257-4F13-B223-970EF5939312}    App Timeline
+#
+# AppId / UserId columns are foreign keys into `SruDbIdMapTable`; we
+# build that map once and join into every projected row.
 # ---------------------------------------------------------------------------
 
 
-_SRUM_SECTION_FROM_SUFFIX: dict[str, str] = {
-    "AppResourceUseInfo":   "app_resource_use",
-    "NetworkUsages":        "network_usage",
-    "NetworkConnections":   "network_connections",
-    "PushNotificationData": "push_notifications",
-    "EnergyUsage":          "energy_usage",
-    "EnergyUsageLT":        "energy_usage_lt",
-    "vfuprov":              "vfuprov",
-    "Unknown312":           "unknown_312",
-    "Unknown313":           "unknown_313",
-    "Unknown314":           "unknown_314",
+import struct
+from datetime import datetime, timedelta, timezone
+
+# Map ESE table name -> our section key. Same keys as the old SrumECmd
+# CSV-driven parser so consumers / fixtures don't have to change.
+_SRUM_PROVIDER_SECTION: dict[str, str] = {
+    "{D10CA2FE-6FCF-4F6D-848E-B2E99266FA89}":   "app_resource_use",
+    "{973F5D5C-1D90-4944-BE8E-24B94231A174}":   "network_usage",
+    "{DD6636C4-8929-4683-974E-22C046A43763}":   "network_connections",
+    "{D10CA2FE-6FCF-4F6D-848E-B2E99266FA86}":   "push_notifications",
+    "{FEE4E14F-02A9-4550-B5CE-5FA2DA202E37}":   "energy_usage",
+    "{FEE4E14F-02A9-4550-B5CE-5FA2DA202E37}LT": "energy_usage_lt",
+    "{5C8CF1C7-7257-4F13-B223-970EF5939312}":   "app_timeline",
+}
+
+_SRUM_FILETIME_EPOCH = datetime(1601, 1, 1, tzinfo=timezone.utc)
+_SRUM_OLE_EPOCH      = datetime(1899, 12, 30, tzinfo=timezone.utc)
+
+
+def _srum_ole_to_iso(raw: bytes | None) -> str | None:
+    """Decode an 8-byte little-endian OLE Automation Date to ISO-Z UTC."""
+    if not raw or len(raw) != 8:
+        return None
+    try:
+        (d,) = struct.unpack("<d", raw)
+    except struct.error:
+        return None
+    if d <= 0 or d != d:  # negative / NaN
+        return None
+    try:
+        return (_SRUM_OLE_EPOCH + timedelta(days=d)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except (OverflowError, ValueError):
+        return None
+
+
+def _srum_filetime_to_iso(value: int | None) -> str | None:
+    """100ns-since-1601 (Windows FILETIME) -> ISO-Z UTC."""
+    if not value or value <= 0:
+        return None
+    try:
+        return (_SRUM_FILETIME_EPOCH + timedelta(microseconds=value // 10)).strftime(
+            "%Y-%m-%dT%H:%M:%SZ"
+        )
+    except (OverflowError, ValueError):
+        return None
+
+
+def _srum_sid_to_str(raw: bytes) -> str:
+    """Render a binary Windows SID as `S-1-5-...`."""
+    if not raw or len(raw) < 8:
+        return raw.hex() if raw else ""
+    revision = raw[0]
+    sub_count = raw[1]
+    authority = int.from_bytes(raw[2:8], "big")
+    end = 8 + 4 * sub_count
+    if len(raw) < end:
+        return raw.hex()
+    subs = [
+        int.from_bytes(raw[8 + 4 * i : 12 + 4 * i], "little")
+        for i in range(sub_count)
+    ]
+    return "S-" + "-".join([str(revision), str(authority)] + [str(x) for x in subs])
+
+
+def _srum_decode_idmap_blob(idtype: int, blob: bytes | None) -> tuple[str, str | None]:
+    """Decode one SruDbIdMapTable row's IdBlob using its IdType."""
+    if blob is None:
+        return ("empty", None)
+    if idtype == 3:
+        return ("user_sid", _srum_sid_to_str(blob) if blob else None)
+    if idtype in (0, 1, 2):
+        try:
+            value = blob.decode("utf-16-le").rstrip("\x00")
+        except UnicodeDecodeError:
+            value = blob.hex()
+        kind = {0: "app_path", 1: "service", 2: "appx_name"}[idtype]
+        return (kind, value)
+    return ("unknown", blob.hex() if blob else None)
+
+
+def _srum_build_id_map(esedb_file: Any) -> dict[int, tuple[str, str | None]]:
+    """SruDbIdMapTable -> {IdIndex: (kind, decoded_value)}."""
+    out: dict[int, tuple[str, str | None]] = {}
+    for ti in range(esedb_file.get_number_of_tables()):
+        table = esedb_file.get_table(ti)
+        if table.get_name() != "SruDbIdMapTable":
+            continue
+        nrows = table.get_number_of_records()
+        for ri in range(nrows):
+            rec = table.get_record(ri)
+            try:
+                idtype = rec.get_value_data_as_integer(0)
+                idx    = rec.get_value_data_as_integer(1)
+                blob   = rec.get_value_data(2)
+            except (OSError, IOError):
+                continue
+            if idx is None:
+                continue
+            out[idx] = _srum_decode_idmap_blob(idtype, blob)
+        break
+    return out
+
+
+def _srum_safe_int(rec: Any, col_idx: int) -> int | None:
+    """Pull an integer column, returning None when libesedb errors *or* when
+    it hands back the "missing fixed column" sentinel (`*` byte pattern).
+
+    ESE pre-allocates fixed-size columns even in records that never wrote
+    them; libesedb fills those bytes with 0x2A (ASCII "*"). For an Int32
+    that surfaces as 707406378; for an Int64, 3038287259199220266. Both
+    are noise we don't want to ship to the agent — return None instead.
+    """
+    try:
+        raw = rec.get_value_data(col_idx)
+    except (OSError, IOError):
+        return None
+    if not raw:
+        return None
+    if all(b == 0x2A for b in raw):
+        return None
+    try:
+        return rec.get_value_data_as_integer(col_idx)
+    except (OSError, IOError, OverflowError):
+        return None
+
+
+def _srum_safe_raw(rec: Any, col_idx: int) -> bytes | None:
+    try:
+        raw = rec.get_value_data(col_idx)
+    except (OSError, IOError):
+        return None
+    if raw and all(b == 0x2A for b in raw):
+        return None
+    return raw
+
+
+def _srum_resolve_app(id_map: dict[int, tuple[str, str | None]],
+                     app_id: int | None) -> dict[str, Any]:
+    if app_id is None:
+        return {"app_id": None, "app_name": None, "app_kind": None}
+    entry = id_map.get(app_id)
+    if not entry:
+        return {"app_id": app_id, "app_name": None, "app_kind": None}
+    kind, value = entry
+    return {"app_id": app_id, "app_name": value, "app_kind": kind}
+
+
+def _srum_resolve_user(id_map: dict[int, tuple[str, str | None]],
+                      user_id: int | None) -> dict[str, Any]:
+    if user_id is None:
+        return {"user_id": None, "user_sid": None}
+    entry = id_map.get(user_id)
+    if not entry:
+        return {"user_id": user_id, "user_sid": None}
+    _kind, value = entry
+    return {"user_id": user_id, "user_sid": value}
+
+
+# Per-provider column projections. Indexes match the schemas confirmed
+# against the libesedb table layout — see the inline comment in each.
+# Each projector returns a flat dict suitable for query_rows.
+
+def _project_app_resource_use(rec: Any, id_map: dict) -> dict[str, Any]:
+    # Cols: AutoIncId TimeStamp AppId UserId FgCycleTime BgCycleTime FaceTime
+    # FgCtxSw BgCtxSw FgBytesR FgBytesW FgNumR FgNumW FgFlush BgBytesR BgBytesW
+    # BgNumR BgNumW BgFlush
+    row: dict[str, Any] = {
+        "auto_inc_id":            _srum_safe_int(rec, 0),
+        "timestamp":              _srum_ole_to_iso(_srum_safe_raw(rec, 1)),
+        **_srum_resolve_app(id_map, _srum_safe_int(rec, 2)),
+        **_srum_resolve_user(id_map, _srum_safe_int(rec, 3)),
+        "foreground_cycle_time":  _srum_safe_int(rec, 4),
+        "background_cycle_time":  _srum_safe_int(rec, 5),
+        "face_time":              _srum_safe_int(rec, 6),
+        "foreground_bytes_read":  _srum_safe_int(rec, 9),
+        "foreground_bytes_written": _srum_safe_int(rec, 10),
+        "background_bytes_read":  _srum_safe_int(rec, 14),
+        "background_bytes_written": _srum_safe_int(rec, 15),
+    }
+    return row
+
+
+def _project_network_usage(rec: Any, id_map: dict) -> dict[str, Any]:
+    # Cols: AutoIncId TimeStamp AppId UserId InterfaceLuid L2ProfileId
+    # L2ProfileFlags BytesSent BytesRecvd
+    return {
+        "auto_inc_id":      _srum_safe_int(rec, 0),
+        "timestamp":        _srum_ole_to_iso(_srum_safe_raw(rec, 1)),
+        **_srum_resolve_app(id_map, _srum_safe_int(rec, 2)),
+        **_srum_resolve_user(id_map, _srum_safe_int(rec, 3)),
+        "interface_luid":   _srum_safe_int(rec, 4),
+        "l2_profile_id":    _srum_safe_int(rec, 5),
+        "l2_profile_flags": _srum_safe_int(rec, 6),
+        "bytes_sent":       _srum_safe_int(rec, 7),
+        "bytes_recvd":      _srum_safe_int(rec, 8),
+    }
+
+
+def _project_network_connections(rec: Any, id_map: dict) -> dict[str, Any]:
+    # Cols: AutoIncId TimeStamp AppId UserId InterfaceLuid L2ProfileId
+    # ConnectedTime ConnectStartTime L2ProfileFlags
+    return {
+        "auto_inc_id":         _srum_safe_int(rec, 0),
+        "timestamp":           _srum_ole_to_iso(_srum_safe_raw(rec, 1)),
+        **_srum_resolve_app(id_map, _srum_safe_int(rec, 2)),
+        **_srum_resolve_user(id_map, _srum_safe_int(rec, 3)),
+        "interface_luid":      _srum_safe_int(rec, 4),
+        "l2_profile_id":       _srum_safe_int(rec, 5),
+        "connected_time_s":    _srum_safe_int(rec, 6),
+        "connect_start_time":  _srum_filetime_to_iso(_srum_safe_int(rec, 7)),
+        "l2_profile_flags":    _srum_safe_int(rec, 8),
+    }
+
+
+def _project_push_notifications(rec: Any, id_map: dict) -> dict[str, Any]:
+    # Cols: AutoIncId TimeStamp AppId UserId NotificationType PayloadSize NetworkType
+    return {
+        "auto_inc_id":       _srum_safe_int(rec, 0),
+        "timestamp":         _srum_ole_to_iso(_srum_safe_raw(rec, 1)),
+        **_srum_resolve_app(id_map, _srum_safe_int(rec, 2)),
+        **_srum_resolve_user(id_map, _srum_safe_int(rec, 3)),
+        "notification_type": _srum_safe_int(rec, 4),
+        "payload_size":      _srum_safe_int(rec, 5),
+        "network_type":      _srum_safe_int(rec, 6),
+    }
+
+
+def _project_energy_usage(rec: Any, id_map: dict, *, lt: bool) -> dict[str, Any]:
+    # Both energy_usage and energy_usage_lt share cols 0..14; LT adds a
+    # ConfigurationHash at col 15 (we surface it as hex).
+    row: dict[str, Any] = {
+        "auto_inc_id":        _srum_safe_int(rec, 0),
+        "timestamp":          _srum_ole_to_iso(_srum_safe_raw(rec, 1)),
+        **_srum_resolve_app(id_map, _srum_safe_int(rec, 2)),
+        **_srum_resolve_user(id_map, _srum_safe_int(rec, 3)),
+        "active_ac_time_s":   _srum_safe_int(rec, 4),
+        "cs_ac_time_s":       _srum_safe_int(rec, 5),
+        "active_dc_time_s":   _srum_safe_int(rec, 6),
+        "cs_dc_time_s":       _srum_safe_int(rec, 7),
+        "active_discharge_s": _srum_safe_int(rec, 8),
+        "cs_discharge_s":     _srum_safe_int(rec, 9),
+        "active_energy":      _srum_safe_int(rec, 10),
+        "cs_energy":          _srum_safe_int(rec, 11),
+        "designed_capacity":  _srum_safe_int(rec, 12),
+        "full_charge_capacity": _srum_safe_int(rec, 13),
+        "cycle_count":        _srum_safe_int(rec, 14),
+    }
+    if lt:
+        cfg = _srum_safe_raw(rec, 15)
+        row["configuration_hash"] = cfg.hex() if cfg else None
+    return row
+
+
+def _project_app_timeline(rec: Any, id_map: dict) -> dict[str, Any]:
+    # 44 cols — project the high-value ones; the rest are mostly time-bin
+    # blobs whose interpretation is undocumented enough that we surface
+    # the integer scalars and skip the raw binary timelines.
+    return {
+        "auto_inc_id":          _srum_safe_int(rec, 0),
+        "timestamp":            _srum_ole_to_iso(_srum_safe_raw(rec, 1)),
+        **_srum_resolve_app(id_map, _srum_safe_int(rec, 2)),
+        **_srum_resolve_user(id_map, _srum_safe_int(rec, 3)),
+        "flags":                _srum_safe_int(rec, 4),
+        "end_time":             _srum_filetime_to_iso(_srum_safe_int(rec, 5)),
+        "duration_ms":          _srum_safe_int(rec, 6),
+        "span_ms":              _srum_safe_int(rec, 7),
+        "in_focus_s":           _srum_safe_int(rec, 20),
+        "psm_foreground_s":     _srum_safe_int(rec, 21),
+        "user_input_s":         _srum_safe_int(rec, 22),
+        "audio_in_s":           _srum_safe_int(rec, 26),
+        "audio_out_s":          _srum_safe_int(rec, 27),
+        "display_required_s":   _srum_safe_int(rec, 39),
+        "keyboard_input_s":     _srum_safe_int(rec, 42),
+        "mouse_input_s":        _srum_safe_int(rec, 43),
+    }
+
+
+_SRUM_PROJECTORS: dict[str, Any] = {
+    "app_resource_use":    _project_app_resource_use,
+    "network_usage":       _project_network_usage,
+    "network_connections": _project_network_connections,
+    "push_notifications":  _project_push_notifications,
+    "app_timeline":        _project_app_timeline,
 }
 
 
-def _srum_section_for(csv_filename: str) -> str | None:
-    """Map a `<ts>_SrumECmd_<Suffix>.csv` filename to a section key."""
-    m = re.search(r"_SrumECmd_([A-Za-z0-9]+)\.csv$", csv_filename)
-    if not m:
-        return None
-    return _SRUM_SECTION_FROM_SUFFIX.get(m.group(1))
+def parse_srum_file(path: Path) -> dict[str, Any]:
+    """In-process SRUDB.dat parser using libyal libesedb (pyesedb).
 
-
-def parse_srum_from_dir(out_dir: Path) -> dict[str, Any]:
-    """Walk a SrumECmd output directory; build per-section row lists.
-
-    Mirrors `parse_amcache_from_dir`'s shape so the wrapper can reuse the
-    multi-file runner pattern.
+    Replaces the SrumECmd subprocess (which exits "Non-Windows platforms
+    not supported" on Linux). Output shape mirrors the old CSV-driven
+    parser so consumers (truncation, query_rows, summary) are unchanged.
     """
-    sections: dict[str, dict[str, Any]] = {}
-    unknown_files: list[str] = []
-    for csv_path in sorted(out_dir.glob("*_SrumECmd_*.csv")):
-        section = _srum_section_for(csv_path.name)
-        if section is None:
-            unknown_files.append(csv_path.name)
-            continue
-        rows: list[dict[str, Any]] = []
-        try:
-            text = csv_path.read_text(errors="replace")
-        except OSError:
-            continue
-        if not text.strip():
-            sections[section] = {"count": 0, "rows": []}
-            continue
-        reader = csv.DictReader(io.StringIO(text))
-        for row in reader:
-            normalised: dict[str, Any] = {}
-            for k, v in row.items():
-                if k is None:
+    try:
+        import pyesedb
+    except ImportError as e:
+        raise RuntimeError(
+            "pyesedb (libesedb-python3) not installed; install via "
+            "`apt install libesedb-python3` or "
+            "`bash scripts/bootstrap_sift_tools.sh`"
+        ) from e
+
+    f = pyesedb.file()
+    f.open(str(path))
+    try:
+        id_map = _srum_build_id_map(f)
+        sections: dict[str, dict[str, Any]] = {}
+        unknown_tables: list[str] = []
+        for ti in range(f.get_number_of_tables()):
+            table = f.get_table(ti)
+            tname = table.get_name()
+            section = _SRUM_PROVIDER_SECTION.get(tname)
+            if section is None:
+                continue
+            if section in ("energy_usage", "energy_usage_lt"):
+                projector = lambda r, m, lt=(section == "energy_usage_lt"): (
+                    _project_energy_usage(r, m, lt=lt)
+                )
+            else:
+                projector = _SRUM_PROJECTORS.get(section)
+            if projector is None:
+                unknown_tables.append(tname)
+                continue
+            rows: list[dict[str, Any]] = []
+            for ri in range(table.get_number_of_records()):
+                try:
+                    rec = table.get_record(ri)
+                    rows.append(projector(rec, id_map))
+                except (OSError, IOError):
                     continue
-                normalised[k.replace(" ", "_").lower()] = v
-            # Normalise common timestamp columns
-            for ts_field in ("timestamp", "event_timestamp", "connectstarttime", "endtime"):
-                if ts_field in normalised and normalised[ts_field]:
-                    normalised[ts_field] = _normalise_dt(normalised[ts_field])
-            rows.append(normalised)
-        sections[section] = {"count": len(rows), "rows": rows}
+            sections[section] = {"count": len(rows), "rows": rows}
+    finally:
+        f.close()
 
     section_counts = {k: v["count"] for k, v in sections.items()}
+    id_map_summary = {
+        "total":     len(id_map),
+        "app_path":  sum(1 for v in id_map.values() if v[0] == "app_path"),
+        "service":   sum(1 for v in id_map.values() if v[0] == "service"),
+        "appx_name": sum(1 for v in id_map.values() if v[0] == "appx_name"),
+        "user_sid":  sum(1 for v in id_map.values() if v[0] == "user_sid"),
+    }
     return {
         "total_count":    sum(section_counts.values()),
         "section_counts": section_counts,
         "sections":       sections,
-        "unknown_files":  unknown_files,
+        "unknown_files":  unknown_tables,
+        "id_map_summary": id_map_summary,
     }
 
 
 def parse_srum(text: str) -> dict[str, Any]:
-    """Re-hydrate a previously-serialised parse_srum_from_dir result.
+    """Re-hydrate a previously-serialised parse_srum_file result.
 
-    Same pattern as parse_amcache: wrapper writes JSON to raw_output,
-    parser is `json.loads` so query_rows works even for nested-section
-    layouts.
+    The wrapper persists `parse_srum_file(path)` as JSON to raw_output;
+    this parser is just `json.loads` so query_rows works against the
+    nested-section layout.
     """
     if not text.strip():
         return {

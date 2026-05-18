@@ -11,8 +11,11 @@
 #     to run with "Non-Windows platforms not supported due to the need
 #     to load decompression specific Windows libraries". libscca's MAM /
 #     XPRESS-Huffman decompressor is portable.)
+#   - libesedb-python3 — cross-platform ESE database parser used by
+#     ezt_srum_parse. (SrumECmd hits the same Linux guard as PECmd:
+#     "Non-Windows platforms not supported due to the need to load ESI
+#     specific Windows libraries". libesedb is portable.)
 #   - Volatility 2 (`vol.py`) — for Phase 2 Win7-x86 / WinXP memory support
-#   - SrumECmd (Eric Zimmerman, .NET) — Win8+ System Resource Usage Monitor
 #   - Memory Baseliner (FSecureLABS) — process diff against a clean baseline
 #
 # Usage:
@@ -56,59 +59,23 @@ apt_install ssdeep
 # install the system package so pyscca is available even without the venv.
 apt_install libscca-python3
 
+# libesedb — cross-platform ESE database parser for SRUM. Same story as
+# libscca: apt package libesedb-python3 (system-wide), pip package
+# libesedb-python (venv). SrumECmd is Linux-broken; libesedb is portable.
+apt_install libesedb-python3
+
 # Volatility 2 — for Phase 2 Win7-x86 PAE + WinXP memory analysis.
 # Ubuntu's `volatility` package ships v2.6 with Python 2 baked in.
 apt_install volatility
 
-# ---- 2. Eric Zimmerman EZ Tools (SrumECmd only via Get-ZimmermanTools) ----
+# ---- 2. EZ Tools — no longer fetched on Linux -----------------------------
 #
-# Only SrumECmd is fetched here. PECmd was previously installed but its
-# 2026.5.0+ build refuses to run on Linux:
-#   "Non-Windows platforms not supported due to the need to load
-#    decompression specific Windows libraries! Exiting..."
-# ezt_prefetch_parse uses libscca (installed above) instead.
-
-EZT_PS="https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1"
-
-needs_ezt_install=0
-for tool in SrumECmd; do
-    if [[ ! -f "$EZ_DIR/${tool}.dll" ]]; then
-        needs_ezt_install=1
-        log "$tool: missing → will download"
-    else
-        log "$tool: already at $EZ_DIR/${tool}.dll"
-    fi
-done
-
-if [[ "$needs_ezt_install" -eq 1 ]]; then
-    if ! command -v pwsh >/dev/null; then
-        warn "pwsh not on PATH — install PowerShell, then re-run this script."
-        warn "  apt install -y powershell"
-        exit 1
-    fi
-    sudo mkdir -p "$EZ_DIR"
-    tmpdir="$(mktemp -d)"
-    log "downloading Get-ZimmermanTools.ps1 → $tmpdir"
-    python3 -c "
-import urllib.request, sys
-with urllib.request.urlopen('$EZT_PS', timeout=30) as r:
-    sys.stdout.buffer.write(r.read())" > "$tmpdir/Get-ZimmermanTools.ps1"
-    log "running official installer (-NetVersion 9, all tools) ..."
-    pwsh -File "$tmpdir/Get-ZimmermanTools.ps1" -Dest "$tmpdir/tools" -NetVersion 9
-    # Copy the tools we want (with their deps + .runtimeconfig.json + subdirs)
-    for tool in SrumECmd; do
-        src="$tmpdir/tools/net9/${tool}"
-        if [[ -d "$src" ]]; then
-            log "copying $tool from $src → $EZ_DIR/"
-            sudo cp -r "$src"/* "$EZ_DIR/"
-        else
-            warn "$tool not found at $src — Get-ZimmermanTools layout may have changed."
-            warn "  layout under $tmpdir/tools:"
-            find "$tmpdir/tools" -maxdepth 3 -name "${tool}*" 2>/dev/null | sed 's/^/    /' || true
-        fi
-    done
-    rm -rf "$tmpdir"
-fi
+# The two Linux-broken tools (PECmd v2026.5.0, SrumECmd v2026.5.0) have
+# both been replaced with libyal libraries (libscca, libesedb). Older
+# EZ Tools (MFTECmd, AppCompatCacheParser, EvtxECmd, AmcacheParser,
+# RBCmd, JLECmd, RECmd, bstrings) still run fine via `dotnet` and are
+# preinstalled in /opt/zimmermantools on the SIFT image — no extra
+# download step required.
 
 # ---- 3. Memory Baseliner ---------------------------------------------------
 
@@ -125,8 +92,8 @@ fi
 log "verification:"
 command -v yara                     >/dev/null && echo "  yara: $(yara --version 2>&1 | head -1)" || warn "  yara: NOT on PATH"
 command -v vol.py                   >/dev/null && echo "  vol.py (Vol2): $(vol.py --info 2>&1 | head -1)" || warn "  vol.py (Vol2): NOT on PATH"
-python3 -c "import pyscca" 2>/dev/null  && echo "  pyscca (libscca): present"  || warn "  pyscca: NOT importable (apt: libscca-python3, pip: libscca-python)"
-[[ -f "$EZ_DIR/SrumECmd.dll" ]]     && echo "  SrumECmd.dll: present"         || warn "  SrumECmd.dll: MISSING"
+python3 -c "import pyscca"  2>/dev/null && echo "  pyscca  (libscca):  present" || warn "  pyscca:  NOT importable (apt: libscca-python3,  pip: libscca-python)"
+python3 -c "import pyesedb" 2>/dev/null && echo "  pyesedb (libesedb): present" || warn "  pyesedb: NOT importable (apt: libesedb-python3, pip: libesedb-python)"
 [[ -d "$MEMBASE_DIR" ]]             && echo "  memory-baseliner: present"     || warn "  memory-baseliner: MISSING"
 
 log "done."

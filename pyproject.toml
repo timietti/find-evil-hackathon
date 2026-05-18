@@ -32,6 +32,11 @@ dependencies = [
   # ("Non-Windows platforms not supported due to the need to load
   # decompression specific Windows libraries").
   "libscca-python>=20240501",
+  # Cross-platform ESE database parser (libyal libesedb). Used by
+  # ezt_srum_parse because EZ Tools' SrumECmd hits the same Linux
+  # guard ("Non-Windows platforms not supported due to the need to
+  # load ESI specific Windows libraries").
+  "libesedb-python>=20240420",
 ]
 
 [project.optional-dependencies]

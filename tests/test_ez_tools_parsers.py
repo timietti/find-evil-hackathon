@@ -18,7 +18,7 @@ from mcp_server.parsers.ez_tools import (
     parse_recyclebin,
     parse_shimcache,
     parse_srum,
-    parse_srum_from_dir,
+    parse_srum_file,
     parse_task_xml,
     summarise_amcache,
     summarise_evtx,
@@ -368,54 +368,166 @@ def test_summarise_recyclebin_mentions_count() -> None:
     assert "Recycle Bin records" in s
 
 
-# ---- SrumECmd (System Resource Usage Monitor) -------------------------------
+# ---- SRUM — System Resource Usage Monitor (libesedb-based) ------------------
+#
+# Helpers are pure; parse_srum_file requires a real SRUDB.dat fixture
+# (too big to vendor — gated on /cases evidence presence).
 
 
-SRUM_FIXTURE_DIR = FIXTURES / "srum_sample"
+def test_srum_sid_to_str_well_known_sids() -> None:
+    """Binary SIDs from SruDbIdMapTable decode to canonical S-1-5-… strings."""
+    from mcp_server.parsers.ez_tools import _srum_sid_to_str
+    assert _srum_sid_to_str(bytes.fromhex("010100000000000512000000")) == "S-1-5-18"
+    assert _srum_sid_to_str(bytes.fromhex("010100000000000513000000")) == "S-1-5-19"
+    assert _srum_sid_to_str(bytes.fromhex("010100000000000514000000")) == "S-1-5-20"
+    # 3 sub-authorities (DWM session SID)
+    assert (
+        _srum_sid_to_str(bytes.fromhex("01030000000000055a0000000000000001000000"))
+        == "S-1-5-90-0-1"
+    )
 
 
-def test_parse_srum_from_dir_finds_sections() -> None:
-    if not SRUM_FIXTURE_DIR.exists():
-        pytest.skip("missing srum fixture dir")
-    out = parse_srum_from_dir(SRUM_FIXTURE_DIR)
-    assert "network_usage" in out["section_counts"]
-    assert "app_resource_use" in out["section_counts"]
-    assert out["unknown_files"] == []
-    assert out["total_count"] == sum(out["section_counts"].values())
+def test_srum_decode_idmap_blob_app_path_utf16() -> None:
+    """IdType 0 IdBlob is UTF-16LE NUL-terminated, holding `\\Device\\...` paths."""
+    from mcp_server.parsers.ez_tools import _srum_decode_idmap_blob
+    blob = "\\Device\\HarddiskVolume1\\smss.exe\x00".encode("utf-16-le")
+    kind, value = _srum_decode_idmap_blob(0, blob)
+    assert kind == "app_path"
+    assert value == "\\Device\\HarddiskVolume1\\smss.exe"
 
 
-def test_parse_srum_network_usage_normalises_columns() -> None:
-    out = parse_srum_from_dir(SRUM_FIXTURE_DIR)
-    rows = out["sections"]["network_usage"]["rows"]
-    assert len(rows) >= 3
-    # CSV column "BytesSent" should be lower-cased to "bytessent"
-    r = rows[0]
-    assert "bytessent" in r
-    assert "bytesreceived" in r
-    # ExeInfo retained
-    assert "exeinfo" in r
+def test_srum_decode_idmap_blob_service_name() -> None:
+    """IdType 1 IdBlob is UTF-16LE service name (e.g., "DiagTrack")."""
+    from mcp_server.parsers.ez_tools import _srum_decode_idmap_blob
+    blob = "Spooler\x00".encode("utf-16-le")
+    kind, value = _srum_decode_idmap_blob(1, blob)
+    assert kind == "service"
+    assert value == "Spooler"
 
 
-def test_parse_srum_round_trip() -> None:
-    """parse_srum(json_text) re-hydrates parse_srum_from_dir output."""
-    import json
-    parsed = parse_srum_from_dir(SRUM_FIXTURE_DIR)
-    text = json.dumps(parsed)
-    rehydrated = parse_srum(text)
-    assert rehydrated["section_counts"] == parsed["section_counts"]
+def test_srum_decode_idmap_blob_appx_package() -> None:
+    """IdType 2 IdBlob is UTF-16LE AppX package full name."""
+    from mcp_server.parsers.ez_tools import _srum_decode_idmap_blob
+    blob = "Microsoft.MicrosoftEdge_38.14393.0.0_neutral__8wekyb3d8bbwe\x00".encode("utf-16-le")
+    kind, value = _srum_decode_idmap_blob(2, blob)
+    assert kind == "appx_name"
+    assert value.startswith("Microsoft.MicrosoftEdge_")
+
+
+def test_srum_decode_idmap_blob_user_sid() -> None:
+    """IdType 3 IdBlob is a binary Windows SID."""
+    from mcp_server.parsers.ez_tools import _srum_decode_idmap_blob
+    blob = bytes.fromhex("010100000000000512000000")
+    kind, value = _srum_decode_idmap_blob(3, blob)
+    assert kind == "user_sid"
+    assert value == "S-1-5-18"
+
+
+def test_srum_ole_to_iso_round_trip() -> None:
+    """OLE Automation Date (8-byte LE double, days since 1899-12-30) → ISO UTC."""
+    import struct
+    from mcp_server.parsers.ez_tools import _srum_ole_to_iso
+    # 2021-07-18T03:44:00Z is what SHIELDBASE wkstn-01 has on row 0.
+    days = 44395.155555555556  # 2021-07-18 03:44:00 UTC
+    raw = struct.pack("<d", days)
+    assert _srum_ole_to_iso(raw) == "2021-07-18T03:44:00Z"
+    assert _srum_ole_to_iso(None) is None
+    assert _srum_ole_to_iso(b"") is None
+
+
+def test_srum_filetime_to_iso_round_trip() -> None:
+    """100-ns intervals since 1601-01-01 → ISO UTC."""
+    from mcp_server.parsers.ez_tools import _srum_filetime_to_iso
+    # 2021-02-03T21:51:48Z (truncated) — value taken from a SHIELDBASE row.
+    assert _srum_filetime_to_iso(132568627086631082) == "2021-02-03T21:51:48Z"
+    assert _srum_filetime_to_iso(0) is None
+    assert _srum_filetime_to_iso(None) is None
 
 
 def test_parse_srum_empty_text() -> None:
+    """parse_srum() re-hydrator handles empty input gracefully."""
     out = parse_srum("")
     assert out["total_count"] == 0
     assert out["section_counts"] == {}
 
 
-def test_summarise_srum_includes_network_usage_when_present() -> None:
-    parsed = parse_srum_from_dir(SRUM_FIXTURE_DIR)
+def test_parse_srum_round_trip_synthetic() -> None:
+    """parse_srum(json_text) is a json.loads re-hydrator preserving shape."""
+    import json
+    synthetic = {
+        "total_count": 2,
+        "section_counts": {"network_usage": 2},
+        "sections": {
+            "network_usage": {
+                "count": 2,
+                "rows": [
+                    {"app_name": "WinRM", "bytes_sent": 948163, "bytes_recvd": 523592},
+                    {"app_name": "svchost.exe", "bytes_sent": 1024, "bytes_recvd": 2048},
+                ],
+            }
+        },
+        "unknown_files": [],
+        "id_map_summary": {"total": 2767},
+    }
+    re_h = parse_srum(json.dumps(synthetic))
+    assert re_h["total_count"] == 2
+    assert re_h["sections"]["network_usage"]["rows"][0]["bytes_sent"] == 948163
+
+
+def test_summarise_srum_no_sections() -> None:
+    assert summarise_srum({"section_counts": {}}) == "no SRUM sections parsed"
+
+
+def test_summarise_srum_includes_network_usage() -> None:
+    parsed = {
+        "total_count":    100,
+        "section_counts": {"network_usage": 80, "app_resource_use": 20},
+    }
     s = summarise_srum(parsed)
     assert "SRUM rows" in s
-    assert "network-usage" in s.lower() or "network_usage" in s.lower() or "network" in s.lower()
+    assert "network-usage" in s
+
+
+# Optional integration test against a real SRUDB.dat. The 35 MB file
+# isn't vendored — we extract from SHIELDBASE evidence when available.
+
+_SHIELDBASE_SRUDB = Path("/tmp/srum-dev/SRUDB.dat")  # populated by hand-extraction
+_REQUIRES_REAL_SRUDB = pytest.mark.skipif(
+    not _SHIELDBASE_SRUDB.exists(),
+    reason="real SRUDB.dat fixture not present at /tmp/srum-dev/SRUDB.dat",
+)
+
+
+@_REQUIRES_REAL_SRUDB
+def test_parse_srum_file_real_srudb() -> None:
+    """End-to-end SRUDB.dat parse: 7 sections, id_map join, sentinel filter."""
+    parsed = parse_srum_file(_SHIELDBASE_SRUDB)
+    sc = parsed["section_counts"]
+    # All 7 SRUM provider tables present (energy_usage may be empty).
+    expected = {
+        "app_resource_use", "network_usage", "network_connections",
+        "push_notifications", "energy_usage", "energy_usage_lt",
+        "app_timeline",
+    }
+    assert expected.issubset(sc.keys()), f"missing sections: {expected - sc.keys()}"
+    assert parsed["total_count"] == sum(sc.values())
+    # id_map_summary surfaces IdType breakdown.
+    ims = parsed["id_map_summary"]
+    assert ims["total"] > 1000
+    assert ims["app_path"] > 0
+    assert ims["user_sid"] > 0
+    # network_usage rows carry resolved app_name and decoded bytes.
+    nu_rows = parsed["sections"]["network_usage"]["rows"]
+    assert nu_rows, "network_usage should have rows"
+    r0 = nu_rows[0]
+    assert "bytes_sent" in r0 and "bytes_recvd" in r0
+    assert "app_name" in r0
+    assert r0["timestamp"].endswith("Z")
+    # app_timeline sentinel filter — no "707406378" garbage values
+    at_rows = parsed["sections"]["app_timeline"]["rows"]
+    for r in at_rows[:50]:
+        for k in ("in_focus_s", "psm_foreground_s", "user_input_s"):
+            assert r.get(k) != 707406378, f"sentinel leaked through to {k}"
 
 
 # ---- Task XML parser (Phase 1.5, T1053 disk-side) --------------------------

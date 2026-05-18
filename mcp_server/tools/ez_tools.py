@@ -51,7 +51,7 @@ from mcp_server.parsers.ez_tools import (
     parse_prefetch_file,
     parse_recyclebin,
     parse_shimcache,
-    parse_srum_from_dir,
+    parse_srum_file,
     parse_task_xml,
     summarise_amcache,
     summarise_evtx,
@@ -566,55 +566,61 @@ def ezt_srum_parse(
     *,
     audit: AuditLogger,
     agent: str = "disk_agent",
-    timeout_s: float = 900,
+    timeout_s: float = 900,  # noqa: ARG001 — in-process parser
 ) -> dict[str, Any]:
-    """`SrumECmd -f <extracted-SRUDB> --csv <out>` — System Resource Usage Monitor.
+    """In-process SRUM parser via libyal `libesedb` (pyesedb).
 
     Pre-req: extract `Windows\\System32\\sru\\SRUDB.dat` via `tsk_icat_extract`.
     SRUM is Win8+ — XP/Win7 hosts will not have this file.
 
-    Returns multiple sections (AppResourceUseInfo, NetworkUsages,
-    NetworkConnections, PushNotificationData, EnergyUsage). The killer
-    section for exfil detection is **NetworkUsages**: per-app per-interface
-    accumulated bytes-in / bytes-out by hour. Each section's rows are
-    truncated to 50 on the wire.
+    Returns the canonical SRUM provider tables — keyed by section:
+    `app_resource_use`, `network_usage`, `network_connections`,
+    `push_notifications`, `energy_usage`, `energy_usage_lt`, `app_timeline`.
+    AppId / UserId integers are joined to `SruDbIdMapTable` so each row
+    carries an `app_name` (program path / service / AppX) and `user_sid`.
+    Each section's rows are truncated to 50 on the wire; full rows on
+    disk under `audit/raw/<exec_id>.json`, drillable via `query_rows`.
+
+    The killer section for exfil detection is **network_usage**: per-app
+    per-interface accumulated bytes_sent / bytes_recvd by hour.
+
+    Note: this used to wrap EZ Tools' SrumECmd, but SrumECmd refuses to
+    run on non-Windows ("Non-Windows platforms not supported due to the
+    need to load ESI specific Windows libraries"). libesedb is a portable
+    ESE parser; output is functionally equivalent.
     """
     extract_path = _resolve_extract(audit, extract_exec_id)
     exec_id = audit.new_exec_id()
-    out_subdir = audit.raw_output_dir / "ez_tools" / exec_id
-    out_subdir.mkdir(parents=True, exist_ok=True)
-    sub_dir = audit.raw_output_dir / "subprocess"
 
-    dll = _check_dll("SrumECmd.dll")
-    argv = [
-        _check_dotnet(), str(dll),
-        "-f", str(extract_path),
-        "--csv", str(out_subdir),
-    ]
-
-    rr = run_subprocess(argv, output_dir=sub_dir, name=exec_id, timeout_s=timeout_s)
-
-    if not rr.ok:
-        raw_capture = audit.write_raw(
-            exec_id, f"FAILED ({rr.error}). stderr: {rr.stderr_path}\n",
-        )
+    try:
+        parsed = parse_srum_file(extract_path)
+    except RuntimeError as e:
+        # pyesedb import error
+        raw_capture = audit.write_raw(exec_id, f"FAILED: {e}\n")
         audit.record(
             exec_id=exec_id, agent=agent, tool="ezt_srum_parse",
             args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
             raw_output_path=raw_capture,
-            exit_code=rr.exit_code, wall_ms=rr.wall_ms,
-            summary=f"FAILED: {rr.error or 'non-zero exit'}",
-            error=rr.error or f"exit {rr.exit_code}",
+            exit_code=1, wall_ms=0,
+            summary=f"FAILED: {e}",
+            error=str(e),
+        )
+        raise ToolError(f"ezt_srum_parse failed: {e}") from e
+    except (OSError, IOError) as e:
+        raw_capture = audit.write_raw(exec_id, f"FAILED: libesedb: {e}\n")
+        audit.record(
+            exec_id=exec_id, agent=agent, tool="ezt_srum_parse",
+            args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+            raw_output_path=raw_capture,
+            exit_code=1, wall_ms=0,
+            summary=f"FAILED: not a valid SRUDB.dat ({e})",
+            error=str(e),
         )
         raise ToolError(
-            f"ezt_srum_parse failed (exit {rr.exit_code}, "
-            f"timed_out={rr.timed_out}): {rr.error}. "
-            f"stderr at {rr.stderr_path}"
-        )
+            f"ezt_srum_parse: libesedb could not parse {extract_path} "
+            f"(likely not a valid SRUDB.dat / ESE file): {e}"
+        ) from e
 
-    parsed = parse_srum_from_dir(out_subdir)
-
-    # Persist combined dict as JSON to raw_output for query_rows compat.
     raw_text = json.dumps(parsed, default=str)
     raw_path = audit.write_raw(exec_id, raw_text)
     summary = summarise_srum(parsed)
@@ -622,6 +628,7 @@ def ezt_srum_parse(
     parsed_summary_compact = {
         "total_count":    parsed.get("total_count"),
         "section_counts": parsed.get("section_counts"),
+        "id_map_summary": parsed.get("id_map_summary"),
         "unknown_files":  parsed.get("unknown_files"),
     }
 
@@ -629,7 +636,7 @@ def ezt_srum_parse(
         exec_id=exec_id, agent=agent, tool="ezt_srum_parse",
         args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
         raw_output_path=raw_path,
-        exit_code=0, wall_ms=rr.wall_ms,
+        exit_code=0, wall_ms=0,
         summary=summary,
         parsed_summary=parsed_summary_compact,
     )
