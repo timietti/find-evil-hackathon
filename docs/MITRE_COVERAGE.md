@@ -1,9 +1,14 @@
-# MITRE ATT&CK coverage — SIFT-OWL v0.4 (26 MCP tools)
+# MITRE ATT&CK coverage — SIFT-OWL v0.4 (38 MCP tools)
 
 > Per-technique evaluation of the current typed MCP inventory's ability to
 > surface forensic evidence supporting detection. Cross-references the
-> existing 26 tools (11 vol3 + 6 disk + 8 EZ Tools + query_rows) and points
-> to the roadmap phases that close remaining gaps.
+> existing 38 tools (17 vol3 + 6 disk + 10 EZ Tools + 4 hunt/carve/hash +
+> query_rows) and points to the roadmap phases that close remaining gaps.
+>
+> The two `EZT`-prefixed tools that wrap a Linux-broken EZ Tool — Prefetch
+> and SRUM — were rebuilt on libyal libraries (`libscca` / `libesedb`,
+> W3-41 + W3-43). The MITRE coverage semantics they deliver are unchanged
+> from the original SrumECmd / PECmd output.
 
 ## Status legend
 
@@ -85,3 +90,15 @@ The matrix excludes **non-detection** coverage (e.g. atomic-red-team-style adver
 For each technique, the corresponding *forensic artefacts* MITRE documents — registry keys, log events, file paths, in-memory primitives — are the search space. Tools that parse those artefacts give the agent direct access; missing parsers leave the artefacts as raw bytes the agent must reason about indirectly.
 
 The roadmap (`plans/MCP_TOOL_ROADMAP.md`) is updated with a **Phase 1.5** that bundles the 5 high-leverage Vol3 wrappers above into a single small release. Together they take Partial coverage of T1003 / T1053 / T1558 / T1574 / T1071 to Full, with ~2 hours of implementation effort.
+
+## Tool-portability status (Linux SIFT)
+
+| Tool family       | Backend                | Linux | Notes |
+|---|---|---|---|
+| `vol3_*` (17)     | Volatility 3 (Python) | ✅ | Works fine. Symbol PDBs auto-fetched. |
+| `tsk_* / ewf_*` (6) | Sleuth Kit + libewf  | ✅ | Native Linux build. |
+| `ezt_prefetch_parse` | libyal `libscca` (pyscca) | ✅ | PECmd 2026.5.0 is **Linux-broken** ("ESI-specific Windows libraries"). pyscca is portable; same fields. |
+| `ezt_srum_parse`  | libyal `libesedb` (pyesedb) | ✅ | SrumECmd 2026.5.0 has the same guard. pyesedb parses SRUDB.dat directly; joins SruDbIdMapTable for app/user resolution. |
+| Other `ezt_*` (8) | EZ Tools `.dll` via `dotnet` runtime | ✅ | MFTECmd / AppCompatCacheParser / EvtxECmd / AmcacheParser / RBCmd / JLECmd / RECmd / task XML + persistence-keys Python parsers. All older releases — no Windows guard. |
+| `yara_scan_extract`, `vol3_vadyarascan`, `bulk_extract`, `strings_extract`, `hash_file` | YARA + bulk_extractor + Python | ✅ | All on PATH or pip-installable. |
+| `query_rows`      | in-process audit-log replay | ✅ | Pure Python. |
