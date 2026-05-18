@@ -48,7 +48,7 @@ from mcp_server.parsers.ez_tools import (
     parse_jumplist,
     parse_mft,
     parse_persistence_keys_from_csv,
-    parse_prefetch,
+    parse_prefetch_file,
     parse_recyclebin,
     parse_shimcache,
     parse_srum_from_dir,
@@ -408,29 +408,73 @@ def ezt_prefetch_parse(
     *,
     audit: AuditLogger,
     agent: str = "disk_agent",
-    timeout_s: float = 600,
+    timeout_s: float = 60,  # noqa: ARG001 — in-process parser
 ) -> dict[str, Any]:
-    """`PECmd -f <extracted-pf> --json <out>` — Windows Prefetch parser.
+    """In-process Windows Prefetch parser via libyal `libscca` (pyscca).
 
     Pre-req: extract a single `.pf` file from
     `Windows\\Prefetch\\<NAME>-<HASH>.pf` via `tsk_icat_extract`.
 
-    Per-binary execution evidence: ExecutableName + Hash, RunCount, LastRun
-    + 7 PreviousRun timestamps, list of files / directories the binary
-    referenced. Survives binary deletion. The Win10/Win11 program-execution
-    gold standard.
+    Per-binary execution evidence: executable_name + 8-hex hash, run_count,
+    last_run (most recent) + previous_runs (up to 7 prior on Win10+),
+    list of files_loaded (DLLs + config), directories, and volume info
+    (device_path, serial_number, creation_time). Survives binary deletion.
+
+    Note: this used to wrap EZ Tools' PECmd, but PECmd refuses to run on
+    non-Windows ("Non-Windows platforms not supported due to the need to
+    load decompression specific Windows libraries"). libscca's pyscca
+    bindings include a portable MAM/XPRESS-Huffman decompressor and work
+    cross-platform; functionally equivalent output.
     """
-    return _run_ez_tool(
-        audit=audit, agent=agent,
-        tool_name="ezt_prefetch_parse",
-        dll_path=_check_dll("PECmd.dll"),
-        extract_exec_id=extract_exec_id,
-        output_format="json",
-        output_glob="*_PECmd_Output.json",
-        parser=parse_prefetch,
-        summariser=summarise_prefetch,
-        timeout_s=timeout_s,
+    extract_path = _resolve_extract(audit, extract_exec_id)
+    exec_id = audit.new_exec_id()
+
+    try:
+        parsed = parse_prefetch_file(extract_path)
+    except RuntimeError as e:
+        # libscca import error or invalid file signature
+        raw_capture = audit.write_raw(exec_id, f"FAILED: {e}\n")
+        audit.record(
+            exec_id=exec_id, agent=agent, tool="ezt_prefetch_parse",
+            args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+            raw_output_path=raw_capture,
+            exit_code=1, wall_ms=0,
+            summary=f"FAILED: {e}",
+            error=str(e),
+        )
+        raise ToolError(f"ezt_prefetch_parse failed: {e}") from e
+    except (OSError, IOError) as e:
+        # File isn't a valid Prefetch (bad signature, etc.)
+        raw_capture = audit.write_raw(exec_id, f"FAILED: libscca: {e}\n")
+        audit.record(
+            exec_id=exec_id, agent=agent, tool="ezt_prefetch_parse",
+            args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+            raw_output_path=raw_capture,
+            exit_code=1, wall_ms=0,
+            summary=f"FAILED: not a valid Prefetch file ({e})",
+            error=str(e),
+        )
+        raise ToolError(
+            f"ezt_prefetch_parse: libscca could not parse {extract_path} "
+            f"(likely not a valid .pf file): {e}"
+        ) from e
+
+    raw_text = json.dumps(parsed, default=str)
+    raw_path = audit.write_raw(exec_id, raw_text)
+    summary = summarise_prefetch(parsed)
+
+    parsed_summary_compact = {k: v for k, v in parsed.items() if k != "rows"}
+
+    audit.record(
+        exec_id=exec_id, agent=agent, tool="ezt_prefetch_parse",
+        args={"extract_exec_id": extract_exec_id, "extract_path": str(extract_path)},
+        raw_output_path=raw_path,
+        exit_code=0, wall_ms=0,
+        summary=summary,
+        parsed_summary=parsed_summary_compact,
     )
+
+    return {"exec_id": exec_id, **parsed}
 
 
 def ezt_jumplist_parse(

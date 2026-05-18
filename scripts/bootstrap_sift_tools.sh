@@ -5,8 +5,13 @@
 #
 # What this installs:
 #   - YARA binary (`yara`) — for Phase 3 threat-hunt rules
+#   - ssdeep — for hash_file fuzzy-hash (optional)
+#   - libscca-python3 — cross-platform Windows Prefetch parser used by
+#     ezt_prefetch_parse. (PECmd is NOT installed for Linux — it refuses
+#     to run with "Non-Windows platforms not supported due to the need
+#     to load decompression specific Windows libraries". libscca's MAM /
+#     XPRESS-Huffman decompressor is portable.)
 #   - Volatility 2 (`vol.py`) — for Phase 2 Win7-x86 / WinXP memory support
-#   - PECmd (Eric Zimmerman, .NET) — Win10/Win11 Prefetch parser
 #   - SrumECmd (Eric Zimmerman, .NET) — Win8+ System Resource Usage Monitor
 #   - Memory Baseliner (FSecureLABS) — process diff against a clean baseline
 #
@@ -46,22 +51,27 @@ apt_install yara
 # ssdeep — Phase 3 hash_file fuzzy-hash. Optional (hash_file works without it).
 apt_install ssdeep
 
+# libscca — cross-platform Windows Prefetch parser. The Python bindings are
+# packaged as libscca-python3 (system-wide) and libscca-python (pip). We
+# install the system package so pyscca is available even without the venv.
+apt_install libscca-python3
+
 # Volatility 2 — for Phase 2 Win7-x86 PAE + WinXP memory analysis.
 # Ubuntu's `volatility` package ships v2.6 with Python 2 baked in.
 apt_install volatility
 
-# ---- 2. Eric Zimmerman EZ Tools (PECmd, SrumECmd via Get-ZimmermanTools) ---
+# ---- 2. Eric Zimmerman EZ Tools (SrumECmd only via Get-ZimmermanTools) ----
 #
-# The official installer is a PowerShell script at
-# https://github.com/EricZimmerman/Get-ZimmermanTools — it discovers the
-# current download URLs from https://ericzimmerman.github.io and downloads
-# the chosen .NET version. SIFT 24.x ships pwsh by default; the existing
-# /opt/zimmermantools dlls target net9.0.
+# Only SrumECmd is fetched here. PECmd was previously installed but its
+# 2026.5.0+ build refuses to run on Linux:
+#   "Non-Windows platforms not supported due to the need to load
+#    decompression specific Windows libraries! Exiting..."
+# ezt_prefetch_parse uses libscca (installed above) instead.
 
 EZT_PS="https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1"
 
 needs_ezt_install=0
-for tool in PECmd SrumECmd; do
+for tool in SrumECmd; do
     if [[ ! -f "$EZ_DIR/${tool}.dll" ]]; then
         needs_ezt_install=1
         log "$tool: missing → will download"
@@ -86,7 +96,7 @@ with urllib.request.urlopen('$EZT_PS', timeout=30) as r:
     log "running official installer (-NetVersion 9, all tools) ..."
     pwsh -File "$tmpdir/Get-ZimmermanTools.ps1" -Dest "$tmpdir/tools" -NetVersion 9
     # Copy the tools we want (with their deps + .runtimeconfig.json + subdirs)
-    for tool in PECmd SrumECmd; do
+    for tool in SrumECmd; do
         src="$tmpdir/tools/net9/${tool}"
         if [[ -d "$src" ]]; then
             log "copying $tool from $src → $EZ_DIR/"
@@ -115,7 +125,7 @@ fi
 log "verification:"
 command -v yara                     >/dev/null && echo "  yara: $(yara --version 2>&1 | head -1)" || warn "  yara: NOT on PATH"
 command -v vol.py                   >/dev/null && echo "  vol.py (Vol2): $(vol.py --info 2>&1 | head -1)" || warn "  vol.py (Vol2): NOT on PATH"
-[[ -f "$EZ_DIR/PECmd.dll" ]]        && echo "  PECmd.dll: present"            || warn "  PECmd.dll: MISSING"
+python3 -c "import pyscca" 2>/dev/null  && echo "  pyscca (libscca): present"  || warn "  pyscca: NOT importable (apt: libscca-python3, pip: libscca-python)"
 [[ -f "$EZ_DIR/SrumECmd.dll" ]]     && echo "  SrumECmd.dll: present"         || warn "  SrumECmd.dll: MISSING"
 [[ -d "$MEMBASE_DIR" ]]             && echo "  memory-baseliner: present"     || warn "  memory-baseliner: MISSING"
 

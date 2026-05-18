@@ -27,6 +27,11 @@ dependencies = [
   # CLI + DX
   "rich>=13.7,<14.0",
   "typer>=0.12,<0.20",
+  # Cross-platform Windows Prefetch parser (libyal libscca). Used by
+  # ezt_prefetch_parse because EZ Tools' PECmd refuses to run on Linux
+  # ("Non-Windows platforms not supported due to the need to load
+  # decompression specific Windows libraries").
+  "libscca-python>=20240501",
 ]
 
 [project.optional-dependencies]

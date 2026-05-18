@@ -452,62 +452,138 @@ def summarise_amcache(parsed: dict[str, Any]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# PECmd — Windows Prefetch (.pf) parser.
+# Windows Prefetch (.pf) parser.
 #
-# Output format: line-delimited JSON per .pf file with fields like
-# SourceFilename, SourceCreated, SourceModified, SourceAccessed, ExecutableName,
-# Hash, Size, Version, RunCount, LastRun, PreviousRun0..6, Volume0Name,
-# Volume0Serial, Volume0Created, Directories, FilesLoaded.
+# Originally wrapped EZ Tools' PECmd, but PECmd v2026.5.0+ refuses to run on
+# non-Windows platforms ("Non-Windows platforms not supported due to the need
+# to load decompression specific Windows libraries"). Switched to libyal's
+# `libscca` Python bindings (`pyscca`) which has a portable MAM/XPRESS-Huffman
+# decompressor.
+#
+# parse_prefetch_file(path) does the actual parsing via pyscca and returns a
+# dict shaped identically to what we surfaced to the agent before. The wrapper
+# in `tools/ez_tools.py` serialises that dict to JSON in the audit raw_output,
+# then `parse_prefetch(text)` is a json.loads re-hydrator used by query_rows.
 # ---------------------------------------------------------------------------
 
 
-def parse_prefetch(stdout: str) -> dict[str, Any]:
-    """Parse PECmd JSON output (one .pf record per line).
+def parse_prefetch_file(path: Path) -> dict[str, Any]:
+    """Open a `.pf` file with libscca and return a structured dict.
 
-    Prefetch is the Win10/Win11 program-execution gold standard: per-binary
-    last-run + 7 previous runs, plus the list of files loaded (libraries,
-    config files) by the binary.
+    Returned shape (1 row, since one .pf file = one executable):
+        {
+          "count": 1,
+          "total_runs": <int>,
+          "by_executable": {exe: 1},
+          "rows": [{
+            "source_filename": <basename>,
+            "executable_name": <exe>,
+            "hash":            <8-hex>,
+            "format_version":  <int>,
+            "run_count":       <int>,
+            "last_run":        <ISO timestamp>,
+            "previous_runs":   [ISO, ISO, ...],
+            "volume_name":     <str>,
+            "volume_serial":   <hex>,
+            "volume_created":  <ISO>,
+            "files_loaded":    [<NT path>, ...],
+            "directories":     [<NT path>, ...],
+          }]
+        }
     """
-    rows = parse_jsonl_rows(stdout)
-    out_rows: list[dict[str, Any]] = []
-    by_executable: dict[str, int] = {}
-    total_runs = 0
-    for r in rows:
-        exe = (r.get("ExecutableName") or "").lower()
-        run_count = r.get("RunCount") or 0
-        if exe:
-            by_executable[exe] = by_executable.get(exe, 0) + 1
-        try:
-            total_runs += int(run_count)
-        except (TypeError, ValueError):
-            pass
-        out_rows.append({
-            "source_filename":  r.get("SourceFilename"),
-            "executable_name":  r.get("ExecutableName"),
-            "hash":             r.get("Hash"),
-            "size":             r.get("Size"),
-            "version":          r.get("Version"),
+    try:
+        import pyscca
+    except ImportError as e:
+        raise RuntimeError(
+            "pyscca (libscca-python) not installed; install via "
+            "`pip install libscca-python` or `bash scripts/bootstrap_sift_tools.sh`"
+        ) from e
+
+    pf = pyscca.file()
+    pf.open(str(path))
+    try:
+        n_lasts = 8  # Win10+ stores 8 last-run timestamps; older versions 1
+        last_runs: list[str] = []
+        for i in range(n_lasts):
+            try:
+                t = pf.get_last_run_time(i)
+            except (OSError, ValueError, IOError):
+                break
+            if t is None:
+                continue
+            last_runs.append(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
+
+        # Filenames loaded (DLLs, config) — these are NT paths
+        n_files = pf.get_number_of_filenames()
+        files_loaded = [pf.get_filename(i) for i in range(n_files)]
+
+        # Volumes (typically 1)
+        volume_info: dict[str, Any] = {}
+        n_vols = pf.get_number_of_volumes()
+        directories: list[str] = []
+        if n_vols > 0:
+            v0 = pf.get_volume_information(0)
+            if v0 is not None:
+                volume_info["device_path"]   = v0.device_path
+                volume_info["serial_number"] = f"{v0.serial_number:08X}" if v0.serial_number is not None else None
+                volume_info["creation_time"] = (
+                    v0.creation_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+                    if v0.creation_time else None
+                )
+                # libscca exposes directory_strings as a sub-list per volume
+                n_dirs = getattr(v0, "number_of_directory_strings", 0) or 0
+                for di in range(n_dirs):
+                    try:
+                        directories.append(v0.get_directory_string(di))
+                    except (OSError, AttributeError, ValueError):
+                        break
+
+        executable = pf.get_executable_filename()
+        prefetch_hash = pf.get_prefetch_hash()
+        run_count = pf.get_run_count() or 0
+        fmt_version = pf.get_format_version()
+
+        row: dict[str, Any] = {
+            "source_filename":  path.name,
+            "executable_name":  executable,
+            "hash":             f"{prefetch_hash:08X}" if prefetch_hash is not None else None,
+            "format_version":   fmt_version,
             "run_count":        run_count,
-            "last_run":         _normalise_dt(r.get("LastRun")),
-            "previous_runs":    [
-                _normalise_dt(r.get(f"PreviousRun{i}")) for i in range(7)
-                if r.get(f"PreviousRun{i}")
-            ],
-            "source_created":   _normalise_dt(r.get("SourceCreated")),
-            "source_modified":  _normalise_dt(r.get("SourceModified")),
-            "source_accessed":  _normalise_dt(r.get("SourceAccessed")),
-            "volume_name":      r.get("Volume0Name"),
-            "volume_serial":    r.get("Volume0Serial"),
-            "volume_created":   _normalise_dt(r.get("Volume0Created")),
-            "directories":      r.get("Directories"),
-            "files_loaded":     r.get("FilesLoaded"),
-        })
+            "last_run":         last_runs[0] if last_runs else None,
+            "previous_runs":    last_runs[1:] if len(last_runs) > 1 else [],
+            "volume_name":      volume_info.get("device_path"),
+            "volume_serial":    volume_info.get("serial_number"),
+            "volume_created":   volume_info.get("creation_time"),
+            "files_loaded":     files_loaded,
+            "directories":      directories,
+        }
+    finally:
+        pf.close()
+
+    by_executable = {(executable or "").lower(): 1} if executable else {}
     return {
-        "count":         len(out_rows),
-        "total_runs":    total_runs,
-        "by_executable": dict(sorted(by_executable.items(), key=lambda kv: -kv[1])[:30]),
-        "rows":          out_rows,
+        "count":         1,
+        "total_runs":    int(run_count or 0),
+        "by_executable": by_executable,
+        "rows":          [row],
     }
+
+
+def parse_prefetch(text: str) -> dict[str, Any]:
+    """Re-hydrate a previously-serialised parse_prefetch_file result.
+
+    The wrapper persists `parse_prefetch_file(path)` as JSON to audit
+    raw_output. This parser exists so `query_rows` can re-read it.
+    """
+    if not text.strip():
+        return {"count": 0, "total_runs": 0, "by_executable": {}, "rows": []}
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return {
+            "count": 0, "total_runs": 0, "by_executable": {}, "rows": [],
+            "_parse_error": "raw_output is not valid JSON",
+        }
 
 
 def summarise_prefetch(parsed: dict[str, Any]) -> str:

@@ -1,2 +1,21 @@
-{"SourceFilename":"C:\\Windows\\Prefetch\\NOTEPAD.EXE-D8414F97.pf","SourceCreated":"2020-11-13 22:30:42","SourceModified":"2020-11-15 12:00:00","SourceAccessed":"2020-11-15 12:00:00","ExecutableName":"NOTEPAD.EXE","Hash":"D8414F97","Size":51200,"Version":"Windows10","RunCount":12,"LastRun":"2020-11-15 12:00:00","PreviousRun0":"2020-11-15 09:30:00","PreviousRun1":"2020-11-14 22:11:00","Volume0Name":"\\VOLUME{01d6b9c0:0000000000000000}","Volume0Serial":"AA11BB22","Volume0Created":"2020-10-24 11:11:00","Directories":"C:\\WINDOWS\\SYSTEM32, C:\\USERS\\FROCBA\\DESKTOP","FilesLoaded":"\\VOLUME{...}\\WINDOWS\\SYSTEM32\\NTDLL.DLL"}
-{"SourceFilename":"C:\\Windows\\Prefetch\\STUN.EXE-12345678.pf","SourceCreated":"2020-11-13 22:31:00","SourceModified":"2020-11-13 22:31:00","SourceAccessed":"2020-11-13 22:31:00","ExecutableName":"STUN.EXE","Hash":"12345678","Size":40960,"Version":"Windows10","RunCount":3,"LastRun":"2020-11-13 22:31:00","PreviousRun0":null,"Volume0Name":"\\VOLUME{01d6b9c0:0000000000000000}","Volume0Serial":"AA11BB22","Volume0Created":"2020-10-24 11:11:00","Directories":"C:\\USERS\\FROCBA\\APPDATA\\LOCAL\\TEMP","FilesLoaded":""}
+{
+  "count": 1,
+  "total_runs": 12,
+  "by_executable": {"notepad.exe": 1},
+  "rows": [
+    {
+      "source_filename":  "NOTEPAD.EXE-D8414F97.pf",
+      "executable_name":  "NOTEPAD.EXE",
+      "hash":             "D8414F97",
+      "format_version":   30,
+      "run_count":        12,
+      "last_run":         "2020-11-15T12:00:00Z",
+      "previous_runs":    ["2020-11-15T09:30:00Z", "2020-11-14T22:11:00Z"],
+      "volume_name":      "\\VOLUME{01d6b9c0:0000000000000000}",
+      "volume_serial":    "AA11BB22",
+      "volume_created":   "2020-10-24T11:11:00Z",
+      "files_loaded":     ["\\WINDOWS\\SYSTEM32\\NTDLL.DLL", "\\WINDOWS\\SYSTEM32\\KERNEL32.DLL"],
+      "directories":      ["\\WINDOWS\\SYSTEM32"]
+    }
+  ]
+}

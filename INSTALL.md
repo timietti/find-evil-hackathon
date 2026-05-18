@@ -22,7 +22,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
 # Optional but recommended: install the forensic-tool deps that aren't
-# always present on a fresh SIFT image (YARA, Vol2, PECmd, SrumECmd,
+# always present on a fresh SIFT image (YARA, Vol2, libscca-python, SrumECmd,
 # Memory Baseliner). Idempotent.
 bash scripts/bootstrap_sift_tools.sh
 

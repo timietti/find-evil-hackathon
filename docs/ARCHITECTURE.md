@@ -143,7 +143,7 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 | `ezt_shimcache_parse(extract_exec_id)` | `AppCompatCacheParser --csv` | extract `Windows\System32\config\SYSTEM` |
 | `ezt_evtx_parse(extract_exec_id)` | `EvtxECmd --json` | extract a single `.evtx` file |
 | `ezt_amcache_parse(extract_exec_id)` | `AmcacheParser -i --csv` | extract `Windows\AppCompat\Programs\Amcache.hve` |
-| `ezt_prefetch_parse(extract_exec_id)` | `PECmd --json` | extract a single `.pf` file |
+| `ezt_prefetch_parse(extract_exec_id)` | libyal `libscca` (pyscca) — *not* PECmd; PECmd refuses to run on Linux | extract a single `.pf` file |
 | `ezt_jumplist_parse(extract_exec_id)` | `JLECmd --json` | extract a `.automaticDestinations-ms` / `.customDestinations-ms` |
 | `ezt_recyclebin_parse(extract_exec_id)` | `RBCmd --json` | extract a `$Recycle.Bin\S-*\$I*` record |
 | `ezt_srum_parse(extract_exec_id)` | `SrumECmd --csv` | extract `Windows\System32\sru\SRUDB.dat` (Win8+) |

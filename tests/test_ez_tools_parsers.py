@@ -250,7 +250,11 @@ def test_summarise_amcache_includes_program_exec_total() -> None:
     assert "program-exec" in s
 
 
-# ---- PECmd (Prefetch) -------------------------------------------------------
+# ---- Prefetch (pyscca / libscca) -------------------------------------------
+# Note: PECmd v2026.5.0+ refuses to run on Linux, so ezt_prefetch_parse now
+# uses libyal's libscca (pyscca) in-process. The audit raw_output stores the
+# parsed dict as JSON; parse_prefetch(text) re-hydrates via json.loads for
+# query_rows compat.
 
 
 def test_parse_prefetch_extracts_per_binary_records() -> None:
@@ -260,7 +264,7 @@ def test_parse_prefetch_extracts_per_binary_records() -> None:
     assert notepad is not None
     assert notepad["run_count"] == 12
     assert notepad["last_run"].endswith("Z")
-    # PreviousRun list captures only non-null entries
+    # previous_runs captures non-null prior timestamps
     assert isinstance(notepad["previous_runs"], list)
     assert len(notepad["previous_runs"]) >= 2
 
@@ -268,7 +272,7 @@ def test_parse_prefetch_extracts_per_binary_records() -> None:
 def test_parse_prefetch_aggregates_by_executable_and_total_runs() -> None:
     out = parse_prefetch(_fixture("prefetch_head.json"))
     assert "by_executable" in out
-    assert out["total_runs"] >= 12  # NOTEPAD has RunCount 12
+    assert out["total_runs"] >= 12
     assert "notepad.exe" in out["by_executable"]
 
 
@@ -278,11 +282,29 @@ def test_parse_prefetch_handles_empty() -> None:
     assert out["rows"] == []
 
 
+def test_parse_prefetch_handles_invalid_json() -> None:
+    out = parse_prefetch("not actually json")
+    assert out["count"] == 0
+    assert "_parse_error" in out
+
+
 def test_summarise_prefetch_includes_run_total() -> None:
     out = parse_prefetch(_fixture("prefetch_head.json"))
     s = summarise_prefetch(out)
     assert "Prefetch records" in s
     assert "cumulative runs" in s
+
+
+def test_parse_prefetch_file_requires_real_pf(tmp_path: Path) -> None:
+    """parse_prefetch_file invokes libscca; a non-Prefetch input must raise."""
+    from mcp_server.parsers.ez_tools import parse_prefetch_file
+    pytest.importorskip("pyscca")
+    fake = tmp_path / "not_a_prefetch.bin"
+    fake.write_bytes(b"\x00" * 256)
+    import pyscca
+    # libscca raises IOError-style on signature mismatch
+    with pytest.raises((OSError, IOError, RuntimeError)):
+        parse_prefetch_file(fake)
 
 
 # ---- JLECmd (Jump Lists) ----------------------------------------------------

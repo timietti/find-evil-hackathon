@@ -136,7 +136,7 @@
       <text x="530" y="573" class="h2">SIFT tool executables</text>
       <text x="530" y="588" class="small" fill="#6b7280">subprocess invocation  ·  argv-list only  ·  shell=True never used</text>
       <text x="530" y="603" class="mono">vol  ·  fls / icat / mmls / fsstat  ·  ewfinfo / ewfverify</text>
-      <text x="530" y="616" class="mono">MFTECmd  ·  EvtxECmd  ·  AmcacheParser  ·  PECmd  ·  ...</text>
+      <text x="530" y="616" class="mono">MFTECmd  ·  EvtxECmd  ·  AmcacheParser  ·  libscca  ·  ...</text>
       <text x="530" y="629" class="mono">yara  ·  bulk_extractor  ·  bstrings  ·  hashlib + ssdeep</text>
     </g>
 
