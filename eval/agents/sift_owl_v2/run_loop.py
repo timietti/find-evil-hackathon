@@ -348,6 +348,8 @@ def _run_one_iteration(
     model: str,
     max_budget_usd: float,
     max_turns: int,
+    llm_check: bool,
+    llm_max_calls: int | None,
 ) -> IterationResult:
     iter_dir.mkdir(parents=True, exist_ok=True)
     prompt_path = iter_dir / "prompt.md"
@@ -443,7 +445,9 @@ def _run_one_iteration(
     if not iter_audit_link.exists():
         iter_audit_link.symlink_to(audit_dir)
 
-    rv, verdicts = validate_run(iter_dir)
+    rv, verdicts = validate_run(
+        iter_dir, llm_check=llm_check, llm_max_calls=llm_max_calls,
+    )
     write_validator_report(iter_dir, rv, verdicts)
     validator_report = json.loads((iter_dir / "validator_report.json").read_text())
 
@@ -502,11 +506,44 @@ def main(
         ),
     ),
     dry_run: bool = typer.Option(False, "--dry-run"),
+    llm_check: bool = typer.Option(
+        None,  # tri-state: None = auto-detect from ANTHROPIC_API_KEY
+        "--llm-check/--no-llm-check",
+        help=(
+            "Run the validator's LLM prose-check (Haiku) on Unverifiable "
+            "claims after each iteration's rule-based pass. Default: auto "
+            "(on iff ANTHROPIC_API_KEY is set). Adds ~$0.10 / iter."
+        ),
+    ),
+    llm_max_calls: int = typer.Option(
+        50, "--llm-max-calls",
+        help="Per-iter cap on LLM invocations (cost safety). 0 = unlimited.",
+    ),
 ) -> None:
     if shutil.which("claude") is None:
         raise RuntimeError("claude CLI not on PATH")
     if shutil.which("sift-mcp") is None:
         raise RuntimeError("sift-mcp not on PATH")
+
+    # Tri-state: explicit --llm-check / --no-llm-check overrides; default
+    # autodetects from ANTHROPIC_API_KEY. The Anthropic SDK does not honour
+    # Claude Code's OAuth credential, so the API key has to be in env for
+    # the prose-check pass to fire.
+    if llm_check is None:
+        resolved_llm_check = bool(os.environ.get("ANTHROPIC_API_KEY"))
+        if resolved_llm_check:
+            console.log(
+                "[bold green]llm-check:[/] auto-enabled "
+                "(ANTHROPIC_API_KEY is set; ~$0.10 / iter)"
+            )
+        else:
+            console.log(
+                "[yellow]llm-check:[/] auto-disabled "
+                "(ANTHROPIC_API_KEY not set — rule-based validator only)"
+            )
+    else:
+        resolved_llm_check = llm_check
+        console.log(f"[bold]llm-check:[/] explicit={resolved_llm_check}")
 
     case_data = _load_case(case)
     evidence_dir = case_data.get("evidence_dir") or "/cases"
@@ -606,6 +643,8 @@ def main(
             model=model,
             max_budget_usd=per_iter_budget,
             max_turns=max_turns_per_iter,
+            llm_check=resolved_llm_check,
+            llm_max_calls=(None if llm_max_calls == 0 else llm_max_calls),
         )
         iterations.append(result)
         total_cost += result.cost_usd
