@@ -456,18 +456,12 @@ def ezt_recyclebin_parse(extract_exec_id: str) -> dict[str, Any]:
     return _ezt_recyclebin_parse(extract_exec_id, audit=_audit())
 
 
-@mcp.tool()
-def ezt_srum_parse(extract_exec_id: str) -> dict[str, Any]:
-    """`SrumECmd --csv` on an extracted SRUDB.dat — System Resource Usage
-    Monitor (Win8+).
-
-    Pre-req: extract `Windows\\System32\\sru\\SRUDB.dat` via `tsk_icat_extract`.
-    Returns multiple sections; the killer one is **NetworkUsages** — per-app
-    accumulated bytes-in / bytes-out by hour and interface. Strong **exfil
-    detector**: the largest outbound bytes-out per process per hour.
-
-    XP/Win7 hosts will not have SRUDB.dat — call only on Win8+ images."""
-    return _ezt_srum_parse(extract_exec_id, audit=_audit())
+# NOTE: ezt_srum_parse was previously registered here but disabled in
+# W3-42 — SrumECmd v2026.5.0 refuses to run on Linux with the same
+# "Non-Windows platforms not supported" guard that affected PECmd.
+# The fix needs a pyesedb-based SRUM parser; pending future work.
+# Code path retained in tools/ez_tools.py + parsers/ez_tools.py but
+# not exposed via MCP.
 
 
 @mcp.tool()

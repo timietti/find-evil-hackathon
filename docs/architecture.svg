@@ -28,7 +28,7 @@
   <rect width="1400" height="900" fill="#f9fafb"/>
 
   <!-- Title -->
-  <text x="700" y="35" class="h1" text-anchor="middle">SIFT-OWL — Architecture (v0.4, 38 typed MCP tools)</text>
+  <text x="700" y="35" class="h1" text-anchor="middle">SIFT-OWL — Architecture (v0.4, 37 typed MCP tools)</text>
   <text x="700" y="55" class="meta" text-anchor="middle">Self-correcting DFIR loop on a typed read-only MCP boundary, with per-call audit anchoring every claim to a tool execution</text>
 
   <!-- ========== ORCHESTRATOR ROW (top) ========== -->
@@ -92,7 +92,7 @@
     <g>
       <rect x="520" y="280" width="400" height="240" rx="6" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
       <text x="530" y="302" class="h2">sift-mcp  ·  FastMCP stdio server</text>
-      <text x="530" y="320" class="small">38 typed read-only tools; Pydantic input schemas</text>
+      <text x="530" y="320" class="small">37 typed read-only tools; Pydantic input schemas</text>
       <text x="530" y="336" class="small">Every call: validate args -> run subprocess (argv-list)</text>
       <text x="530" y="352" class="small">-> parse -> write audit row -> return parsed dict</text>
 
@@ -111,9 +111,9 @@
       </g>
       <g>
         <rect x="530" y="424" width="188" height="54" rx="4" fill="#fde68a"/>
-        <text x="624" y="440" class="small" text-anchor="middle" font-weight="700">Windows artefacts · EZT (10)</text>
+        <text x="624" y="440" class="small" text-anchor="middle" font-weight="700">Windows artefacts · EZT (9)</text>
         <text x="624" y="456" class="small" text-anchor="middle">MFT, ShimCache, EVTX,</text>
-        <text x="624" y="470" class="small" text-anchor="middle" font-size="10">Amcache, Prefetch, JLE, RB, SRUM, ...</text>
+        <text x="624" y="470" class="small" text-anchor="middle" font-size="10">Amcache, Prefetch, JLE, RB, ...</text>
       </g>
       <g>
         <rect x="720" y="424" width="190" height="54" rx="4" fill="#fecaca"/>
@@ -317,7 +317,7 @@
 
   <!-- Footer -->
   <text x="40" y="892" class="meta">
-    SIFT-OWL · find-evil-hackathon · 38 tools (Phase 1 + 1.5 + 3) · 258 unit tests · validator v0..v5 · MIT
+    SIFT-OWL · find-evil-hackathon · 37 tools (Phase 1 + 1.5 + 3) · 258 unit tests · validator v0..v5 · MIT
   </text>
   <text x="1360" y="892" class="meta" text-anchor="end">
     miettinen.timo@gmail.com  ·  2026-06-15 submission

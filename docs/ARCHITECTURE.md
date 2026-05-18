@@ -87,7 +87,7 @@ After each iteration, a non-LLM validator pass runs:
 
 ## MCP server function inventory (implemented)
 
-The MCP server exposes **38 typed functions**. Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
+The MCP server exposes **37 typed functions** (a 38th, `ezt_srum_parse`, is registered in source but disabled at the MCP boundary — SrumECmd is Linux-broken pending a libesedb-based reimplementation; tracked in `plans/MCP_TOOL_ROADMAP.md`). Every function returns `{exec_id, ...parsed_dict}` and records one row in `audit/exec_log.jsonl`:
 
 ```jsonc
 { "exec_id": "01H...UUIDv7",

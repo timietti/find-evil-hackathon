@@ -310,7 +310,19 @@ Submission deliverables                                            ← #30/#31/#
     │
     ▼
 [Post-submission] Phase 4 (Plaso) → Phase 6 (correlator) → Phase 7 (Linux/mac)
+                  → SRUM (pyesedb-based reimplementation)
 ```
+
+**SRUM (Linux-broken SrumECmd):** `ezt_srum_parse` was disabled at the MCP
+boundary in W3-42 — SrumECmd v2026.5.0 exits with "Non-Windows platforms not
+supported due to the need to load ESI specific Windows libraries". The fix
+mirrors the Prefetch refactor: replace the SrumECmd subprocess with an
+in-process libyal `libesedb` (pyesedb) reader against
+`Windows\System32\sru\SRUDB.dat`, projecting the same per-process /
+per-app / push-notification tables SrumECmd produces today. The
+`mcp_server/tools/ez_tools.py` + `mcp_server/parsers/ez_tools.py` code paths
+are retained; re-register the tool in `mcp_server/server.py` once the
+pyesedb parser lands.
 
 **Reordering note (2026-05-11):** Phase 5 promoted from post-submission to
 pre-submission after the MITRE coverage audit found it closes 7 of 9

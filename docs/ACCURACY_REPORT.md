@@ -69,7 +69,7 @@ regression. **63 validator tests pass; 258 unit tests overall.**
 |---|---|
 | Model | Claude Sonnet 4.6 (`claude-sonnet-4-6`), API tier `standard` |
 | Validator LLM (v4 only) | Claude Haiku 4.5 (`claude-haiku-4-5-20251001`) |
-| MCP server | FastMCP stdio (`sift-mcp`), 38 typed tools, no shell, no filesystem-by-path |
+| MCP server | FastMCP stdio (`sift-mcp`), 37 typed tools, no shell, no filesystem-by-path (38th `ezt_srum_parse` disabled on Linux pending pyesedb-based reimplementation) |
 | Loop harness | `eval/agents/sift_owl_v2/run_loop.py` — 3 iterations, budget split |
 | Allow-list | `mcp__sift-owl__*` only; built-in `Bash`/`Read`/`Edit`/`Write`/`Agent`/`WebFetch` denied |
 
@@ -200,7 +200,7 @@ the published state of the art.
 
 | Concern | Protocol SIFT | SIFT-OWL |
 |---|---|---|
-| **Tool surface** | `Bash(*)` allow-list with narrow deny-list (`rm -rf:*`, `dd:*`, `wget:*`, `curl:*`, `ssh:*`, `WebFetch`) | 38 typed read-only functions; no `Bash` exposed; no `shell=True` anywhere in subprocess invocations |
+| **Tool surface** | `Bash(*)` allow-list with narrow deny-list (`rm -rf:*`, `dd:*`, `wget:*`, `curl:*`, `ssh:*`, `WebFetch`) | 37 typed read-only functions; no `Bash` exposed; no `shell=True` anywhere in subprocess invocations |
 | **Evidence integrity** | Prompt-based ("Never modify `/cases/`") | Architectural — `validate_evidence_path()` rejects paths outside the allow-list at the MCP boundary; no write tool exposed |
 | **Audit trail** | `$CONVERSATION_SUMMARY` `Stop`-hook to `forensic_audit.log` — single line per session (and **empty in non-interactive `claude -p` mode**) | Per-call JSONL row in `audit/exec_log.jsonl` with `exec_id`, args, sha256(input + output), `wall_ms`, parsed_summary |
 | **Hallucinations** | Caught only by human review | Validator agent — every `[CONFIRMED]` claim must cite an `exec_id`; validator re-checks structural support against the parsed JSON of the cited call |

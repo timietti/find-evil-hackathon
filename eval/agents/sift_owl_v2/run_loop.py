@@ -98,7 +98,8 @@ ALLOWED_MCP_TOOLS = " ".join([
     "mcp__sift-owl__ezt_prefetch_parse",
     "mcp__sift-owl__ezt_jumplist_parse",
     "mcp__sift-owl__ezt_recyclebin_parse",
-    "mcp__sift-owl__ezt_srum_parse",
+    # ezt_srum_parse disabled in W3-42 — SrumECmd is Linux-broken pending
+    # a pyesedb-based reimplementation
     "mcp__sift-owl__ezt_task_xml_parse",
     "mcp__sift-owl__ezt_persistence_keys_parse",
     # threat hunt + carving + hashing (Phase 3)
