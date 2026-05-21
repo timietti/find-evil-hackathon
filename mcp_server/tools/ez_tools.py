@@ -538,8 +538,20 @@ def ezt_recyclebin_parse(
     )
 
 
-# Default per-section row cap on the wire for SRUM. Same shape as Amcache.
-_SRUM_SECTION_ROW_LIMIT = 50
+# SRUM wire-fit constants. The parser typically produces a *very* large
+# dict (179K rows across 7 sections on a 35 MB SRUDB.dat is normal). The
+# tool-result on the wire has to stay under Claude Code's per-call
+# transport envelope (~25 KB headroom is the convention used by the
+# memory plugins — see `mcp_server/tools/memory.py:308`).
+#
+# Strategy: start at the standard 50-row default; if serialised JSON
+# exceeds the target, halve the per-section cap and retry. The parser
+# is NOT re-invoked — only `_truncate_srum` + `json.dumps` are repeated,
+# each pass costs ~5-10 ms on already-parsed data. Worst case ends in
+# a `count`-only fallback (no rows on the wire; agent uses `query_rows`).
+_SRUM_SECTION_ROW_LIMIT  = 50
+_SRUM_WIRE_TARGET_BYTES  = 25 * 1024          # match single-section tools
+_SRUM_WIRE_SHRINK_LADDER = (50, 25, 12, 6, 3, 1)
 
 
 def _truncate_srum(
@@ -559,6 +571,58 @@ def _truncate_srum(
         }
     out["sections"] = out_sections
     return out
+
+
+def _fit_srum_to_wire(
+    parsed: dict[str, Any],
+    *,
+    target_bytes: int = _SRUM_WIRE_TARGET_BYTES,
+    ladder: tuple[int, ...] = _SRUM_WIRE_SHRINK_LADDER,
+) -> tuple[dict[str, Any], int, str]:
+    """Shrink per-section row caps until the JSON payload fits the wire.
+
+    Walks `ladder` (50, 25, 12, …) and re-runs `_truncate_srum`+`json.dumps`
+    on the already-parsed dict at each step until `len(json) <= target_bytes`.
+    If even the smallest cap is too big, returns a `count`-only payload
+    (rows dropped entirely; the agent must use `query_rows` to drill).
+
+    Returns: (fitted_dict, applied_row_cap, reason).
+    `reason` is one of:
+      - "default"           — first cap fit, no shrink needed
+      - "size-fit"          — needed to shrink to stay under target
+      - "minimum-fallback"  — even cap=1 was too big; rows dropped
+    """
+    last_serialised_len: int | None = None
+    for cap in ladder:
+        candidate = _truncate_srum(parsed, limit=cap)
+        serialised_len = len(json.dumps(candidate, default=str))
+        last_serialised_len = serialised_len
+        if serialised_len <= target_bytes:
+            reason = "default" if cap == ladder[0] else "size-fit"
+            candidate["wire_cap_applied"] = cap
+            candidate["wire_target_bytes"] = target_bytes
+            candidate["wire_payload_bytes"] = serialised_len
+            candidate["wire_cap_reason"] = reason
+            return candidate, cap, reason
+
+    # Fallback: drop all rows; the agent has section_counts + id_map_summary
+    # in the audit trail and can query_rows for any specific section.
+    fallback = {k: v for k, v in parsed.items() if k != "sections"}
+    out_sections: dict[str, Any] = {}
+    for sec_key, sec in (parsed.get("sections") or {}).items():
+        rows = sec.get("rows") or []
+        out_sections[sec_key] = {
+            "count":          sec.get("count", len(rows)),
+            "rows":           [],
+            "rows_truncated": True,
+            "rows_total":     len(rows),
+        }
+    fallback["sections"] = out_sections
+    fallback["wire_cap_applied"]   = 0
+    fallback["wire_target_bytes"]  = target_bytes
+    fallback["wire_payload_bytes"] = last_serialised_len or 0
+    fallback["wire_cap_reason"]    = "minimum-fallback"
+    return fallback, 0, "minimum-fallback"
 
 
 def ezt_srum_parse(
@@ -623,13 +687,32 @@ def ezt_srum_parse(
 
     raw_text = json.dumps(parsed, default=str)
     raw_path = audit.write_raw(exec_id, raw_text)
+
+    # Fit to wire BEFORE recording the audit row so the summary string
+    # carries the wire-cap status (the agent reads `summary` in the
+    # audit log + the response payload carries `wire_cap_*` fields too).
+    fitted, applied_cap, reason = _fit_srum_to_wire(parsed)
     summary = summarise_srum(parsed)
+    if reason == "size-fit":
+        summary += (
+            f"; wire shrink: capped to {applied_cap} rows/section "
+            f"({fitted['wire_payload_bytes']}B fit under "
+            f"{fitted['wire_target_bytes']}B target — use query_rows for "
+            f"more)"
+        )
+    elif reason == "minimum-fallback":
+        summary += (
+            "; wire shrink: even cap=1 exceeded target — rows dropped from "
+            "response; section_counts retained; use query_rows to drill"
+        )
 
     parsed_summary_compact = {
-        "total_count":    parsed.get("total_count"),
-        "section_counts": parsed.get("section_counts"),
-        "id_map_summary": parsed.get("id_map_summary"),
-        "unknown_files":  parsed.get("unknown_files"),
+        "total_count":      parsed.get("total_count"),
+        "section_counts":   parsed.get("section_counts"),
+        "id_map_summary":   parsed.get("id_map_summary"),
+        "unknown_files":    parsed.get("unknown_files"),
+        "wire_cap_applied": applied_cap,
+        "wire_cap_reason":  reason,
     }
 
     audit.record(
@@ -641,8 +724,7 @@ def ezt_srum_parse(
         parsed_summary=parsed_summary_compact,
     )
 
-    truncated = _truncate_srum(parsed)
-    return {"exec_id": exec_id, **truncated}
+    return {"exec_id": exec_id, **fitted}
 
 
 # ---------------------------------------------------------------------------

@@ -530,6 +530,90 @@ def test_parse_srum_file_real_srudb() -> None:
             assert r.get(k) != 707406378, f"sentinel leaked through to {k}"
 
 
+# ---- _fit_srum_to_wire — iterative wire-size shrink (W3-47) ----------------
+
+
+def _synthetic_srum(rows_per_section: int, row_bytes: int) -> dict:
+    """Build a parsed-SRUM dict large enough to need shrinking."""
+    payload = "x" * row_bytes  # filler to inflate JSON size predictably
+    sections = {}
+    section_counts = {}
+    for name in (
+        "network_usage", "app_resource_use", "network_connections",
+        "push_notifications", "energy_usage", "energy_usage_lt", "app_timeline",
+    ):
+        rows = [{"i": i, "app_name": payload, "ts": "2026-05-20T00:00:00Z"}
+                for i in range(rows_per_section)]
+        sections[name] = {"count": len(rows), "rows": rows}
+        section_counts[name] = len(rows)
+    return {
+        "total_count":    sum(section_counts.values()),
+        "section_counts": section_counts,
+        "sections":       sections,
+        "unknown_files":  [],
+        "id_map_summary": {"total": 1000},
+    }
+
+
+def test_fit_srum_first_cap_fits() -> None:
+    """Small dict fits at the default 50-row cap — no shrink needed."""
+    from mcp_server.tools.ez_tools import _fit_srum_to_wire
+    parsed = _synthetic_srum(rows_per_section=2, row_bytes=20)
+    fitted, cap, reason = _fit_srum_to_wire(parsed, target_bytes=25 * 1024)
+    assert cap == 50
+    assert reason == "default"
+    assert fitted["wire_cap_applied"] == 50
+    assert fitted["wire_payload_bytes"] < 25 * 1024
+
+
+def test_fit_srum_shrinks_when_oversize() -> None:
+    """Bloated dict triggers the shrink ladder; cap < 50 after fit."""
+    from mcp_server.tools.ez_tools import _fit_srum_to_wire
+    # 50 rows × 7 sections × ~120 B each ≈ 42 KB — too big for 25 KB target.
+    parsed = _synthetic_srum(rows_per_section=50, row_bytes=100)
+    fitted, cap, reason = _fit_srum_to_wire(parsed, target_bytes=25 * 1024)
+    assert reason == "size-fit"
+    assert cap < 50
+    assert fitted["wire_cap_applied"] == cap
+    assert fitted["wire_payload_bytes"] <= 25 * 1024
+    # rows_total still reflects pre-truncation count (for the agent)
+    for sec_key, sec in fitted["sections"].items():
+        assert sec["rows_total"] == 50
+        assert len(sec["rows"]) <= cap
+
+
+def test_fit_srum_falls_back_when_minimum_too_big() -> None:
+    """Even cap=1 over budget → drop rows entirely, keep section_counts."""
+    from mcp_server.tools.ez_tools import _fit_srum_to_wire
+    # Each row 8 KB; 7 rows = 56 KB — even cap=1 doesn't fit 25 KB.
+    parsed = _synthetic_srum(rows_per_section=50, row_bytes=8000)
+    fitted, cap, reason = _fit_srum_to_wire(parsed, target_bytes=25 * 1024)
+    assert reason == "minimum-fallback"
+    assert cap == 0
+    # All sections empty-rows but counts preserved.
+    for sec_key, sec in fitted["sections"].items():
+        assert sec["rows"] == []
+        assert sec["count"] == 50
+        assert sec["rows_truncated"] is True
+        assert sec["rows_total"] == 50
+
+
+def test_fit_srum_shrink_is_fast() -> None:
+    """Iterative shrink is in-memory only — must be <100 ms even on big input.
+
+    Validates the user's concern that iterative shrinking doesn't blow up
+    runtime (parser runs ONCE, only the in-process truncate+json.dumps
+    repeats). Real SHIELDBASE benchmark: 1 ms total on 179K rows.
+    """
+    import time
+    from mcp_server.tools.ez_tools import _fit_srum_to_wire
+    parsed = _synthetic_srum(rows_per_section=50, row_bytes=200)
+    t0 = time.time()
+    _fit_srum_to_wire(parsed, target_bytes=25 * 1024)
+    ms = (time.time() - t0) * 1000
+    assert ms < 100, f"shrink took {ms:.0f} ms — should be <100 ms"
+
+
 # ---- Task XML parser (Phase 1.5, T1053 disk-side) --------------------------
 
 
