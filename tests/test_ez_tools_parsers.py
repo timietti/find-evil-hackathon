@@ -614,6 +614,40 @@ def test_fit_srum_shrink_is_fast() -> None:
     assert ms < 100, f"shrink took {ms:.0f} ms — should be <100 ms"
 
 
+def test_fit_sections_generic_amcache_busy_host() -> None:
+    """`_fit_sections_to_wire` also shrinks Amcache — same bug class as SRUM.
+
+    Synthetic busy-host Amcache (6 sections × 50 rows × ~400 B/row) hits
+    160 KB at the default cap; shrink-fit must bring it under 25 KB.
+    """
+    from mcp_server.tools.ez_tools import (
+        _fit_sections_to_wire, _truncate_amcache,
+    )
+    parsed = _synthetic_srum(rows_per_section=50, row_bytes=100)
+    # rename keys to match Amcache section layout (the truncate fn doesn't
+    # care about section names, only that there's a `sections` dict).
+    fitted, cap, reason = _fit_sections_to_wire(
+        parsed, _truncate_amcache, target_bytes=25 * 1024,
+    )
+    assert reason == "size-fit"
+    assert cap < 50
+    assert fitted["wire_payload_bytes"] <= 25 * 1024
+
+
+def test_fit_sections_generic_persistence_busy_host() -> None:
+    """`_fit_sections_to_wire` also shrinks persistence_keys."""
+    from mcp_server.tools.ez_tools import (
+        _fit_sections_to_wire, _truncate_persistence,
+    )
+    parsed = _synthetic_srum(rows_per_section=50, row_bytes=100)
+    fitted, cap, reason = _fit_sections_to_wire(
+        parsed, _truncate_persistence, target_bytes=25 * 1024,
+    )
+    assert reason == "size-fit"
+    assert cap < 50
+    assert fitted["wire_payload_bytes"] <= 25 * 1024
+
+
 # ---- Task XML parser (Phase 1.5, T1053 disk-side) --------------------------
 
 
