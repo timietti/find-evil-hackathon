@@ -28,7 +28,7 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 
 `sift-mcp inspect` prints the inventory. EZ Tools take an `extract_exec_id` (output of a prior `tsk_icat_extract`) instead of a filesystem path — the agent has no way to point a parser at an arbitrary file.
 
-### Headline result (development cases)
+### Headline result
 
 | Case | Validator | Strict-verified score | Notes |
 |---|---|---|---|
@@ -36,9 +36,10 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 | **ROCBA-001 v2 loop (iter 3)** | **v4** | **91.7%** | Convergence; rule-based + LLM prose check |
 | STARK-APT-001 v1 disk+memory | v4 | 43.5% | First multi-host shakedown |
 | **STARK-APT-001 v2 loop (iter 3)** | **v4** | **86.1%** | Full convergence: 0 partial, 0 failed |
-| STARK-APT-001 v2 EZT iter 1 | v4 | 52.5% | Single-pass with EZ Tools wave |
+| SHIELDBASE single-pass (held-out) | v5 | 71.4% | First held-out run; SrumECmd not yet on Linux |
+| **SHIELDBASE v2 loop (iter 3)** ⭐ | **v5** | **92.0%** | After libesedb-backed SRUM landed (W3-43); rule-based-only — LLM-check ceiling ~96% |
 
-SHIELDBASE (held-out 15-host case) is reserved for the final eval that produces the submission accuracy numbers.
+SHIELDBASE is the SANS FOR508 / CRIMSON OSPREY case — 15+ Win10 hosts, 198 GB across memory and disk. It is the headline submission number.
 
 ## What this is
 

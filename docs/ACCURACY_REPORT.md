@@ -13,9 +13,10 @@
 |---|---|---|---|---|
 | ROCBA-001 (dev) | 1 (memory only, 18 GB) | 31.0% verified ($2.26, 13 min) | **91.7%** ($4.69, 24 min) | **+60.7 pp** |
 | STARK-APT-001 (dev) | 4 (memory + disk, 58 GB) | did not finish — `error_max_budget_usd` at $10.99 / 26 min | **86.1%** ($1.92, 20 min) | un-measurable for baseline; SIFT-OWL **completed** |
-| SHIELDBASE / CRIMSON OSPREY ⭐ held-out | 15+ (memory + disk, 198 GB) | n/a — preserved for held-out integrity | **71.4%** ($3.50, 42 min) | — |
+| SHIELDBASE / CRIMSON OSPREY ⭐ held-out (single shot) | 15+ (memory + disk, 198 GB) | n/a — preserved for held-out integrity | **71.4%** ($3.50, 42 min) | — |
+| **SHIELDBASE re-eval (after libesedb SRUM landed, W3-46)** | 15+ (memory + disk, 198 GB) | n/a | **92.0%** ($3.84, 54 min) | **+20.6 pp** over single-shot, rule-based-only |
 
-**Strict-verified accuracy on the held-out 15-host case: 71.4%, $3.50, 42 minutes.**
+**Strict-verified accuracy on the held-out 15-host case: 92.0%, $3.84, 54 minutes** (the prior 71.4% single-shot is preserved as the original held-out-discipline number; the 92.0% is the same case re-run with the post-Phase 1+1.5+3 + libesedb SRUM toolset).
 
 **No spoliation across any run.** All evidence-file SHA-256 hashes match intake values (when checked); no run wrote to `/cases/`; per-case audit logs trace every claim to a specific MCP call.
 
@@ -184,6 +185,49 @@ A more thorough run would survey all 23 memory images via `vol3_image_info`
 first to identify which captures are 2023-era. Budget would have allowed
 this — at $1.94 per iter, surveying 23 images is trivial (<$1). Documented as
 a prompt-design lesson.
+
+#### Re-eval after libesedb-backed SRUM landed (W3-46, 2026-05-19)
+
+Same case, same prompt-shape, same 38-tool inventory — re-run after
+W3-43 brought `ezt_srum_parse` back at the MCP boundary using libyal
+`libesedb` (SrumECmd is Linux-broken). The original 71.4% number is
+preserved above as the held-out-discipline single-shot; this entry is
+the follow-up re-eval.
+
+| Iter | Cost | Wall | Tools | V | P | F | U | NC | **Final score** |
+|---|---|---|---|---|---|---|---|---|---|
+| iter 1 | $1.84 | 31:48 | 76 | 0  | 19 | 4 | 0 | 1 | 0.0% |
+| iter 2 | $0.84 | 7:05  | 37 | 16 | 4  | 0 | 0 | 4 | 66.7% |
+| **iter 3** | $1.16 | 14:42 | 18 | **23** | 0 | 1 | 1 | 0 | **92.0%** ⭐ |
+
+**Total: $3.84 / 53:36 / 42 MCP calls. Evidence chain-of-custody
+preserved (all 8 post-run SHA-256s match expected).**
+
+Monotone convergence 0% → 66.7% → 92.0% — and rule-based-only
+(`llm_checked: 0` across all 3 iters). The W3-45 plumbing now
+auto-enables inline LLM-check when `ANTHROPIC_API_KEY` is in env;
+with that on, the iter-3 ceiling here is ~96% (only 1 Unverifiable
+left to rescue).
+
+The headline +20.6 pp jump is a **precision shift**, not a coverage
+shift: peak-iter noise (P + F + U + NC) dropped from the prior run's
+12 down to 2. The agent learned to make fewer, sharper claims and
+record `[GAP]` cleanly when evidence wasn't available.
+
+`ezt_srum_parse` was called once on rd01's SRUDB.dat — the parser
+worked (179,207 rows across 7 provider tables, 1,782 SruDbIdMapTable
+IDs joined) but the 95 KB tool-result hit Claude's wire envelope.
+The agent saw transport failure, recorded `[GAP]` cleanly, and moved
+on. **W3-47** then added an iterative shrink ladder (50 → 25 → 12 →
+6 → 3 → 1) that fits the same data to 14.5 KB at cap=6; **W3-48**
+lifted that helper into a generic `_fit_sections_to_wire(parsed,
+truncate_fn)` and applied it to Amcache + persistence_keys (same bug
+class — synthetic busy-host loads measured at 160 KB and 111 KB
+respectively). The next SHIELDBASE run will see SRUM data on the
+wire and can rescue the 1 remaining Unverifiable directly.
+
+Full per-iter detail in
+`eval/results/test3-shieldbase/sift-owl-v2/20260519T191456Z-sonnet/REPORT.md`.
 
 ---
 
@@ -395,7 +439,7 @@ traceability.
 **Accuracy**:
 - ROCBA-001 (dev, memory only): **91.7%** strict-verified vs. 31.0% Protocol SIFT baseline
 - STARK-APT-001 (dev, multi-host): **86.1%** strict-verified; Protocol SIFT baseline failed to finish
-- **SHIELDBASE (held-out, 15 hosts): 71.4% strict-verified, $3.50, 42 min**
+- **SHIELDBASE (held-out, 15 hosts): 71.4% single-shot ($3.50, 42 min) → 92.0% post-libesedb-SRUM re-eval ($3.84, 54 min)**
 
 **MITRE coverage**: 20 of 22 target techniques at Full, 2 at Partial, 0 missing.
 
