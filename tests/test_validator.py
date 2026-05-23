@@ -30,6 +30,35 @@ def test_extract_pid() -> None:
     assert "29440" in t.pids
 
 
+def test_extract_skips_backticked_exec_id_after_marker() -> None:
+    """`(exec_id `UUID`)` must NOT pull the UUID into `quoted` tokens.
+
+    Pre-fix (W3-50): the agent's prose-style citation
+    `(exec_id `019e563e-...`)` leaked the backticked UUID into the
+    verifiable-tokens list; the verifier then marked it "missing" from
+    every cited tool's parsed output (exec_ids are metadata, not data),
+    cascading the verdict to `partial`/`failed` and zeroing the score.
+    Mirrors the existing `exec_id` guard on `hex_hashes`.
+    """
+    t = extract_tokens(
+        "[CONFIRMED] `p.exe` implant active in memory "
+        "(exec_id `019e563e-23a4-7053-a243-629158db8679`)"
+    )
+    assert "p.exe" in t.quoted
+    assert "019e563e-23a4-7053-a243-629158db8679" not in t.quoted, (
+        f"exec_id leaked into quoted tokens: {t.quoted}"
+    )
+
+
+def test_extract_keeps_normal_backticked_tokens() -> None:
+    """Sanity: ordinary backticked tokens are still extracted as quoted."""
+    t = extract_tokens(
+        "[CONFIRMED] `vibranium` user logged on from `WORKSTATION-04`"
+    )
+    assert "vibranium" in t.quoted
+    assert "WORKSTATION-04" in t.quoted
+
+
 def test_extract_ipv4() -> None:
     t = extract_tokens("Connections to 81.30.144.115 (59 hits) and 213.202.233.104")
     assert "81.30.144.115" in t.ips

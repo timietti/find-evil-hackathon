@@ -234,6 +234,7 @@ class ClaimVerdict:
         d["claim"] = {
             "tag":       self.claim.tag,
             "exec_id":   self.claim.exec_id,
+            "exec_ids":  list(self.claim.exec_ids),
             "text":      self.claim.text,
             "raw_match": self.claim.raw_match,
             "line_no":   self.claim.line_no,

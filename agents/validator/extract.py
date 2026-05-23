@@ -284,7 +284,19 @@ def extract_tokens(claim: str) -> ExtractedTokens:
             continue
         raw_hashes.append(m.group(1))
     hex_hashes  = list(set(raw_hashes))
-    quoted      = list({m.group(1) for m in _RE_BACKTICK.finditer(claim)})
+    # Backtick-quoted tokens. Skip ones that are clearly an exec_id citation
+    # (preceded by `exec_id` / `exec ids:`), mirroring the hex_hash guard
+    # above — otherwise the agent's prose-style cite `(exec_id `UUID`)`
+    # leaks the UUID into the "verifiable tokens" list and the verifier
+    # marks it missing from the cited tool's parsed output.
+    raw_quoted: list[str] = []
+    for m in _RE_BACKTICK.finditer(claim):
+        s, _ = m.span(1)
+        before = claim[max(0, s - 20) : s].lower()
+        if "exec_id" in before or "exec id" in before or "exec ids" in before:
+            continue
+        raw_quoted.append(m.group(1))
+    quoted      = list(set(raw_quoted))
 
     # Email post-processing: the regex greedily matches a `.tld`, but in
     # forensic prose we often see `email@domain.com.lnk` where `.lnk` is
