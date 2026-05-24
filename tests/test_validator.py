@@ -59,6 +59,44 @@ def test_extract_keeps_normal_backticked_tokens() -> None:
     assert "WORKSTATION-04" in t.quoted
 
 
+def test_parse_claims_trailing_exec_id_in_multi_tag_bullets() -> None:
+    """Bug B (W3-52): bullet-list `[CONFIRMED] (exec_id `UUID`)` format.
+
+    Each bullet has a tag mid-line and the prose cite at the end. Pre-fix,
+    `parse_claims` scoped each claim's text from prev-tag-end to this-tag-end,
+    so the trailing cite fell into the NEXT claim's preamble and the current
+    claim got `exec_ids=[]` → status `not_confirmed`. Fix attaches any cite
+    in the "trailing window" (this tag's end → next tag's start) to THIS
+    claim's exec_ids.
+    """
+    para = (
+        "- **C2 behavior:** 14 connections to `172.16.4.10:8080` "
+        "[CONFIRMED] (exec_id `019e563f-736c-7cb0-818c-0ead9bcd4b14`)\n"
+        "- `p.exe` spawned multiple `rundll32.exe` children: PIDs 1424, "
+        "7552, 5768 [CONFIRMED] (exec_id `019e563e-23a4-7053-a243-629158db8679`)"
+    )
+    claims = parse_claims(para)
+    assert len(claims) == 2
+    # Each claim must own its OWN trailing cite, not the previous claim's.
+    assert claims[0].exec_id == "019e563f-736c-7cb0-818c-0ead9bcd4b14"
+    assert claims[1].exec_id == "019e563e-23a4-7053-a243-629158db8679"
+    # No cross-contamination.
+    assert "019e563e-23a4-7053-a243-629158db8679" not in claims[0].exec_ids
+    assert "019e563f-736c-7cb0-818c-0ead9bcd4b14" not in claims[1].exec_ids
+
+
+def test_parse_claims_single_tag_paragraph_unchanged() -> None:
+    """Single-tag paragraphs retain v2 behaviour (whole paragraph = claim)."""
+    para = (
+        "**Primary host: rd01 (172.16.6.11)** — [CONFIRMED] `p.exe` implant "
+        "active in memory (exec_id `019e563e-23a4-7053-a243-629158db8679`), "
+        "WMI-spawned PowerShell chain observed."
+    )
+    claims = parse_claims(para)
+    assert len(claims) == 1
+    assert claims[0].exec_id == "019e563e-23a4-7053-a243-629158db8679"
+
+
 def test_extract_ipv4() -> None:
     t = extract_tokens("Connections to 81.30.144.115 (59 hits) and 213.202.233.104")
     assert "81.30.144.115" in t.ips

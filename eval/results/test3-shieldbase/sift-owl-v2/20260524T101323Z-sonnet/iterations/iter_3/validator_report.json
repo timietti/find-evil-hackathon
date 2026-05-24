@@ -1,0 +1,3923 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test3-shieldbase/sift-owl-v2/20260524T101323Z-sonnet/iterations/iter_3",
+    "total_claims": 96,
+    "confirmed_count": 79,
+    "inferred_count": 10,
+    "hypothesis_count": 3,
+    "gap_count": 4,
+    "other_count": 0,
+    "verified": 71,
+    "partial": 1,
+    "failed": 1,
+    "unverifiable": 4,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 2,
+    "confirmation_score": 0.899,
+    "llm_checked": 7,
+    "llm_verified": 3,
+    "llm_unsupported": 0,
+    "llm_unrelated": 3,
+    "llm_uncertain": 1,
+    "llm_total_cost_usd": 0.0189
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "I need to resolve 28 validator demotions. The main patterns are: (1) `IP:port` combined tokens not found in netscan data, (2) `[CONFIRMED]` tags in the Demotion Resolution Summary table itself, (3) missing multi-cites for cross-source claims. Let me query the key exec_ids to understand the exact data format before writing the corrected report.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 1
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "I now have all the information needed. Key findings from queries:\n- `172.16.4.10:8080` is stored as separate fields `foreign_addr`/`foreign_port` \u2014 the combined \"IP:port\" token never appears\n- Same for `10.10.4.5:59361` and `10.10.254.1:61613`\n- p.exe (PID 8260) has **zero** entries in rd01 netscan \u2014 connections to 172.16.4.10 have `pid:null`\n- `ri.exe` confirmed in fls_list exec_id 019e5984 at `Users/spsql/Downloads/ri.exe`\n- `Windows/Temp/Perfmon/p.exe` confirmed at inode 5994 in fls_list (forward slash, not backslash)\n- image_info exec_ids don't support query_rows \u2014 can't confirm IPs/processes from them\n- Demotion Summary table must be removed (it was injecting false `[CONFIRMED]` tags)",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 22
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]** `rubyw.exe` (PID 1156) was running on the file server with process creation time `2018-08-08T18:08:00Z` \u2014 nearly four weeks before rd01 was compromised.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 56
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-08T18:08:00Z"
+        ],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-08T18:08:00Z",
+          "rubyw.exe"
+        ]
+      },
+      "matched": [
+        "1156",
+        "2018-08-08T18:08:00Z",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]** `rubyw.exe` (PID 1156) maintained an ESTABLISHED TCP connection from `10.10.4.5` port `59361` to `10.10.254.1` port `61613` (STOMP/ActiveMQ C2 channel).",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 58
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [
+          "10.10.4.5",
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "59361",
+          "61613",
+          "rubyw.exe",
+          "10.10.4.5",
+          "10.10.254.1"
+        ]
+      },
+      "matched": [
+        "1156",
+        "10.10.4.5",
+        "10.10.254.1",
+        "rubyw.exe",
+        "59361",
+        "61613"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]** `Rar.exe` (PID 2524) ran on the file server from `2018-09-05T14:43:11Z` to `2018-09-05T14:52:56Z` (~9.75 min) \u2014 data archival/staging.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 60
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2524"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T14:43:11Z",
+          "2018-09-05T14:52:56Z"
+        ],
+        "filenames": [
+          "Rar.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Rar.exe",
+          "2018-09-05T14:43:11Z",
+          "2018-09-05T14:52:56Z"
+        ]
+      },
+      "matched": [
+        "2524",
+        "2018-09-05T14:43:11Z",
+        "2018-09-05T14:52:56Z",
+        "Rar.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]** `ngentask.exe` (PID 7092) on the file server had CLOSED connections from `172.16.4.5` to `172.16.4.10` port `8080` \u2014 the same internal C2 relay used by rd01 and wkstn-01.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 62
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "7092"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.4.5",
+          "172.16.4.10"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "ngentask.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "ngentask.exe",
+          "172.16.4.5",
+          "172.16.4.10",
+          "8080"
+        ]
+      },
+      "matched": [
+        "7092",
+        "172.16.4.5",
+        "172.16.4.10",
+        "ngentask.exe",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5992-d9fd-78a1-86c0-0b57ffab283c",
+        "exec_ids": [
+          "019e5992-d9fd-78a1-86c0-0b57ffab283c"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]** The file server disk contains 3,302 `.rb` (Ruby) files under `ProgramData/PuppetLabs/puppet/` \u2014 the attacker leveraged the existing Puppet Ruby runtime for the STOMP C2 implant. The `Shares/` directory with 1,212 files represents the primary data collection target.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]",
+        "line_no": 64
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          ".rb",
+          "Shares/",
+          "ProgramData/PuppetLabs/puppet/"
+        ]
+      },
+      "matched": [
+        ".rb",
+        "Shares/",
+        "ProgramData/PuppetLabs/puppet/"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]** `p.exe` (PID 8260, ppid 5948) is in memory on rd01 with creation time `2018-08-30T22:15:18Z`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 68
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "p.exe",
+          "2018-08-30T22:15:18Z"
+        ]
+      },
+      "matched": [
+        "8260",
+        "2018-08-30T22:15:18Z",
+        "p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5980-870a-78f2-90d4-6ddae88d43e5",
+        "exec_ids": [
+          "019e5980-870a-78f2-90d4-6ddae88d43e5"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5]** `p.exe` (PID 8260) has PAGE_EXECUTE_READWRITE private VadS memory \u2014 RWX shellcode-class injection confirmed.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5]",
+        "line_no": 70
+      },
+      "status": "verified",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "p.exe"
+        ]
+      },
+      "matched": [
+        "8260",
+        "p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597b-fc85-75d3-bff1-0358e8a16035",
+        "exec_ids": [
+          "019e597b-fc85-75d3-bff1-0358e8a16035"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]** rd01 (local `172.16.6.11`) shows 14 connections to `172.16.4.10` port `8080` including 1 ESTABLISHED and multiple CLOSE_WAIT states at capture time.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]",
+        "line_no": 72
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.4.10",
+          "172.16.6.11"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "8080",
+          "172.16.4.10",
+          "172.16.6.11"
+        ]
+      },
+      "matched": [
+        "172.16.4.10",
+        "172.16.6.11",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e597d-1cd6-7662-8c3a-1c61f74282b0"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]** Full process chain on rd01:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "line_no": 82
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim references a process chain with specific exec_ids and a host identifier (rd01), but the vol3_psscan data contains only process snapshots with PIDs, PPIDs, image names, and timestamps\u2014no exec_ids, host names, or chain linkage information that would support the claim's assertion about a spec",
+      "llm_cost_usd": 0.004662
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e597d-1cd6-7662-8c3a-1c61f74282b0"
+        ],
+        "text": "| PID | PPID | Image | Evidence |\n|-----|------|-------|---------|\n| 2876 | 868 | WmiPrvSE.exe | WMI provider host; path wmiprvse.exe in `C:\\WINDOWS\\system32\\wbem\\` \u2014 initiates chain **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "line_no": 86
+      },
+      "status": "partial",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "WmiPrvSE.exe",
+          "wmiprvse.exe"
+        ],
+        "paths": [],
+        "drive_refs": [
+          "C:\\WINDOWS\\system32\\wbem\\`"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "C:\\WINDOWS\\system32\\wbem\\"
+        ]
+      },
+      "matched": [
+        "WmiPrvSE.exe",
+        "wmiprvse.exe",
+        "C:\\WINDOWS\\system32\\wbem\\"
+      ],
+      "missing": [
+        "C:\\WINDOWS\\system32\\wbem\\`"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 8712 | 2876 | powershell.exe | Child of WmiPrvSE.exe (PID 2876) \u2014 WMI-triggered execution (T1047) **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 87
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2876"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "WmiPrvSE.exe",
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2876",
+        "WmiPrvSE.exe",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 5848 | 8712 | powershell.exe | WOW64 child of powershell (PID 8712) \u2014 nested execution (T1059.001) **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 88
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "8712"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "8712",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 5948 | 5848 | cmd.exe | WOW64 child of powershell (PID 5848), created `2018-08-30T22:15:18Z` **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 89
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5848"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [
+          "cmd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-30T22:15:18Z"
+        ]
+      },
+      "matched": [
+        "5848",
+        "2018-08-30T22:15:18Z",
+        "cmd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 8260 | 5948 | p.exe | Primary backdoor; child of cmd.exe (PID 5948), created `2018-08-30T22:15:18Z` **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 90
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5948"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [
+          "p.exe",
+          "cmd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-30T22:15:18Z"
+        ]
+      },
+      "matched": [
+        "5948",
+        "2018-08-30T22:15:18Z",
+        "p.exe",
+        "cmd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e5980-870a-78f2-90d4-6ddae88d43e5",
+          "019e5984-20d1-7612-bc2e-3d0cc116babb",
+          "019e5985-d676-7202-ad5c-e9c3dd728cf7",
+          "019e5986-75ce-7382-9526-76f791917a71"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5, exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb, exec_id 019e5985-d676-7202-ad5c-e9c3dd728cf7, exec_id 019e5986-75ce-7382-9526-76f791917a71]**",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5, exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb, exec_id 019e5985-d676-7202-ad5c-e9c3dd728cf7, exec_id 019e5986-75ce-7382-9526-76f791917a71]",
+        "line_no": 98
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim contains only execution IDs (UUIDs) with no testable factual assertions about processes, timestamps, file paths, or other attributes that the vol3_psscan tool's parsed data could verify or refute.",
+      "llm_cost_usd": 0.0046099999999999995
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5984-20d1-7612-bc2e-3d0cc116babb",
+        "exec_ids": [
+          "019e5984-20d1-7612-bc2e-3d0cc116babb"
+        ],
+        "text": "| Attribute | Value | exec_id |\n|-----------|-------|---------|\n| Path | `Windows/Temp/Perfmon/p.exe` (inode 5994) | **[CONFIRMED \u2014 exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "line_no": 102
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "5994"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Windows/Temp/Perfmon/p.exe"
+        ]
+      },
+      "matched": [
+        "5994",
+        "p.exe",
+        "Windows/Temp/Perfmon/p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5985-d676-7202-ad5c-e9c3dd728cf7",
+        "exec_ids": [
+          "019e5985-d676-7202-ad5c-e9c3dd728cf7"
+        ],
+        "text": "** |\n| SHA-256 | `7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c` | **[CONFIRMED \u2014 exec_id 019e5985-d676-7202-ad5c-e9c3dd728cf7]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5985-d676-7202-ad5c-e9c3dd728cf7]",
+        "line_no": 103
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c"
+        ],
+        "quoted": [
+          "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c"
+        ]
+      },
+      "matched": [
+        "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| PID | 8260, ppid=5948 (cmd.exe), created `2018-08-30T22:15:18Z` | **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 104
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [
+          "cmd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-30T22:15:18Z"
+        ]
+      },
+      "matched": [
+        "2018-08-30T22:15:18Z",
+        "cmd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5986-75ce-7382-9526-76f791917a71",
+        "exec_ids": [
+          "019e5986-75ce-7382-9526-76f791917a71"
+        ],
+        "text": "** |\n| First/only execution | `2018-08-30T22:15:18Z`, RunCount=1 | **[CONFIRMED \u2014 exec_id 019e5986-75ce-7382-9526-76f791917a71]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5986-75ce-7382-9526-76f791917a71]",
+        "line_no": 105
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-30T22:15:18Z"
+        ]
+      },
+      "matched": [
+        "2018-08-30T22:15:18Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5986-75ce-7382-9526-76f791917a71",
+        "exec_ids": [
+          "019e5986-75ce-7382-9526-76f791917a71"
+        ],
+        "text": "** |\n| DLLs loaded | WININET.dll, WS2_32.dll, DNSAPI.dll, CRYPTSP.dll, RSAENH.dll | **[CONFIRMED \u2014 exec_id 019e5986-75ce-7382-9526-76f791917a71]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5986-75ce-7382-9526-76f791917a71]",
+        "line_no": 106
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "CRYPTSP.dll",
+          "WININET.dll",
+          "RSAENH.dll",
+          "WS2_32.dll",
+          "DNSAPI.dll"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "CRYPTSP.dll",
+        "WININET.dll",
+        "RSAENH.dll",
+        "WS2_32.dll",
+        "DNSAPI.dll"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5980-870a-78f2-90d4-6ddae88d43e5",
+        "exec_ids": [
+          "019e5980-870a-78f2-90d4-6ddae88d43e5"
+        ],
+        "text": "** |\n| RWX private memory | PID 8260, PAGE_EXECUTE_READWRITE, VadS tag, private_memory=1 | **[CONFIRMED \u2014 exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5]",
+        "line_no": 107
+      },
+      "status": "verified",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "8260"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]** `rubyw.exe` (PID 1156) was running on the file server with creation time `2018-08-08T18:08:00Z`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 113
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-08T18:08:00Z"
+        ],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-08T18:08:00Z",
+          "rubyw.exe"
+        ]
+      },
+      "matched": [
+        "1156",
+        "2018-08-08T18:08:00Z",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]** `rubyw.exe` (PID 1156) maintained an ESTABLISHED TCP connection from `10.10.4.5` port `59361` to `10.10.254.1` port `61613` \u2014 STOMP/Apache ActiveMQ protocol. Port 61613 is the canonical STOMP wire protocol port.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 115
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [
+          "10.10.4.5",
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "59361",
+          "61613",
+          "rubyw.exe",
+          "10.10.4.5",
+          "10.10.254.1"
+        ]
+      },
+      "matched": [
+        "1156",
+        "10.10.4.5",
+        "10.10.254.1",
+        "rubyw.exe",
+        "59361",
+        "61613"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5992-d9fd-78a1-86c0-0b57ffab283c",
+        "exec_ids": [
+          "019e5992-d9fd-78a1-86c0-0b57ffab283c"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]** Although the file server has a legitimate Puppet installation with 3,302 Ruby files in `ProgramData/PuppetLabs/`, Puppet communicates via HTTPS to a Puppet master \u2014 not STOMP to an external IP \u2014 indicating the attacker leveraged the existing Ruby runtime for a custom STOMP C2 implant. `rubyw.exe` executes Ruby scripts without a console window (stealth execution).",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]",
+        "line_no": 117
+      },
+      "status": "failed",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "ProgramData/PuppetLabs/",
+          "rubyw.exe"
+        ]
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [
+        "rubyw.exe",
+        "ProgramData/PuppetLabs/"
+      ],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]** `sd.exe` (PID 5588, ppid=12172) ran on wkstn-01 from `2018-09-06T17:14:51Z` to `2018-09-06T17:14:57Z` (6 seconds). This binary name does not correspond to a standard Windows system binary. Its brief execution immediately before `sc.exe` ran at `2018-09-06T17:15:31Z` on the same host suggests coordinated attacker activity.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 125
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5588"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T17:14:51Z",
+          "2018-09-06T17:14:57Z",
+          "2018-09-06T17:15:31Z"
+        ],
+        "filenames": [
+          "sd.exe",
+          "sc.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "sc.exe",
+          "sd.exe",
+          "2018-09-06T17:15:31Z",
+          "2018-09-06T17:14:57Z",
+          "2018-09-06T17:14:51Z"
+        ]
+      },
+      "matched": [
+        "5588",
+        "2018-09-06T17:14:51Z",
+        "2018-09-06T17:14:57Z",
+        "2018-09-06T17:15:31Z",
+        "sd.exe",
+        "sc.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]** The file server has `rubyw.exe` (PID 1156) created `2018-08-08T18:08:00Z` \u2014 the earliest confirmed compromise, 23 days before rd01.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 139
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-08T18:08:00Z"
+        ],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-08T18:08:00Z",
+          "rubyw.exe"
+        ]
+      },
+      "matched": [
+        "1156",
+        "2018-08-08T18:08:00Z",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]** The WmiPrvSE.exe (PID 2876) \u2192 powershell.exe (PID 8712) \u2192 powershell.exe (PID 5848) \u2192 cmd.exe (PID 5948) \u2192 p.exe (PID 8260) chain on rd01 confirms WMI-based lateral movement (T1047) was used to reach rd01.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 141
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5948",
+          "8260",
+          "8712",
+          "2876",
+          "5848"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe",
+          "WmiPrvSE.exe",
+          "cmd.exe",
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "5948",
+        "8260",
+        "8712",
+        "2876",
+        "5848",
+        "p.exe",
+        "WmiPrvSE.exe",
+        "cmd.exe",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597b-fc85-75d3-bff1-0358e8a16035",
+        "exec_ids": [
+          "019e597b-fc85-75d3-bff1-0358e8a16035"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]** rd01 (`172.16.6.11`) had 14 connections to `172.16.4.10` port `8080` including 1 ESTABLISHED and multiple CLOSE_WAIT states \u2014 active C2 beaconing at capture time.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]",
+        "line_no": 143
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.4.10",
+          "172.16.6.11"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "8080",
+          "172.16.4.10",
+          "172.16.6.11"
+        ]
+      },
+      "matched": [
+        "172.16.4.10",
+        "172.16.6.11",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5993-a131-7ae2-9ba4-cb18611fee86",
+        "exec_ids": [
+          "019e5993-a131-7ae2-9ba4-cb18611fee86"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]** wkstn-01 (`172.16.7.11`) had exactly 7 CLOSED connections to `172.16.4.10` port `8080`, indicating prior C2 contact from this workstation.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "line_no": 145
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.7.11",
+          "172.16.4.10"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "172.16.7.11",
+          "172.16.4.10",
+          "8080"
+        ]
+      },
+      "matched": [
+        "172.16.7.11",
+        "172.16.4.10",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]** file01 (`172.16.4.5`) had connections from `ngentask.exe` (PID 7092) to `172.16.4.10` port `8080` \u2014 a second process on the file server using the same C2 relay as rd01 and wkstn-01.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 147
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "7092"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.4.5",
+          "172.16.4.10"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "ngentask.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "ngentask.exe",
+          "172.16.4.5",
+          "172.16.4.10",
+          "8080"
+        ]
+      },
+      "matched": [
+        "7092",
+        "172.16.4.5",
+        "172.16.4.10",
+        "ngentask.exe",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "| **[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 153
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNRELATED",
+      "llm_reason": "The claim references an 'exec_id' identifier that is not a field present in process scan data; this appears to be a metadata or report tracking identifier unrelated to the actual process forensic content of the vol3_psscan tool output.",
+      "llm_cost_usd": 0.005933
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e597b-fc85-75d3-bff1-0358e8a16035"
+        ],
+        "text": "** |\n| rd01 (172.16.6.11) | `2018-08-30T22:15:18Z` (p.exe PID 8260 first run) | WMI lateral movement (T1047) | **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]",
+        "line_no": 154
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.6.11"
+        ],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2018-08-30T22:15:18Z"
+        ]
+      },
+      "matched": [
+        "8260",
+        "172.16.6.11",
+        "2018-08-30T22:15:18Z",
+        "p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5993-a131-7ae2-9ba4-cb18611fee86",
+        "exec_ids": [
+          "019e5993-a131-7ae2-9ba4-cb18611fee86"
+        ],
+        "text": "| **[CONFIRMED \u2014 exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "line_no": 155
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNCERTAIN",
+      "llm_reason": "The claim contains only an execution ID with a 'CONFIRMED' status label but makes no specific factual assertion about network connections, IPs, or other data that could be verified against the netscan output.",
+      "llm_cost_usd": 0.000784
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597b-fc85-75d3-bff1-0358e8a16035",
+        "exec_ids": [
+          "019e597b-fc85-75d3-bff1-0358e8a16035",
+          "019e5991-2e2e-71b1-a420-117e3451809a",
+          "019e5993-a131-7ae2-9ba4-cb18611fee86"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035, exec_id 019e5991-2e2e-71b1-a420-117e3451809a, exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]** Three distinct hosts show connections to `172.16.4.10` port `8080`: rd01 (`172.16.6.11`, 14 connections), file01 (`172.16.4.5` via ngentask.exe PID 7092, 4 connections), and wkstn-01 (`172.16.7.11`, 7 connections). This host functions as a central internal C2 relay.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035, exec_id 019e5991-2e2e-71b1-a420-117e3451809a, exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "line_no": 159
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_netscan",
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "7092"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.7.11",
+          "172.16.4.5",
+          "172.16.4.10",
+          "172.16.6.11"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "ngentask.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "172.16.7.11",
+          "172.16.6.11",
+          "8080",
+          "172.16.4.5",
+          "172.16.4.10"
+        ]
+      },
+      "matched": [
+        "7092",
+        "172.16.7.11",
+        "172.16.4.5",
+        "172.16.4.10",
+        "172.16.6.11",
+        "ngentask.exe",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e597d-1cd6-7662-8c3a-1c61f74282b0"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]** WMI execution (T1047) confirmed by WmiPrvSE.exe (PID 2876) as parent of the attacker PowerShell chain on rd01.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "line_no": 165
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "2876"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "WmiPrvSE.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2876",
+        "WmiPrvSE.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]** `sc.exe` (PID 3068) ran on wkstn-01 at `2018-09-06T17:15:31Z`, and `sd.exe` (PID 5588) ran 40 seconds earlier at `2018-09-06T17:14:51Z` \u2014 service manipulation consistent with T1543.003.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 167
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5588",
+          "3068"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T17:14:51Z",
+          "2018-09-06T17:15:31Z"
+        ],
+        "filenames": [
+          "sc.exe",
+          "sd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "sc.exe",
+          "2018-09-06T17:14:51Z",
+          "sd.exe",
+          "2018-09-06T17:15:31Z"
+        ]
+      },
+      "matched": [
+        "5588",
+        "3068",
+        "2018-09-06T17:14:51Z",
+        "2018-09-06T17:15:31Z",
+        "sc.exe",
+        "sd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-1923-7dc1-ab8a-be8292d9d088",
+        "exec_ids": [
+          "019e5999-1923-7dc1-ab8a-be8292d9d088"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]** Two MSCASH/DCC2 domain credential hashes recovered from rd01 memory:",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "line_no": 175
+      },
+      "status": "verified",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "VERIFIED",
+      "llm_reason": "The parsed cachedump data contains exactly two credential hash entries with usernames 'tdungan' and 'spsql', each with an associated hash value, structurally matching the claim of two MSCASH/DCC2 domain credential hashes recovered.",
+      "llm_cost_usd": 0.000967
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-1923-7dc1-ab8a-be8292d9d088",
+        "exec_ids": [
+          "019e5999-1923-7dc1-ab8a-be8292d9d088"
+        ],
+        "text": "Both accounts logged into rd01, exposing DCC2 hashes that are offline-crackable (T1003.005). **[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]**",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "line_no": 182
+      },
+      "status": "verified",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "VERIFIED",
+      "llm_reason": "The parsed cachedump data structurally confirms the presence of two cached credential hashes for accounts 'tdungan' and 'spsql', which supports the claim that both accounts logged into the system and exposed DCC2 (Domain Cached Credentials) hashes that are offline-crackable.",
+      "llm_cost_usd": 0.00102
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-092b-7230-ba7a-f7083bd0d3a4",
+        "exec_ids": [
+          "019e5999-092b-7230-ba7a-f7083bd0d3a4"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5999-092b-7230-ba7a-f7083bd0d3a4]** Six local accounts identified: `Administrator`, `Guest`, `DefaultAccount`, `WDAGUtilityAccount`, `defaultuser0`, `range_admin`. All NT hashes are null (not extractable from memory). `range_admin` is a non-standard account warranting investigation as a potentially attacker-created backdoor account.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-092b-7230-ba7a-f7083bd0d3a4]",
+        "line_no": 186
+      },
+      "status": "verified",
+      "tool_name": "vol3_hashdump",
+      "tool_names": [
+        "vol3_hashdump"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "DefaultAccount",
+          "range_admin",
+          "defaultuser0",
+          "WDAGUtilityAccount",
+          "Administrator",
+          "Guest"
+        ]
+      },
+      "matched": [
+        "DefaultAccount",
+        "range_admin",
+        "defaultuser0",
+        "WDAGUtilityAccount",
+        "Administrator",
+        "Guest"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830",
+          "019e5992-d9fd-78a1-86c0-0b57ffab283c"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830, exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]** `Rar.exe` (PID 2524) ran on the file server from `2018-09-05T14:43:11Z` to `2018-09-05T14:52:56Z` (~9.75 minutes), consistent with archiving a large dataset (T1560.001). The file server disk contains a `Shares/` directory with 1,212 files \u2014 the primary organizational data collection target.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830, exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]",
+        "line_no": 202
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [
+          "2524"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T14:43:11Z",
+          "2018-09-05T14:52:56Z"
+        ],
+        "filenames": [
+          "Rar.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Rar.exe",
+          "2018-09-05T14:43:11Z",
+          "Shares/",
+          "2018-09-05T14:52:56Z"
+        ]
+      },
+      "matched": [
+        "2524",
+        "2018-09-05T14:43:11Z",
+        "2018-09-05T14:52:56Z",
+        "Rar.exe",
+        "Shares/"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597b-fc85-75d3-bff1-0358e8a16035",
+        "exec_ids": [
+          "019e597b-fc85-75d3-bff1-0358e8a16035"
+        ],
+        "text": "1. **HTTP port 8080 \u2192 172.16.4.10 (internal relay)**: rd01 (`172.16.6.11`) had active connections to `172.16.4.10` port `8080` **[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035]",
+        "line_no": 208
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.4.10",
+          "172.16.6.11"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "8080",
+          "172.16.4.10",
+          "172.16.6.11"
+        ]
+      },
+      "matched": [
+        "172.16.4.10",
+        "172.16.6.11",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "**; `ngentask.exe` (PID 7092) on file01 also connected to `172.16.4.10` port `8080` from `172.16.4.5` **[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 208
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "7092"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.4.5",
+          "172.16.4.10"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "ngentask.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "ngentask.exe",
+          "172.16.4.5",
+          "172.16.4.10",
+          "8080"
+        ]
+      },
+      "matched": [
+        "7092",
+        "172.16.4.5",
+        "172.16.4.10",
+        "ngentask.exe",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5993-a131-7ae2-9ba4-cb18611fee86",
+        "exec_ids": [
+          "019e5993-a131-7ae2-9ba4-cb18611fee86"
+        ],
+        "text": "**; wkstn-01 (`172.16.7.11`) had 7 CLOSED connections to `172.16.4.10` port `8080` **[CONFIRMED \u2014 exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "line_no": 208
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.7.11",
+          "172.16.4.10"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "172.16.7.11",
+          "172.16.4.10",
+          "8080"
+        ]
+      },
+      "matched": [
+        "172.16.7.11",
+        "172.16.4.10",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "2. **STOMP port 61613 \u2192 10.10.254.1 (external, via Ruby)**: `rubyw.exe` (PID 1156) on file01 maintained an ESTABLISHED connection from `10.10.4.5` port `59361` to `10.10.254.1` port `61613` **[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]**.",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 210
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [
+          "10.10.4.5",
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "59361",
+          "61613",
+          "rubyw.exe",
+          "10.10.4.5",
+          "10.10.254.1"
+        ]
+      },
+      "matched": [
+        "1156",
+        "10.10.4.5",
+        "10.10.254.1",
+        "rubyw.exe",
+        "59361",
+        "61613"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "| Timestamp (UTC) | Event | Confidence |\n|-----------------|-------|------------|\n| 2018-08-04T16:28:20Z | vmtoolsd.exe boots on wkstn-01 \u2014 baseline date | **[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 222
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-04T16:28:20Z"
+        ],
+        "filenames": [
+          "vmtoolsd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2018-08-04T16:28:20Z",
+        "vmtoolsd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "** |\n| **2018-08-08T18:08:00Z** | **rubyw.exe (PID 1156) created on file server \u2014 earliest confirmed compromise** | **[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 223
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-08T18:08:00Z"
+        ],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "1156",
+        "2018-08-08T18:08:00Z",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "** |\n| 2018-08-15T17:10:32Z | Autorunsc.exe (PID 9048) ran on wkstn-01 (recon or IR tool) | **[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 224
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "9048"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-15T17:10:32Z"
+        ],
+        "filenames": [
+          "Autorunsc.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "9048",
+        "2018-08-15T17:10:32Z",
+        "Autorunsc.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 2018-08-30T13:51:58Z | System (PID 4) boot on rd01 \u2014 system baseline | **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 225
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "4"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T13:51:58Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "4",
+        "2018-08-30T13:51:58Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5986-75ce-7382-9526-76f791917a71",
+        "exec_ids": [
+          "019e5986-75ce-7382-9526-76f791917a71",
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| **2018-08-30T22:15:18Z** | **p.exe (PID 8260) first executed on rd01 via cmd.exe (PID 5948) \u2014 RunCount=1** | **[CONFIRMED \u2014 exec_id 019e5986-75ce-7382-9526-76f791917a71, exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5986-75ce-7382-9526-76f791917a71, exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 226
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse",
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5948",
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-30T22:15:18Z"
+        ],
+        "filenames": [
+          "p.exe",
+          "cmd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "5948",
+        "8260",
+        "2018-08-30T22:15:18Z",
+        "p.exe",
+        "cmd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "** |\n| 2018-09-05T14:43:11Z | Rar.exe (PID 2524) begins data archiving on file server | **[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 227
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2524"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T14:43:11Z"
+        ],
+        "filenames": [
+          "Rar.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2524",
+        "2018-09-05T14:43:11Z",
+        "Rar.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "** |\n| 2018-09-05T14:52:56Z | Rar.exe (PID 2524) exits after ~9.75 min \u2014 staging complete | **[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 228
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2524"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T14:52:56Z"
+        ],
+        "filenames": [
+          "Rar.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2524",
+        "2018-09-05T14:52:56Z",
+        "Rar.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e598d-c83e-7a21-b6f7-3fdaef5c387f",
+        "exec_ids": [
+          "019e598d-c83e-7a21-b6f7-3fdaef5c387f"
+        ],
+        "text": "** |\n| 2018-09-05T15:48:20Z | Exchange server memory captured \u2014 earliest memory capture | **[CONFIRMED \u2014 exec_id 019e598d-c83e-7a21-b6f7-3fdaef5c387f]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e598d-c83e-7a21-b6f7-3fdaef5c387f]",
+        "line_no": 229
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T15:48:20Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2018-09-05T15:48:20Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 2018-09-06T14:03:54Z | WmiPrvSE.exe (PID 11948) spawned on rd01 \u2014 new WMI execution | **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 230
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "11948"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T14:03:54Z"
+        ],
+        "filenames": [
+          "WmiPrvSE.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "11948",
+        "2018-09-06T14:03:54Z",
+        "WmiPrvSE.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "** |\n| 2018-09-06T17:14:51Z | sd.exe (PID 5588) ran on wkstn-01 for 6 seconds | **[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 231
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5588"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T17:14:51Z"
+        ],
+        "filenames": [
+          "sd.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "5588",
+        "2018-09-06T17:14:51Z",
+        "sd.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "** |\n| 2018-09-06T17:15:31Z | sc.exe (PID 3068) ran on wkstn-01 \u2014 service manipulation | **[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 232
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "3068"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T17:15:31Z"
+        ],
+        "filenames": [
+          "sc.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "3068",
+        "2018-09-06T17:15:31Z",
+        "sc.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5979-fe75-76b2-affc-9ad475cf8a75",
+        "exec_ids": [
+          "019e5979-fe75-76b2-affc-9ad475cf8a75",
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| 2018-09-06T18:57:17Z | rd01 memory captured \u2014 p.exe (PID 8260) and WmiPrvSE chain active | **[CONFIRMED \u2014 exec_id 019e5979-fe75-76b2-affc-9ad475cf8a75, exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5979-fe75-76b2-affc-9ad475cf8a75, exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 233
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info",
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T18:57:17Z"
+        ],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "8260",
+        "2018-09-06T18:57:17Z",
+        "p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-0f87-7353-8f83-3bd2c11fcb45",
+        "exec_ids": [
+          "019e597a-0f87-7353-8f83-3bd2c11fcb45",
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "** |\n| 2018-09-06T19:28:44Z | file01 memory captured \u2014 rubyw.exe (PID 1156) STOMP C2 active | **[CONFIRMED \u2014 exec_id 019e597a-0f87-7353-8f83-3bd2c11fcb45, exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-0f87-7353-8f83-3bd2c11fcb45, exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 234
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info",
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T19:28:44Z"
+        ],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "1156",
+        "2018-09-06T19:28:44Z",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-08c7-7ce0-bc1b-179f8e2b97f1",
+        "exec_ids": [
+          "019e597a-08c7-7ce0-bc1b-179f8e2b97f1"
+        ],
+        "text": "** |\n| 2018-09-06T22:57:49Z | DC memory captured | **[CONFIRMED \u2014 exec_id 019e597a-08c7-7ce0-bc1b-179f8e2b97f1]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-08c7-7ce0-bc1b-179f8e2b97f1]",
+        "line_no": 235
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-06T22:57:49Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2018-09-06T22:57:49Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e597d-1cd6-7662-8c3a-1c61f74282b0"
+        ],
+        "text": "** |\n| Execution | Windows Management Instrumentation | T1047 | WmiPrvSE.exe (PID 2876) spawning powershell.exe (PID 8712) on rd01 **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "line_no": 248
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "8712",
+          "2876"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "WmiPrvSE.exe",
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "8712",
+        "2876",
+        "WmiPrvSE.exe",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| Execution | Command and Scripting Interpreter: PowerShell | T1059.001 | Nested powershell.exe (PID 5848) under WmiPrvSE.exe chain **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 249
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5848"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "WmiPrvSE.exe",
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "5848",
+        "WmiPrvSE.exe",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830",
+          "019e5992-d9fd-78a1-86c0-0b57ffab283c"
+        ],
+        "text": "** |\n| Execution | Command and Scripting Interpreter: Ruby | T1059.004 | rubyw.exe (PID 1156) on file01 leveraging PuppetLabs Ruby runtime **[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830, exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830, exec_id 019e5992-d9fd-78a1-86c0-0b57ffab283c]",
+        "line_no": 250
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "1156",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5980-870a-78f2-90d4-6ddae88d43e5",
+        "exec_ids": [
+          "019e5980-870a-78f2-90d4-6ddae88d43e5"
+        ],
+        "text": "** |\n| Defense Evasion | Process Injection / RWX shellcode | T1055 | p.exe (PID 8260) PAGE_EXECUTE_READWRITE private VadS memory **[CONFIRMED \u2014 exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5980-870a-78f2-90d4-6ddae88d43e5]",
+        "line_no": 251
+      },
+      "status": "verified",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "8260",
+        "p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5984-20d1-7612-bc2e-3d0cc116babb",
+        "exec_ids": [
+          "019e5984-20d1-7612-bc2e-3d0cc116babb"
+        ],
+        "text": "** |\n| Defense Evasion | Masquerading | T1036 | p.exe placed in `Windows/Temp/Perfmon/` (system-like path) **[CONFIRMED \u2014 exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "line_no": 252
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Windows/Temp/Perfmon/"
+        ]
+      },
+      "matched": [
+        "p.exe",
+        "Windows/Temp/Perfmon/"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-1923-7dc1-ab8a-be8292d9d088",
+        "exec_ids": [
+          "019e5999-1923-7dc1-ab8a-be8292d9d088"
+        ],
+        "text": "** |\n| Credential Access | OS Credential Dumping: Cached Domain Credentials | T1003.005 | DCC2 hashes for tdungan and spsql on rd01 **[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "line_no": 253
+      },
+      "status": "verified",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "VERIFIED",
+      "llm_reason": "The parsed cachedump data structurally contains two usernames (tdungan and spsql) with corresponding DCC2 hashes, directly matching the claim's specific assertion about cached credentials for these accounts.",
+      "llm_cost_usd": 0.000926
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5995-31eb-7720-9803-0332a5a39dc3",
+        "exec_ids": [
+          "019e5995-31eb-7720-9803-0332a5a39dc3"
+        ],
+        "text": "** |\n| Discovery | System Service Discovery / Recon | T1007 | sc.exe (PID 3068) and Autorunsc.exe (PID 9048) on wkstn-01 **[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5995-31eb-7720-9803-0332a5a39dc3]",
+        "line_no": 255
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "9048",
+          "3068"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "sc.exe",
+          "Autorunsc.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "9048",
+        "3068",
+        "sc.exe",
+        "Autorunsc.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+          "019e597d-1cd6-7662-8c3a-1c61f74282b0"
+        ],
+        "text": "** |\n| Lateral Movement | WMI-based remote execution | T1021.003 | WmiPrvSE.exe (PID 2876) as parent of attacker chain on rd01 **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2, exec_id 019e597d-1cd6-7662-8c3a-1c61f74282b0]",
+        "line_no": 256
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "2876"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "WmiPrvSE.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2876",
+        "WmiPrvSE.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-e973-74e2-bcbd-8891e848f830",
+        "exec_ids": [
+          "019e5991-e973-74e2-bcbd-8891e848f830"
+        ],
+        "text": "** |\n| Collection | Archive Collected Data: Archive via Utility | T1560.001 | Rar.exe (PID 2524) ran 9.75 min on file01 **[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-e973-74e2-bcbd-8891e848f830]",
+        "line_no": 258
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2524"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Rar.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2524",
+        "Rar.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597b-fc85-75d3-bff1-0358e8a16035",
+        "exec_ids": [
+          "019e597b-fc85-75d3-bff1-0358e8a16035",
+          "019e5991-2e2e-71b1-a420-117e3451809a",
+          "019e5993-a131-7ae2-9ba4-cb18611fee86"
+        ],
+        "text": "** |\n| Command & Control | Application Layer Protocol: Web Protocols | T1071.001 | HTTP C2 over port 8080 to 172.16.4.10 from rd01 (`172.16.6.11`), file01 (`172.16.4.5`, ngentask.exe PID 7092), wkstn-01 (`172.16.7.11`) **[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035, exec_id 019e5991-2e2e-71b1-a420-117e3451809a, exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035, exec_id 019e5991-2e2e-71b1-a420-117e3451809a, exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "line_no": 259
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_netscan",
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "7092"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.7.11",
+          "172.16.4.5",
+          "172.16.4.10",
+          "172.16.6.11"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "ngentask.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "172.16.7.11",
+          "172.16.4.5",
+          "172.16.6.11"
+        ]
+      },
+      "matched": [
+        "7092",
+        "172.16.7.11",
+        "172.16.4.5",
+        "172.16.4.10",
+        "172.16.6.11",
+        "ngentask.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "** |\n| Command & Control | Non-Standard Protocol (STOMP/ActiveMQ) | T1095 | rubyw.exe (PID 1156) STOMP port 61613 to 10.10.254.1 on file01 **[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 260
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "1156",
+        "10.10.254.1",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5985-d676-7202-ad5c-e9c3dd728cf7",
+        "exec_ids": [
+          "019e5985-d676-7202-ad5c-e9c3dd728cf7",
+          "019e5984-20d1-7612-bc2e-3d0cc116babb"
+        ],
+        "text": "| Type | Value | Host | Confidence |\n|------|-------|------|------------|\n| File SHA-256 | `7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c` \u2014 `Windows/Temp/Perfmon/p.exe` | rd01 | **[CONFIRMED \u2014 exec_id 019e5985-d676-7202-ad5c-e9c3dd728cf7, exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5985-d676-7202-ad5c-e9c3dd728cf7, exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "line_no": 280
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c"
+        ],
+        "quoted": [
+          "Windows/Temp/Perfmon/p.exe",
+          "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c"
+        ]
+      },
+      "matched": [
+        "p.exe",
+        "7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c",
+        "Windows/Temp/Perfmon/p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e598e-0d91-7c21-844b-756eee9a33fc",
+        "exec_ids": [
+          "019e598e-0d91-7c21-844b-756eee9a33fc",
+          "019e5984-20d1-7612-bc2e-3d0cc116babb"
+        ],
+        "text": "** |\n| File SHA-256 | `57a04605ae0e308a0410b15f5478457417f03fcecf6eb30db7abb6409257429f` \u2014 `Users/spsql/Downloads/ri.exe` | rd01 | **[CONFIRMED \u2014 exec_id 019e598e-0d91-7c21-844b-756eee9a33fc, exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e598e-0d91-7c21-844b-756eee9a33fc, exec_id 019e5984-20d1-7612-bc2e-3d0cc116babb]",
+        "line_no": 281
+      },
+      "status": "verified",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "ri.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "57a04605ae0e308a0410b15f5478457417f03fcecf6eb30db7abb6409257429f"
+        ],
+        "quoted": [
+          "57a04605ae0e308a0410b15f5478457417f03fcecf6eb30db7abb6409257429f",
+          "Users/spsql/Downloads/ri.exe"
+        ]
+      },
+      "matched": [
+        "ri.exe",
+        "57a04605ae0e308a0410b15f5478457417f03fcecf6eb30db7abb6409257429f",
+        "Users/spsql/Downloads/ri.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597b-fc85-75d3-bff1-0358e8a16035",
+        "exec_ids": [
+          "019e597b-fc85-75d3-bff1-0358e8a16035",
+          "019e5991-2e2e-71b1-a420-117e3451809a",
+          "019e5993-a131-7ae2-9ba4-cb18611fee86"
+        ],
+        "text": "** |\n| C2 IP + Port | `172.16.4.10` port `8080` (internal relay) \u2014 rd01 (`172.16.6.11`), file01 (`172.16.4.5`), wkstn-01 (`172.16.7.11`) | rd01, file01, wkstn-01 | **[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035, exec_id 019e5991-2e2e-71b1-a420-117e3451809a, exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597b-fc85-75d3-bff1-0358e8a16035, exec_id 019e5991-2e2e-71b1-a420-117e3451809a, exec_id 019e5993-a131-7ae2-9ba4-cb18611fee86]",
+        "line_no": 282
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_netscan",
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.7.11",
+          "172.16.4.5",
+          "172.16.4.10",
+          "172.16.6.11"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "172.16.7.11",
+          "172.16.6.11",
+          "8080",
+          "172.16.4.5",
+          "172.16.4.10"
+        ]
+      },
+      "matched": [
+        "172.16.7.11",
+        "172.16.4.5",
+        "172.16.4.10",
+        "172.16.6.11",
+        "8080"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5991-2e2e-71b1-a420-117e3451809a",
+        "exec_ids": [
+          "019e5991-2e2e-71b1-a420-117e3451809a"
+        ],
+        "text": "** |\n| C2 IP + Port | `10.10.254.1` port `61613` (STOMP external) | file01 | **[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5991-2e2e-71b1-a420-117e3451809a]",
+        "line_no": 283
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "10.10.254.1",
+          "61613"
+        ]
+      },
+      "matched": [
+        "10.10.254.1",
+        "61613"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e597a-322c-7db1-b1de-d58e3bbb3cd2",
+        "exec_ids": [
+          "019e597a-322c-7db1-b1de-d58e3bbb3cd2"
+        ],
+        "text": "** |\n| Process chain | WmiPrvSE.exe (2876) \u2192 powershell.exe (8712) \u2192 powershell.exe (5848) \u2192 cmd.exe (5948) \u2192 p.exe (8260) | rd01 | **[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e597a-322c-7db1-b1de-d58e3bbb3cd2]",
+        "line_no": 284
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe",
+          "WmiPrvSE.exe",
+          "cmd.exe",
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "p.exe",
+        "WmiPrvSE.exe",
+        "cmd.exe",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-1923-7dc1-ab8a-be8292d9d088",
+        "exec_ids": [
+          "019e5999-1923-7dc1-ab8a-be8292d9d088"
+        ],
+        "text": "** |\n| Credential hash | tdungan DCC2: `b1 f8 72 62 37 0d 99 9b 3a b0 a9 43 19 d2 32 65` | rd01 | **[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "line_no": 285
+      },
+      "status": "verified",
+      "tool_name": "vol3_cachedump",
+      "tool_names": [
+        "vol3_cachedump"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "b1 f8 72 62 37 0d 99 9b 3a b0 a9 43 19 d2 32 65"
+        ]
+      },
+      "matched": [
+        "b1 f8 72 62 37 0d 99 9b 3a b0 a9 43 19 d2 32 65"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-1923-7dc1-ab8a-be8292d9d088",
+        "exec_ids": [
+          "019e5999-1923-7dc1-ab8a-be8292d9d088"
+        ],
+        "text": "** |\n| Credential hash | spsql DCC2: `4e 7a 21 7b 9b 6a df 36 e2 1a 7e 76 ce 1c 71 d2` | rd01 | **[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-1923-7dc1-ab8a-be8292d9d088]",
+        "line_no": 286
+      },
+      "status": "verified",
+      "tool_name": "vol3_cachedump",
+      "tool_names": [
+        "vol3_cachedump"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "4e 7a 21 7b 9b 6a df 36 e2 1a 7e 76 ce 1c 71 d2"
+        ]
+      },
+      "matched": [
+        "4e 7a 21 7b 9b 6a df 36 e2 1a 7e 76 ce 1c 71 d2"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e5999-092b-7230-ba7a-f7083bd0d3a4",
+        "exec_ids": [
+          "019e5999-092b-7230-ba7a-f7083bd0d3a4"
+        ],
+        "text": "** |\n| Suspicious account | `range_admin` (non-standard local account) | rd01 | **[CONFIRMED \u2014 exec_id 019e5999-092b-7230-ba7a-f7083bd0d3a4]",
+        "raw_match": "[CONFIRMED \u2014 exec_id 019e5999-092b-7230-ba7a-f7083bd0d3a4]",
+        "line_no": 287
+      },
+      "status": "verified",
+      "tool_name": "vol3_hashdump",
+      "tool_names": [
+        "vol3_hashdump"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "range_admin"
+        ]
+      },
+      "matched": [
+        "range_admin"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}

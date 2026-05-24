@@ -1,0 +1,224 @@
+{
+  "run_id": "20260524T101323Z-sonnet",
+  "case": "test3-shieldbase",
+  "model": "sonnet",
+  "max_budget_usd": 30.0,
+  "max_iterations": 3,
+  "started_utc": "2026-05-24T10:13:23Z",
+  "evidence_dir": "/cases/find-evil-test3/evidence",
+  "pre_run_hashes": {},
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v2/prompt-test3-shieldbase.md",
+  "claude_version": "2.1.150 (Claude Code)",
+  "harness_git_rev": "c01819653327a28432d13f9881a303d35621b735",
+  "finished_utc": "2026-05-24T11:11:07Z",
+  "total_cost_usd": 4.5878478000000005,
+  "iterations": [
+    {
+      "iteration": 1,
+      "exit_code": 0,
+      "wall_seconds": 2266.278184890747,
+      "cost_usd": 2.92433725,
+      "tool_use_count": 97,
+      "confirmed_count": 35,
+      "verified_count": 2,
+      "demoted_count": 33
+    },
+    {
+      "iteration": 2,
+      "exit_code": 0,
+      "wall_seconds": 661.1619048118591,
+      "cost_usd": 0.8922294499999999,
+      "tool_use_count": 29,
+      "confirmed_count": 77,
+      "verified_count": 42,
+      "demoted_count": 28
+    },
+    {
+      "iteration": 3,
+      "exit_code": 0,
+      "wall_seconds": 469.3672740459442,
+      "cost_usd": 0.7712811,
+      "tool_use_count": 25,
+      "confirmed_count": 79,
+      "verified_count": 71,
+      "demoted_count": 4
+    }
+  ],
+  "post_run_hashes": {
+    "/cases/find-evil-test3/evidence/disk/base-dc-cdrive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "e2b9cf0cb6759fd079f45fa903d80bde602160ff969c969c6f0cd704965b31b1",
+      "match": true,
+      "size_bytes": 12325692793
+    },
+    "/cases/find-evil-test3/evidence/disk/base-file-cdrive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "ad9c85399fa8b2483f1d8a3684bc7e074b57d4c3ec88726cde271549bd742a18",
+      "match": true,
+      "size_bytes": 16401447045
+    },
+    "/cases/find-evil-test3/evidence/disk/base-rd-01-cdrive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "12a622aa073dbbda3a4983014328a6085c8247ce93fe47fd6ba7483ed9d19aab",
+      "match": true,
+      "size_bytes": 17820145297
+    },
+    "/cases/find-evil-test3/evidence/disk/base-rd-02-cdrive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "50ad43ff0e8a0cc478e0e68f418b9f752fb440fd5020ca4fe55680292ac834bc",
+      "match": true,
+      "size_bytes": 17213574387
+    },
+    "/cases/find-evil-test3/evidence/disk/base-wkstn-01-c-drive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "ede47a0733203134f92c8ae46df4f5106b78a2c357fdb1d3c84301261076429f",
+      "match": true,
+      "size_bytes": 16923891211
+    },
+    "/cases/find-evil-test3/evidence/disk/base-wkstn-05-cdrive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "a94f2a866e2e562c58c3fbcd3a94882f2d3c3db3c66a5e5eedf16a4b1c0a65e0",
+      "match": true,
+      "size_bytes": 14809873122
+    },
+    "/cases/find-evil-test3/evidence/disk/dmz-ftp-cdrive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "d19754685d75aecb1fe18c3d75516dc0a965754335d981f3925e0e1b767ca8f8",
+      "match": true,
+      "size_bytes": 12824779973
+    },
+    "/cases/find-evil-test3/evidence/memory/base-dc-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "9679193c2b7852817006c55481124666422fea67ba63c872cf5e4203c6fa629a",
+      "match": true,
+      "size_bytes": 5368709120
+    },
+    "/cases/find-evil-test3/evidence/memory/base-file-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "4c192e5dc751350777be5ca3dec8bd264baaba73e08e98d759825983b5ce22fd",
+      "match": true,
+      "size_bytes": 2147483648
+    },
+    "/cases/find-evil-test3/evidence/memory/base-file-snapshot5.img": {
+      "expected_sha256": null,
+      "actual_sha256": "77db470e53173dc4a8d67a81000ccb82348db048464b5dd03e450f1073682711",
+      "match": true,
+      "size_bytes": 2147483648
+    },
+    "/cases/find-evil-test3/evidence/memory/base-mail-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "c6e11fbb62d3c401121723f88c4c477a6c0571253860f46b3c8e2312f06d9743",
+      "match": true,
+      "size_bytes": 18253611008
+    },
+    "/cases/find-evil-test3/evidence/memory/base-av-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "89e5a25d4a71bcca3953e7e691954a77ab559835865cd2c7337875cbf0750f64",
+      "match": true,
+      "size_bytes": 9663676416
+    },
+    "/cases/find-evil-test3/evidence/memory/base-hunt-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "c2d9a3b50cacb0206f6e21b58dd7a2cf5d98f72e20f92c4954bea1294b7c8544",
+      "match": true,
+      "size_bytes": 5368709120
+    },
+    "/cases/find-evil-test3/evidence/memory/base-elf-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "39af7546aaa812e919271d4fe77cdee5fd49f30fada02282f8b6104fa0cdab59",
+      "match": true,
+      "size_bytes": 5368709120
+    },
+    "/cases/find-evil-test3/evidence/memory/base-sp-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "f253aaf8af9e8becd6594e38d7b59a7e1f1cee0c047edc09326303daf2cbffc6",
+      "match": true,
+      "size_bytes": 9663676416
+    },
+    "/cases/find-evil-test3/evidence/memory/base-admin-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "d58343cb4e4a06ecc56012c8e25760b297594bf4695303527a5cbb2331726891",
+      "match": true,
+      "size_bytes": 5368709120
+    },
+    "/cases/find-evil-test3/evidence/memory/base-rd01-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "83456c716bbbeb116b474b87473445629db5dd018d0c667ec99f088871e1cbca",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-rd-02-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "a4519af8720b130617f3ec92f064bf5103cbc74e329d59bc13d12a8cc14e0ee9",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-rd-03-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "b145a4429b81fe413c04c29983f73cec4c413a36b2852c195ddd4a624c12482b",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-rd-04-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "fff9ae72d5222a6f9e8784ce799371bdd4d876ffd73b661edfeb0b8dbde229f8",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-rd-05-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "1c40c58349a687d58a14af44f22d0c7cbc5ced46ed92d9b80492186b266932d0",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-rd-06-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "c8c5a194e4b3b342931aa6581621ff110c58f7f970be6c31622d0877f564de65",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-01-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "e52f84eca8703c30903c754369476e4cd8fa781cbf1a7a7b42f5062535fa6956",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-01-mem.img": {
+      "expected_sha256": null,
+      "actual_sha256": "2caefa29dd738228d1274a6d3a75d60dbdbf3eda2483e1e5bd0a500e9ac07fbc",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-02-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "796608dce6f92053f32f84a1c92c20cdf5cd9dd76f7ef5be8df6ffb4ec67a21a",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-03-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "f487e77fa902d99c16b27bd9f1c1d8996353c9628e37e5e1a5b6efc00f72da48",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-04-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "36a29c5794ca2b764fc241f1f6e1f092f66df43d0c788fee7fe7a20d80c83f7a",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-05-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "74ff679b25727d5fb7a8f70217d6fad965efd806260b7d224f0b38bd1c436115",
+      "match": true,
+      "size_bytes": 3221225472
+    },
+    "/cases/find-evil-test3/evidence/memory/base-wkstn-06-memory.img": {
+      "expected_sha256": null,
+      "actual_sha256": "c2fd18e522f61bc9a7817a5a0bb12a8d6a1f9629c76c0b13595d9d84237a9d28",
+      "match": true,
+      "size_bytes": 2147483648
+    }
+  },
+  "evidence_unchanged": true
+}

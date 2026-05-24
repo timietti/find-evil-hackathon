@@ -93,6 +93,19 @@ _RE_TOOL_OR_MARKER = re.compile(
     re.IGNORECASE,
 )
 
+# Bug B (W3-52) helper: detect a `(exec_id ...)` or `(vol3_psscan ...)`
+# parenthetical that *immediately* follows a `[CONFIRMED]` tag — that
+# parenthetical is the cite belonging to THAT tag (not the next one).
+# Allows optional whitespace / punctuation between tag and paren.
+_RE_TRAILING_CITE = re.compile(
+    r"^[\s,;.:—–-]*"                       # whitespace / punctuation
+    r"\(\s*"                               # opening paren
+    r"(?:exec[_ ]?ids?|vol3_\w+|ezt_\w+|tsk_\w+|ewf_\w+|query_rows)"  # marker
+    r"[^)]*"                               # any content up to close
+    r"\)",                                 # closing paren
+    re.IGNORECASE,
+)
+
 # Strict UUID-shape: at least 8-hex + dash + 4+ hex. This deliberately
 # rejects bare 8+hex tokens (which would catch SHA-256 fragments) and
 # requires the dash-separated structure UUIDv7 emits.
@@ -174,21 +187,50 @@ def parse_claims(report_text: str) -> list[Claim]:
         #     previous tag's end (or paragraph start) to this tag's end. This
         #     stops sibling claims from polluting each other's tokens
         #     (failure type #1 from the EZ-Tool run COMPARISON.md).
+        #
+        # Bug B fix (W3-52): for multi-tag paragraphs, the prose-cite
+        # `(exec_id `UUID`)` that *follows* a tag would otherwise fall
+        # into the NEXT claim's preamble, leaving this claim with
+        # `exec_ids=[]` → not_confirmed. After scoping the claim_text as
+        # before (to keep sibling pollution off the token-extraction
+        # surface), peek into the trailing window between this tag's end
+        # and the next tag's start, and attach any exec_ids found there
+        # to THIS claim.
         is_multi_tag = len(tags) > 1
         prev_end = 0
-        for m in tags:
+        for idx, m in enumerate(tags):
             tag = m.group(1).upper()
             body = m.group(2) or ""
             exec_ids = _RE_EXEC_ID.findall(body)
 
             if is_multi_tag:
                 claim_text = para[prev_end : m.end()].strip()
+                next_tag_start = (
+                    tags[idx + 1].start() if idx + 1 < len(tags) else len(para)
+                )
+                # Bug B: a `(exec_id ...)` or `(vol3_psscan ...)` immediately
+                # after the tag is THIS claim's cite. Detect and consume it
+                # so the next claim's slice starts AFTER it (otherwise the
+                # cite would leak into the next claim's claim_text and
+                # cross-contaminate exec-id attribution).
+                trailing_window = para[m.end() : next_tag_start]
+                cite_m = _RE_TRAILING_CITE.match(trailing_window)
+                trailing_cite = cite_m.group(0) if cite_m else ""
+                consumed_end = m.end() + (cite_m.end() if cite_m else 0)
             else:
                 claim_text = para
+                trailing_cite = ""
+                consumed_end = m.end()
             # Validator v5: if no exec_ids in the tag body, scan the claim
             # prose for marker-anchored citations like "(tool exec_id=X)".
             if not exec_ids:
                 exec_ids = _extract_exec_ids_from_prose(claim_text)
+
+            # Bug B (W3-52): attach exec_ids from the trailing cite.
+            if trailing_cite:
+                for eid in _extract_exec_ids_from_prose(trailing_cite):
+                    if eid not in exec_ids:
+                        exec_ids.append(eid)
 
             primary = exec_ids[0] if exec_ids else None
 
@@ -201,7 +243,7 @@ def parse_claims(report_text: str) -> list[Claim]:
                 raw_match=m.group(0),
                 line_no=start + offset_lines,
             ))
-            prev_end = m.end()
+            prev_end = consumed_end
     return claims
 
 
