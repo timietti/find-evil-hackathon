@@ -166,7 +166,7 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 
 ### Deferred from the original v0.1 plan
 
-`vol3_handles`, `vol3_dlllist`, `vol3_modscan`, `baseliner_proc_diff`, `mount_e01_ro`, `tsk_recover`, `mactime_timeline`, `parse_registry`, `extract_prefetch`, `extract_srum`, `yara_scan`, `bulk_extractor_carve`, `vol3_vadyarascan`, `plaso_extract`, `plaso_filter`, `plaso_info` — none are implemented. The 20 shipped tools cover memory + disk + the highest-signal Windows-artifact parsers; additional wrappers can be added as the SHIELDBASE eval reveals gaps.
+`vol3_modscan`, `baseliner_proc_diff`, `mount_e01_ro`, `tsk_recover`, `parse_registry`, `bulk_extractor_carve` — placeholder names from the v0.1 plan that were superseded by what actually shipped (the 38-tool inventory now covers memory + disk + Windows-artefact parsers + threat hunt). The Plaso super-timeline family (`plaso_build` / `plaso_filter` / `plaso_info`) and the `mactime_timeline` wrapper were considered and removed from the roadmap (2026-05-25) — see `plans/MCP_TOOL_ROADMAP.md`. Additional wrappers can still be added as eval surfaces gaps.
 
 ## Audit log schemas
 

@@ -26,7 +26,6 @@ Amcache) + `query_rows`. See `docs/ARCHITECTURE.md` § "MCP server function inve
 | `SQLECmd/SQLECmd.dll` | `/opt/zimmermantools/SQLECmd/` | SQLite parsing with plugin packs (Chrome / Edge / Firefox / Skype / Teams history) |
 | `bstrings.dll` | `/opt/zimmermantools/` | High-perf strings extractor with regex filters |
 | `bulk_extractor` | `/usr/bin/` | Feature extraction (URLs, emails, BTC, IPs, phone, ZIP/RAR signatures) over raw bytes — works on disk AND memory |
-| Plaso (`log2timeline.py` / `psort.py` / `pinfo.py`) | `/usr/bin/` | Super-timeline — single biggest force-multiplier in DFIR |
 
 ### Tool inventory **missing on this install** — would need install routine entries
 
@@ -202,27 +201,15 @@ is the work (feature-file walker per category).
 
 ---
 
-### Phase 4 — Plaso super-timeline (biggest force-multiplier) ⏳ *can run async*
+### Phase 4 — Plaso super-timeline (dropped, 2026-05-25)
 
-| # | New tool | Wraps | Notes |
-|---|---|---|---|
-| 4.1 | `plaso_build(image)` | `log2timeline.py` | **SLOW** — hours on 14 GB disk. Produces `.plaso` storage file. |
-| 4.2 | `plaso_filter(plaso_exec_id, time_range, sources)` | `psort.py -o json_line --time-slice=...` | Query the .plaso file for a time window + source filter |
-| 4.3 | `plaso_info(plaso_exec_id)` | `pinfo.py` | Event source counts, hostname extraction, time range |
-
-**Design note:** Plaso is the single highest-signal cross-source tool in DFIR
-because it natively parses **everything** — registry, EVTX, prefetch, MFT, EZ tools
-output, browser history, etc. — into a unified normalised event stream. The
-problem is wall time: a single `log2timeline.py` run on a 14 GB E01 takes ~2 hours.
-
-**Design choice:** Run `plaso_build` once per disk image, cache the `.plaso` storage
-file under `audit/raw/plaso/<exec_id>.plaso`, then `plaso_filter` reads from the
-cache instantly. The agent doesn't pay the cost twice per case.
-
-**Effort:** ~8-10 hours including a runtime / timeout strategy that doesn't block
-the iteration loop indefinitely.
-
-**Install touches:** Already installed on this SIFT (`plaso 20260119`).
+Originally scoped as a post-submission addition. Removed from the roadmap
+after the W3-52 SHIELDBASE run (89.9% strict, 71/79 verified) showed the
+existing inventory builds adequate per-claim timelines from individual
+tool outputs (psscan create_time + MFT timestamps + EVTX + Prefetch).
+A super-timeline would add a multi-million-event firehose at ~2 hr/disk
+wall — out of proportion to the marginal signal vs. the agent's current
+targeted approach.
 
 ---
 
@@ -255,14 +242,13 @@ Not new forensic primitives, but new agent helpers built on top of the audit log
 |---|---|---|
 | 6.1 | `correlate_indicator(value, kind?)` | All exec_log rows whose `parsed_summary` contains the value (IP, hash, path, account name). Cross-source by construction. |
 | 6.2 | `correlate_process(name, hostname?)` | Memory psscan + disk MFT + ShimCache + Amcache + Prefetch + EVTX 4688 rows matching the process name. |
-| 6.3 | `timeline_aggregate(start_utc, end_utc)` | Every timestamped row across all prior exec_log entries in the window, sorted chronologically. |
-| 6.4 | `audit_search(query)` | Full-text search over `parsed_summary` and `summary` fields in `audit/exec_log.jsonl`. |
+| 6.3 | `audit_search(query)` | Full-text search over `parsed_summary` and `summary` fields in `audit/exec_log.jsonl`. |
 
 **Why these matter:** Today the agent has to do correlation by hand — "I see STUN.exe
 in psscan, now let me query_rows on MFT for the path, now let me query EVTX...".
 These tools fold the pattern into a single call.
 
-**Effort:** ~4-6 hours. Pure-Python; reads the audit log; no subprocess.
+**Effort:** ~3-4 hours. Pure-Python; reads the audit log; no subprocess.
 
 ---
 
@@ -311,7 +297,7 @@ Phase 5 (RECmd / SQLECmd / LECmd / WxTCmd) ⚠ promoted              ← 4-6 hr
 Submission deliverables                                            ← #30/#31/#32
     │
     ▼
-[Post-submission] Phase 4 (Plaso) → Phase 6 (correlator) → Phase 7 (Linux/mac)
+[Post-submission] Phase 6 (correlator) → Phase 7 (Linux/mac)
 ```
 
 **SRUM (libesedb-based, W3-43):** ✓ done. `ezt_srum_parse` now reads
@@ -325,9 +311,13 @@ libscca (W3-41).
 
 **Reordering note (2026-05-11):** Phase 5 promoted from post-submission to
 pre-submission after the MITRE coverage audit found it closes 7 of 9
-Partial-coverage techniques. Phase 4 (Plaso) deferred to post-submission
-since it's a heavy lift and the existing inventory already covers most
-correlator-friendly artefacts via `query_rows` over the audit log.
+Partial-coverage techniques.
+
+**Phase 4 (Plaso) removed from roadmap (2026-05-25):** Originally a
+post-submission addition. Dropped after the W3-52 SHIELDBASE run showed
+the existing inventory builds adequate per-claim timelines without a
+super-timeline firehose; the wall-time cost (~2 hr/disk) is out of
+proportion to the marginal signal.
 
 Phase 1 ships **before** SHIELDBASE so the headline result includes Prefetch +
 JumpList coverage. Phase 2 ships **after** SHIELDBASE because legacy-OS support
@@ -363,9 +353,8 @@ Every new tool **must**:
 | **1.5 — MITRE-driven Vol3 gaps** | **5** | **~2 hr** | **next** | pending |
 | 2 — Vol2 fallback | 15 | 6-8 hr | post-Phase 3 | pending |
 | 3 — YARA + carving | 5 | 6-8 hr | post-Phase 1.5 | pending |
-| 4 — Plaso | 3 | 8-10 hr | post-submission | pending |
 | 5 — Registry + browser | 5 | 4-6 hr | **pre-submission** ⚠ promoted | pending |
-| 6 — Correlator helpers | 4 | 4-6 hr | post-submission | pending |
+| 6 — Correlator helpers | 3 | 3-4 hr | post-submission | pending |
 | 7 — Linux/mac | ~8 | — | future | future |
 
 **Inventory growth across the pre-submission phases:**

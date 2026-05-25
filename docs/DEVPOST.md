@@ -321,7 +321,7 @@ Documented in `plans/MCP_TOOL_ROADMAP.md`:
   grained DNS/HTTP detection.
 - **Phase 6 — Cross-source correlator helpers** (~4-6 hr): meta-tools on
   top of the audit log (`correlate_indicator`, `correlate_process`,
-  `timeline_aggregate`). Closes T1110 (brute-force aggregation) and
+  `audit_search`). Closes T1110 (brute-force aggregation) and
   removes manual correlation grunt-work from the agent's loop.
 - **Linux + macOS memory** (post-submission stretch): Vol3 has profiles
   for both. Adding `vol3_linux_*` and `vol3_mac_*` makes SIFT-OWL the only

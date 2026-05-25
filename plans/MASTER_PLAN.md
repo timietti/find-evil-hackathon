@@ -73,7 +73,7 @@ Pick approach #2 (Custom MCP Server) as the **foundation** — judges explicitly
 **Rationale:**
 
 - **Custom MCP Server** → wins criterion 4 (architectural guardrails). The agent *physically cannot* `rm` evidence because the server exposes only typed, read-only forensic functions.
-- **Multi-agent specialists** → wins criterion 3 (depth). Domain agents (memory / disk / timeline / registry / network) each go deep without polluting one giant context. Inter-agent message log → wins criterion 5 (audit trail).
+- **Multi-agent specialists** → wins criterion 3 (depth). Domain agents (memory / disk / registry / network) each go deep without polluting one giant context. Inter-agent message log → wins criterion 5 (audit trail).
 - **Persistent learning loop with verifiable success criteria** → wins criterion 1 (autonomous execution quality). Each iteration scores its own output; hallucinations get caught by cross-source correlation; max-iteration cap prevents runaway.
 - **Cross-source correlation** (disk ↔ memory) → wins criterion 2 (IR accuracy). The agent's *own* second-line review surfaces contradictions before they reach the report.
 
@@ -96,22 +96,21 @@ Project codename: **`SIFT-OWL`** (Operate, Witness, Learn). Working name only; w
 │  Claude Opus 4.7 · plans, sequences, self-evaluates, terminates          │
 └────────────┬─────────────────────────────────────────────────┬───────────┘
              │ A2A messages (logged, timestamped, token-counted)│
-   ┌─────────┴──────────┬──────────────┬──────────────┬────────┴────────┐
-   │ Memory Agent        │ Disk Agent    │ Timeline     │ Windows-Arts   │
-   │ (Vol3, MemBaseline) │ (TSK, EWF)    │ Agent        │ Agent          │
-   │                     │               │ (Plaso)      │ (EZ Tools)     │
-   └─────────┬───────────┴───────┬──────┴──────┬───────┴────────┬───────┘
-             │                   │             │                │
-             ▼                   ▼             ▼                ▼
+   ┌─────────┴──────────┬──────────────┬──────────────────────────────┐
+   │ Memory Agent        │ Disk Agent    │ Windows-Artefacts Agent      │
+   │ (Vol3, MemBaseline) │ (TSK, EWF)    │ (EZ Tools + libscca/libesedb)│
+   └─────────┬───────────┴───────┬──────┴───────────────┬──────────────┘
+             │                   │                       │
+             ▼                   ▼                       ▼
    ┌──────────────────────────────────────────────────────────────────┐
    │                    SIFT-MCP (Custom MCP Server)                  │
    │   Typed, read-only forensic functions. NO shell exec exposed.    │
    │   Every call → execution_id, timestamp, hash of input+output.    │
    │                                                                  │
-   │   get_amcache(image)         vol3_pslist(memdump)                │
-   │   extract_mft_timeline(img)  vol3_malfind(memdump)               │
-   │   parse_evtx(path)           extract_prefetch(image)             │
-   │   yara_scan(path, ruleset)   shimcache(image)                    │
+   │   ezt_amcache_parse          vol3_psscan                        │
+   │   tsk_fls_list               vol3_malfind                        │
+   │   ezt_evtx_parse             ezt_prefetch_parse                  │
+   │   yara_scan_extract          ezt_shimcache_parse                 │
    │   ...                                                            │
    └────────┬─────────────────────────────────────────────────────────┘
             │ Subprocess execution (sandboxed, image mounted RO)
@@ -322,7 +321,6 @@ find-evil-hackathon/
 │   ├── orchestrator.py
 │   ├── memory_agent.py
 │   ├── disk_agent.py
-│   ├── timeline_agent.py
 │   ├── correlator.py          # cross-source correlation pass
 │   ├── validator.py           # hallucination detector
 │   └── prompts/               # all system prompts here
