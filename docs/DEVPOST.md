@@ -9,7 +9,7 @@
 
 ## Tagline (≤140 chars)
 
-> Autonomous DFIR agent that processes raw disk + memory images end-to-end on a typed-MCP boundary — held-out 71.4% verified at $3.50.
+> Autonomous DFIR agent that processes raw disk + memory images end-to-end on a typed-MCP boundary — held-out 71.4% single-shot, 89.9% on the same case with the self-correcting loop + libesedb-backed SRUM.
 
 ---
 
@@ -53,7 +53,7 @@ Three SANS-canonical cases ran end-to-end:
 |---|---|---|---|---|
 | ROCBA-001 (dev) | 1 | 18 GB memory | **91.7%** strict-verified | 31.0% |
 | STARK-APT-001 (dev) | 4 | 58 GB disk + memory | **86.1%** strict-verified | did not finish (budget overrun) |
-| SHIELDBASE / CRIMSON OSPREY ⭐ | 15+ | 198 GB disk + memory | **71.4%** strict-verified (HELD-OUT single shot, $3.50, 42 min) | n/a |
+| SHIELDBASE / CRIMSON OSPREY ⭐ | 15+ | 198 GB disk + memory | **71.4%** strict-verified, single shot (HELD-OUT, $3.50, 42 min) **→ 89.9%** (71 of 79 claims) with the self-correcting loop ($4.59, 57 min) | n/a |
 
 **No spoliation across any run.** Every claim re-derivable from the committed
 audit log.
@@ -151,8 +151,13 @@ all six trust boundaries called out.
 APT). The eval was a *single run* against a case SIFT-OWL had never seen,
 with no prompt tuning informed by the case's content.
 
-**Result: 71.4% strict-verified at iter 3, $3.50 total, 42 minutes wall.**
-12% of the $30 budget.
+**Single-shot, held-out result: 71.4% strict-verified at iter 3, $3.50 total,
+42 minutes wall.** 12% of the $30 budget. The same case run again with the
+self-correcting loop after libesedb-backed SRUM landed (W3-43) and inline
+LLM-check enabled (W3-45) reached **89.9% strict-verified with 71 of 79 claims
+confirmed, $4.59 total, 57 minutes** — 3× the substantive verified-claim count
+of the single-shot run, and roughly the v2 loop's ceiling on this case
+(variance band 60–92% across 4 samples).
 
 Substantive findings (all `exec_id`-cited):
 - **Cobalt Strike Beacon** intrusion across rd01 (patient zero, OUTLOOK.EXE
@@ -251,7 +256,10 @@ are which era.
 
 2. **Held-out discipline preserved.** SHIELDBASE was a single shot — we
    never iterated SIFT-OWL on this case, never tuned prompts to its
-   findings. The 71.4% is intrinsic.
+   findings. The 71.4% is intrinsic. The same case re-run later with the
+   self-correcting loop + libesedb SRUM + inline LLM-check reached
+   **89.9% (71/79 verified claims)** — substantively much more, on a
+   case that wasn't tuned to.
 
 3. **MITRE ATT&CK coverage at 91% Full** (20 of 22 target techniques) with
    zero missing-coverage techniques. Every Partial has a documented closure

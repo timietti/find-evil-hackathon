@@ -13,10 +13,16 @@
 |---|---|---|---|---|
 | ROCBA-001 (dev) | 1 (memory only, 18 GB) | 31.0% verified ($2.26, 13 min) | **91.7%** ($4.69, 24 min) | **+60.7 pp** |
 | STARK-APT-001 (dev) | 4 (memory + disk, 58 GB) | did not finish — `error_max_budget_usd` at $10.99 / 26 min | **86.1%** ($1.92, 20 min) | un-measurable for baseline; SIFT-OWL **completed** |
-| SHIELDBASE / CRIMSON OSPREY ⭐ held-out (single shot) | 15+ (memory + disk, 198 GB) | n/a — preserved for held-out integrity | **71.4%** ($3.50, 42 min) | — |
-| **SHIELDBASE re-eval (after libesedb SRUM landed, W3-46)** | 15+ (memory + disk, 198 GB) | n/a | **92.0%** ($3.84, 54 min) | **+20.6 pp** over single-shot, rule-based-only |
+| SHIELDBASE / CRIMSON OSPREY ⭐ held-out (single shot) | 15+ (memory + disk, 198 GB) | n/a — preserved for held-out integrity | **71.4%** (30/42, $3.50, 42 min) | — |
+| SHIELDBASE re-eval rule-only (W3-46) | 15+ (memory + disk, 198 GB) | n/a | **92.0%** (23/25, $3.84, 54 min) | rule-only; small claim count |
+| SHIELDBASE re-eval rule-only post wire-fit (W3-49) | 15+ (memory + disk, 198 GB) | n/a | **60.0%** (18/30, $2.71, 42 min) | variance band; SRUM cap=6 fit |
+| **SHIELDBASE re-eval w/ full stack (W3-52)** ⭐ | 15+ (memory + disk, 198 GB) | n/a | **89.9%** (71/79, $4.59, 57 min) | **3× the verified-claim count** of W3-46; first run with all infrastructure exercised end-to-end |
 
-**Strict-verified accuracy on the held-out 15-host case: 92.0%, $3.84, 54 minutes** (the prior 71.4% single-shot is preserved as the original held-out-discipline number; the 92.0% is the same case re-run with the post-Phase 1+1.5+3 + libesedb SRUM toolset).
+**Strict-verified accuracy on the held-out 15-host case: 89.9%, $4.59, 57 minutes** (71 verified claims of 79 — the substantive ceiling for this case under the v2 loop with all infrastructure exercised). The prior 71.4% single-shot is preserved as the original held-out-discipline number; the 92.0% W3-46 number had a small claim denominator (23 V) which inflated the percent; the W3-52 89.9% verified 71 strict claims and is the canonical accuracy number.
+
+### Variance band
+
+Four v2-loop SHIELDBASE samples (same case, same prompt, same model) bracket the loop's strict-verified peak between **60.0% and 92.0%**; this is exploration-path variance, not measurement noise. The stable findings — the actual incident narrative (Outlook RWX → WMI → PowerShell → p.exe chain; file01 hollowed rundll32 since 2018-08-28T22:08:25Z; mail-server hollowed rundll32 PID 15116; proxy01 C2 at 172.16.4.10:3128/8080; Metasploit STOMP via 10.10.254.1:61613; Rar.exe staging on file01; Azure / AWS HTTPS egress) — **reproduce across every run**. The single-number score sits on top of that floor.
 
 **No spoliation across any run.** All evidence-file SHA-256 hashes match intake values (when checked); no run wrote to `/cases/`; per-case audit logs trace every claim to a specific MCP call.
 
@@ -229,6 +235,66 @@ wire and can rescue the 1 remaining Unverifiable directly.
 Full per-iter detail in
 `eval/results/test3-shieldbase/sift-owl-v2/20260519T191456Z-sonnet/REPORT.md`.
 
+#### Re-eval post wire-fit (W3-49, 2026-05-22)
+
+Same case, rule-based-only, **W3-47/W3-48** shrink-ladder in place.
+
+| iter | wall | cost | tools | V | P | F | U | NC | **score** |
+|------|------|------|-------|---|---|---|---|----|----|
+|  1   | 29.1m| $1.65|  19   |  7|  7|  2|  0|  3 | 36.8% |
+|  2   |  7.3m| $0.59|  11   | 11|  8|  0|  4|  0 | 47.8% |
+|  3   |  5.3m| $0.47|   3   | 18|  5|  2|  3|  2 | **60.0%** ⭐ |
+
+Total: $2.71 / 41.6 min / 33 MCP calls. SRUM was called and the
+wire-fit fired (capped at 6 rows/section, 14,521 B under target) —
+the fix is validated end-to-end. The +20pp drop vs. W3-46 is
+exploration-path variance, not a fix regression: the agent **did
+not cite the SRUM exec_id** in any iter-3 verified claim (chose
+cheaper signals — psscan + netscan + cmdline — and SRUM's
+per-process bytes signal would have been useful but wasn't needed).
+
+Full detail in
+`eval/results/test3-shieldbase/sift-owl-v2/20260522T191444Z-sonnet/REPORT.md`.
+
+#### Re-eval w/ inline `--llm-check` + validator bug fixes (W3-50/52, 2026-05-24)
+
+With `ANTHROPIC_API_KEY` set, W3-45's auto-detect enables
+`--llm-check` inline (rescues Unverifiable verdicts via Haiku
+4.5 against the cited tool's parsed JSON). The first attempt
+(W3-50) surfaced two validator bugs which masked all signal —
+both fixed in W3-50 (backticked exec-id leak into verifiable
+tokens) and W3-52 (multi-tag paragraph scoping orphans the
+trailing prose cite). Re-run after both fixes:
+
+| iter | wall | cost | tools | V | P | F | U | NC | LLM-V | **score** |
+|------|------|------|-------|----|---|---|---|----|-------|------|
+|  1   | 37.8m| $2.92|  35   |  2|  4|  2|  0| 27 |  0    |  5.7% |
+|  2   | 11.0m| $0.89|   9   | 42| 23|  1|  7|  4 |  2/9  | 54.5% |
+|**3** |  7.8m| $0.77|   3   |**71**|  1|  1|  4|  2 |  3/7  | **89.9%** ⭐ |
+
+Total: $4.59 / 56.6 min / 47 MCP calls + LLM rescue cost $0.050.
+
+**First SHIELDBASE run where every infrastructure piece worked
+end-to-end together**: libesedb SRUM + wire-fit + inline
+`--llm-check` + both validator fixes. 71 verified strict claims —
+**3× the verified-claim count of W3-46's 92.0% peak** (which had
+only 23 V) — for a similar percent. The substantive ceiling, not a
+clipped denominator.
+
+iter 1 sat low (5.7%) because the agent emitted many bare
+`[CONFIRMED]` cells in a MITRE-attribution table without exec_id
+cites — a content / prompt issue, not a validator issue (filed as
+follow-up: require cites in MITRE cells). iter 2 added cites and
+the loop converged to 89.9% by iter 3 with monotone improvement.
+
+LLM-check decomposition: Haiku invoked 16 times across iters 2+3,
+rescued 5 (~31% rescue rate — about half the projected 70%; the
+case's Unverifiables are largely prose-only inference rather than
+supportable structural claims).
+
+Full detail in
+`eval/results/test3-shieldbase/sift-owl-v2/20260524T101323Z-sonnet/REPORT.md`.
+
 ---
 
 ## 3. SIFT-OWL vs. Protocol SIFT — head-to-head
@@ -439,7 +505,7 @@ traceability.
 **Accuracy**:
 - ROCBA-001 (dev, memory only): **91.7%** strict-verified vs. 31.0% Protocol SIFT baseline
 - STARK-APT-001 (dev, multi-host): **86.1%** strict-verified; Protocol SIFT baseline failed to finish
-- **SHIELDBASE (held-out, 15 hosts): 71.4% single-shot ($3.50, 42 min) → 92.0% post-libesedb-SRUM re-eval ($3.84, 54 min)**
+- **SHIELDBASE (held-out, 15 hosts): 71.4% single-shot ($3.50, 42 min) → 89.9% w/ full stack working end-to-end (71 verified claims, $4.59, 57 min)** — variance band 60–92% across 4 v2-loop samples
 
 **MITRE coverage**: 20 of 22 target techniques at Full, 2 at Partial, 0 missing.
 

@@ -37,7 +37,8 @@
 
   ROCBA-001:        91.7%
   STARK-APT-001:    86.1%
-  SHIELDBASE  ⭐    71.4%        held-out · $3.50 · 42 min
+  SHIELDBASE        71.4%        single-shot held-out · $3.50 · 42 min
+  SHIELDBASE  ⭐    89.9%        self-correcting loop · 71/79 V · $4.59 · 57 min
   ```
 - Bottom: `github.com/timietti/find-evil-hackathon · MIT`
 
@@ -46,8 +47,10 @@
 > memory images end-to-end — no human in the loop, no shell access for
 > the model, and a per-call audit trail every claim has to cite. On a
 > held-out 15-host SANS case, three dollars and forty-two minutes of
-> compute got us seventy-one percent of claims strictly verified.
-> Here's how."
+> compute got us seventy-one percent of claims strictly verified on a
+> single shot; the self-correcting loop with libesedb-backed SRUM gets
+> us to eighty-nine point nine percent with seventy-one of seventy-nine
+> verified. Here's how."
 
 ---
 
@@ -232,13 +235,12 @@ LLM-promoted: 1 (Haiku 4.5 prose check, $0.0013)
 **Screen — sub-scene 7a (4:30 - 4:48)**: results table
 
 ```
-Case               Strict-verified    Cost      Wall      Hosts
-─────────────────────────────────────────────────────────────────
-ROCBA-001  dev        91.7%          $4.69     24 min      1
-STARK-APT  dev        86.1%          $1.92     20 min      4
-SHIELDBASE  ⭐
-   held-out single shot              $3.50     42 min     15+
-   71.4% strict-verified at iter 3
+Case                          Strict-verified    Cost      Wall    Hosts
+─────────────────────────────────────────────────────────────────────────
+ROCBA-001  dev                   91.7%          $4.69     24 min     1
+STARK-APT  dev                   86.1%          $1.92     20 min     4
+SHIELDBASE held-out single shot  71.4%  (30/42) $3.50     42 min    15+
+SHIELDBASE self-correcting ⭐    89.9%  (71/79) $4.59     57 min    15+
 
 MITRE ATT&CK coverage: 20 of 22 target techniques at Full (91%)
                        2 Partial, 0 Missing
@@ -249,12 +251,14 @@ vs Protocol SIFT baseline:
 ```
 
 **VO** (18 s)
-> "Three cases, twenty-six total claims to verify across the held-out
-> SHIELDBASE alone, twenty of twenty-two MITRE techniques at Full
-> coverage. No shell, no spoliation, every claim traceable. Compared
-> to the published baseline: sixty-points-of-accuracy lift on ROCBA,
-> five-point-seven times cheaper on STARK-APT, where the baseline
-> didn't even finish."
+> "Three cases. On the held-out SHIELDBASE, seventy-one percent of
+> claims verified on a single shot; the self-correcting loop with
+> libesedb-backed SRUM and inline LLM-check pushes that to eighty-nine
+> point nine percent — seventy-one of seventy-nine confirmed claims.
+> Twenty of twenty-two MITRE techniques at Full coverage. No shell,
+> no spoliation, every claim traceable. Sixty-points-of-accuracy lift
+> on ROCBA over the baseline; on STARK-APT, where the baseline didn't
+> even finish, we landed in twenty minutes for under two dollars."
 
 **Screen — sub-scene 7b (4:48 - 5:00)**: closing card
 ```

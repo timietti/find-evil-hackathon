@@ -106,6 +106,16 @@ The MCP server exposes **38 typed functions**. Every function returns `{exec_id,
 
 The agent sees `exec_id + summary + first 50 rows`. The full row list stays on disk and is reachable via `query_rows(exec_id, filter_field, filter_value, limit, offset)`.
 
+### Multi-section wire-fit (W3-47 / W3-48)
+
+`ezt_srum_parse`, `ezt_amcache_parse`, and `ezt_persistence_keys_parse` produce a `{sections: {key: {count, rows}}}` shape where the default 50-rows-per-section cap multiplied by 6–9 sections overruns Claude Code's per-tool-result transport envelope (empirically: SRUM ~95 KB, Amcache ~160 KB, persistence ~111 KB — all 4–6× over the ~25 KB target). `_fit_sections_to_wire(parsed, truncate_fn)` walks an iterative ladder (50 → 25 → 12 → 6 → 3 → 1 rows/section), re-running the truncate fn + `json.dumps` until the payload fits; if even cap=1 doesn't fit, falls back to a `count`-only payload (rows dropped, section_counts retained, `query_rows` drill still available). Parser is invoked once; the ladder pass costs <1 ms on real 179K-row data. Status surfaced as `wire_cap_applied` / `wire_cap_reason` in the response and audit-row summary.
+
+### Validator (v6) — claim parser & token extractor
+
+- **Bug A fix (W3-50)**: backticked exec-id tokens preceded by an `exec_id`/`exec ids:` marker are excluded from `tokens.quoted` — mirroring the existing guard on `hex_hashes`. Otherwise the agent's `(exec_id `UUID`)` prose format leaks the UUID into the verifiable-token list and the verifier marks it "missing" from the cited tool's parsed output.
+- **Bug B fix (W3-52)**: in multi-tag paragraphs (e.g. bullet-list claims with `[CONFIRMED]` mid-bullet and `(exec_id ...)` after), each tag's trailing cite is detected via `_RE_TRAILING_CITE` and attached to *that* claim. The consumed cite advances `prev_end` so the next claim's slice starts after it — no cross-contamination between sibling claims.
+- **LLM-check (W3-45 + Haiku 4.5)** auto-enables when `ANTHROPIC_API_KEY` is in the environment; rescues prose-only `unverifiable` verdicts. ~$0.05 per 3-iter run.
+
 ### Memory (Volatility 3) — 11
 
 | Function | Wraps | Notes |

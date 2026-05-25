@@ -284,7 +284,9 @@ Working backwards from SHIELDBASE final eval:
 Phase 1 ✓ (Prefetch + JLE + SBE + RBE + SRUM + dlllist + handles)  ← done
     │
     ▼
-SHIELDBASE final eval run ✓                                        ← done (71.4%)
+SHIELDBASE final eval run ✓                                        ← 71.4% single-shot held-out;
+                                                                     89.9% (71/79) with v2 loop
+                                                                     + libesedb SRUM + LLM-check (W3-52)
     │
     ▼
 Phase 1.5 (5 Vol3 plugin gaps from MITRE audit)                    ← 2 hr — NEXT
@@ -369,7 +371,7 @@ Every new tool **must**:
 **Inventory growth across the pre-submission phases:**
 
 ```
-v0.4 (today)     26 tools  (W3-19 shipped)
+v0.4 (current)   38 tools  (W3-19 + W3-26 + W3-27 + W3-43 shipped + W3-47/48 wire-fit + W3-50/52 validator fixes)
 + Phase 1.5      31 tools
 + Phase 3        36 tools
 + Phase 5        41 tools   ← MITRE-driven promotion to pre-submission

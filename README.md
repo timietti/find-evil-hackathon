@@ -11,10 +11,11 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 ### What ships today
 
 - **38 typed read-only MCP tools** over a FastMCP stdio server (`sift-mcp`). The agent connected to it has **no shell, no filesystem, no network** — it can only call the registered forensic functions.
-- **Self-correcting agent loop** (`eval/agents/sift_owl_v2/run_loop.py`). The agent generates a report; a validator scores every claim against parsed tool output; the loop replans for the next iteration with the flagged claims spelled out. Terminates on convergence, no-improvement, or max-iter cap.
-- **Validator v4** — rule-based extraction (PIDs, IPs, paths, timestamps, hashes, inodes) with paren-aware negation handling, timestamp prefix matching, and an opt-in LLM prose-check pass (Haiku 4.5) for unverifiable prose claims.
+- **Self-correcting agent loop** (`eval/agents/sift_owl_v2/run_loop.py`). The agent generates a report; a validator scores every claim against parsed tool output; the loop replans for the next iteration with the flagged claims spelled out. Terminates on convergence, no-improvement, or max-iter cap. `--llm-check` auto-enables when `ANTHROPIC_API_KEY` is in env (Haiku rescue on Unverifiable verdicts, ~$0.05/3-iter run).
+- **Validator v6** — rule-based extraction (PIDs, IPs, paths, timestamps, hashes, inodes) with paren-aware negation handling, timestamp prefix matching, and an inline LLM prose-check pass (Haiku 4.5) for unverifiable prose claims. Multi-tag bullet-list paragraphs scope each trailing `(exec_id ...)` cite to its own claim (W3-52); backticked exec-ids no longer leak into the verifiable-token list (W3-50).
 - **Per-call audit trail** — `audit/exec_log.jsonl` records every MCP call with `exec_id`, args, sha256 of inputs and raw output, `parsed_summary`, `wall_ms`. Every "confirmed" claim in a final report cites an `exec_id` that the validator can resolve.
-- **258 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
+- **Iterative wire-size shrink** for multi-section tools (SRUM / Amcache / persistence_keys): if the default 50-rows-per-section payload exceeds Claude's tool-result transport envelope, the truncate-fn re-runs at 25, 12, 6, 3, 1 rows/section until it fits under ~25 KB; falls back to count-only if even cap=1 is too big. Full row data stays on disk, drillable via `query_rows`.
+- **277 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
 
 ### MCP tool inventory
 
@@ -37,7 +38,9 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 | STARK-APT-001 v1 disk+memory | v4 | 43.5% | First multi-host shakedown |
 | **STARK-APT-001 v2 loop (iter 3)** | **v4** | **86.1%** | Full convergence: 0 partial, 0 failed |
 | SHIELDBASE single-pass (held-out) | v5 | 71.4% | First held-out run; SrumECmd not yet on Linux |
-| **SHIELDBASE v2 loop (iter 3)** ⭐ | **v5** | **92.0%** | After libesedb-backed SRUM landed (W3-43); rule-based-only — LLM-check ceiling ~96% |
+| SHIELDBASE v2 loop, rule-only (W3-46) | v5 | 92.0% (23/25) | After libesedb-backed SRUM landed; small claim count |
+| SHIELDBASE v2 loop, rule-only post wire-fit (W3-49) | v5 | 60.0% (18/30) | Variance band; agent skipped citing SRUM data |
+| **SHIELDBASE v2 loop + inline `--llm-check` (W3-52)** ⭐ | **v6** | **89.9% (71/79)** | Full stack working end-to-end; 3× the substantive claim count of W3-46 |
 
 SHIELDBASE is the SANS FOR508 / CRIMSON OSPREY case — 15+ Win10 hosts, 198 GB across memory and disk. It is the headline submission number.
 

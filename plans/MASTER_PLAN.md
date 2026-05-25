@@ -12,11 +12,11 @@
 
 | Track | Status |
 |---|---|
-| MCP server | **26 typed read-only tools** (11 vol3 + 6 disk + 8 EZ Tools + query_rows). 198 unit tests green. |
-| Agents | v0 / v1 single-pass + **v2 self-correction loop** all shipped under `eval/agents/`. |
+| MCP server | **38 typed read-only tools** (17 vol3 + 6 disk + 10 EZ Tools + 4 hunt/carve/hash + query_rows). 277 unit tests green. Multi-section tools (SRUM, Amcache, persistence_keys) use iterative wire-size shrink (W3-47/48). |
+| Agents | v0 / v1 single-pass + **v2 self-correction loop** all shipped under `eval/agents/`. v2 loop plumbs `--llm-check` inline; auto-detect from `ANTHROPIC_API_KEY` (W3-45). |
 | Validator | v0..v4 shipped. v4 adds LLM-based prose check (Haiku 4.5; opt-in via `--llm-check`). |
 | Datasets | ROCBA-001 + STARK-APT-001 in active dev. **SHIELDBASE held out** for the final eval. |
-| Headline accuracy | ROCBA v2 loop iter 3 = **91.7% strict-verified** (v4 validator). STARK-APT v2 loop iter 3 = 86.1%. |
+| Headline accuracy | ROCBA v2 loop iter 3 = **91.7%**; STARK-APT v2 loop iter 3 = **86.1%**; SHIELDBASE single-shot held-out **71.4%** → SHIELDBASE v2 loop w/ full stack **89.9%** (71 of 79 verified, W3-52). Variance band 60–92% across 4 v2-loop samples on SHIELDBASE. |
 | Baselines | Protocol SIFT baselines: ROCBA done (31% verified). STARK-APT *in progress 2026-05-10*. SHIELDBASE runs in held-out session. |
 | Architecturally enforced | TB1-TB5 architectural; TB6/TB7 hybrid (rule-based + LLM). See `docs/ARCHITECTURE.md`. |
 
