@@ -32,18 +32,18 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 
 ### Headline result
 
-| Case | Validator | Strict-verified score | Notes |
+| Case | Validator | Strict-verified | Notes |
 |---|---|---|---|
 | ROCBA-001 single-pass v1 | v4 | 57.1% | First end-to-end run, memory-only |
 | **ROCBA-001 v2 loop (iter 3)** | **v4** | **91.7%** | Convergence; rule-based + LLM prose check |
-| STARK-APT-001 v1 disk+memory | v4 | 43.5% | First multi-host shakedown |
+| STARK-APT-001 v1 (disk + memory) | v4 | 43.5% | First multi-host shakedown |
 | **STARK-APT-001 v2 loop (iter 3)** | **v4** | **86.1%** | Full convergence: 0 partial, 0 failed |
-| SHIELDBASE single-pass (held-out) | v5 | 71.4% | First held-out run; SrumECmd not yet on Linux |
-| SHIELDBASE v2 loop, rule-only (W3-46) | v5 | 92.0% (23/25) | After libesedb-backed SRUM landed; small claim count |
-| SHIELDBASE v2 loop, rule-only post wire-fit (W3-49) | v5 | 60.0% (18/30) | Variance band; agent skipped citing SRUM data |
-| **SHIELDBASE v2 loop + inline `--llm-check` (W3-52)** ⭐ | **v6** | **89.9% (71/79)** | Full stack working end-to-end; 3× the substantive claim count of W3-46 |
+| SHIELDBASE single-shot, held-out | v5 | 71.4% (30/42) | Original held-out discipline; no prompt tuning to this case |
+| **SHIELDBASE v2 loop, full stack** ⭐ | **v6** | **89.9% (71/79)** | Same case, +20.6 pp, 3× the verified-claim count — libesedb SRUM + wire-fit + inline `--llm-check` all engaged |
 
-SHIELDBASE is the SANS FOR508 / CRIMSON OSPREY case — 15+ Win10 hosts, 198 GB across memory and disk. It is the headline submission number.
+SHIELDBASE is the SANS FOR508 / CRIMSON OSPREY case — 15+ Win10 hosts, 198 GB across memory and disk. It is the headline submission case.
+
+The v2 loop's strict-verified peak on SHIELDBASE has been sampled four times under varying configurations, bracketing the variance band at **60.0–92.0%** (full per-run detail in [`docs/ACCURACY_REPORT.md`](docs/ACCURACY_REPORT.md)). The substantive findings — the actual incident narrative — reproduce across every run; the single-number score sits on top of that floor.
 
 ## What this is
 
@@ -70,11 +70,22 @@ cd find-evil-hackathon
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
+# Optional but recommended on a fresh SIFT image: YARA + ssdeep +
+# libscca + libesedb + the Vol3 community symbol pack (~800 MB,
+# lets Vol3 run fully offline). Idempotent.
+bash scripts/bootstrap_sift_tools.sh
+
 # Inspect the MCP tool inventory (no Vol3 / evidence required)
 sift-mcp inspect
 
-# Validate the test suite passes on your machine
-pytest -x --deselect tests/test_disk_e2e.py --deselect tests/test_vol3_memory_e2e.py --deselect tests/test_ez_tools_e2e.py
+# Validate the test suite passes on your machine (279 tests pass)
+pytest -x --deselect tests/test_disk_e2e.py \
+          --deselect tests/test_vol3_memory_e2e.py \
+          --deselect tests/test_ez_tools_e2e.py
+
+# Optional: set ANTHROPIC_API_KEY so the v2 loop auto-enables
+# --llm-check (Haiku rescue on Unverifiable verdicts, ~$0.05/3-iter run).
+export ANTHROPIC_API_KEY=sk-ant-api03-...
 ```
 
 Full installation / setup: [`INSTALL.md`](INSTALL.md).
@@ -98,8 +109,8 @@ find-evil-hackathon/
 │   ├── agents/sift_owl_v0..v2/     # SIFT-OWL eval harnesses (single-pass → loop)
 │   └── results/                    # per-run validator reports + REPORT.md
 ├── audit/                          # default per-run audit dir (gitignored)
-├── tests/                          # 173 unit tests + slow E2E
-└── scripts/                        # one-off helpers
+├── tests/                          # 279 unit tests + slow E2E
+└── scripts/                        # bootstrap + one-off helpers
 ```
 
 ## License

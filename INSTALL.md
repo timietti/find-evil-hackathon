@@ -6,12 +6,12 @@
 
 | Requirement | Notes |
 |---|---|
-| SANS SIFT Workstation | Volatility 3, Sleuth Kit, EWF tools, EZ Tools, Plaso, YARA, bulk_extractor pre-installed at SIFT-default paths |
+| SANS SIFT Workstation | Volatility 3, Sleuth Kit, EWF tools, EZ Tools, YARA, bulk_extractor pre-installed at SIFT-default paths |
 | Python 3.12+ | `python3 --version` |
 | Claude Code CLI | `claude --version` — the agent harness invokes `claude -p ...` |
 | .NET 9 runtime | `dotnet --info` — EZ Tools target `net9.0` |
-| Anthropic API key | `export ANTHROPIC_API_KEY=...` (only needed for the validator's `--llm-check` mode) |
-| Disk space | ≥ 5 GB free under `audit/` for one full multi-host run |
+| Anthropic API key | `export ANTHROPIC_API_KEY=...` — recommended; the v2 loop auto-enables `--llm-check` when set (~$0.05 / 3-iter run). Optional. |
+| Disk space | ~1 GB for the Vol3 community symbol pack (under `/opt/sift-owl/vol3-symbols/`); ≥ 5 GB free under `audit/` per full multi-host run |
 
 ## Install
 
@@ -42,10 +42,11 @@ The slow E2E tests under the `--deselect` flags require real evidence images. Sk
 SIFT-OWL ships three evaluation harnesses; the canonical one is the **v2 self-correction loop** under `eval/agents/sift_owl_v2/`. It expects a case definition in `eval/cases/<case_id>/case.yaml` describing evidence paths and SHA-256 hashes.
 
 ```bash
-export ANTHROPIC_API_KEY=...   # required only if you want --llm-check
+# Recommended: enables inline --llm-check (Haiku rescue, ~$0.05 / 3-iter run)
+export ANTHROPIC_API_KEY=sk-ant-api03-...
 
 # Run a 3-iteration self-correction loop on the bundled ROCBA case
-python -m eval.agents.sift_owl_v2.run_loop \
+sift-owl-loop \
     --case rocba-001 \
     --prompt-file prompt.md \
     --model sonnet \
@@ -96,9 +97,9 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full trust-boundary t
 
 | Symptom | Fix |
 |---|---|
-| `volatility3 symbols not found` | First run downloads Microsoft PDB symbols; ensure outbound HTTPS to `downloads.volatilityfoundation.org`, or pre-populate `~/.cache/volatility3/`. Win7-x86 PAE PDBs are NOT auto-downloadable — the agent flags `[GAP]` for those memory images and proceeds with disk-side analysis. |
+| `volatility3 symbols not found` | Run `bash scripts/bootstrap_sift_tools.sh` — it caches the community symbol pack to `/opt/sift-owl/vol3-symbols/windows.zip` and Vol3 then runs **fully offline** for every supported kernel GUID. Win7-x86 PAE images still fail at `KernelPDBScanner` — a Vol3 framework limitation, not symbol availability; the agent flags `[GAP]` and proceeds with disk-side analysis. |
 | `dotnet: command not found` | EZ Tools require `dotnet` runtime v9 — `apt install dotnet-runtime-9.0` (current EZ Tool builds target `net9.0`). |
 | `vol not on PATH` | The wrapper looks up `vol` via `$PATH`. Override with `SIFT_OWL_VOL3_BIN=/path/to/vol`. |
-| `MCP tool result overflow` | Each row-emitting tool truncates to 50 rows at the wire; use `query_rows(<exec_id>, filter_field, filter_value, limit, offset)` to drill into the full row list (preserved on disk). |
+| `MCP tool result overflow` | Single-section tools truncate to 50 rows at the wire; multi-section tools (SRUM / Amcache / persistence_keys) shrink iteratively (50 → 25 → 12 → 6 → 3 → 1 rows/section) until the payload fits under ~25 KB. Use `query_rows(<exec_id>, filter_field, filter_value, limit, offset)` to drill into the full row list (preserved on disk). |
 | Long wall-clock on large memory images | Default `--max-turns-per-iter 120`; bump for cases with many hosts. |
-| `ANTHROPIC_API_KEY` not set | Required only for the validator's `--llm-check` flag and v4 prose check. Without it, the validator runs purely rule-based. |
+| `ANTHROPIC_API_KEY` not set | Without it the v2 loop's inline `--llm-check` (Haiku rescue on Unverifiable verdicts) is disabled; the validator still runs the full rule-based pass. ~$0.05 / 3-iter run when enabled. |

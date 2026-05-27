@@ -38,7 +38,7 @@ For every claim the agent tags `[CONFIRMED]` in its final report, the validator
 1. **Parses** the claim into structured tokens (PIDs, IPs, file paths, ISO timestamps, hashes, inode numbers, email addresses, brace-style GUIDs).
 2. **Resolves** the cited `exec_id`(s) against `audit/exec_log.jsonl` to find the MCP call that produced the evidence — and the **parsed JSON** of that call's tool output.
 3. **Verifies** that each extracted token is *structurally present* in the parsed JSON (path-prefix-aware for Windows paths, timestamp-prefix-aware for partial timestamps, paren-aware negation for "X is NOT in Y" assertions).
-4. **Optionally** sends unverifiable prose-only claims to Haiku 4.5 (validator v4 `--llm-check`) for a one-shot prose-vs-data check.
+4. **Optionally** sends unverifiable prose-only claims to Haiku 4.5 (`--llm-check`, auto-enabled when `ANTHROPIC_API_KEY` is in env, ~$0.05 / 3-iter run) for a one-shot prose-vs-data check.
 
 Outcomes per claim:
 - **verified** — every extracted token found in parsed data (or negation matched correctly)
@@ -64,18 +64,19 @@ surfaced on a real run:
 | v1 | Negation detection (`X is not in Y`) | ROCBA v0 had 2 "failed" claims that were correct *negative* assertions |
 | v2 | Backslash normalisation; subject-clause negation; markdown strip pre-segmentation | ROCBA v1 + STARK-APT v1 false positives |
 | v3 | Per-tag claim segmentation; paren-aware negation; timestamp prefix match | STARK-APT v2 EZT run's multi-tag paragraphs |
-| **v4** | LLM-based prose check (Haiku 4.5, opt-in `--llm-check`, $0.01/run) | Strict-verified plateau on prose-only claims |
+| **v4** | LLM-based prose check (Haiku 4.5, opt-in `--llm-check`, ~$0.05 / 3-iter run) | Strict-verified plateau on prose-only claims |
 | **v5** | Prose-style exec_id citations outside tag brackets; UUID-shape detection near tool-name markers; audit-log prefix lookup for truncated UUIDs in MITRE tables | SHIELDBASE iter-1 produced 0/56 verified with prose-style citations the v4 regex didn't catch |
+| **v6** | Backticked exec-id guard in token extractor (`` (exec_id `UUID`) `` no longer leaks the UUID into the verifiable-token list, W3-50); multi-tag paragraph scoping so the trailing `(exec_id …)` cite attaches to *its* claim, not the next bullet (W3-52); inline `--llm-check` auto-enables when `ANTHROPIC_API_KEY` is in env (W3-45) | SHIELDBASE 2026-05-23 run scored 0/29 raw because both extraction bugs masked the signal; same `final_response.md`s post-fix scored 71/79 = 89.9% |
 
 Tests in [`tests/test_validator.py`](../tests/test_validator.py) preserve every
-regression. **63 validator tests pass; 258 unit tests overall.**
+regression. **67 validator tests pass; 279 unit tests overall.**
 
 ### 1.3 Run setup
 
 | Component | Value |
 |---|---|
 | Model | Claude Sonnet 4.6 (`claude-sonnet-4-6`), API tier `standard` |
-| Validator LLM (v4 only) | Claude Haiku 4.5 (`claude-haiku-4-5-20251001`) |
+| Validator LLM (rescue pass) | Claude Haiku 4.5 (`claude-haiku-4-5-20251001`) |
 | MCP server | FastMCP stdio (`sift-mcp`), 38 typed tools, no shell, no filesystem-by-path |
 | Loop harness | `eval/agents/sift_owl_v2/run_loop.py` — 3 iterations, budget split |
 | Allow-list | `mcp__sift-owl__*` only; built-in `Bash`/`Read`/`Edit`/`Write`/`Agent`/`WebFetch` denied |

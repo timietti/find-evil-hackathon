@@ -9,7 +9,7 @@
 
 ## Tagline (≤140 chars)
 
-> Autonomous DFIR agent that processes raw disk + memory images end-to-end on a typed-MCP boundary — held-out 71.4% single-shot, 89.9% on the same case with the self-correcting loop + libesedb-backed SRUM.
+> Autonomous DFIR agent on a typed-MCP boundary — no shell, every claim cited. Held-out SANS case: 71.4% single-shot → 89.9% with the loop.
 
 ---
 
@@ -110,28 +110,35 @@ structural support. No claim is taken on trust.
 
 Termination: converged (no improvement + no demotions), max-iter, or budget.
 
-### The validator (5 versions)
+### The validator (6 versions)
 
-Every regression a real run surfaced got a fix + a test. Final v5:
+Every regression a real run surfaced got a fix + a test. Final v6:
 - Per-claim segmentation with paren-aware negation handling
 - Backslash-normalisation for Windows paths
 - Timestamp prefix matching (`T23:09Z` matches `T23:09:14Z`)
-- Prose-style citation extraction (handles `(vol3_psscan exec_id=X)` outside
-  tag brackets — the format the agent emitted on SHIELDBASE)
+- Prose-style citation extraction (handles `(vol3_psscan exec_id=X)`
+  outside tag brackets — the format the agent emitted on SHIELDBASE)
 - Audit-log prefix lookup for truncated UUIDs in MITRE-style tables
-- Optional LLM prose check via Haiku 4.5 (`--llm-check`)
+- Backticked exec-id guard so `` (exec_id `UUID`) `` doesn't leak the
+  UUID into the verifiable-token list (would otherwise cascade
+  every claim to `partial` — SHIELDBASE W3-50)
+- Multi-tag paragraph scoping so the trailing `(exec_id …)` cite on a
+  bullet-list claim attaches to *its* tag, not the next bullet (W3-52)
+- Inline LLM prose check via Haiku 4.5; auto-enables when
+  `ANTHROPIC_API_KEY` is in env (~$0.05 / 3-iter run)
 
 ### Stack
 
 - **Language**: Python 3.12 (server) + Claude Code CLI (investigator harness)
 - **MCP**: FastMCP over stdio
-- **Tooling**: Volatility 3 2.28, Sleuth Kit + libewf, EZ Tools (.NET 9
-  builds via Eric Zimmerman's official installer), YARA 4.5, bulk_extractor
-  2.0.3, Plaso (installed, not yet wrapped)
-- **Validator LLMs**: Sonnet 4.6 for the investigator, Haiku 4.5 for opt-in
-  prose verification
-- **Testing**: 258 pytest unit tests + slow E2E markers; per-MCP-call audit
-  trail enables full replay
+- **Tooling**: Volatility 3 2.28 (runs fully offline via cached community
+  symbol pack), Sleuth Kit + libewf, EZ Tools (.NET 9 builds), libyal
+  `libscca` (Prefetch — replaces Linux-broken PECmd), libyal `libesedb`
+  (SRUM — replaces Linux-broken SrumECmd), YARA 4.5, bulk_extractor 2.0.3
+- **Validator LLMs**: Sonnet 4.6 for the investigator, Haiku 4.5 for the
+  prose-check rescue pass
+- **Testing**: 279 pytest unit tests + slow E2E markers; per-MCP-call
+  audit trail enables full replay
 
 ### Architecture diagram
 
@@ -312,24 +319,29 @@ are which era.
 
 Documented in `plans/MCP_TOOL_ROADMAP.md`:
 
-- **Phase 2 — Volatility 2 fallback family** (~6-8 hr): adds 15 `vol2_*`
-  wrappers for legacy Windows memory (Win7-x86 PAE, WinXP) where Vol3 can't
-  auto-download PDB symbols. Closes the only `[GAP]` SIFT-OWL has had to
-  declare in any eval.
-- **Phase 5 — RECmd batches + SQLECmd + LECmd + WxTCmd** (~4-6 hr): closes
-  T1091 (USB via Shellbags) and adds browser history for T1071 finer-
-  grained DNS/HTTP detection.
-- **Phase 6 — Cross-source correlator helpers** (~4-6 hr): meta-tools on
-  top of the audit log (`correlate_indicator`, `correlate_process`,
-  `audit_search`). Closes T1110 (brute-force aggregation) and
-  removes manual correlation grunt-work from the agent's loop.
-- **Linux + macOS memory** (post-submission stretch): Vol3 has profiles
-  for both. Adding `vol3_linux_*` and `vol3_mac_*` makes SIFT-OWL the only
-  public AI DFIR agent that handles non-Windows memory.
+- **Phase 5 — RECmd batches + SQLECmd + LECmd + WxTCmd** (~4-6 hr):
+  closes T1091 (USB via Shellbags) and adds browser history for T1071
+  finer-grained DNS/HTTP detection.
+- **Phase 6 — Cross-source correlator helpers** (~3-4 hr):
+  meta-tools on top of the audit log (`correlate_indicator`,
+  `correlate_process`, `audit_search`). Closes T1110 (brute-force
+  aggregation) and removes manual correlation grunt-work from the
+  agent's loop.
+- **Legacy Windows memory (Win7-x86 PAE)** — known gap. W3-53 cached
+  the Vol3 community symbol pack so Vol3 now runs fully offline, but
+  Win7-x86 PAE dumps still fail at `KernelPDBScanner` — a Vol3
+  framework limitation, not symbol availability. Vol2 wrappers or
+  `memprocfs` integration would unblock them; both are
+  post-submission territory.
+- **Linux + macOS memory** (post-submission stretch): Vol3 has
+  profiles for both. Adding `vol3_linux_*` and `vol3_mac_*` makes
+  SIFT-OWL the only public AI DFIR agent that handles non-Windows
+  memory.
 
-We'd also like to formalise the "do you need more data?" pre-iteration
-check that would have prevented the STARK-APT re-eval's iter-3 regression
-(agent rewrote the report without running any new tools and lost 5 pp).
+We'd also like to formalise the "do you need more data?"
+pre-iteration check that would have prevented the STARK-APT re-eval's
+iter-3 regression (agent rewrote the report without running any new
+tools and lost 5 pp).
 
 ---
 
@@ -346,16 +358,23 @@ git clone https://github.com/timietti/find-evil-hackathon.git
 cd find-evil-hackathon
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-bash scripts/bootstrap_sift_tools.sh    # installs YARA, ssdeep, missing EZ tools
+
+# Installs YARA + ssdeep + libscca + libesedb + the Vol3 community
+# symbol pack (~800 MB, lets Vol3 run fully offline). Idempotent.
+bash scripts/bootstrap_sift_tools.sh
+
 sift-mcp inspect                        # prints the 38-tool inventory
 pytest -x --deselect tests/test_disk_e2e.py \
           --deselect tests/test_vol3_memory_e2e.py \
           --deselect tests/test_ez_tools_e2e.py
-# 258 unit tests pass
+# 279 unit tests pass
+
+# Optional: set ANTHROPIC_API_KEY so the v2 loop auto-enables
+# `--llm-check` (Haiku 4.5 rescue on Unverifiable verdicts, ~$0.05).
+export ANTHROPIC_API_KEY=sk-ant-api03-...
 
 # Run on a case:
-python -m eval.agents.sift_owl_v2.run_loop \
-    --case rocba-001 --prompt-file prompt.md \
+sift-owl-loop --case rocba-001 --prompt-file prompt.md \
     --model sonnet --max-budget-usd 5 --max-iterations 3
 ```
 
@@ -385,6 +404,7 @@ MIT — `LICENSE` in repo.
 | Public repo | `https://github.com/timietti/find-evil-hackathon` |
 | Architecture diagram | `docs/architecture.svg` + `docs/architecture.png` |
 | Accuracy report | `docs/ACCURACY_REPORT.md` |
-| Held-out eval evidence | `eval/results/test3-shieldbase/sift-owl-v2/20260510T194945Z-sonnet/` |
+| Held-out eval (single-shot) | `eval/results/test3-shieldbase/sift-owl-v2/20260510T194945Z-sonnet/REPORT.md` — 71.4% |
+| Held-out eval (v2 loop, canonical) | `eval/results/test3-shieldbase/sift-owl-v2/20260524T101323Z-sonnet/REPORT.md` — **89.9%**, 71/79 verified |
 | Audit log sample | `audit/exec_log.jsonl` per run dir |
-| Demo video | (to be recorded; storyboard in `plans/MASTER_PLAN.md` §Polish) |
+| Demo video storyboard | `docs/DEMO_SCRIPT.md` |
