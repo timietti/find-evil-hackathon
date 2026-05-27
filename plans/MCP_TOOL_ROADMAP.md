@@ -123,12 +123,35 @@ the table.
 
 ---
 
-### Phase 2 — Legacy Windows memory support (Win7-x86 / WinXP) 🎯 *general-DFIR value*
+### Phase 2 — Legacy Windows memory support (Win7-x86 / WinXP)
 
-**This is the gap the user explicitly called out.** Vol3 cannot get PDB symbols
-for Win7-x86 PAE (`ntkrpamp.pdb`) or WinXP — these were the failure mode on
-nromanoff during STARK-APT. Vol2 has built-in profiles for both, no symbol download
-needed.
+**Status update 2026-05-27 (W3-53):** Investigated as "Option A — targeted
+Vol3 symbol fix". Outcome:
+
+- ✅ **Vol3 community symbol pack wired in** (`/opt/sift-owl/vol3-symbols/`,
+  ~800 MB, populated by `bootstrap_sift_tools.sh`). Vol3 now runs **fully
+  offline**; cold-start `windows.info` on x64 images drops ~30 s → ~5 s.
+  Validated against the STARK-APT win2008R2 dump.
+- ✅ **WinXP (`tdungan`) confirmed working** with current Vol3 — not a
+  gap, just no one had run `windows.info` on it directly before.
+- ❌ **Win7-x86 PAE (`nromanoff`) still fails** with the pack in place.
+  `KernelPDBScanner` finds 0 candidates even though the pack contains
+  the correct `ntkrpamp.pdb` JSONs. The bottleneck is Vol3's page-map
+  scanning logic on PAE dumps, not symbol availability. Vol3's verbose
+  trace confirms it finds a PAE DTB at offset 1593344 with 4 valid
+  pointers, then can't cross-reference to a kernel.
+
+**Path forward for nromanoff:** Disk-side analysis is the only working
+route (Prefetch, MFT, Amcache — already exercised in current STARK-APT
+runs). Vol2 wrappers OR `memprocfs` integration would unblock memory
+analysis on PAE; both are post-submission territory and out of scope
+under the original "Option A" remit.
+
+Vol2 specifically requires installing Python 2.7 or a community Py3
+port (`apt install volatility` is no longer available on Ubuntu Noble),
+which is ~12-16 hr of work for one host's memory signal on one dev
+case. The accuracy report's variance-band analysis already shows
+STARK-APT hits 86.1% relying on disk-side evidence for nromanoff.
 
 #### Design choice: parallel `vol2_*` family, not auto-routing
 

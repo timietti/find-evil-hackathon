@@ -68,6 +68,37 @@ def test_validate_evidence_path_rejects_missing_when_required() -> None:
         validate_evidence_path("/cases/this-does-not-exist.E01")
 
 
+# ---- Vol3 symbol-dirs argv injection (W3-53) -------------------------------
+
+
+def test_vol_symbol_args_no_cache_no_override(monkeypatch, tmp_path) -> None:
+    """No cache dir + no env override → empty list (Vol3 uses defaults)."""
+    from mcp_server.tools import memory as memory_mod
+    monkeypatch.delenv("SIFT_OWL_VOL3_SYMBOL_DIRS", raising=False)
+    monkeypatch.setattr(memory_mod, "_VOL3_SYMBOLS_DEFAULT", str(tmp_path / "missing"))
+    assert memory_mod._vol_symbol_args() == []
+
+
+def test_vol_symbol_args_default_cache_present(monkeypatch, tmp_path) -> None:
+    """Cache dir present + no override → `-s <default-cache>`."""
+    from mcp_server.tools import memory as memory_mod
+    cache = tmp_path / "vol3-symbols"
+    cache.mkdir()
+    monkeypatch.delenv("SIFT_OWL_VOL3_SYMBOL_DIRS", raising=False)
+    monkeypatch.setattr(memory_mod, "_VOL3_SYMBOLS_DEFAULT", str(cache))
+    assert memory_mod._vol_symbol_args() == ["-s", str(cache)]
+
+
+def test_vol_symbol_args_env_override_wins(monkeypatch, tmp_path) -> None:
+    """$SIFT_OWL_VOL3_SYMBOL_DIRS takes precedence over the default cache."""
+    from mcp_server.tools import memory as memory_mod
+    cache = tmp_path / "vol3-symbols"
+    cache.mkdir()
+    monkeypatch.setattr(memory_mod, "_VOL3_SYMBOLS_DEFAULT", str(cache))
+    monkeypatch.setenv("SIFT_OWL_VOL3_SYMBOL_DIRS", "/custom/a;/custom/b")
+    assert memory_mod._vol_symbol_args() == ["-s", "/custom/a;/custom/b"]
+
+
 # ---- vol3_image_info E2E (real Vol3 + real evidence) -----------------------
 
 

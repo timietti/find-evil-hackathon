@@ -98,6 +98,38 @@ def _vol_executable() -> str:
     return found
 
 
+# W3-53: extra symbol-dirs to add to Vol3 invocations. Default cache lives
+# under `/opt/sift-owl/vol3-symbols/` (populated by
+# `scripts/bootstrap_sift_tools.sh`); override via $SIFT_OWL_VOL3_SYMBOL_DIRS.
+# Vol3 reads `.zip` files in the symbol dir directly — no extraction needed.
+# Multiple paths semicolon-separated, per Vol3's `-s` flag convention.
+_VOL3_SYMBOLS_DEFAULT = "/opt/sift-owl/vol3-symbols"
+
+
+def _vol_symbol_args() -> list[str]:
+    """Build the `-s <dirs>` portion of every Vol3 argv if a cache exists.
+
+    The Vol3 community symbol pack
+    (`https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip`)
+    contains pre-converted JSON for every Windows kernel GUID Vol3
+    supports. With the pack present at the default cache dir, Vol3 runs
+    **fully offline** — no Microsoft Symbol Server round-trip per case
+    — and cold-start `windows.info` on x64 images drops from ~30 s to
+    ~5 s. Empirically validated against the STARK-APT win2008R2 dump.
+
+    Known not-fixed: Win7-x86 PAE dumps (e.g. STARK-APT `nromanoff`)
+    still fail at `KernelPDBScanner` — that's a Vol3 page-map scanning
+    limitation, NOT a symbol-availability one, and the pack does not
+    change that outcome.
+    """
+    override = os.environ.get("SIFT_OWL_VOL3_SYMBOL_DIRS")
+    if override:
+        return ["-s", override]
+    if Path(_VOL3_SYMBOLS_DEFAULT).is_dir():
+        return ["-s", _VOL3_SYMBOLS_DEFAULT]
+    return []
+
+
 def vol3_image_info(
     args: ImageInfoArgs | dict,
     *,
@@ -121,7 +153,7 @@ def vol3_image_info(
 
     exec_id = audit.new_exec_id()
     raw_dir = audit.raw_output_dir / "subprocess"
-    argv = [_vol_executable(), "-q", "-f", str(image_path), "windows.info"]
+    argv = [_vol_executable(), "-q", *_vol_symbol_args(), "-f", str(image_path), "windows.info"]
 
     rr = run_subprocess(
         argv,
@@ -359,7 +391,7 @@ def _run_jsonl_plugin(
     """
     exec_id = audit.new_exec_id()
     raw_dir = audit.raw_output_dir / "subprocess"
-    argv = [_vol_executable(), "-q", "-r", "jsonl", "-f", str(image_path), plugin]
+    argv = [_vol_executable(), "-q", *_vol_symbol_args(), "-r", "jsonl", "-f", str(image_path), plugin]
     if extra_plugin_args:
         argv.extend(extra_plugin_args)
 

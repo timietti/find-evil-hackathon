@@ -15,7 +15,8 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 - **Validator v6** — rule-based extraction (PIDs, IPs, paths, timestamps, hashes, inodes) with paren-aware negation handling, timestamp prefix matching, and an inline LLM prose-check pass (Haiku 4.5) for unverifiable prose claims. Multi-tag bullet-list paragraphs scope each trailing `(exec_id ...)` cite to its own claim (W3-52); backticked exec-ids no longer leak into the verifiable-token list (W3-50).
 - **Per-call audit trail** — `audit/exec_log.jsonl` records every MCP call with `exec_id`, args, sha256 of inputs and raw output, `parsed_summary`, `wall_ms`. Every "confirmed" claim in a final report cites an `exec_id` that the validator can resolve.
 - **Iterative wire-size shrink** for multi-section tools (SRUM / Amcache / persistence_keys): if the default 50-rows-per-section payload exceeds Claude's tool-result transport envelope, the truncate-fn re-runs at 25, 12, 6, 3, 1 rows/section until it fits under ~25 KB; falls back to count-only if even cap=1 is too big. Full row data stays on disk, drillable via `query_rows`.
-- **277 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
+- **Vol3 fully offline** — the bootstrap caches the community Windows symbol pack (~800 MB) under `/opt/sift-owl/vol3-symbols/`; the MCP wrapper passes it via `-s` to every `vol` call. No Microsoft Symbol Server round-trip per case; cold-start `windows.info` drops ~30 s → ~5 s on x64 images.
+- **279 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
 
 ### MCP tool inventory
 

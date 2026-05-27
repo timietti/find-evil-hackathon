@@ -15,7 +15,12 @@
 #     ezt_srum_parse. (SrumECmd hits the same Linux guard as PECmd:
 #     "Non-Windows platforms not supported due to the need to load ESI
 #     specific Windows libraries". libesedb is portable.)
-#   - Volatility 2 (`vol.py`) — for Phase 2 Win7-x86 / WinXP memory support
+#   - Vol3 community symbol pack (~800 MB, cached at
+#     /opt/sift-owl/vol3-symbols/windows.zip) — pre-converted JSON
+#     symbols for every Windows kernel GUID Vol3 supports. Lets Vol3
+#     run fully offline; speeds cold-start from ~30 s to ~5 s.
+#     (Does NOT solve the Win7-x86 PAE [GAP] — that's a Vol3
+#     `KernelPDBScanner` limitation, not a symbol-availability one.)
 #   - Memory Baseliner (FSecureLABS) — process diff against a clean baseline
 #
 # Usage:
@@ -64,9 +69,35 @@ apt_install libscca-python3
 # libesedb-python (venv). SrumECmd is Linux-broken; libesedb is portable.
 apt_install libesedb-python3
 
-# Volatility 2 — for Phase 2 Win7-x86 PAE + WinXP memory analysis.
-# Ubuntu's `volatility` package ships v2.6 with Python 2 baked in.
-apt_install volatility
+# Volatility 3 community symbol pack — pre-converted JSON symbols for
+# every Windows kernel GUID Vol3 supports. Cached locally so Vol3 runs
+# **fully offline** (no Microsoft Symbol Server round-trip per case).
+# Speeds up cold-start `windows.info` from ~30 s to ~5 s on x64 images.
+# ~800 MB.
+#
+# Vol3 reads .zip files in the symbol-dirs path directly — no extraction
+# needed. The MCP wrapper auto-detects /opt/sift-owl/vol3-symbols and
+# passes it via `-s` to every vol invocation (override:
+# $SIFT_OWL_VOL3_SYMBOL_DIRS).
+#
+# Known limitation: this does NOT fix the Win7-x86 PAE [GAP] on nromanoff
+# (STARK-APT). The pack contains the right ntkrpamp.pdb JSON, but Vol3's
+# `KernelPDBScanner` on that specific PAE dump doesn't find a kernel
+# signature to match against. That is a Vol3 framework limitation; only
+# disk-side analysis works for nromanoff today.
+VOL3_SYM_DIR="/opt/sift-owl/vol3-symbols"
+VOL3_SYM_URL="https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip"
+if [[ -f "$VOL3_SYM_DIR/windows.zip" ]]; then
+    log "Vol3 symbol pack already at $VOL3_SYM_DIR/windows.zip"
+else
+    log "downloading Vol3 community symbol pack -> $VOL3_SYM_DIR/windows.zip ..."
+    sudo mkdir -p "$VOL3_SYM_DIR"
+    sudo chown "$(whoami)" "$VOL3_SYM_DIR"
+    if ! wget -q --tries=2 --timeout=60 -O "$VOL3_SYM_DIR/windows.zip" "$VOL3_SYM_URL"; then
+        warn "Vol3 symbol pack download FAILED — Win7-x86 PAE images will hit 'No suitable kernels'"
+        warn "  manual retry: wget -O $VOL3_SYM_DIR/windows.zip $VOL3_SYM_URL"
+    fi
+fi
 
 # ---- 2. EZ Tools — no longer fetched on Linux -----------------------------
 #
@@ -91,9 +122,10 @@ fi
 
 log "verification:"
 command -v yara                     >/dev/null && echo "  yara: $(yara --version 2>&1 | head -1)" || warn "  yara: NOT on PATH"
-command -v vol.py                   >/dev/null && echo "  vol.py (Vol2): $(vol.py --info 2>&1 | head -1)" || warn "  vol.py (Vol2): NOT on PATH"
+command -v vol                      >/dev/null && echo "  vol  (Vol3):  $(vol --help 2>&1 | head -1)"   || warn "  vol (Vol3): NOT on PATH"
 python3 -c "import pyscca"  2>/dev/null && echo "  pyscca  (libscca):  present" || warn "  pyscca:  NOT importable (apt: libscca-python3,  pip: libscca-python)"
 python3 -c "import pyesedb" 2>/dev/null && echo "  pyesedb (libesedb): present" || warn "  pyesedb: NOT importable (apt: libesedb-python3, pip: libesedb-python)"
+[[ -f "$VOL3_SYM_DIR/windows.zip" ]] && echo "  Vol3 symbol pack: $(du -h "$VOL3_SYM_DIR/windows.zip" | cut -f1)" || warn "  Vol3 symbol pack: MISSING — Win7-x86 PAE will fail"
 [[ -d "$MEMBASE_DIR" ]]             && echo "  memory-baseliner: present"     || warn "  memory-baseliner: MISSING"
 
 log "done."

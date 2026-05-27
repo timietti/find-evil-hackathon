@@ -180,7 +180,7 @@ def vol3_vadyarascan(
     Per-PID required: scanning all processes is hours on a multi-GB image.
     Returns per-match records: PID, ImageFileName, Rule, Offset, ...
     """
-    from mcp_server.tools.memory import _vol_executable
+    from mcp_server.tools.memory import _vol_executable, _vol_symbol_args
     image_path = validate_evidence_path(image, allowed_roots=evidence_roots)
     rules = Path(ruleset_path) if ruleset_path else _yara_ruleset()
     if not rules.exists():
@@ -191,7 +191,7 @@ def vol3_vadyarascan(
 
     argv = [
         _vol_executable(),
-        "-q", "-r", "jsonl",
+        "-q", *_vol_symbol_args(), "-r", "jsonl",
         "-f", str(image_path),
         "windows.vadyarascan",
         "--pid", str(pid),
