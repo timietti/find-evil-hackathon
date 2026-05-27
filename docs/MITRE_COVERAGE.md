@@ -9,6 +9,13 @@
 > and SRUM — were rebuilt on libyal libraries (`libscca` / `libesedb`,
 > W3-41 + W3-43). The MITRE coverage semantics they deliver are unchanged
 > from the original SrumECmd / PECmd output.
+>
+> Validator v6 (W3-50/52) tightens the rule-based pass — backticked
+> exec-id tokens no longer leak into the verifiable-token list, and
+> multi-tag bullet-list paragraphs scope each trailing `(exec_id …)`
+> cite to its own claim. Inline `--llm-check` (Haiku 4.5) auto-enables
+> when `ANTHROPIC_API_KEY` is in env (W3-45). Vol3 runs fully offline
+> after W3-53.
 
 ## Status legend
 
@@ -95,7 +102,7 @@ The roadmap (`plans/MCP_TOOL_ROADMAP.md`) is updated with a **Phase 1.5** that b
 
 | Tool family       | Backend                | Linux | Notes |
 |---|---|---|---|
-| `vol3_*` (17)     | Volatility 3 (Python) | ✅ | Works fine. Symbol PDBs auto-fetched. |
+| `vol3_*` (17)     | Volatility 3 (Python) | ✅ | Runs fully offline (W3-53): community symbol pack cached at `/opt/sift-owl/vol3-symbols/`, MCP wrapper passes `-s` automatically. Cold-start `windows.info` ~5 s on x64 images. **Win7-x86 PAE** (e.g. STARK-APT `nromanoff`) is a known Vol3 `KernelPDBScanner` limitation — symbol pack does not unblock it; disk-side fallback is the working route. |
 | `tsk_* / ewf_*` (6) | Sleuth Kit + libewf  | ✅ | Native Linux build. |
 | `ezt_prefetch_parse` | libyal `libscca` (pyscca) | ✅ | PECmd 2026.5.0 is **Linux-broken** ("ESI-specific Windows libraries"). pyscca is portable; same fields. |
 | `ezt_srum_parse`  | libyal `libesedb` (pyesedb) | ✅ | SrumECmd 2026.5.0 has the same guard. pyesedb parses SRUDB.dat directly; joins SruDbIdMapTable for app/user resolution. |

@@ -22,12 +22,14 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
 # Optional but recommended: install the forensic-tool deps that aren't
-# always present on a fresh SIFT image (YARA, Vol2, libscca-python, SrumECmd,
-# Memory Baseliner). Idempotent.
+# always present on a fresh SIFT image — YARA, ssdeep, libscca-python3
+# (Prefetch), libesedb-python3 (SRUM), the Vol3 community symbol pack
+# (~800 MB; lets Vol3 run fully offline), and Memory Baseliner.
+# Idempotent.
 bash scripts/bootstrap_sift_tools.sh
 
 # Sanity-check the install
-sift-mcp inspect           # prints the 26-tool MCP inventory
+sift-mcp inspect           # prints the 38-tool MCP inventory
 pytest -x --deselect tests/test_disk_e2e.py \
           --deselect tests/test_vol3_memory_e2e.py \
           --deselect tests/test_ez_tools_e2e.py
