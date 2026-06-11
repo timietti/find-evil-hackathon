@@ -26,6 +26,15 @@ evidence:
     size_bytes: 19050528768
     sha256: eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563
     captured_utc: "2020-11-16T02:32:38Z"
+  - path: /cases/find-evil-test/rocba-cdrive.e01
+    kind: disk_image
+    size_bytes: 23678691658              # compressed EnCase 1 file
+    sha256: f2eb856d6fb48e3928e6b6d388b2f116a57b735137354a7eaddca951d81b5c67
+    media_size_bytes: 87431311360        # 81 GiB raw — from ewfinfo
+    media_md5: 5efc207c85587683e5ca5fa2d5ef1aa4   # EWF-embedded acquisition hashes
+    media_sha1: 645dcd29ab039359fbdb6643961478b3d914f21d
+    acquired_utc: "2020-12-18T18:26:51Z"          # per ewfinfo (treat as UTC)
+    acquisition_software: "X-Ways Forensics 20.1"
   - path: /cases/find-evil-test/ROCBA-BACKGROUND.pptx
     kind: case_briefing
     size_bytes: 40148560

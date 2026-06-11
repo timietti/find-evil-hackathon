@@ -14,6 +14,12 @@ was stolen, but on returning Sunday afternoon **2020-11-15** Fred saw signs his 
 had been used. He left it powered on per SRL incident-team instructions, and memory was
 captured at **2020-11-15 21:32:38 EST** (`2020-11-16T02:32:38Z`).
 
+The C: drive was imaged later — **`rocba-cdrive.e01`**, X-Ways Forensics
+acquisition on **2020-12-18** (81 GiB EnCase 1 raw, 23 GB compressed; EWF-
+embedded MD5 / SHA-1 captured in `case.yaml`). The disk image landed
+mid-development on **2026-06-08**; prior ROCBA runs (single-pass v1 →
+v2 loop 91.7%) were memory-only.
+
 ## Working hypothesis
 
 A physical adversary with hands-on access to a logged-in SRL workstation, with ≈ 36–48
