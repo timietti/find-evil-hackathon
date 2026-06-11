@@ -114,6 +114,11 @@ _RE_UUID_LIKE = re.compile(
 )
 
 
+_RE_BACKTICKED_UUID = re.compile(
+    r"`([0-9a-fA-F]{8}-[0-9a-fA-F]{4,}(?:-[0-9a-fA-F]+)*)`"
+)
+
+
 def _extract_exec_ids_from_prose(text: str) -> list[str]:
     """Find exec_ids that follow a marker (`exec_id`, `exec_ids`, or any
     SIFT-OWL MCP tool name) in prose.
@@ -122,6 +127,15 @@ def _extract_exec_ids_from_prose(text: str) -> list[str]:
     tokens NEAR a marker so that SHA-256 hashes elsewhere in the prose
     don't get misclassified, and uses a UUID-shape regex (requires at
     least one `-`) so 64-hex SHA tokens are rejected.
+
+    Bug C fix (W3-54): when the claim is in **markdown-table format**
+    — the agent occasionally lays out claims as `| ts | event |
+    \`UUID\` | [CONFIRMED]` rows — there is no marker preceding the
+    UUID, so the marker-anchored scan finds nothing. Detect this by
+    presence of `|` (table delimiter) and accept any **backticked**
+    UUID-shape token in the text. The backticks + strict 8-4-…-…
+    dash-separated-hex shape are specific enough to avoid SHA-256
+    false-matches.
     """
     out: list[str] = []
     seen: set[str] = set()
@@ -131,6 +145,14 @@ def _extract_exec_ids_from_prose(text: str) -> list[str]:
         tail = text[m.end() : m.end() + 200]
         chunk = re.split(r"\.\s|\)\s|\;\s|\n\s*\n", tail, maxsplit=1)[0]
         for eid in _RE_UUID_LIKE.findall(chunk):
+            if eid not in seen:
+                seen.add(eid)
+                out.append(eid)
+    # Bug C (W3-54) — markdown-table claims without a marker. Only
+    # activate when no marker-anchored cite was found AND the claim
+    # text contains a table delimiter.
+    if not out and "|" in text:
+        for eid in _RE_BACKTICKED_UUID.findall(text):
             if eid not in seen:
                 seen.add(eid)
                 out.append(eid)

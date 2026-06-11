@@ -180,16 +180,20 @@ _RE_FILENAME = re.compile(
 )
 # Backslash-style Windows paths (`C:\Users\fredr\...`, `\\?\C:\...`,
 # `\Device\HarddiskVolume3\Windows`).  The agent often quotes these.
+#
+# Bug D fix (W3-54): exclude backtick from the path character class so
+# a claim like "`\Users\srl-h\`" doesn't sweep the trailing backtick
+# into the path token (which then fails to match the haystack).
 _RE_WIN_PATH = re.compile(
-    r"(\\\\?\\?[A-Za-z]:\\[^\s\"']+|"        # `\\?\C:\…` or `C:\…`
-    r"\\\\[^\s\\\"']+(?:\\[^\s\\\"']+)+|"    # UNC `\\host\share\…`
-    r"\\Device\\[^\s\"']+|"                  # `\Device\…`
-    r"\\Users\\[^\s\\\"']+(?:\\[^\s\\\"']+)*|"  # `\Users\fredr\…` (forensic-volume style)
-    r"\\Windows\\[^\s\\\"']+(?:\\[^\s\\\"']+)*)"
+    r"(\\\\?\\?[A-Za-z]:\\[^\s\"'`]+|"        # `\\?\C:\…` or `C:\…`
+    r"\\\\[^\s\\\"'`]+(?:\\[^\s\\\"'`]+)+|"   # UNC `\\host\share\…`
+    r"\\Device\\[^\s\"'`]+|"                  # `\Device\…`
+    r"\\Users\\[^\s\\\"'`]+(?:\\[^\s\\\"'`]+)*|"  # `\Users\fredr\…`
+    r"\\Windows\\[^\s\\\"'`]+(?:\\[^\s\\\"'`]+)*)"
 )
 # Letter-drive references like `D:\Tools\` or `D:\` — distinct from `C:\Users\…`
 # already caught above.
-_RE_DRIVE_REF = re.compile(r"\b([A-Za-z]:\\[^\s\"']*)")
+_RE_DRIVE_REF = re.compile(r"\b([A-Za-z]:\\[^\s\"'`]*)")
 # UserAssist GUIDs / curly-brace identifiers: `{9E04CAB2-CC14-11DF-...}`
 _RE_BRACE_GUID = re.compile(
     r"\{[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\}"

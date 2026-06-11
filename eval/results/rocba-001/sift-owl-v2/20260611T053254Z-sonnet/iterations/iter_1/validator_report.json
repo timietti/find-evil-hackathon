@@ -1,0 +1,1689 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v2/20260611T053254Z-sonnet/iterations/iter_1",
+    "total_claims": 42,
+    "confirmed_count": 38,
+    "inferred_count": 3,
+    "hypothesis_count": 0,
+    "gap_count": 1,
+    "other_count": 0,
+    "verified": 9,
+    "partial": 9,
+    "failed": 1,
+    "unverifiable": 0,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 19,
+    "confirmation_score": 0.237,
+    "llm_checked": 0,
+    "llm_verified": 0,
+    "llm_unsupported": 0,
+    "llm_unrelated": 0,
+    "llm_uncertain": 0,
+    "llm_total_cost_usd": 0.0
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED]** Fred had access to at least three SRL research projects on this Surface, evidenced by files present in his OneDrive and local filesystem at the time of capture:",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 78
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED]** A second local account `srl-h` also existed on this machine (MFT inode 39: `.\\Users\\srl-h\\...` OneDrive setup log); this user's OneDrive share `\\Users\\srl-h\\OneDrive\\Documents\\` was present but sparsely populated on disk.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 89
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "**[CONFIRMED]** `SRL VPN Setup.pdf` (157,471 bytes, inode 124037, `.\\Users\\fredr\\OneDrive\\Documents\\SRL\\`) was on the device. **[exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 91
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "124037"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Setup.pdf"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\Documents\\SRL\\`)"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SRL VPN Setup.pdf",
+          ".\\Users\\fredr\\OneDrive\\Documents\\SRL\\"
+        ]
+      },
+      "matched": [
+        "124037",
+        "Setup.pdf",
+        "SRL VPN Setup.pdf"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\Documents\\SRL\\`)",
+        ".\\Users\\fredr\\OneDrive\\Documents\\SRL\\"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED]** The following SRL intellectual-property documents were accessed during the intruder window and were open in process pool memory at the moment of capture, placing them directly in the intruder's active session:",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 97
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb545-f281-7ec0-bddf-d68f99218c85",
+        "exec_ids": [
+          "019eb545-f281-7ec0-bddf-d68f99218c85"
+        ],
+        "text": "1. **`Vibrainium - SRL.docx`** \u2014 SRL Vibranium research  \n   Path: `\\Users\\fredr\\OneDrive - Stark Research Labs\\Research\\Vibrainium - SRL.docx`  \n   Status: open file object in pool memory at 2020-11-16T02:32:38Z  \n   [CONFIRMED, exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816094876896`]",
+        "raw_match": "[CONFIRMED, exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816094876896`]",
+        "line_no": 102
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [
+          "SRL.docx"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [
+          "0x201816094876896"
+        ],
+        "hex_hashes": [],
+        "quoted": [
+          "0x201816094876896",
+          "\\Users\\fredr\\OneDrive - Stark Research Labs\\Research\\Vibrainium - SRL.docx",
+          "Vibrainium - SRL.docx"
+        ]
+      },
+      "matched": [
+        "SRL.docx",
+        "\\Users\\fredr\\OneDrive",
+        "\\Users\\fredr\\OneDrive - Stark Research Labs\\Research\\Vibrainium - SRL.docx",
+        "Vibrainium - SRL.docx"
+      ],
+      "missing": [
+        "2020-11-16T02:32:38Z",
+        "0x201816094876896"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb545-f281-7ec0-bddf-d68f99218c85",
+        "exec_ids": [
+          "019eb545-f281-7ec0-bddf-d68f99218c85"
+        ],
+        "text": "2. **`Quantum Particles Affected by Other Dimensions.pdf`** \u2014 SRL FTL communications research  \n   Path: `\\Users\\fredr\\Stark Research Labs\\SRL-Projects - Gunstar\\FTL Comms\\Quantum Particles Affected by Other Dimensions.pdf`  \n   Status: open file object in pool memory at 2020-11-16T02:32:38Z  \n   [CONFIRMED, exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816460363840`]",
+        "raw_match": "[CONFIRMED, exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816460363840`]",
+        "line_no": 107
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [
+          "Dimensions.pdf"
+        ],
+        "paths": [
+          "\\Users\\fredr\\Stark"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [
+          "0x201816460363840"
+        ],
+        "hex_hashes": [],
+        "quoted": [
+          "Quantum Particles Affected by Other Dimensions.pdf",
+          "0x201816460363840"
+        ]
+      },
+      "matched": [
+        "Dimensions.pdf",
+        "\\Users\\fredr\\Stark",
+        "Quantum Particles Affected by Other Dimensions.pdf"
+      ],
+      "missing": [
+        "2020-11-16T02:32:38Z",
+        "0x201816460363840"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb545-f281-7ec0-bddf-d68f99218c85",
+        "exec_ids": [
+          "019eb545-f281-7ec0-bddf-d68f99218c85"
+        ],
+        "text": "3. **`Data Set Results SRL`** \u2014 data set file (likely SRL dataset)  \n   Path: `\\Users\\fredr\\OneDrive\\Data Set Results SRL`  \n   Status: open file object in pool memory  \n   [CONFIRMED, exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816233460192`]",
+        "raw_match": "[CONFIRMED, exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816233460192`]",
+        "line_no": 112
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\Data"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [
+          "0x201816233460192"
+        ],
+        "hex_hashes": [],
+        "quoted": [
+          "\\Users\\fredr\\OneDrive\\Data Set Results SRL",
+          "Data Set Results SRL",
+          "0x201816233460192"
+        ]
+      },
+      "matched": [
+        "\\Users\\fredr\\OneDrive\\Data",
+        "\\Users\\fredr\\OneDrive\\Data Set Results SRL",
+        "Data Set Results SRL"
+      ],
+      "missing": [
+        "0x201816233460192"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED]** The following SRL project files were synced to the SRL OneDrive during the intruder window (MFT created/record_changed = 2020-11-14T05:11:18Z, entirely within the intrusion):",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 114
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "4. **`Tesseract Overview_MH.pptx`** (3.99 MB) \u2014 Project P.E.G.A.S.U.S. classified overview  \n   `.\\Users\\fredr\\OneDrive - Stark Research Labs\\Documents\\Case Files\\Project P.E.G.A.S.U.S\\`  \n   MFT entry 130588, created 2020-11-14T05:11:18Z, accessed 2020-11-14T05:11:18Z  \n   [CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "raw_match": "[CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "line_no": 119
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "130588"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:11:18Z"
+        ],
+        "filenames": [
+          "Overview_MH.pptx"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Tesseract Overview_MH.pptx"
+        ]
+      },
+      "matched": [
+        "130588",
+        "2020-11-14T05:11:18Z",
+        "Overview_MH.pptx",
+        "\\Users\\fredr\\OneDrive",
+        "Tesseract Overview_MH.pptx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "5. **`ADAMANTIUM-Background.docx`** (62 KB) \u2014 Adamantium alloy background research  \n   MFT entry 130659, created 2020-11-02T17:20:50Z, accessed 2020-11-10T14:01:19Z (pre-window, but last access inside window)  \n   [CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "raw_match": "[CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "line_no": 123
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "130659"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2020-11-02T17:20:50Z",
+          "2020-11-10T14:01:19Z"
+        ],
+        "filenames": [
+          "ADAMANTIUM-Background.docx"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "ADAMANTIUM-Background.docx"
+        ]
+      },
+      "matched": [
+        "130659",
+        "2020-11-02T17:20:50Z",
+        "2020-11-10T14:01:19Z",
+        "ADAMANTIUM-Background.docx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "6. **`SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx`** (455 KB) \u2014 Vibranium test results  \n   MFT entry 104304, `.\\Users\\fredr\\OneDrive\\Documents\\`, accessed 2020-11-02T15:02:12Z  \n   [CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "raw_match": "[CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "line_no": 127
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "104304"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2020-11-02T15:02:12Z"
+        ],
+        "filenames": [
+          "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx"
+        ],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\Documents\\`,"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx",
+          ".\\Users\\fredr\\OneDrive\\Documents\\"
+        ]
+      },
+      "matched": [
+        "104304",
+        "2020-11-02T15:02:12Z",
+        "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx",
+        ".\\Users\\fredr\\OneDrive\\Documents\\"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\Documents\\`,"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb545-f281-7ec0-bddf-d68f99218c85",
+        "exec_ids": [
+          "019eb545-f281-7ec0-bddf-d68f99218c85"
+        ],
+        "text": "**[CONFIRMED]** A PDF was staged in the Recycle Bin under SID `S-1-5-21-528816539-567677750-276746561-1002`:  \n`\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IJD15WX.pdf`  \n[exec_id `019eb545-f281-7ec0-bddf-d68f99218c85`, offset `0x201816387163968`]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 129
+      },
+      "status": "partial",
+      "tool_name": "vol3_filescan",
+      "tool_names": [
+        "vol3_filescan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "IJD15WX.pdf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [
+          "0x201816387163968"
+        ],
+        "hex_hashes": [],
+        "quoted": [
+          "S-1-5-21-528816539-567677750-276746561-1002",
+          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IJD15WX.pdf",
+          "0x201816387163968"
+        ]
+      },
+      "matched": [
+        "IJD15WX.pdf",
+        "S-1-5-21-528816539-567677750-276746561-1002",
+        "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IJD15WX.pdf"
+      ],
+      "missing": [
+        "0x201816387163968"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "**[CONFIRMED]** `SRL VPN Setup.pdf` (157 KB, inode 124037) was present and accessible \u2014 credentials for SRL VPN access were exposed.  [exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 133
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "124037"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Setup.pdf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SRL VPN Setup.pdf"
+        ]
+      },
+      "matched": [
+        "124037",
+        "Setup.pdf",
+        "SRL VPN Setup.pdf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED] Primary vector: Remote Desktop Protocol clipboard / file transfer**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 139
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED] Secondary vector: USB removable media**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 152
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED] RDP client configuration saved**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 159
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED] T1021.001 \u2014 Remote Desktop Protocol (inbound)**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 173
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED] T1092 / T1074 \u2014 Removable Media Staging**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 183
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "**[CONFIRMED] No malware / no persistence implanted**",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 187
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "|\n| **2020-11-13T22:00:00Z** | **Intruder window opens** \u2014 Fred family departs for Disney World | Case briefing | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 207
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "|\n| 2020-11-14T03:42:56Z | `TSTHEME.EXE-01D23267.pf` created in `.\\Windows\\Prefetch\\` \u2014 first RDP session of the intrusion | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 96265) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 208
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T03:42:56Z"
+        ],
+        "filenames": [
+          "TSTHEME.EXE",
+          "-01D23267.pf"
+        ],
+        "paths": [
+          "\\Windows\\Prefetch\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "TSTHEME.EXE-01D23267.pf",
+          ".\\Windows\\Prefetch\\"
+        ]
+      },
+      "matched": [
+        "2020-11-14T03:42:56Z",
+        "TSTHEME.EXE",
+        "-01D23267.pf",
+        "TSTHEME.EXE-01D23267.pf",
+        ".\\Windows\\Prefetch\\"
+      ],
+      "missing": [
+        "\\Windows\\Prefetch\\`"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb533-5a98-7bd0-af52-7de9219dc49b",
+        "exec_ids": [
+          "019eb533-5a98-7bd0-af52-7de9219dc49b"
+        ],
+        "text": "|\n| 2020-11-14T05:05:33Z | UserAssist `Microsoft.Windows.RemoteDesktop` last_updated \u2014 attacker used RDP client on the Surface | exec_id `019eb533-5a98-7bd0-af52-7de9219dc49b` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 209
+      },
+      "status": "verified",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:05:33Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Microsoft.Windows.RemoteDesktop"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:05:33Z",
+        "Microsoft.Windows.RemoteDesktop"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "|\n| 2020-11-14T05:10:44Z | `Default.rdp` created/modified in `.\\Users\\fredr\\OneDrive\\Documents\\` \u2014 RDP connection config saved and synced to cloud | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 104308) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 210
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:10:44Z"
+        ],
+        "filenames": [],
+        "paths": [
+          "\\Users\\fredr\\OneDrive\\Documents\\`"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Default.rdp",
+          ".\\Users\\fredr\\OneDrive\\Documents\\"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:10:44Z",
+        "Default.rdp",
+        ".\\Users\\fredr\\OneDrive\\Documents\\"
+      ],
+      "missing": [
+        "\\Users\\fredr\\OneDrive\\Documents\\`"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "|\n| 2020-11-14T05:11:18Z | SRL OneDrive files created/synced: `Tesseract Overview_MH.pptx`, Case Files / Project P.E.G.A.S.U.S., Marketing materials | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entries 130535, 130588, 130521) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 211
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:11:18Z"
+        ],
+        "filenames": [
+          "Overview_MH.pptx"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Tesseract Overview_MH.pptx"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:11:18Z",
+        "Overview_MH.pptx",
+        "Tesseract Overview_MH.pptx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "|\n| 2020-11-14T14:17:21Z | `TSTHEME.EXE-01D23267.pf` last modified \u2014 second or continued RDP session | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 96265) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 212
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T14:17:21Z"
+        ],
+        "filenames": [
+          "TSTHEME.EXE",
+          "-01D23267.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "TSTHEME.EXE-01D23267.pf"
+        ]
+      },
+      "matched": [
+        "2020-11-14T14:17:21Z",
+        "TSTHEME.EXE",
+        "-01D23267.pf",
+        "TSTHEME.EXE-01D23267.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb545-3355-7fb1-a261-aab0c85d7634",
+        "exec_ids": [
+          "019eb545-3355-7fb1-a261-aab0c85d7634"
+        ],
+        "text": "|\n| 2020-11-15T09:05:17Z | PowerShell engine start/stop (events 40961/40962) \u2014 activity inside intruder window, no script content logged | exec_id `019eb545-3355-7fb1-a261-aab0c85d7634` (records 45\u201347) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 213
+      },
+      "status": "failed",
+      "tool_name": "ezt_evtx_parse",
+      "tool_names": [
+        "ezt_evtx_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-15T09:05:17Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [
+        "2020-11-15T09:05:17Z"
+      ],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb541-08ea-7ea0-9495-7cc627c154e8",
+        "exec_ids": [
+          "019eb541-08ea-7ea0-9495-7cc627c154e8"
+        ],
+        "text": "|\n| 2020-11-16T02:29:42Z | `DRVINST.EXE-39D9EAC7.pf` created \u2014 USB driver installation, removable device inserted | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 61982) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 214
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-16T02:29:42Z"
+        ],
+        "filenames": [
+          "DRVINST.EXE",
+          "-39D9EAC7.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "DRVINST.EXE-39D9EAC7.pf"
+        ]
+      },
+      "matched": [
+        "2020-11-16T02:29:42Z",
+        "DRVINST.EXE",
+        "-39D9EAC7.pf",
+        "DRVINST.EXE-39D9EAC7.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb530-2955-7a33-b1fc-ce929bbcdd47",
+        "exec_ids": [
+          "019eb530-2955-7a33-b1fc-ce929bbcdd47"
+        ],
+        "text": "|\n| 2020-11-16T02:31:18Z | First visible fresh RDP connection from 213.202.233.104:58072 (CLOSED) | exec_id `019eb530-2955-7a33-b1fc-ce929bbcdd47` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 215
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:18Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "213.202.233.104",
+        "2020-11-16T02:31:18Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb530-2955-7a33-b1fc-ce929bbcdd47",
+        "exec_ids": [
+          "019eb530-2955-7a33-b1fc-ce929bbcdd47"
+        ],
+        "text": "|\n| 2020-11-16T02:31:27Z | First visible fresh RDP connection from 81.30.144.115:59055 (CLOSED) | exec_id `019eb530-2955-7a33-b1fc-ce929bbcdd47` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 216
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "81.30.144.115"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:27Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "81.30.144.115",
+        "2020-11-16T02:31:27Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019eb52b-b26c-7e81-95e9-30145fbc7b79",
+        "exec_ids": [
+          "019eb52b-b26c-7e81-95e9-30145fbc7b79"
+        ],
+        "text": "|\n| 2020-11-16T02:32:38Z | **Memory captured** \u2014 two ESTABLISHED RDP sessions active from 81.30.144.115 and 213.202.233.104. SRL research documents (`Vibrainium - SRL.docx`, `Quantum Particles Affected by Other Dimensions.pdf`, `Data Set Results SRL`) open in process file pool. | exec_id `019eb52b-b26c-7e81-95e9-30145fbc7b79`; `019eb545-f281-7ec0-bddf-d68f99218c85`; `019eb530-2955-7a33-b1fc-ce929bbcdd47` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 217
+      },
+      "status": "partial",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "213.202.233.104",
+          "81.30.144.115"
+        ],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [
+          "SRL.docx",
+          "Dimensions.pdf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Vibrainium - SRL.docx",
+          "Data Set Results SRL",
+          "Quantum Particles Affected by Other Dimensions.pdf",
+          "019eb530-2955-7a33-b1fc-ce929bbcdd47",
+          "019eb545-f281-7ec0-bddf-d68f99218c85"
+        ]
+      },
+      "matched": [
+        "2020-11-16T02:32:38Z"
+      ],
+      "missing": [
+        "213.202.233.104",
+        "81.30.144.115",
+        "SRL.docx",
+        "Dimensions.pdf",
+        "Vibrainium - SRL.docx",
+        "Data Set Results SRL",
+        "Quantum Particles Affected by Other Dimensions.pdf",
+        "019eb530-2955-7a33-b1fc-ce929bbcdd47",
+        "019eb545-f281-7ec0-bddf-d68f99218c85"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "| Indicator | Value | Confidence |\n|---|---|---|\n| Attacker IP #1 | `81.30.144.115` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 238
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "\u2014 59 inbound RDP connection objects |\n| Attacker IP #2 | `213.202.233.104` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 239
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "\u2014 54 inbound RDP connection objects |\n| Entry vector | RDP (port 3389, T1021.001) using Fred's pre-existing Windows credentials | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 240
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "|\n| Exfil vector #1 | RDP clipboard/file transfer (two simultaneous sessions) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 241
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "|\n| Exfil vector #2 | USB removable storage (DRVINST.EXE 02:29:42Z) | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 242
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "|\n| Target data | VIBRANIUM, ADAMANTIUM, Project P.E.G.A.S.U.S. (Tesseract), FTL comms research, SRL VPN credentials | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 243
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "|\n| Persistence installed | **None detected** | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 244
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "|\n| Malware used | **None detected** | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 245
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}

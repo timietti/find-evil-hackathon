@@ -97,6 +97,34 @@ def test_parse_claims_single_tag_paragraph_unchanged() -> None:
     assert claims[0].exec_id == "019e563e-23a4-7053-a243-629158db8679"
 
 
+def test_parse_claims_markdown_table_row_extracts_backticked_uuid() -> None:
+    """Bug C (W3-54): markdown-table claims — `[CONFIRMED]` in the last
+    cell, exec_id as a backticked UUID in a previous cell, no marker
+    keyword. Must extract the UUID via the table-row fallback.
+    """
+    row = (
+        "| | 2020-11-14T03:42:56Z | TSTHEME.EXE-01D23267.pf created in"
+        " .\\Windows\\Prefetch\\ — first RDP session of intrusion |"
+        " `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 96265) |"
+        " [CONFIRMED]"
+    )
+    claims = parse_claims(row)
+    assert len(claims) == 1
+    assert claims[0].exec_id == "019eb541-08ea-7ea0-9495-7cc627c154e8"
+
+
+def test_extract_path_strips_trailing_backtick_when_quoted() -> None:
+    """Bug D (W3-54): `\\Users\\srl-h\\` in backticks must not capture
+    the trailing backtick — the path-regex character class now excludes
+    backtick so the captured token is the bare Windows path.
+    """
+    t = extract_tokens(
+        "[CONFIRMED] Account profile `\\Users\\srl-h\\` exists on disk"
+    )
+    assert "\\Users\\srl-h" in t.paths, f"paths: {t.paths}"
+    assert not any("`" in p for p in t.paths), f"backtick leak: {t.paths}"
+
+
 def test_extract_ipv4() -> None:
     t = extract_tokens("Connections to 81.30.144.115 (59 hits) and 213.202.233.104")
     assert "81.30.144.115" in t.ips
