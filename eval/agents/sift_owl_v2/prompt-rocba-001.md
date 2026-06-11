@@ -240,6 +240,25 @@ Write a single markdown report covering all five goals. For every claim:
    hash, inode) so the validator can locate them in the cited tool's
    parsed output.
 
+**Critical — citation discipline:** **every `[CONFIRMED]` tag must
+carry its own inline `exec_id` cite.** Do *not* use `[CONFIRMED]`
+as a section header introducing a child table whose rows carry the
+actual citations — the validator scopes each tag's text to its own
+paragraph or table row, not to a downstream block. Acceptable
+formats:
+
+- `**[CONFIRMED — exec_id `019eb541-...`]** Claim prose with tokens.`
+- `| ts | description | `019eb541-...` | [CONFIRMED]` (table row,
+  one tag per row)
+
+NOT acceptable (the W3-54 anti-pattern that scored ~0 on the
+section-header claims):
+
+- `**[CONFIRMED]** Fred had access to the following:` *followed by a
+  child table* — that tag has no cite of its own. Either fold the
+  evidence into the row tags below, or change the section header to
+  `[INFERRED]` so it's not subject to strict verification.
+
 Each iteration's prompt may also include validator feedback for the
 claims that failed verification; address those flagged claims
 specifically before producing the next iteration's report.

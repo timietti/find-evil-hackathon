@@ -16,7 +16,7 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 - **Per-call audit trail** — `audit/exec_log.jsonl` records every MCP call with `exec_id`, args, sha256 of inputs and raw output, `parsed_summary`, `wall_ms`. Every "confirmed" claim in a final report cites an `exec_id` that the validator can resolve.
 - **Iterative wire-size shrink** for multi-section tools (SRUM / Amcache / persistence_keys): if the default 50-rows-per-section payload exceeds Claude's tool-result transport envelope, the truncate-fn re-runs at 25, 12, 6, 3, 1 rows/section until it fits under ~25 KB; falls back to count-only if even cap=1 is too big. Full row data stays on disk, drillable via `query_rows`.
 - **Vol3 fully offline** — the bootstrap caches the community Windows symbol pack (~800 MB) under `/opt/sift-owl/vol3-symbols/`; the MCP wrapper passes it via `-s` to every `vol` call. No Microsoft Symbol Server round-trip per case; cold-start `windows.info` drops ~30 s → ~5 s on x64 images.
-- **279 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
+- **284 unit tests** + slow E2E tests. Architectural trust boundaries (TB1-TB7) have tests asserting them.
 
 ### MCP tool inventory
 
@@ -35,7 +35,8 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 | Case | Validator | Strict-verified | Notes |
 |---|---|---|---|
 | ROCBA-001 single-pass v1 | v4 | 57.1% | First end-to-end run, memory-only |
-| **ROCBA-001 v2 loop (iter 3)** | **v4** | **91.7%** | Convergence; rule-based + LLM prose check |
+| **ROCBA-001 v2 loop (iter 3)** | **v4** | **91.7%** | Convergence; rule-based + LLM prose check; memory-only |
+| **ROCBA-001 v2 loop, disk + memory (W3-54/57)** | v6 | **63.2% (24/38)** | First run after the C: drive image arrived 2026-06-08. iter 2 post-fix score; raw run scored 23.7% before W3-54/56/57 validator fixes surfaced four table-format edge cases the prior memory-only runs didn't hit. |
 | STARK-APT-001 v1 (disk + memory) | v4 | 43.5% | First multi-host shakedown |
 | **STARK-APT-001 v2 loop (iter 3)** | **v4** | **86.1%** | Full convergence: 0 partial, 0 failed |
 | SHIELDBASE single-shot, held-out | v5 | 71.4% (30/42) | Original held-out discipline; no prompt tuning to this case |
@@ -109,7 +110,7 @@ find-evil-hackathon/
 │   ├── agents/sift_owl_v0..v2/     # SIFT-OWL eval harnesses (single-pass → loop)
 │   └── results/                    # per-run validator reports + REPORT.md
 ├── audit/                          # default per-run audit dir (gitignored)
-├── tests/                          # 279 unit tests + slow E2E
+├── tests/                          # 284 unit tests + slow E2E
 └── scripts/                        # bootstrap + one-off helpers
 ```
 

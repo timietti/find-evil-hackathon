@@ -11,7 +11,8 @@
 
 | Case | Hosts | Protocol SIFT baseline | **SIFT-OWL v2 loop** | Δ |
 |---|---|---|---|---|
-| ROCBA-001 (dev) | 1 (memory only, 18 GB) | 31.0% verified ($2.26, 13 min) | **91.7%** ($4.69, 24 min) | **+60.7 pp** |
+| ROCBA-001 (dev, memory-only) | 1 (memory only, 18 GB) | 31.0% verified ($2.26, 13 min) | **91.7%** ($4.69, 24 min) | **+60.7 pp** |
+| ROCBA-001 (dev, **disk + memory**, organiser added C: drive 2026-06-08) | 1 (memory + 81 GiB NTFS disk) | n/a | **63.2%** (24/38, post-fix; $3.34, 112 min) | **+39.5 pp** over the raw 23.7% the loop saw (W3-54/57 validator bug fixes) |
 | STARK-APT-001 (dev) | 4 (memory + disk, 58 GB) | did not finish — `error_max_budget_usd` at $10.99 / 26 min | **86.1%** ($1.92, 20 min) | un-measurable for baseline; SIFT-OWL **completed** |
 | SHIELDBASE / CRIMSON OSPREY ⭐ held-out (single shot) | 15+ (memory + disk, 198 GB) | n/a — preserved for held-out integrity | **71.4%** (30/42, $3.50, 42 min) | — |
 | SHIELDBASE re-eval rule-only (W3-46) | 15+ (memory + disk, 198 GB) | n/a | **92.0%** (23/25, $3.84, 54 min) | rule-only; small claim count |
@@ -67,9 +68,10 @@ surfaced on a real run:
 | **v4** | LLM-based prose check (Haiku 4.5, opt-in `--llm-check`, ~$0.05 / 3-iter run) | Strict-verified plateau on prose-only claims |
 | **v5** | Prose-style exec_id citations outside tag brackets; UUID-shape detection near tool-name markers; audit-log prefix lookup for truncated UUIDs in MITRE tables | SHIELDBASE iter-1 produced 0/56 verified with prose-style citations the v4 regex didn't catch |
 | **v6** | Backticked exec-id guard in token extractor (`` (exec_id `UUID`) `` no longer leaks the UUID into the verifiable-token list, W3-50); multi-tag paragraph scoping so the trailing `(exec_id …)` cite attaches to *its* claim, not the next bullet (W3-52); inline `--llm-check` auto-enables when `ANTHROPIC_API_KEY` is in env (W3-45) | SHIELDBASE 2026-05-23 run scored 0/29 raw because both extraction bugs masked the signal; same `final_response.md`s post-fix scored 71/79 = 89.9% |
+| **v7** | Markdown-table claim parser (W3-54 bug C): bare backticked UUID in a table cell now resolves to an exec_id even without a `exec_id` marker preceding. Path regex excludes backtick (W3-54 bug D). Backticked UUIDv7-shape tokens are stripped from `tokens.quoted` regardless of marker context (W3-57 bug F). Dot-prefix relative paths normalise (`.\Users\...` → `\Users\...`, W3-57 bug G). Per-`exec_id` parsed-haystack cache cuts iter-validation walls 16 min → 3 min on disk-heavy runs (W3-56). | ROCBA disk + memory 2026-06-11 run scored 9/38 = 23.7% raw because all four edge cases coincided on markdown-table claims the agent emitted; same `final_response.md`s post-fix scored 24/38 = 63.2% on iter 2 (+39.5 pp) |
 
 Tests in [`tests/test_validator.py`](../tests/test_validator.py) preserve every
-regression. **67 validator tests pass; 279 unit tests overall.**
+regression. **71 validator tests pass; 284 unit tests overall.**
 
 ### 1.3 Run setup
 
