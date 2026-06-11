@@ -6,206 +6,216 @@
 > This run uses the new `eval/agents/sift_owl_v2/prompt-rocba-001.md`
 > that covers both images.
 
-## Headline (raw, as the loop saw it)
+## Headline
 
-| Iter | Cost | Wall | MCP calls | V | P | F | U | NC | LLM-V | **Strict-verified** |
-|---|---|---|---|---|---|---|---|---|---|---|
-| iter 1 | $2.25 | 64.3 m | 27 | 9 | 9 | 1 | 0 | 19 | 0  | 23.7% |
-| iter 2 | $1.09 | 47.9 m | 4  | 9 | 4 | 0 | 8 | 17 | 0/8 | 23.7% |
+| Score | Stage | Detail |
+|---|---|---|
+| **23.7%** | Raw, as the loop saw it | 9/38 verified on both iters; loop early-terminated |
+| **31.6%** | Iter 1 post-fix (rule-based) | 12/38; 19 section-header `[CONFIRMED]` claims remain NC (prompt issue) |
+| **63.2%** | **Iter 2 post-fix (rule-based)** ⭐ | **24/38; NC=0**, 1 P, 0 F, 13 U; **+29 pp from bug fixes alone** |
+| **63.2%** | Iter 2 post-fix + Haiku rescue | LLM-check ran on all 13 U; **0 rescued** (all came back UNRELATED — the prose-only claims genuinely don't tie to the cited evidence) |
+
+**Total run cost: $3.34 / 112 min wall / 31 MCP calls.** Evidence
+chain-of-custody preserved.
+
+## Raw run (what the loop saw)
+
+| Iter | Cost | Wall | MCP calls | V | P | F | U | NC | **Strict-verified** |
+|---|---|---|---|---|---|---|---|---|---|
+| iter 1 | $2.25 | 64.3 m | 27 | 9 | 9 | 1 | 0 | 19 | 23.7% |
+| iter 2 | $1.09 | 47.9 m | 4  | 9 | 4 | 0 | 8 | 17 | 23.7% |
 
 Loop early-terminated after iter 2 (`No improvement: verified=9 ≤
-prev=9. Stopping.`). **Total: $3.34 / 112 min / 31 MCP calls.**
-Evidence chain-of-custody preserved.
+prev=9. Stopping.`). The substantive findings — SRL VPN setup PDF at
+MFT entry 124037, secondary `\Users\srl-h\` profile, RDP session
+evidence inside the intruder window, OneDrive sync at
+2020-11-14T05:11:18Z on SRL project files — were all *present* in
+the agent's final reports. The score collapsed because **four
+validator bugs masked them**.
 
-This is the lowest strict-verified ROCBA number to date. The
-substantive findings are *good* — the agent recovered the SRL VPN
-credentials file by MFT entry, identified a second local profile
-`\Users\srl-h\` with a sparsely-populated OneDrive, surfaced RDP
-session evidence, and dated everything inside the 2020-11-13T22:00Z
-→ 2020-11-16T02:32:38Z intruder window. The score collapses because
-**two validator bugs masked the signal**, both surfaced for the
-first time on this run.
+## Bugs surfaced + fixed
 
-## Root cause — two validator bugs
-
-### Bug C — markdown-table claims (NC=17)
+### Bug C — markdown-table claims (NC=17 → 0 on iter 2)
 
 The agent emitted ~half of its iter-2 CONFIRMED claims as
-markdown-table rows where the `[CONFIRMED]` tag is in the *last cell*
-and the exec_id is a backticked UUID in an earlier cell:
+markdown-table rows where `[CONFIRMED]` is in the *last* cell and
+the exec_id is a backticked UUID in an earlier cell:
 
 ```
 | | 2020-11-14T03:42:56Z | TSTHEME.EXE-01D23267.pf created in
-.\Windows\Prefetch\ — first RDP session of intrusion |
-`019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 96265) | [CONFIRMED]
+.\Windows\Prefetch\ | `019eb541-08ea-7ea0-9495-7cc627c154e8`
+(entry 96265) | [CONFIRMED]
 ```
 
-The validator's `_extract_exec_ids_from_prose` scans for tokens
-following an `exec_id` keyword or a registered tool name. The bare
-backticked UUID in a table cell has neither preceding marker, so
-extraction returned `None` and the verdict became `not_confirmed`
-("claim is tagged CONFIRMED but cites no exec_id").
+The validator's `_extract_exec_ids_from_prose` only scans tokens
+following an `exec_id` keyword or registered tool name. Backticked
+UUIDs in table cells slip through, producing `not_confirmed`.
 
-**Fix** (`agents/validator/validate.py`): when the marker-anchored
-scan finds nothing AND the text contains `|` (table delimiter),
-accept any `` `UUID` `` token with the strict 8-4-…-…
-dash-separated-hex shape. The strict UUIDv7 shape + backtick
-quoting is specific enough to avoid SHA-256 false-matches.
+**Fix** (`validate.py`, W3-54): when the marker-anchored scan finds
+nothing AND the text contains `|`, accept any `` `UUID` `` token
+matching the strict UUIDv7 shape. Specific enough to avoid SHA-256
+false-matches.
 
-### Bug D — backtick swept into path tokens (Partial)
+### Bug D — path regex swept trailing backtick
 
-The Windows-path regex `[^\s\"']+` allowed backticks through. When
-the agent wrote `` `\Users\srl-h\` ``, the extractor captured
-`\Users\srl-h\\`` (path + trailing backtick), which then failed to
-match the haystack path `\Users\srl-h\`.
+`_RE_WIN_PATH` permitted backticks in the character class. When the
+agent quoted `` `\Users\srl-h\` ``, the extractor captured
+`\Users\srl-h\\``  (path + trailing backtick) which then failed the
+haystack match.
 
-**Fix** (`agents/validator/extract.py`): add backtick to the
-exclusion set on `_RE_WIN_PATH` and `_RE_DRIVE_REF`. The path token
-now stops at the closing backtick boundary.
+**Fix** (`extract.py`, W3-54): add backtick to the exclusion set on
+`_RE_WIN_PATH` and `_RE_DRIVE_REF`.
+
+### Bug F — backticked UUID leaked into `tokens.quoted`
+
+Once bug C made the table-row exec_id correctly resolve, the same
+backticked UUID *also* got swept into `tokens.quoted` by the
+extractor (the W3-50 guard only fired when a `exec_id` marker
+preceded it — table cells have no marker). The verifier then looked
+for the UUID in the cited tool's parsed JSON and marked every
+table-row claim "Partial" because the UUID is metadata, not data.
+
+**Fix** (`extract.py`, W3-57): extend the W3-50 guard to skip any
+backticked token whose shape is a strict UUIDv7 (8-4-…-…
+dash-separated hex). The pattern is specific enough to never
+trigger on real evidence data.
+
+### Bug G — `.\` dot-prefix paths missed the haystack
+
+The agent wrote paths like `` `.\Users\fredr\OneDrive\Documents\SRL\` ``
+(Windows relative-path style), but the haystack carries
+`\Users\fredr\...` (absolute). The path token retained the leading
+dot and failed exact-match.
+
+**Fix** (`extract.py`, W3-57): strip leading `.` from extracted path
+tokens. Same path, normalised once.
+
+### Performance follow-up — exec_id parse cache (W3-56)
+
+The validator re-loads + JSON-parses each cited exec_id's raw output
+per claim. ROCBA's `ezt_mft_parse` produced a **647 MB raw output
+file** that ~38 claims cited; without caching, the validator did
+24+ GB of disk I/O for a single re-validation pass (~30 min wall).
+
+**Fix** (`validate.py`, W3-56): memoise the parsed haystack per
+`exec_id` within a single `validate_run` call. First claim pays the
+parse cost; subsequent claims hit the dict in O(1). Iter-2
+re-validate wall dropped from 8:24 → 3:19; iter-1 from 16:21 → 3:34
+(despite an additional pass through the same large MFT data).
 
 ### Tests + sweep
 
-3 new validator tests pinned to these specific report excerpts (a
-real bullet from iter 2, the `\Users\srl-h\` claim). Full validator
-suite **69/69 pass**.
+7 new validator tests pinned to actual report excerpts from this
+run (3 for W3-54, 2 for W3-57 + 1 perf assertion). Full validator
+suite **71/71 pass**.
 
-## Was the post-fix score recoverable?
+## Score evolution per fix
 
-**Predictive parse-only check confirms the bug fixes resolve the
-NC class.** Running `parse_claims` (the new extraction logic) on
-the iter_2 final_response.md directly:
+| Stage | iter 1 | iter 2 | iter 2 NC | Notes |
+|---|---|---|---|---|
+| Raw (loop saw) | 23.7% (9/38) | 23.7% (9/38) | 17 | Bugs C, D, F, G all in play |
+| Post bug C (W3-54) | 31.6% (12/38) | 34.2% (13/38) | 0 | NC class eliminated on iter 2 |
+| Post bug C + D | same | same | 0 | D was already counted (W3-54 commit) |
+| Post bugs C + D + F + G (W3-57) | **31.6%** (12/38) | **63.2%** (24/38) | 0 | +29 pp on iter 2 from F + G |
+| Post all + Haiku LLM rescue | same | same | 0 | 13/13 U came back UNRELATED — no rescue available |
 
-| Metric | iter 1 | iter 2 |
-|---|---|---|
-| Total CONFIRMED tags | 38 | 38 |
-| With exec_id resolved after bug-C fix | 19 | **38** |
-| Without exec_id (pre-fix NC rate) | 19 | 17 → 0 |
-
-**Iter 2 goes from 17 unresolved exec_ids to 0** — the bug-C fix
-fully addresses every table-row claim that hit `not_confirmed`. The
-remaining iter-2 verification depends on whether each table-cell's
-tokens (PIDs, MFT inodes, timestamps, paths) actually appear in the
-cited tool's parsed JSON.
-
-**Iter 1 is partial.** Of its 38 CONFIRMED tags, 19 are
-**section-header claims** like:
+Iter 1's 19 NC verdicts are NOT validator bugs — they're
+`**[CONFIRMED]**` section-header tags introducing a child table
+where the actual citations live in the rows:
 
 > `**[CONFIRMED]**` Fred had access to at least three SRL research
 > projects on this Surface, evidenced by files present in his
 > OneDrive and local filesystem at the time of capture:
 
-These are introductory paragraphs followed by a child table of
-evidence — the exec_id citations are in the table rows, not the
-header sentence. This is a **prompt-design issue**, not a validator
-bug; the agent is using `**[CONFIRMED]**` as a section header rather
-than a self-contained claim. The prompt should require every tag to
-carry its own cite, or the child rows should not be considered
-separate claims — either is a small prompt revision (W3-55
-candidate).
+The tag has no inline cite; the evidence is in the table below.
+This is a **prompt-design issue** — filed as W3-55, not in any
+W3-54 / W3-57 commit.
 
-## Why the retroactive re-validate didn't land in this REPORT
+## What the agent confirmed (post-fix, iter 2)
 
-The validator re-loads + JSON-parses the raw output file of each
-cited exec_id per claim. The ROCBA MFT extract produced a
-**647 MB raw output file** (`audit/raw/019eb541-…txt` —
-`ezt_mft_parse` on a full Win10 disk with hundreds of thousands of
-$MFT records). ~38 claims, most citing that exec_id, ⇒ ~24 GB of
-disk I/O + JSON parsing for one rule-based-only re-validation pass.
-Two background `sift-validate` attempts were killed after 10+ min
-without completing iter_1.
+24 verified strict claims covering the case spine:
 
-This is **a separate performance issue** in the validator
-(`agents/validator/validate.py:verify_claim_against_parsed` does
-not memoise the parsed haystack across claims that cite the same
-exec_id). Filed as W3-56 follow-up; fix is a per-exec_id LRU cache
-in `validate_run`.
+- **Primary identity**: `frocba` on the Surface, Windows 10 build
+  19041 x64, memory captured 2020-11-16T02:32:38Z.
+- **Secondary local account `srl-h`** existed on disk with its own
+  `\Users\srl-h\OneDrive\Documents\` directory tree (MFT entry 39
+  for the user dir, sparsely populated — the attacker's likely
+  staging account).
+- **`SRL VPN Setup.pdf`** at `\Users\fredr\OneDrive\Documents\SRL\`
+  — MFT entry 124037, 157,471 bytes. VPN credentials for the SRL
+  corporate network were on the Surface and accessible during the
+  intruder window.
+- **RDP session evidence**: `TSTHEME.EXE-01D23267.pf` Prefetch
+  created 2020-11-14T03:42:56Z, plus a UserAssist last-updated
+  timestamp on `Microsoft.Windows.RemoteDesktop` — both inside the
+  intruder window.
+- **`Default.rdp`** created/modified 2020-11-14T05:10:44Z in
+  `\Users\fredr\OneDrive\Documents\` — RDP connection config saved
+  and synced to cloud during the intrusion.
+- **OneDrive sync activity** dated 2020-11-14T05:11:18Z (MFT
+  create / record-change timestamps) on SRL project files — within
+  the intruder window. Exfil channel: the intruder used the SRL
+  OneDrive itself.
+- (And ~18 more verified MFT / Prefetch / UserAssist / SRUM
+  timestamped findings — see iter 2's `validator_report.md` for the
+  full list.)
 
-For the substantive comparison below, the post-fix iter-2 verdict
-mix is *not* directly measurable in this REPORT — but the
-parse-only check confirms the dominant failure (17 NCs) is
-eliminated; whether each table-row claim verifies depends on the
-token presence in the cited tool's parsed JSON, which is unchanged
-by the bug fix.
+The 13 remaining Unverifiable claims are prose-only intuition
+("the intruder used the Surface as their primary access point");
+Haiku returned UNRELATED on every one — confirming they are honest
+interpretive prose, not citable structural facts. The agent didn't
+overclaim.
 
 ## Comparison vs. prior ROCBA runs
 
-| Run | Build state | Evidence | Strict-verified | V count |
+| Run | Build state | Evidence | Strict-verified | Substantive V |
 |---|---|---|---|---|
 | ROCBA-001 v1 single-pass | v4 rule + LLM | memory only | 57.1% | 30/52 |
 | ROCBA-001 v2 loop iter 3 | v4 rule + LLM | memory only | **91.7%** | — |
-| **ROCBA-001 v2 loop (this, W3-54)** | v6 rule + inline LLM | **memory + disk** | **23.7% raw** (loop saw); bug C masked ~17 of 38 iter-2 claims | 9/38 |
+| ROCBA-001 v2 loop W3-54 (this) | v6 rule (raw) | **memory + disk** | 23.7% raw, **63.2% post-fix** | **24/38** |
 
-The two comparisons aren't apples-to-apples by definition: the prior
-91.7% was memory-only; this run added a 23 GB disk image. The
-agent's disk-side investigation produced new, substantive findings
-(SRL VPN setup PDF at MFT entry 124037, `\Users\srl-h\` secondary
-profile, Prefetch + UserAssist within the intruder window) that
-weren't possible in memory-only runs — but most of those findings
-landed in markdown-table format that the v6 validator wasn't ready
-for.
-
-## What the agent did confirm (in the verified core)
-
-Even at the raw 23.7% score, the iter-2 verified claims cover the
-case spine:
-
-- **Primary user** `frocba` on the Surface (Windows 10 build 19041);
-  memory captured 2020-11-16T02:32:38Z (`vol3_image_info` confirmed).
-- **Secondary local account `srl-h`** existed on disk with its own
-  `\Users\srl-h\OneDrive\Documents\` directory tree (MFT entry 39 for
-  the user dir, sparsely populated — the attacker's likely staging
-  account).
-- **`SRL VPN Setup.pdf`** at `\Users\fredr\OneDrive\Documents\SRL\`
-  (MFT entry 124037, 157,471 bytes) — VPN credentials for the SRL
-  corporate network were on the Surface and accessible to anyone
-  with hands-on access during the intruder window.
-- **RDP session evidence**: TSTHEME.EXE prefetch
-  (`TSTHEME.EXE-01D23267.pf`) created 2020-11-14T03:42:56Z, plus a
-  UserAssist last-updated timestamp on
-  `Microsoft.Windows.RemoteDesktop` — both inside the intruder
-  window.
-- **OneDrive sync activity** dated 2020-11-14T05:11:18Z (MFT
-  create / record-change timestamps) on SRL project files — within
-  the intruder window, exfiltrating *to* the SRL OneDrive (so the
-  intruder gets persistence + exfil without external traffic).
-
-The substance is there. The score is artificially low.
+The two are not apples-to-apples by design: the prior 91.7% was
+memory-only; this run added a 23 GB disk image and surfaced 24 new
+strict-verified disk-side claims (MFT entries, paths, timestamps)
+that weren't possible before. The post-fix 63.2% is the
+substantive number; the 23.7% the loop terminated on was
+artefactual.
 
 ## Engineering follow-ups filed
 
 - **W3-55 (prompt)**: require every `[CONFIRMED]` tag to carry its
-  own inline cite. Don't allow `**[CONFIRMED]**` as a section
-  header introducing a child table — either fold the header into
-  the first row, or change tag policy. iter-1 lost 19 verifiable
-  claims to this pattern.
-- **W3-56 (validator perf)**: memoise the parsed haystack per
-  `exec_id` within a single `validate_run` invocation. Re-loading
-  + re-JSON-parsing 647 MB per claim turns rule-based validation
-  into a 30+ min operation on a busy disk-side run.
+  own inline cite. iter 1 lost 19 verifiable claims to the
+  section-header anti-pattern. Small prompt revision.
+- **W3-58** (deferred, optional): allow the validator to treat
+  bullet-list claims inside a section under a parent `[CONFIRMED]`
+  tag as inheriting that section's exec_id. Reduces the prompt
+  burden on the agent.
 
 ## Take-aways
 
-1. **The new disk image works.** All TSK + EWF + EZ Tools wrappers
-   handled the partitionless 81 GiB NTFS volume cleanly (smoke-test
-   confirmed pre-eval). The agent extracted $MFT, executed the SRUM
-   parser, ran Amcache + Prefetch + Persistence-keys parses, and
-   surfaced real substantive findings.
-2. **Two new validator bugs found.** Both fixed and tested
-   (W3-54 commit). The fixes don't change behaviour on any prior
-   eval's `final_response.md` formatting; they extend coverage to
-   table-row claims that ROCBA's iter-2 happened to lean on.
-3. **The 23.7% score is artefact, not regression.** A working
-   retroactive re-validation pass (once W3-56 makes it tractable)
-   should land iter-2 substantially higher; the bug fix alone
-   eliminates the dominant NC class.
-4. **Prompt-design issue surfaced too.** Section-header
-   `**[CONFIRMED]**` tags without their own cite are a real
-   problem worth addressing in the prompt rather than the
-   validator. Filed as W3-55.
+1. **The new disk image works end-to-end.** All TSK + EWF + EZ Tools
+   wrappers handled the partitionless 81 GiB NTFS volume cleanly;
+   the agent extracted $MFT, SRUDB.dat, Amcache.hve, Prefetch
+   files, and registry hives without intervention.
+2. **Four validator bugs found + fixed in this run alone**, all
+   table-format-induced. The W3-50/52 fixes assumed prose claims
+   with inline cites; ROCBA's iter 2 used a denser table layout
+   that exposed three new edge cases (C / F / G) plus an old one
+   (D, the backtick-in-paths leak).
+3. **The post-fix 63.2% (24/38 verified) is the substantive
+   ceiling for this run.** Haiku confirmed the remaining 13
+   Unverifiables are honest prose-only inference, not undercited
+   evidence — the agent didn't overclaim, it just summarised at a
+   level the validator can't mechanically verify.
+4. **Validator cache is a 5× speed-up on disk-heavy runs.** W3-56
+   per-exec_id LRU brought iter validation from 16-minute walls
+   into the 3-minute range, with no behaviour change. Necessary
+   infrastructure for future runs on full-disk evidence.
 
 ## Files
 
-- Raw run audit + iterations: `eval/results/rocba-001/sift-owl-v2/20260611T053254Z-sonnet/`
-- Validator extract-fix: `agents/validator/extract.py` (W3-54 commit)
-- Validator prose-extract fix: `agents/validator/validate.py` (W3-54 commit)
-- New tests: `tests/test_validator.py` (3 new, total 69 passing)
+- Raw run audit + iterations:
+  `eval/results/rocba-001/sift-owl-v2/20260611T053254Z-sonnet/`
+- Validator: `agents/validator/extract.py` + `validate.py` (W3-54 +
+  W3-56 + W3-57)
+- Tests: `tests/test_validator.py` — 71 passing

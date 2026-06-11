@@ -1,20 +1,20 @@
 {
   "summary": {
-    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v2/20260611T053254Z-sonnet/iterations/iter_1",
+    "run_dir": "eval/results/rocba-001/sift-owl-v2/20260611T053254Z-sonnet/iterations/iter_1",
     "total_claims": 42,
     "confirmed_count": 38,
     "inferred_count": 3,
     "hypothesis_count": 0,
     "gap_count": 1,
     "other_count": 0,
-    "verified": 9,
-    "partial": 9,
+    "verified": 12,
+    "partial": 6,
     "failed": 1,
     "unverifiable": 0,
     "exec_id_not_found": 0,
     "tool_not_supported": 0,
     "not_confirmed": 19,
-    "confirmation_score": 0.237,
+    "confirmation_score": 0.316,
     "llm_checked": 0,
     "llm_verified": 0,
     "llm_unsupported": 0,
@@ -120,7 +120,7 @@
           "Setup.pdf"
         ],
         "paths": [
-          "\\Users\\fredr\\OneDrive\\Documents\\SRL\\`)"
+          "\\Users\\fredr\\OneDrive\\Documents\\SRL"
         ],
         "drive_refs": [],
         "brace_guids": [],
@@ -135,10 +135,10 @@
       "matched": [
         "124037",
         "Setup.pdf",
+        "\\Users\\fredr\\OneDrive\\Documents\\SRL",
         "SRL VPN Setup.pdf"
       ],
       "missing": [
-        "\\Users\\fredr\\OneDrive\\Documents\\SRL\\`)",
         ".\\Users\\fredr\\OneDrive\\Documents\\SRL\\"
       ],
       "negation_violations": [],
@@ -220,8 +220,8 @@
         ],
         "hex_hashes": [],
         "quoted": [
-          "0x201816094876896",
           "\\Users\\fredr\\OneDrive - Stark Research Labs\\Research\\Vibrainium - SRL.docx",
+          "0x201816094876896",
           "Vibrainium - SRL.docx"
         ]
       },
@@ -279,8 +279,8 @@
         ],
         "hex_hashes": [],
         "quoted": [
-          "Quantum Particles Affected by Other Dimensions.pdf",
-          "0x201816460363840"
+          "0x201816460363840",
+          "Quantum Particles Affected by Other Dimensions.pdf"
         ]
       },
       "matched": [
@@ -332,15 +332,15 @@
         ],
         "hex_hashes": [],
         "quoted": [
-          "\\Users\\fredr\\OneDrive\\Data Set Results SRL",
           "Data Set Results SRL",
-          "0x201816233460192"
+          "0x201816233460192",
+          "\\Users\\fredr\\OneDrive\\Data Set Results SRL"
         ]
       },
       "matched": [
         "\\Users\\fredr\\OneDrive\\Data",
-        "\\Users\\fredr\\OneDrive\\Data Set Results SRL",
-        "Data Set Results SRL"
+        "Data Set Results SRL",
+        "\\Users\\fredr\\OneDrive\\Data Set Results SRL"
       ],
       "missing": [
         "0x201816233460192"
@@ -465,8 +465,8 @@
         ],
         "ips": [],
         "timestamps": [
-          "2020-11-02T17:20:50Z",
-          "2020-11-10T14:01:19Z"
+          "2020-11-10T14:01:19Z",
+          "2020-11-02T17:20:50Z"
         ],
         "filenames": [
           "ADAMANTIUM-Background.docx"
@@ -483,8 +483,8 @@
       },
       "matched": [
         "130659",
-        "2020-11-02T17:20:50Z",
         "2020-11-10T14:01:19Z",
+        "2020-11-02T17:20:50Z",
         "ADAMANTIUM-Background.docx"
       ],
       "missing": [],
@@ -506,7 +506,7 @@
         "raw_match": "[CONFIRMED, exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]",
         "line_no": 127
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse"
@@ -524,7 +524,7 @@
           "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx"
         ],
         "paths": [
-          "\\Users\\fredr\\OneDrive\\Documents\\`,"
+          "\\Users\\fredr\\OneDrive\\Documents"
         ],
         "drive_refs": [],
         "brace_guids": [],
@@ -532,19 +532,18 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx",
-          ".\\Users\\fredr\\OneDrive\\Documents\\"
+          ".\\Users\\fredr\\OneDrive\\Documents\\",
+          "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx"
         ]
       },
       "matched": [
         "104304",
         "2020-11-02T15:02:12Z",
         "SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx",
+        "\\Users\\fredr\\OneDrive\\Documents",
         ".\\Users\\fredr\\OneDrive\\Documents\\"
       ],
-      "missing": [
-        "\\Users\\fredr\\OneDrive\\Documents\\`,"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": "",
@@ -585,9 +584,9 @@
         ],
         "hex_hashes": [],
         "quoted": [
+          "0x201816387163968",
           "S-1-5-21-528816539-567677750-276746561-1002",
-          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IJD15WX.pdf",
-          "0x201816387163968"
+          "\\$Recycle.Bin\\S-1-5-21-528816539-567677750-276746561-1002\\$IJD15WX.pdf"
         ]
       },
       "matched": [
@@ -910,7 +909,7 @@
         "raw_match": "[CONFIRMED]",
         "line_no": 208
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse"
@@ -927,7 +926,7 @@
           "-01D23267.pf"
         ],
         "paths": [
-          "\\Windows\\Prefetch\\`"
+          "\\Windows\\Prefetch"
         ],
         "drive_refs": [],
         "brace_guids": [],
@@ -943,12 +942,11 @@
         "2020-11-14T03:42:56Z",
         "TSTHEME.EXE",
         "-01D23267.pf",
+        "\\Windows\\Prefetch",
         "TSTHEME.EXE-01D23267.pf",
         ".\\Windows\\Prefetch\\"
       ],
-      "missing": [
-        "\\Windows\\Prefetch\\`"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": "",
@@ -1013,7 +1011,7 @@
         "raw_match": "[CONFIRMED]",
         "line_no": 210
       },
-      "status": "partial",
+      "status": "verified",
       "tool_name": "ezt_mft_parse",
       "tool_names": [
         "ezt_mft_parse"
@@ -1027,7 +1025,7 @@
         ],
         "filenames": [],
         "paths": [
-          "\\Users\\fredr\\OneDrive\\Documents\\`"
+          "\\Users\\fredr\\OneDrive\\Documents"
         ],
         "drive_refs": [],
         "brace_guids": [],
@@ -1041,12 +1039,11 @@
       },
       "matched": [
         "2020-11-14T05:10:44Z",
+        "\\Users\\fredr\\OneDrive\\Documents",
         "Default.rdp",
         ".\\Users\\fredr\\OneDrive\\Documents\\"
       ],
-      "missing": [
-        "\\Users\\fredr\\OneDrive\\Documents\\`"
-      ],
+      "missing": [],
       "negation_violations": [],
       "verified_absences": [],
       "notes": "",
@@ -1221,8 +1218,8 @@
           "2020-11-16T02:29:42Z"
         ],
         "filenames": [
-          "DRVINST.EXE",
-          "-39D9EAC7.pf"
+          "-39D9EAC7.pf",
+          "DRVINST.EXE"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1236,8 +1233,8 @@
       },
       "matched": [
         "2020-11-16T02:29:42Z",
-        "DRVINST.EXE",
         "-39D9EAC7.pf",
+        "DRVINST.EXE",
         "DRVINST.EXE-39D9EAC7.pf"
       ],
       "missing": [],
@@ -1367,8 +1364,8 @@
           "2020-11-16T02:32:38Z"
         ],
         "filenames": [
-          "SRL.docx",
-          "Dimensions.pdf"
+          "Dimensions.pdf",
+          "SRL.docx"
         ],
         "paths": [],
         "drive_refs": [],
@@ -1377,11 +1374,9 @@
         "hex_offsets": [],
         "hex_hashes": [],
         "quoted": [
-          "Vibrainium - SRL.docx",
           "Data Set Results SRL",
           "Quantum Particles Affected by Other Dimensions.pdf",
-          "019eb530-2955-7a33-b1fc-ce929bbcdd47",
-          "019eb545-f281-7ec0-bddf-d68f99218c85"
+          "Vibrainium - SRL.docx"
         ]
       },
       "matched": [
@@ -1390,13 +1385,11 @@
       "missing": [
         "213.202.233.104",
         "81.30.144.115",
-        "SRL.docx",
         "Dimensions.pdf",
-        "Vibrainium - SRL.docx",
+        "SRL.docx",
         "Data Set Results SRL",
         "Quantum Particles Affected by Other Dimensions.pdf",
-        "019eb530-2955-7a33-b1fc-ce929bbcdd47",
-        "019eb545-f281-7ec0-bddf-d68f99218c85"
+        "Vibrainium - SRL.docx"
       ],
       "negation_violations": [],
       "verified_absences": [],

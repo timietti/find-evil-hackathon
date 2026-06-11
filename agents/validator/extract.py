@@ -267,7 +267,15 @@ def extract_tokens(claim: str) -> ExtractedTokens:
     ips         = list({m.group(1) for m in _RE_IPV4.finditer(claim)})
     timestamps  = list({m.group(1) for m in _RE_TIMESTAMP_ISO.finditer(claim)})
     filenames   = list({m.group(1) for m in _RE_FILENAME.finditer(claim)})
-    paths       = list({m.group(1) for m in _RE_WIN_PATH.finditer(claim)})
+    # Bug G fix (W3-57): the agent often quotes paths with a `.\` prefix
+    # (`. \Users\fredr\OneDrive\…`) — a Windows-relative-path style — but
+    # the haystack uses absolute `\Users\…`. Adding the `.\…` variant as a
+    # second path token would double-count; instead surface the path
+    # match before the `.\` was prepended. The path regex already starts
+    # matching from `\Users` or `\Windows`, so we just need to also
+    # capture the `.\` variant and normalise.
+    raw_paths: set[str] = {m.group(1) for m in _RE_WIN_PATH.finditer(claim)}
+    paths       = list({p.lstrip(".") for p in raw_paths})
     drive_refs  = list({m.group(1) for m in _RE_DRIVE_REF.finditer(claim)})
     brace_guids = list({m.group(0) for m in _RE_BRACE_GUID.finditer(claim)})
     hex_offsets = list({m.group(1) for m in _RE_HEX_OFFSET.finditer(claim)})
@@ -290,16 +298,24 @@ def extract_tokens(claim: str) -> ExtractedTokens:
     hex_hashes  = list(set(raw_hashes))
     # Backtick-quoted tokens. Skip ones that are clearly an exec_id citation
     # (preceded by `exec_id` / `exec ids:`), mirroring the hex_hash guard
-    # above — otherwise the agent's prose-style cite `(exec_id `UUID`)`
-    # leaks the UUID into the "verifiable tokens" list and the verifier
-    # marks it missing from the cited tool's parsed output.
+    # above. Bug F (W3-57): also skip tokens that have UUIDv7 SHAPE (strict
+    # 8-4-…-… dash-separated hex). In ROCBA's markdown-table claims the
+    # agent puts the bare exec_id in its own cell with no marker; the
+    # marker-anchored guard misses it and the validator then treats the
+    # UUID itself as a verifiable token.
+    _UUID_SHAPE = re.compile(
+        r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4,}(?:-[0-9a-fA-F]+)*$"
+    )
     raw_quoted: list[str] = []
     for m in _RE_BACKTICK.finditer(claim):
         s, _ = m.span(1)
         before = claim[max(0, s - 20) : s].lower()
         if "exec_id" in before or "exec id" in before or "exec ids" in before:
             continue
-        raw_quoted.append(m.group(1))
+        tok = m.group(1)
+        if _UUID_SHAPE.match(tok):
+            continue  # Bug F: bare backticked UUID = exec_id, not data
+        raw_quoted.append(tok)
     quoted      = list(set(raw_quoted))
 
     # Email post-processing: the regex greedily matches a `.tld`, but in

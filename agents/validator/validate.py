@@ -510,6 +510,16 @@ def validate_run(
     report_text = report_path.read_text()
     claims = parse_claims(report_text)
 
+    # W3-56 perf fix: memoise the parsed haystack per exec_id within
+    # this validate_run call. ROCBA's ezt_mft_parse produced a 647 MB
+    # raw output file that ~38 claims cited; without the cache, the
+    # validator re-loaded + re-JSON-parsed it per claim — 24+ GB of I/O
+    # for one rule-based pass. With the cache, the first claim citing
+    # an exec_id pays the parse cost; every subsequent claim hits the
+    # dict in O(1). Memory cost is bounded by the audit log's unique
+    # exec_id count (typically <100 per run).
+    parsed_cache: dict[str, tuple[str, dict[str, Any]]] = {}
+
     verdicts: list[ClaimVerdict] = []
     for claim in claims:
         if claim.tag != "CONFIRMED":
@@ -530,6 +540,13 @@ def validate_run(
         unsupported_tools: set[str] = set()
 
         for eid in claim.exec_ids:
+            # W3-56 cache lookup: skip every audit + I/O step if this
+            # exec_id's parsed haystack is already in the dict.
+            cached = parsed_cache.get(eid)
+            if cached is not None:
+                parsed_by_tool.append(cached)
+                continue
+
             row = audit.lookup_exec(eid)
             if row is None:
                 unresolved.append(eid)
@@ -545,6 +562,7 @@ def validate_run(
                 # ("hash X / size Y / inode Z") can be checked.
                 parsed_summary = row.get("parsed_summary") or {}
                 if parsed_summary:
+                    parsed_cache[eid] = (tname, parsed_summary)
                     parsed_by_tool.append((tname, parsed_summary))
                 else:
                     unsupported_tools.add(tname or "?")
@@ -554,6 +572,7 @@ def validate_run(
                 # No raw file; fall back to parsed_summary if present.
                 ps = row.get("parsed_summary") or {}
                 if ps:
+                    parsed_cache[eid] = (tname, ps)
                     parsed_by_tool.append((tname, ps))
                 else:
                     unresolved.append(f"{eid} (raw missing)")
@@ -562,9 +581,9 @@ def validate_run(
             if not (raw_path.exists() and raw_path.is_file()):
                 unresolved.append(f"{eid} (raw missing)")
                 continue
-            parsed_by_tool.append(
-                (tname, parser(raw_path.read_text(errors="replace")))
-            )
+            entry = (tname, parser(raw_path.read_text(errors="replace")))
+            parsed_cache[eid] = entry
+            parsed_by_tool.append(entry)
 
         if not parsed_by_tool:
             # All citations failed to resolve — bubble up the most
@@ -632,18 +651,28 @@ def validate_run(
             tname = row.get("tool")
             parser = _PARSERS.get(tname)
             parsed_for_prompt: dict[str, Any] = {}
-            raw_output_path = row.get("raw_output_path")
-            if parser is not None and raw_output_path:
-                raw_path = Path(raw_output_path)
-                if raw_path.exists() and raw_path.is_file():
-                    try:
-                        parsed_for_prompt = parser(raw_path.read_text(errors="replace"))
-                    except Exception:
+            # W3-56 cache: re-use the haystack the rule-based pass
+            # already loaded for this exec_id, so the LLM-check rescue
+            # doesn't re-pay the 647 MB MFT parse cost.
+            cached = parsed_cache.get(primary_eid)
+            if cached is not None:
+                tname = cached[0]
+                parsed_for_prompt = cached[1]
+            else:
+                raw_output_path = row.get("raw_output_path")
+                if parser is not None and raw_output_path:
+                    raw_path = Path(raw_output_path)
+                    if raw_path.exists() and raw_path.is_file():
+                        try:
+                            parsed_for_prompt = parser(raw_path.read_text(errors="replace"))
+                        except Exception:
+                            parsed_for_prompt = row.get("parsed_summary") or {}
+                    else:
                         parsed_for_prompt = row.get("parsed_summary") or {}
                 else:
                     parsed_for_prompt = row.get("parsed_summary") or {}
-            else:
-                parsed_for_prompt = row.get("parsed_summary") or {}
+                if parsed_for_prompt:
+                    parsed_cache[primary_eid] = (tname or "?", parsed_for_prompt)
 
             try:
                 pcr = check_claim_prose(

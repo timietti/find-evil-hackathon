@@ -11,15 +11,15 @@
 
 ## Verification of CONFIRMED claims
 
-- ✅ **verified:**           9 (every extracted token found in cited tool's parsed output)
-- ⚠ partial:                9 (some tokens found, some missing)
+- ✅ **verified:**           12 (every extracted token found in cited tool's parsed output)
+- ⚠ partial:                6 (some tokens found, some missing)
 - ❌ failed:                 1 (no tokens found)
 - ❓ unverifiable:           0 (claim is prose only, no extractable tokens)
 - 🔍 exec_id_not_found:     0 (cited exec_id is not in the audit log)
 - ⛔ tool_not_supported:    0 (no parser for cited tool)
 - ⚠ not_confirmed:           19 (CONFIRMED-tagged but missing exec_id)
 
-**Confirmation score: 23.7%** (9 verified / 38 confirmed)
+**Confirmation score: 31.6%** (12 verified / 38 confirmed)
 
 ## Per-claim verdicts
 
@@ -34,8 +34,8 @@
 ### ⚠ partial _(line 91)_
 - tools: `ezt_mft_parse`
 - exec_ids: `7cc627c154e8`
-- matched: `124037`, `Setup.pdf`, `SRL VPN Setup.pdf`
-- **missing**: `\Users\fredr\OneDrive\Documents\SRL\`)`, `.\Users\fredr\OneDrive\Documents\SRL\`
+- matched: `124037`, `Setup.pdf`, `\Users\fredr\OneDrive\Documents\SRL`, `SRL VPN Setup.pdf`
+- **missing**: `.\Users\fredr\OneDrive\Documents\SRL\`
 - claim: > **[CONFIRMED]** `SRL VPN Setup.pdf` (157,471 bytes, inode 124037, `.\Users\fredr\OneDrive\Documents\SRL\`) was on the device. **[exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8`]**
 
 ### 🔍 not_confirmed _(line 97)_
@@ -59,7 +59,7 @@
 ### ⚠ partial _(line 112)_
 - tools: `vol3_filescan`
 - exec_ids: `d68f99218c85`
-- matched: `\Users\fredr\OneDrive\Data`, `\Users\fredr\OneDrive\Data Set Results SRL`, `Data Set Results SRL`
+- matched: `\Users\fredr\OneDrive\Data`, `Data Set Results SRL`, `\Users\fredr\OneDrive\Data Set Results SRL`
 - **missing**: `0x201816233460192`
 - claim: > 3. **`Data Set Results SRL`** — data set file (likely SRL dataset)      Path: `\Users\fredr\OneDrive\Data Set Results SRL`      Status: open file object in pool memory      [CONFIRMED, exec_id `019eb5…
 
@@ -76,14 +76,13 @@
 ### ✅ verified _(line 123)_
 - tools: `ezt_mft_parse`
 - exec_ids: `7cc627c154e8`
-- matched: `130659`, `2020-11-02T17:20:50Z`, `2020-11-10T14:01:19Z`, `ADAMANTIUM-Background.docx`
+- matched: `130659`, `2020-11-10T14:01:19Z`, `2020-11-02T17:20:50Z`, `ADAMANTIUM-Background.docx`
 - claim: > 5. **`ADAMANTIUM-Background.docx`** (62 KB) — Adamantium alloy background research      MFT entry 130659, created 2020-11-02T17:20:50Z, accessed 2020-11-10T14:01:19Z (pre-window, but last access insid…
 
-### ⚠ partial _(line 127)_
+### ✅ verified _(line 127)_
 - tools: `ezt_mft_parse`
 - exec_ids: `7cc627c154e8`
-- matched: `104304`, `2020-11-02T15:02:12Z`, `SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx`, `.\Users\fredr\OneDrive\Documents\`
-- **missing**: `\Users\fredr\OneDrive\Documents\`,`
+- matched: `104304`, `2020-11-02T15:02:12Z`, `SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx`, `\Users\fredr\OneDrive\Documents`, `.\Users\fredr\OneDrive\Documents\`
 - claim: > 6. **`SUCCESS-TEST-PLAN-VIBRANIUM-ALLOY-RESULTS.docx`** (455 KB) — Vibranium test results      MFT entry 104304, `.\Users\fredr\OneDrive\Documents\`, accessed 2020-11-02T15:02:12Z      [CONFIRMED, exe…
 
 ### ⚠ partial _(line 129)_
@@ -127,11 +126,10 @@
 - note: claim is tagged CONFIRMED but cites no exec_id
 - claim: > | | **2020-11-13T22:00:00Z** | **Intruder window opens** — Fred family departs for Disney World | Case briefing | [CONFIRMED]
 
-### ⚠ partial _(line 208)_
+### ✅ verified _(line 208)_
 - tools: `ezt_mft_parse`
 - exec_ids: `7cc627c154e8`
-- matched: `2020-11-14T03:42:56Z`, `TSTHEME.EXE`, `-01D23267.pf`, `TSTHEME.EXE-01D23267.pf`, `.\Windows\Prefetch\`
-- **missing**: `\Windows\Prefetch\``
+- matched: `2020-11-14T03:42:56Z`, `TSTHEME.EXE`, `-01D23267.pf`, `\Windows\Prefetch`, `TSTHEME.EXE-01D23267.pf`, `.\Windows\Prefetch\`
 - claim: > | | 2020-11-14T03:42:56Z | `TSTHEME.EXE-01D23267.pf` created in `.\Windows\Prefetch\` — first RDP session of the intrusion | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 96265) | [CONFIRMED]
 
 ### ✅ verified _(line 209)_
@@ -140,11 +138,10 @@
 - matched: `2020-11-14T05:05:33Z`, `Microsoft.Windows.RemoteDesktop`
 - claim: > | | 2020-11-14T05:05:33Z | UserAssist `Microsoft.Windows.RemoteDesktop` last_updated — attacker used RDP client on the Surface | exec_id `019eb533-5a98-7bd0-af52-7de9219dc49b` | [CONFIRMED]
 
-### ⚠ partial _(line 210)_
+### ✅ verified _(line 210)_
 - tools: `ezt_mft_parse`
 - exec_ids: `7cc627c154e8`
-- matched: `2020-11-14T05:10:44Z`, `Default.rdp`, `.\Users\fredr\OneDrive\Documents\`
-- **missing**: `\Users\fredr\OneDrive\Documents\``
+- matched: `2020-11-14T05:10:44Z`, `\Users\fredr\OneDrive\Documents`, `Default.rdp`, `.\Users\fredr\OneDrive\Documents\`
 - claim: > | | 2020-11-14T05:10:44Z | `Default.rdp` created/modified in `.\Users\fredr\OneDrive\Documents\` — RDP connection config saved and synced to cloud | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (ent…
 
 ### ✅ verified _(line 211)_
@@ -168,7 +165,7 @@
 ### ✅ verified _(line 214)_
 - tools: `ezt_mft_parse`
 - exec_ids: `7cc627c154e8`
-- matched: `2020-11-16T02:29:42Z`, `DRVINST.EXE`, `-39D9EAC7.pf`, `DRVINST.EXE-39D9EAC7.pf`
+- matched: `2020-11-16T02:29:42Z`, `-39D9EAC7.pf`, `DRVINST.EXE`, `DRVINST.EXE-39D9EAC7.pf`
 - claim: > | | 2020-11-16T02:29:42Z | `DRVINST.EXE-39D9EAC7.pf` created — USB driver installation, removable device inserted | exec_id `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 61982) | [CONFIRMED]
 
 ### ✅ verified _(line 215)_
@@ -187,7 +184,7 @@
 - tools: `vol3_image_info`
 - exec_ids: `30145fbc7b79`
 - matched: `2020-11-16T02:32:38Z`
-- **missing**: `213.202.233.104`, `81.30.144.115`, `SRL.docx`, `Dimensions.pdf`, `Vibrainium - SRL.docx`, `Data Set Results SRL`, `Quantum Particles Affected by Other Dimensions.pdf`, `019eb530-2955-7a33-b1fc-ce929bbcdd47` (+1 more)
+- **missing**: `213.202.233.104`, `81.30.144.115`, `Dimensions.pdf`, `SRL.docx`, `Data Set Results SRL`, `Quantum Particles Affected by Other Dimensions.pdf`, `Vibrainium - SRL.docx`
 - claim: > | | 2020-11-16T02:32:38Z | **Memory captured** — two ESTABLISHED RDP sessions active from 81.30.144.115 and 213.202.233.104. SRL research documents (`Vibrainium - SRL.docx`, `Quantum Particles Affecte…
 
 ### 🔍 not_confirmed _(line 238)_

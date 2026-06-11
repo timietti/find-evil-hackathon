@@ -125,6 +125,37 @@ def test_extract_path_strips_trailing_backtick_when_quoted() -> None:
     assert not any("`" in p for p in t.paths), f"backtick leak: {t.paths}"
 
 
+def test_extract_skips_bare_backticked_uuid_in_table_cell() -> None:
+    """Bug F (W3-57): in markdown-table claims the exec_id appears as a
+    bare backticked UUID in its own cell, with no `exec_id` marker
+    preceding. The W3-50 guard misses it. Skip any backticked token
+    whose shape is a UUIDv7 (8-hex-dash-…) — those are exec_ids, not
+    verifiable data.
+    """
+    t = extract_tokens(
+        "| 2020-11-14T03:42:56Z | `TSTHEME.EXE` prefetch |"
+        " `019eb541-08ea-7ea0-9495-7cc627c154e8` (entry 96265) | [CONFIRMED]"
+    )
+    assert "019eb541-08ea-7ea0-9495-7cc627c154e8" not in t.quoted, (
+        f"backticked UUID leaked into quoted: {t.quoted}"
+    )
+    assert "TSTHEME.EXE" in t.quoted, f"quoted: {t.quoted}"
+
+
+def test_extract_strips_dot_prefix_on_relative_path() -> None:
+    """Bug G (W3-57): the agent writes `.\\Users\\fredr\\…` (Windows
+    relative-path notation) but the haystack carries `\\Users\\fredr\\…`
+    — strip the leading `.` so the haystack match works.
+    """
+    t = extract_tokens(
+        "[CONFIRMED] File at `.\\Users\\fredr\\OneDrive\\Documents\\`"
+    )
+    assert "\\Users\\fredr\\OneDrive\\Documents" in t.paths, f"paths: {t.paths}"
+    assert ".\\Users\\fredr\\OneDrive\\Documents" not in t.paths, (
+        f"dot-prefixed variant should be normalised away: {t.paths}"
+    )
+
+
 def test_extract_ipv4() -> None:
     t = extract_tokens("Connections to 81.30.144.115 (59 hits) and 213.202.233.104")
     assert "81.30.144.115" in t.ips
