@@ -1,0 +1,111 @@
+# Machine-readable case context loaded by SIFT-OWL.
+# Human-readable narrative lives in case.md alongside this file.
+
+case_id: VANKO-001
+case_name: "FOR500 — Case of the Abducted Zebrafish / Anthony Vanko IP theft"
+client: Stark Enterprises
+victim:
+  organisation: Stark Enterprises
+  facility: DC Research and Development Facility
+  scope: "single workstation (Microsoft Surface 3); biochemical-engineering R&D"
+
+# Subject of the investigation
+subject:
+  name: Anthony Vanko
+  role: Lead biochemical engineer / scientist
+  research: rapid cell regeneration + Zebrafish DNA splice testing
+  account_status: suspended by JARVIS automated monitoring on 2016-06-30
+
+system:
+  os: Windows (build to be confirmed from disk — Surface 3 era, likely Win8.1 / Win10)
+  arch: x64
+  hostname: null              # to be discovered
+  user: vanko                 # to be confirmed from MFT / registry
+  hardware: "Microsoft Surface 3"
+  drive_model: "Samsung MDGAGC"
+  drive_serial: "e65f5f86"
+
+evidence_dir: /cases/find-evil-test4
+evidence:
+  # Full physical Surface 3 disk image (FTK Imager, EWF chain E01..E21).
+  # GPT layout — 6 partitions; main C: drive is partition 003 starting
+  # at sector 1411072. Pass offset=1411072 to tsk_fs_stat / fls / icat.
+  - path: /cases/find-evil-test4/surface_physical.E01
+    kind: disk_image
+    size_bytes: 2147328814                    # E01 segment file size
+    sha256: 0a44ad8d57bad44eb40a59bdaa8110b79ac019a791b8fd388f6efe09c7aa3b1c
+    media_size_bytes: 125069950976            # 116 GiB raw — from ewfinfo
+    media_md5: 4032d556cc866c23f1e797410e95603c
+    media_sha1: e0e72dfcef167dd358813726e82f6c235bc85ce7
+    segments: 21                              # surface_physical.E01..E21
+    acquired_utc: "2016-11-04T17:47:41Z"      # per ewfinfo
+    acquisition_software: "FTK Imager 2.9.0.1385"
+    examiner: "Ovie Carroll"
+    evidence_number: "20161104-HD001"
+    case_number_ftk: "20161104"
+    description_ftk: "Surface 3"
+    partition_table: GPT
+    partition_count: 6
+    main_partition:
+      slot: 3
+      type: "Basic data partition (NTFS C:)"
+      start_sector: 1411072
+      length_sectors: 230883328
+
+  # CYLR (CyLR rapid triage) collection — pre-extracted Windows critical
+  # artefacts ($MFT, $LogFile, ProgramData, Users, Windows). Same disk as
+  # the E01 chain. Useful for fast targeted artefact access; less
+  # complete than the full image (no $UsnJrnl, no slack/freelist).
+  # NOTE: this directory ALSO contains
+  # `FOR500HANDOUT_Vanko Master Scenario Solution.pdf` — the student
+  # solution. The MCP boundary cannot read PDFs (no Read tool exposed
+  # to the agent), so it is unreachable from inside the loop; flagged
+  # here for human review only.
+  - path: /cases/find-evil-test4/vanko-c-drive.CYLR/G/
+    kind: triage_collection
+    collector: CyLR
+    contents: ['$LogFile', '$MFT', 'ProgramData', 'Users', 'Windows']
+
+  - path: /cases/find-evil-test4/Vanko Student Scenario_D01_01.docx
+    kind: case_briefing
+    sha256: null                              # not load-bearing for integrity
+
+# No memory image for this case — disk-side investigation only.
+
+# Time anchors (all UTC).
+timeline:
+  - { utc: "2016-06-22..2016-06-23", event: "Documents allegedly posted to Chinese university research file share" }
+  - { utc: "2016-06-30",             event: "JARVIS detected large data transfer Stark research server → Vanko workstation; account suspended; email sent to Vanko" }
+  - { utc: "2016-11-04T17:47:41Z",   event: "Disk image acquired by Ovie Carroll using FTK Imager" }
+
+# Alleged source directories on the Stark research server (per the case
+# brief) — these names should appear in artefacts if Vanko accessed them.
+alleged_source_paths:
+  - '\StarkResearch\Level 5 Classified\'
+  - '\StarkResearch\Level 6 Classified\'
+  - '\StarkResearch\Level 7 Classified\'
+  - '\StarkResearch\Level 8 Classified\'
+
+# Suspected R&D topics — these substrings should surface in document
+# titles / Recent files / Jump Lists if Vanko was working on them.
+research_topics:
+  - "cell regeneration"
+  - "rapid cell"
+  - "ZF DNA"
+  - "Zebrafish"
+
+# Briefing-stated investigation goals — these become the agent's task list.
+goals:
+  - id: G1
+    question: "Was Vanko involved with the dissemination of classified information?"
+  - id: G2
+    question: "Validate whether Vanko copied a large volume of classified data from the StarkResearch server."
+  - id: G3
+    question: "What was done with the data after it was copied (cloud / USB / network share / external transfer)?"
+
+# Where the agent writes its outputs. NEVER inside evidence_dir.
+output:
+  analysis_dir: ./eval/results/test4-vanko/analysis
+  exports_dir:  ./eval/results/test4-vanko/exports
+  reports_dir:  ./eval/results/test4-vanko/reports
+  audit_dir:    ./eval/results/test4-vanko/audit
