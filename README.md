@@ -89,6 +89,75 @@ export ANTHROPIC_API_KEY=sk-ant-api03-...
 
 Full installation / setup: [`INSTALL.md`](INSTALL.md).
 
+## Running an investigation
+
+SIFT-OWL ships four bundled cases under `eval/cases/`. Each has a
+`case.yaml` (machine-readable evidence inventory) + `case.md` (human
+briefing) + a matching prompt in `eval/agents/sift_owl_v2/`:
+
+| Case | Evidence path | Prompt file |
+|---|---|---|
+| `rocba-001` | `/cases/find-evil-test/` (memory + disk) | `prompt-rocba-001.md` |
+| `test2-stark-apt` | `/cases/find-evil-test2/` (4 hosts, memory + disk) | `prompt-test2-stark-apt-v3.md` |
+| `test3-shieldbase` | `/cases/find-evil-test3/` (SHIELDBASE, 15+ hosts) | `prompt-test3-shieldbase.md` |
+| `test4-vanko` | `/cases/find-evil-test4/` (VANKO physical disk) | `prompt-test4-vanko.md` |
+
+The v2 self-correction loop is the canonical runner:
+
+```bash
+python -m eval.agents.sift_owl_v2.run_loop \
+    --case            rocba-001 \
+    --prompt-file     eval/agents/sift_owl_v2/prompt-rocba-001.md \
+    --model           sonnet \
+    --max-budget-usd  5.00 \
+    --max-iterations  3
+```
+
+It writes a timestamped run directory under
+`eval/results/<case>/sift-owl-v2/<UTC>-<model>/` with:
+
+```
+audit/exec_log.jsonl          # every MCP call (exec_id, args, hashes, parsed_summary, wall_ms)
+audit/raw/<sha256>            # content-addressed raw tool output
+iterations/iter_N/
+  prompt.md                   # what the agent saw this iter (incl. flagged claims from N-1)
+  final_response.md           # the agent's tagged report
+  validator_report.{md,json}  # per-claim verdicts + strict-verified score
+final_response.md             # the best report across iterations
+run_meta.json                 # command line, model, total cost, total wall
+```
+
+Loop terminates on convergence (0 demoted claims), no-improvement,
+or `--max-iterations` (default 3) / `--max-budget-usd` (default 10).
+`--llm-check` auto-enables when `ANTHROPIC_API_KEY` is set; pass
+`--no-llm-check` to force pure rule-based validation. `--dry-run`
+checks the case + prompt + evidence hashes without spawning the
+investigator.
+
+Useful side tools:
+
+```bash
+# Inspect the MCP tool inventory + per-tool docstrings
+sift-mcp inspect
+
+# Re-validate any prior run (rule-based only; or pass --llm-check)
+sift-validate eval/results/rocba-001/sift-owl-v2/<run-dir>/
+
+# Run the MCP server standalone (e.g. to attach a different client)
+sift-mcp serve
+```
+
+### Your own case
+
+Drop the evidence under `/cases/<your-case>/`, create
+`eval/cases/<your-case>/case.yaml` (use any of the four bundled
+ones as a template — `case_id`, `evidence_dir`, `evidence:` list
+with `path` + `kind` + `sha256` per file), write a
+`prompt-<your-case>.md` describing investigation goals and the
+case-specific context, then invoke `run_loop` as above. The
+harness will pre-hash every `evidence:` entry and refuse to start
+if a hash drifts (chain of custody).
+
 ## Repo layout
 
 ```
