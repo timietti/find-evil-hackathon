@@ -1,0 +1,37 @@
+{
+  "run_id": "20260612T093511Z-sonnet",
+  "case": "test4-vanko",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_iterations": 3,
+  "started_utc": "2026-06-12T09:35:11Z",
+  "evidence_dir": "/cases/find-evil-test4",
+  "pre_run_hashes": {},
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v2/prompt-test4-vanko.md",
+  "claude_version": "2.1.168 (Claude Code)",
+  "harness_git_rev": "ede7b4567d6af73eed45b1e4f4404b530609c02e",
+  "finished_utc": "2026-06-12T10:04:11Z",
+  "total_cost_usd": 1.7546186499999998,
+  "iterations": [
+    {
+      "iteration": 1,
+      "exit_code": 0,
+      "wall_seconds": 959.4080917835236,
+      "cost_usd": 1.1670923999999998,
+      "tool_use_count": 37,
+      "confirmed_count": 38,
+      "verified_count": 25,
+      "demoted_count": 13
+    },
+    {
+      "iteration": 2,
+      "exit_code": 0,
+      "wall_seconds": 584.2853770256042,
+      "cost_usd": 0.58752625,
+      "tool_use_count": 16,
+      "confirmed_count": 37,
+      "verified_count": 37,
+      "demoted_count": 0
+    }
+  ]
+}

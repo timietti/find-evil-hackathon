@@ -1,0 +1,2215 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test4-vanko/sift-owl-v2/20260612T093511Z-sonnet/iterations/iter_2",
+    "total_claims": 42,
+    "confirmed_count": 37,
+    "inferred_count": 4,
+    "hypothesis_count": 0,
+    "gap_count": 1,
+    "other_count": 0,
+    "verified": 37,
+    "partial": 0,
+    "failed": 0,
+    "unverifiable": 0,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 0,
+    "confirmation_score": 1.0,
+    "llm_checked": 0,
+    "llm_verified": 0,
+    "llm_unsupported": 0,
+    "llm_unrelated": 0,
+    "llm_uncertain": 0,
+    "llm_total_cost_usd": 0.0
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-b3aa-7783-898f-e745b5054501",
+        "exec_ids": [
+          "019ebb2f-b3aa-7783-898f-e745b5054501"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-b3aa-7783-898f-e745b5054501`]** Examiner field is `Ovie Carroll`, evidence number `20161104-HD001`, description `Surface 3`, acquisition date `Fri Nov  4 17:47:41 2016`. EWF MD5 matches embedded hash `4032d556cc866c23f1e797410e95603c`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-b3aa-7783-898f-e745b5054501`]",
+        "line_no": 24
+      },
+      "status": "verified",
+      "tool_name": "ewf_info",
+      "tool_names": [
+        "ewf_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "4032d556cc866c23f1e797410e95603c"
+        ],
+        "quoted": [
+          "Fri Nov  4 17:47:41 2016",
+          "4032d556cc866c23f1e797410e95603c",
+          "Ovie Carroll",
+          "20161104-HD001",
+          "Surface 3"
+        ]
+      },
+      "matched": [
+        "4032d556cc866c23f1e797410e95603c",
+        "Fri Nov  4 17:47:41 2016",
+        "Ovie Carroll",
+        "20161104-HD001",
+        "Surface 3"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-b58c-7062-82ad-68d5306eacf9",
+        "exec_ids": [
+          "019ebb2f-b58c-7062-82ad-68d5306eacf9"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-b58c-7062-82ad-68d5306eacf9`]** GPT disk; C: drive is partition slot `003` starting at sector `1411072`, length `230883328` sectors.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-b58c-7062-82ad-68d5306eacf9`]",
+        "line_no": 26
+      },
+      "status": "verified",
+      "tool_name": "tsk_partition_table",
+      "tool_names": [
+        "tsk_partition_table"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "003",
+          "1411072",
+          "230883328"
+        ]
+      },
+      "matched": [
+        "003",
+        "1411072",
+        "230883328"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-d48a-7a20-b5f1-8bf2bf8efade",
+        "exec_ids": [
+          "019ebb2f-d48a-7a20-b5f1-8bf2bf8efade"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-d48a-7a20-b5f1-8bf2bf8efade`]** Filesystem: NTFS, volume name `Windows`, serial `A420A4D720A4B1AA`, cluster size `4096` bytes.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-d48a-7a20-b5f1-8bf2bf8efade`]",
+        "line_no": 28
+      },
+      "status": "verified",
+      "tool_name": "tsk_fs_stat",
+      "tool_names": [
+        "tsk_fs_stat"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "A420A4D720A4B1AA"
+        ],
+        "quoted": [
+          "A420A4D720A4B1AA",
+          "4096",
+          "Windows"
+        ]
+      },
+      "matched": [
+        "A420A4D720A4B1AA",
+        "4096",
+        "Windows"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+          "019ebb37-8282-7ad1-8315-93a5dc3e7321"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`, exec_id `019ebb37-8282-7ad1-8315-93a5dc3e7321`]** Subject profile: single primary user directory `\\Users\\PC User` (MFT parent entry `263009`). SRUM confirms user SID `S-1-5-21-3739107332-290452467-3466442662-1001`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`, exec_id `019ebb37-8282-7ad1-8315-93a5dc3e7321`]",
+        "line_no": 30
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_srum_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "S-1-5-21-3739107332-290452467-3466442662-1001",
+          "263009",
+          "\\Users\\PC User"
+        ]
+      },
+      "matched": [
+        "\\Users\\PC",
+        "S-1-5-21-3739107332-290452467-3466442662-1001",
+        "263009",
+        "\\Users\\PC User"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "| File | Location | MFT Entry | Size | Record Changed | exec_id |\n|---|---|---|---|---|---|\n| `ZF DNA splice test notes.docx` | `\\Users\\PC User\\Documents` | `13367` | `168425` | `2016-06-18T22:00:15Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 42
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-18T22:00:15Z"
+        ],
+        "filenames": [
+          "notes.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "\\Users\\PC User\\Documents",
+          "168425",
+          "2016-06-18T22:00:15Z",
+          "ZF DNA splice test notes.docx",
+          "13367"
+        ]
+      },
+      "matched": [
+        "2016-06-18T22:00:15Z",
+        "notes.docx",
+        "\\Users\\PC",
+        "\\Users\\PC User\\Documents",
+        "168425",
+        "ZF DNA splice test notes.docx",
+        "13367"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Rapid cell regeneration research.docx` | `\\Users\\PC User\\Documents` | `31868` | `480110` | `2016-06-18T22:00:15Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 43
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-18T22:00:15Z"
+        ],
+        "filenames": [
+          "research.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Rapid cell regeneration research.docx",
+          "\\Users\\PC User\\Documents",
+          "2016-06-18T22:00:15Z",
+          "31868",
+          "480110"
+        ]
+      },
+      "matched": [
+        "2016-06-18T22:00:15Z",
+        "research.docx",
+        "\\Users\\PC",
+        "Rapid cell regeneration research.docx",
+        "\\Users\\PC User\\Documents",
+        "31868",
+        "480110"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `zebrafish.pdf` | `\\Users\\PC User\\Documents` | `68394` | `708591` | `2016-06-19T01:32:02Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 44
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-19T01:32:02Z"
+        ],
+        "filenames": [
+          "zebrafish.pdf"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "\\Users\\PC User\\Documents",
+          "zebrafish.pdf",
+          "708591",
+          "2016-06-19T01:32:02Z",
+          "68394"
+        ]
+      },
+      "matched": [
+        "2016-06-19T01:32:02Z",
+        "zebrafish.pdf",
+        "\\Users\\PC",
+        "\\Users\\PC User\\Documents",
+        "708591",
+        "68394"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Rapid cell regeneration research.docx` | `\\Users\\PC User\\OneDrive\\Documents` | `6361` | `493466` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 45
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "research.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Rapid cell regeneration research.docx",
+          "6361",
+          "2016-06-30T14:47:38Z",
+          "493466",
+          "\\Users\\PC User\\OneDrive\\Documents"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "research.docx",
+        "\\Users\\PC",
+        "Rapid cell regeneration research.docx",
+        "6361",
+        "493466",
+        "\\Users\\PC User\\OneDrive\\Documents"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `STARK-TS-Level7-CryoDNA Storage Inventory.docx` | `\\Users\\PC User\\OneDrive\\Documents` | `2193` | `20124` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 46
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Inventory.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2193",
+          "2016-06-30T14:47:38Z",
+          "STARK-TS-Level7-CryoDNA Storage Inventory.docx",
+          "20124",
+          "\\Users\\PC User\\OneDrive\\Documents"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "Inventory.docx",
+        "\\Users\\PC",
+        "2193",
+        "STARK-TS-Level7-CryoDNA Storage Inventory.docx",
+        "20124",
+        "\\Users\\PC User\\OneDrive\\Documents"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Cryo-regeneration of DNA sample-Alpha_Experiment.docx` | `\\Users\\PC User\\OneDrive\\Documents` | `58405` | `494629` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 47
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "sample-Alpha_Experiment.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "58405",
+          "2016-06-30T14:47:38Z",
+          "\\Users\\PC User\\OneDrive\\Documents",
+          "Cryo-regeneration of DNA sample-Alpha_Experiment.docx",
+          "494629"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "sample-Alpha_Experiment.docx",
+        "\\Users\\PC",
+        "58405",
+        "\\Users\\PC User\\OneDrive\\Documents",
+        "Cryo-regeneration of DNA sample-Alpha_Experiment.docx",
+        "494629"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `cryoregeneration x-alpha attempts.xlsx` | `\\Users\\PC User\\OneDrive\\Documents` | `58966` | `12382` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 48
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "attempts.xlsx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-30T14:47:38Z",
+          "12382",
+          "cryoregeneration x-alpha attempts.xlsx",
+          "\\Users\\PC User\\OneDrive\\Documents",
+          "58966"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "attempts.xlsx",
+        "\\Users\\PC",
+        "12382",
+        "cryoregeneration x-alpha attempts.xlsx",
+        "\\Users\\PC User\\OneDrive\\Documents",
+        "58966"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Stark_TS-Level8A_CryoDNA.blacklight.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_8` | `58969` | `20000293` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 49
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Stark_TS-Level8A_CryoDNA.blacklight.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "58969",
+          "20000293",
+          "Stark_TS-Level8A_CryoDNA.blacklight.docx",
+          "2016-06-30T14:47:38Z",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_8"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "Stark_TS-Level8A_CryoDNA.blacklight.docx",
+        "\\Users\\PC",
+        "58969",
+        "20000293",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_8"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Stark_TS-Level8a_DNA Marriage.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_8` | `58971` | `17251` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 50
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Marriage.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "17251",
+          "58971",
+          "2016-06-30T14:47:38Z",
+          "Stark_TS-Level8a_DNA Marriage.docx",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_8"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "Marriage.docx",
+        "\\Users\\PC",
+        "17251",
+        "58971",
+        "Stark_TS-Level8a_DNA Marriage.docx",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_8"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Level 8 Indoc Information.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_8` | `59216` | `23187` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 51
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Information.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "59216",
+          "2016-06-30T14:47:38Z",
+          "23187",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_8",
+          "Level 8 Indoc Information.docx"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "Information.docx",
+        "\\Users\\PC",
+        "59216",
+        "23187",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_8",
+        "Level 8 Indoc Information.docx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Observations on regenerative DNA samples.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_12` | `59031` | `129214` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 52
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "samples.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-30T14:47:38Z",
+          "Observations on regenerative DNA samples.docx",
+          "59031",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_12",
+          "129214"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "samples.docx",
+        "\\Users\\PC",
+        "Observations on regenerative DNA samples.docx",
+        "59031",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_12",
+        "129214"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Reverse Cryo-DNA_DraftStandards_lab_results.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_12` | `59034` | `21469` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 53
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Cryo-DNA_DraftStandards_lab_results.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Reverse Cryo-DNA_DraftStandards_lab_results.docx",
+          "59034",
+          "21469",
+          "2016-06-30T14:47:38Z",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_12"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "Cryo-DNA_DraftStandards_lab_results.docx",
+        "\\Users\\PC",
+        "Reverse Cryo-DNA_DraftStandards_lab_results.docx",
+        "59034",
+        "21469",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_12"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_12` | `56770` | `178280` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 54
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "178280",
+          "2016-06-30T14:47:38Z",
+          "Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx",
+          "56770",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_12"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx",
+        "\\Users\\PC",
+        "178280",
+        "56770",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_12"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| `Stark TS-Level 12_Project_Nehemiah 4.docx` | `\\Users\\PC User\\OneDrive\\Documents\\Level_12` | `59190` | `213302` | `2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 55
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "4.docx"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "213302",
+          "59190",
+          "2016-06-30T14:47:38Z",
+          "Stark TS-Level 12_Project_Nehemiah 4.docx",
+          "\\Users\\PC User\\OneDrive\\Documents\\Level_12"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "4.docx",
+        "\\Users\\PC",
+        "213302",
+        "59190",
+        "Stark TS-Level 12_Project_Nehemiah 4.docx",
+        "\\Users\\PC User\\OneDrive\\Documents\\Level_12"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** `zebrafish.pdf` (entry `68394`) carries a `Zone.Identifier` ADS (`zebrafish.pdf:Zone.Identifier`, 106 bytes), indicating it was downloaded from the internet. The record_changed timestamp `2016-06-19T01:32:02Z` shows it was accessed/referenced on the evening before the JARVIS alert.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 57
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-19T01:32:02Z"
+        ],
+        "filenames": [
+          "zebrafish.pdf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Zone.Identifier",
+          "zebrafish.pdf",
+          "68394",
+          "2016-06-19T01:32:02Z",
+          "zebrafish.pdf:Zone.Identifier"
+        ]
+      },
+      "matched": [
+        "2016-06-19T01:32:02Z",
+        "zebrafish.pdf",
+        "Zone.Identifier",
+        "68394",
+        "zebrafish.pdf:Zone.Identifier"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** Recent Item links confirm active opening of research files on June 29\u201330, 2016:\n- `ZF DNA splice test notes.docx.lnk` (entry `8408`), modified `2016-06-29T16:20:43Z`\n- `Rapid cell regeneration research.docx.lnk` (entry `2232`), modified `2016-06-29T16:20:16Z`\n- `DNA_replication_en.png.lnk` (entry `5920`), modified `2016-06-30T02:02:43Z`\n- `490px-Nulcear_radiation-LEVEL7.jpg.lnk` (entry `36335`), modified `2016-06-29T20:21:28Z`",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 59
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-29T16:20:43Z",
+          "2016-06-29T16:20:16Z",
+          "2016-06-29T20:21:28Z",
+          "2016-06-30T02:02:43Z"
+        ],
+        "filenames": [
+          "DNA_replication_en.png",
+          "490px-Nulcear_radiation-LEVEL7.jpg",
+          "research.docx",
+          "notes.docx"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-29T16:20:43Z",
+          "5920",
+          "ZF DNA splice test notes.docx.lnk",
+          "36335",
+          "2232",
+          "DNA_replication_en.png.lnk",
+          "2016-06-29T16:20:16Z",
+          "490px-Nulcear_radiation-LEVEL7.jpg.lnk",
+          "8408",
+          "2016-06-29T20:21:28Z",
+          "2016-06-30T02:02:43Z",
+          "Rapid cell regeneration research.docx.lnk"
+        ]
+      },
+      "matched": [
+        "2016-06-29T16:20:43Z",
+        "2016-06-29T16:20:16Z",
+        "2016-06-29T20:21:28Z",
+        "2016-06-30T02:02:43Z",
+        "DNA_replication_en.png",
+        "490px-Nulcear_radiation-LEVEL7.jpg",
+        "research.docx",
+        "notes.docx",
+        "5920",
+        "ZF DNA splice test notes.docx.lnk",
+        "36335",
+        "2232",
+        "DNA_replication_en.png.lnk",
+        "490px-Nulcear_radiation-LEVEL7.jpg.lnk",
+        "8408",
+        "Rapid cell regeneration research.docx.lnk"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** The workstation of \"PC User\" (Anthony Vanko) contained all three JARVIS-flagged research topics \u2014 zebrafish DNA splice research (`ZF DNA splice test notes.docx`, `zebrafish.pdf`), rapid cell regeneration (`Rapid cell regeneration research.docx`), and Level 7\u201312 Stark Enterprises classified documents (`STARK-TS-Level7-CryoDNA Storage Inventory.docx`, `Stark_TS-Level8A_CryoDNA.blacklight.docx`, `Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx`) \u2014 all present and actively accessed during the week of `2016-06-18T22:00:15Z` through `2016-06-30T14:47:38Z`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 65
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-18T22:00:15Z",
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [
+          "Stark_TS-Level8A_CryoDNA.blacklight.docx",
+          "research.docx",
+          "zebrafish.pdf",
+          "Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx",
+          "notes.docx",
+          "Inventory.docx"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Rapid cell regeneration research.docx",
+          "Stark_TS-Level8A_CryoDNA.blacklight.docx",
+          "zebrafish.pdf",
+          "STARK-TS-Level7-CryoDNA Storage Inventory.docx",
+          "2016-06-18T22:00:15Z",
+          "2016-06-30T14:47:38Z",
+          "Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx",
+          "ZF DNA splice test notes.docx"
+        ]
+      },
+      "matched": [
+        "2016-06-18T22:00:15Z",
+        "2016-06-30T14:47:38Z",
+        "Stark_TS-Level8A_CryoDNA.blacklight.docx",
+        "research.docx",
+        "zebrafish.pdf",
+        "Stark_Level_12_Wolverine_Dossier_Behavior_Controls.docx",
+        "notes.docx",
+        "Inventory.docx",
+        "Rapid cell regeneration research.docx",
+        "STARK-TS-Level7-CryoDNA Storage Inventory.docx",
+        "ZF DNA splice test notes.docx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** A Recent Items link file `STARK_ENT (D).lnk` (entry `5030`) exists at `\\Users\\PC User\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\`, created `2016-05-13T19:15:07Z`. The `(D)` notation confirms the StarkResearch server share was mapped as local drive letter `D:` since at least May 13, 2016.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 73
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-05-13T19:15:07Z"
+        ],
+        "filenames": [],
+        "paths": [
+          "\\Windows\\Recent",
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-05-13T19:15:07Z",
+          "\\Users\\PC User\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\",
+          "STARK_ENT (D).lnk",
+          "D:",
+          "5030",
+          "(D)"
+        ]
+      },
+      "matched": [
+        "2016-05-13T19:15:07Z",
+        "\\Windows\\Recent",
+        "\\Users\\PC",
+        "\\Users\\PC User\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\",
+        "STARK_ENT (D).lnk",
+        "D:",
+        "5030",
+        "(D)"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** All eleven classified files in `\\Users\\PC User\\OneDrive\\Documents\\` and its subdirectories (`Level_8`, `Level_12`) share the same MFT record_changed timestamp `2016-06-30T14:47:38Z` \u2014 the identical moment JARVIS detected the large data transfer. Entries `58969`, `58971`, and `56770` each have their `copied` field set to `true`, confirming these documents were copied from an external source rather than created locally.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 77
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "58969",
+          "2016-06-30T14:47:38Z",
+          "58971",
+          "Level_8",
+          "56770",
+          "true",
+          "Level_12",
+          "copied",
+          "\\Users\\PC User\\OneDrive\\Documents\\"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "\\Users\\PC",
+        "58969",
+        "58971",
+        "Level_8",
+        "56770",
+        "true",
+        "Level_12",
+        "copied",
+        "\\Users\\PC User\\OneDrive\\Documents\\"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** A Stark network monitoring log `STARKSURFACE-20160630-1025.log` (entry `395`) was created at `2016-06-30T14:25:38Z` \u2014 22 minutes before the sync timestamp `2016-06-30T14:47:38Z`. This log captures activity during the data transfer window, consistent with the workstation's connection to the StarkResearch server during the exfiltration session.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 79
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z",
+          "2016-06-30T14:25:38Z"
+        ],
+        "filenames": [
+          "STARKSURFACE-20160630-1025.log"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "STARKSURFACE-20160630-1025.log",
+          "2016-06-30T14:25:38Z",
+          "2016-06-30T14:47:38Z",
+          "395"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "2016-06-30T14:25:38Z",
+        "STARKSURFACE-20160630-1025.log",
+        "395"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** The MFT confirms an earlier anomalously large Stark monitoring log: `STARKSURFACE-20160621-0643.log` (entry `38`, `160752` bytes, created `2016-06-21T10:43:37Z`) in `\\Windows\\Temp\\`. This represents a bulk session on June 21 \u2014 nine days before the final exfiltration \u2014 demonstrating the pattern of repeated connections to the Stark network prior to the JARVIS-flagged event.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 81
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-21T10:43:37Z"
+        ],
+        "filenames": [
+          "STARKSURFACE-20160621-0643.log"
+        ],
+        "paths": [
+          "\\Windows\\Temp"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-21T10:43:37Z",
+          "STARKSURFACE-20160621-0643.log",
+          "38",
+          "160752",
+          "\\Windows\\Temp\\"
+        ]
+      },
+      "matched": [
+        "2016-06-21T10:43:37Z",
+        "STARKSURFACE-20160621-0643.log",
+        "\\Windows\\Temp",
+        "38",
+        "160752",
+        "\\Windows\\Temp\\"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+          "019ebb3b-b1b4-7490-b112-3a15e8f457fe"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`, exec_id `019ebb3b-b1b4-7490-b112-3a15e8f457fe`]** Vanko copied a large volume of Stark classified research data to his workstation on 2016-06-30 between approximately 14:25\u201314:47 UTC, exploiting the `D:` mapped drive connection (`STARK_ENT (D).lnk`, entry `5030`) to the StarkResearch server established since at least `2016-05-13T19:15:07Z`. The identical record_changed timestamp `2016-06-30T14:47:38Z` across all eleven OneDrive classified documents, combined with the `copied` MFT flag (`true`) on entries `58969`, `58971`, `56770`, confirms bulk copy rather than local creation.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`, exec_id `019ebb3b-b1b4-7490-b112-3a15e8f457fe`]",
+        "line_no": 94
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-05-13T19:15:07Z",
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "58969",
+          "copied",
+          "2016-05-13T19:15:07Z",
+          "2016-06-30T14:47:38Z",
+          "STARK_ENT (D).lnk",
+          "58971",
+          "D:",
+          "true",
+          "56770",
+          "5030"
+        ]
+      },
+      "matched": [
+        "2016-05-13T19:15:07Z",
+        "2016-06-30T14:47:38Z",
+        "58969",
+        "copied",
+        "STARK_ENT (D).lnk",
+        "58971",
+        "D:",
+        "true",
+        "56770",
+        "5030"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+          "019ebb3b-e922-7b73-9e2c-0a1ac717beaf"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`, exec_id `019ebb3b-e922-7b73-9e2c-0a1ac717beaf`]** The MFT shows the Prefetch file `ONEDRIVE.EXE-CA84A5C1.pf` (entry `10575`) was created at `2016-06-30T14:46:54Z` \u2014 44 seconds before the classified documents' MFT record_changed timestamp of `2016-06-30T14:47:38Z`. The Prefetch parse confirms the same executable (`ONEDRIVE.EXE`, hash `CA84A5C1`) with a total run count of `14` and last run at `2016-11-04T13:24:58Z`. The earliest retained previous run in the Prefetch is `2016-07-02T23:02:23Z` (Win10 stores only 8 previous runs; the June 30 entry rolled off), confirming continuous OneDrive activity through July\u2013November 2016.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`, exec_id `019ebb3b-e922-7b73-9e2c-0a1ac717beaf`]",
+        "line_no": 102
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:46:54Z",
+          "2016-06-30T14:47:38Z",
+          "2016-07-02T23:02:23Z",
+          "2016-11-04T13:24:58Z"
+        ],
+        "filenames": [
+          "ONEDRIVE.EXE",
+          "-CA84A5C1.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "10575",
+          "ONEDRIVE.EXE-CA84A5C1.pf",
+          "14",
+          "2016-07-02T23:02:23Z",
+          "ONEDRIVE.EXE",
+          "2016-06-30T14:47:38Z",
+          "2016-11-04T13:24:58Z",
+          "2016-06-30T14:46:54Z",
+          "CA84A5C1"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:46:54Z",
+        "2016-06-30T14:47:38Z",
+        "2016-07-02T23:02:23Z",
+        "2016-11-04T13:24:58Z",
+        "ONEDRIVE.EXE",
+        "-CA84A5C1.pf",
+        "10575",
+        "ONEDRIVE.EXE-CA84A5C1.pf",
+        "14",
+        "CA84A5C1"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb3b-b1b4-7490-b112-3a15e8f457fe",
+        "exec_ids": [
+          "019ebb3b-b1b4-7490-b112-3a15e8f457fe"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb3b-b1b4-7490-b112-3a15e8f457fe`]** HKCU Run key confirms OneDrive was configured to autostart at every login: value name `OneDrive`, value data `C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe`. This means every time Vanko logged in after June 30, 2016, OneDrive would attempt to sync \u2014 uploading any new or modified files to Microsoft cloud storage.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb3b-b1b4-7490-b112-3a15e8f457fe`]",
+        "line_no": 104
+      },
+      "status": "verified",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "OneDrive.exe"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [
+          "C:\\Users\\PC"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe",
+          "OneDrive"
+        ]
+      },
+      "matched": [
+        "OneDrive.exe",
+        "\\Users\\PC",
+        "C:\\Users\\PC",
+        "C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe",
+        "OneDrive"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb3b-e922-7b73-9e2c-0a1ac717beaf",
+        "exec_ids": [
+          "019ebb3b-e922-7b73-9e2c-0a1ac717beaf"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb3b-e922-7b73-9e2c-0a1ac717beaf`]** The Prefetch files_loaded list references sync log files `SYNCENGINE-2016-7-2.232.6860.1.AODL` (July 2, 2016), `SYNCENGINE-2016-8-8.1851.6300.1.AODL` (August 8, 2016), `SYNCENGINE-2016-9-30.1154.6044.1.AODL` (September 30, 2016), and `SYNCENGINE-2016-10-30.2311.7980.1.AODL` (October 30, 2016), confirming active OneDrive sync engine activity for at least four months after the initial exfiltration.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb3b-e922-7b73-9e2c-0a1ac717beaf`]",
+        "line_no": 106
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SYNCENGINE-2016-9-30.1154.6044.1.AODL",
+          "SYNCENGINE-2016-7-2.232.6860.1.AODL",
+          "SYNCENGINE-2016-8-8.1851.6300.1.AODL",
+          "SYNCENGINE-2016-10-30.2311.7980.1.AODL"
+        ]
+      },
+      "matched": [
+        "SYNCENGINE-2016-9-30.1154.6044.1.AODL",
+        "SYNCENGINE-2016-7-2.232.6860.1.AODL",
+        "SYNCENGINE-2016-8-8.1851.6300.1.AODL",
+        "SYNCENGINE-2016-10-30.2311.7980.1.AODL"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb3b-b1b4-7490-b112-3a15e8f457fe",
+        "exec_ids": [
+          "019ebb3b-b1b4-7490-b112-3a15e8f457fe"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb3b-b1b4-7490-b112-3a15e8f457fe`]** The following additional cloud-sync clients are configured to autostart via HKCU Run:\n- `iCloudServices.exe` \u2014 `C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudServices.exe`\n- `iCloudDrive.exe` \u2014 `C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudDrive.exe`\n- `iCloudPhotos.exe` \u2014 `C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudPhotos.exe`\n- `ApplePhotoStreams.exe` \u2014 cloud photo stream to Apple iCloud\n- `Google Photos Backup.exe` \u2014 `C:\\Users\\PC User\\AppData\\Local\\Programs\\Google\\Google Photos Backup\\Google Photos Backup.exe`",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb3b-b1b4-7490-b112-3a15e8f457fe`]",
+        "line_no": 110
+      },
+      "status": "verified",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "iCloudServices.exe",
+          "Backup.exe",
+          "ApplePhotoStreams.exe",
+          "iCloudDrive.exe",
+          "iCloudPhotos.exe"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [
+          "C:\\Users\\PC",
+          "C:\\Program"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudServices.exe",
+          "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudPhotos.exe",
+          "Google Photos Backup.exe",
+          "iCloudServices.exe",
+          "ApplePhotoStreams.exe",
+          "iCloudDrive.exe",
+          "iCloudPhotos.exe",
+          "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudDrive.exe"
+        ]
+      },
+      "matched": [
+        "iCloudServices.exe",
+        "Backup.exe",
+        "ApplePhotoStreams.exe",
+        "iCloudDrive.exe",
+        "iCloudPhotos.exe",
+        "\\Users\\PC",
+        "C:\\Users\\PC",
+        "C:\\Program",
+        "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudServices.exe",
+        "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudPhotos.exe",
+        "Google Photos Backup.exe",
+        "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudDrive.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** Dropbox client is installed at `Client_12.4.22` under `Program Files (x86)\\Dropbox` (MFT entry `16968`, `Dropbox.exe`, record_changed `2016-10-14T22:42:03Z`) and a user Dropbox folder exists at `\\Users\\PC User\\Dropbox\\` with a cache directory `prefetch_cache` (entry `32909`, created `2016-07-07T01:44:54Z` \u2014 one week after the data exfiltration).",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 121
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-10-14T22:42:03Z",
+          "2016-07-07T01:44:54Z"
+        ],
+        "filenames": [
+          "Dropbox.exe"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-10-14T22:42:03Z",
+          "Program Files (x86)\\Dropbox",
+          "\\Users\\PC User\\Dropbox\\",
+          "2016-07-07T01:44:54Z",
+          "Dropbox.exe",
+          "16968",
+          "32909",
+          "prefetch_cache",
+          "Client_12.4.22"
+        ]
+      },
+      "matched": [
+        "2016-10-14T22:42:03Z",
+        "2016-07-07T01:44:54Z",
+        "Dropbox.exe",
+        "\\Users\\PC",
+        "Program Files (x86)\\Dropbox",
+        "\\Users\\PC User\\Dropbox\\",
+        "16968",
+        "32909",
+        "prefetch_cache",
+        "Client_12.4.22"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]** `DROPBOX.EXE-8DACDCF4.pf` (entry `149508`, `\\Windows\\Prefetch`) has the MFT `in_use` field set to `false` \u2014 this Prefetch entry is unallocated (deleted), with all timestamps at `2016-10-14T22:42:42Z`. The deletion of the Prefetch entry for Dropbox while retaining the Dropbox folder and installer is a potential indicator of selective artefact suppression.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb2f-fabe-7e03-bd85-daf567387d3d`]",
+        "line_no": 123
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-10-14T22:42:42Z"
+        ],
+        "filenames": [
+          "-8DACDCF4.pf",
+          "DROPBOX.EXE"
+        ],
+        "paths": [
+          "\\Windows\\Prefetch"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-10-14T22:42:42Z",
+          "false",
+          "\\Windows\\Prefetch",
+          "in_use",
+          "149508",
+          "DROPBOX.EXE-8DACDCF4.pf"
+        ]
+      },
+      "matched": [
+        "2016-10-14T22:42:42Z",
+        "-8DACDCF4.pf",
+        "DROPBOX.EXE",
+        "\\Windows\\Prefetch",
+        "false",
+        "in_use",
+        "149508",
+        "DROPBOX.EXE-8DACDCF4.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb30-b3fc-71b3-92d5-4e71f7d8f70a",
+        "exec_ids": [
+          "019ebb30-b3fc-71b3-92d5-4e71f7d8f70a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb30-b3fc-71b3-92d5-4e71f7d8f70a`]** Multiple DropboxUpdate log files exist in `ProgramData/Dropbox/Update/Log` spanning August 2015 through 2016, including `DropboxUpdate.log-2015-08-26-22-23-59-490-3772` (inode `303485`) and `DropboxUpdate.log-2016-02-18-02-09-43-432-6996` (inode `20866`), confirming Dropbox was actively maintained throughout the period of interest.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb30-b3fc-71b3-92d5-4e71f7d8f70a`]",
+        "line_no": 125
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "DropboxUpdate.log"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "DropboxUpdate.log-2016-02-18-02-09-43-432-6996",
+          "303485",
+          "20866",
+          "DropboxUpdate.log-2015-08-26-22-23-59-490-3772",
+          "ProgramData/Dropbox/Update/Log"
+        ]
+      },
+      "matched": [
+        "DropboxUpdate.log",
+        "DropboxUpdate.log-2016-02-18-02-09-43-432-6996",
+        "303485",
+        "20866",
+        "DropboxUpdate.log-2015-08-26-22-23-59-490-3772",
+        "ProgramData/Dropbox/Update/Log"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb30-b3fc-71b3-92d5-4e71f7d8f70a",
+        "exec_ids": [
+          "019ebb30-b3fc-71b3-92d5-4e71f7d8f70a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb30-b3fc-71b3-92d5-4e71f7d8f70a`]** Multiple versions of the iCloud installer are cached:\n- `iCloud Control Panel 4.1.1.53` (inode `306815`)\n- `iCloud Control Panel 5.1.0.34` (inode `46785`)\n- `iCloud Control Panel 5.2.1.69` (inode `21263`)",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb30-b3fc-71b3-92d5-4e71f7d8f70a`]",
+        "line_no": 129
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "5.1.0.34",
+          "5.2.1.69",
+          "4.1.1.53"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "306815",
+          "iCloud Control Panel 5.1.0.34",
+          "46785",
+          "iCloud Control Panel 5.2.1.69",
+          "21263",
+          "iCloud Control Panel 4.1.1.53"
+        ]
+      },
+      "matched": [
+        "5.1.0.34",
+        "5.2.1.69",
+        "4.1.1.53",
+        "306815",
+        "iCloud Control Panel 5.1.0.34",
+        "46785",
+        "iCloud Control Panel 5.2.1.69",
+        "21263",
+        "iCloud Control Panel 4.1.1.53"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "| Investigation Goal | Finding | exec_id(s) | Confidence |\n|---|---|---|---|\n| G1: Vanko involved in dissemination | All three JARVIS-flagged research topics (zebrafish, cell regeneration, ZF DNA splice) plus Level 7\u201312 classified Stark documents found locally and in OneDrive folder, actively accessed `2016-06-29T16:20:43Z`\u2013`2016-06-30T14:47:38Z` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 146
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-29T16:20:43Z",
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-29T16:20:43Z",
+          "2016-06-30T14:47:38Z"
+        ]
+      },
+      "matched": [
+        "2016-06-29T16:20:43Z",
+        "2016-06-30T14:47:38Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d"
+        ],
+        "text": "|\n| G2: Large-volume data copy from StarkResearch | Mapped drive `D:` (`STARK_ENT (D).lnk`, entry `5030`) to Stark server from `2016-05-13T19:15:07Z`; 14 classified files bulk-copied at `2016-06-30T14:47:38Z`; `copied` flag `true` on entries `58969`, `58971`, `56770` | `019ebb2f-fabe-7e03-bd85-daf567387d3d` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 147
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-05-13T19:15:07Z",
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "58969",
+          "copied",
+          "2016-05-13T19:15:07Z",
+          "2016-06-30T14:47:38Z",
+          "STARK_ENT (D).lnk",
+          "58971",
+          "D:",
+          "true",
+          "56770",
+          "5030"
+        ]
+      },
+      "matched": [
+        "2016-05-13T19:15:07Z",
+        "2016-06-30T14:47:38Z",
+        "58969",
+        "copied",
+        "STARK_ENT (D).lnk",
+        "58971",
+        "D:",
+        "true",
+        "56770",
+        "5030"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+        "exec_ids": [
+          "019ebb2f-fabe-7e03-bd85-daf567387d3d",
+          "019ebb3b-e922-7b73-9e2c-0a1ac717beaf",
+          "019ebb3b-b1b4-7490-b112-3a15e8f457fe"
+        ],
+        "text": "|\n| G3: Post-transfer data disposition | OneDrive (primary): Prefetch file created `2016-06-30T14:46:54Z` (entry `10575`), HKCU autostart `OneDrive.exe`, sync logs through October 2016; Dropbox (installed, Prefetch deleted, cache `2016-07-07T01:44:54Z`); iCloud + Google Photos Backup autostart-configured | `019ebb2f-fabe-7e03-bd85-daf567387d3d`, `019ebb3b-e922-7b73-9e2c-0a1ac717beaf`, `019ebb3b-b1b4-7490-b112-3a15e8f457fe` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 148
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse",
+        "ezt_prefetch_parse",
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:46:54Z",
+          "2016-07-07T01:44:54Z"
+        ],
+        "filenames": [
+          "OneDrive.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-30T14:46:54Z",
+          "10575",
+          "OneDrive.exe",
+          "2016-07-07T01:44:54Z"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:46:54Z",
+        "2016-07-07T01:44:54Z",
+        "OneDrive.exe",
+        "10575"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}
