@@ -35,10 +35,13 @@
   SIFT-OWL
   Autonomous DFIR agent on a typed-MCP boundary
 
-  ROCBA-001:        91.7%
-  STARK-APT-001:    86.1%
+  ROCBA-001:        91.7%        memory-only · iter-3
+  ROCBA-001+disk:   96.7%        W3-58 disk+memory · iter-3
+  STARK-APT-001:    86.1%        4-host · iter-3
   SHIELDBASE        71.4%        single-shot held-out · $3.50 · 42 min
   SHIELDBASE  ⭐    89.9%        self-correcting loop · 71/79 V · $4.59 · 57 min
+  VANKO-001         36.4%        single-shot held-out · $2.21 · 30 min
+  VANKO-001   ⭐⭐  100.0%       post-W3-60 retry · 37/37 V · $1.75 · 26 min
   ```
 - Bottom: `github.com/timietti/find-evil-hackathon · MIT`
 
@@ -235,12 +238,15 @@ LLM-promoted: 1 (Haiku 4.5 prose check, $0.0013)
 **Screen — sub-scene 7a (4:30 - 4:48)**: results table
 
 ```
-Case                          Strict-verified    Cost      Wall    Hosts
-─────────────────────────────────────────────────────────────────────────
-ROCBA-001  dev                   91.7%          $4.69     24 min     1
-STARK-APT  dev                   86.1%          $1.92     20 min     4
-SHIELDBASE held-out single shot  71.4%  (30/42) $3.50     42 min    15+
-SHIELDBASE self-correcting ⭐    89.9%  (71/79) $4.59     57 min    15+
+Case                            Strict-verified    Cost      Wall    Hosts
+─────────────────────────────────────────────────────────────────────────────
+ROCBA-001  dev (memory-only)       91.7%          $4.69     24 min     1
+ROCBA-001  W3-58 (disk+memory)     96.7%          $4.30     27 min     1
+STARK-APT  dev                     86.1%          $1.92     20 min     4
+SHIELDBASE held-out single shot    71.4%  (30/42) $3.50     42 min    15+
+SHIELDBASE self-correcting ⭐      89.9%  (71/79) $4.59     57 min    15+
+VANKO-001  held-out single shot    36.4%  ( 8/22) $2.21     30 min     1
+VANKO-001  post-W3-60 retry ⭐⭐    100.0% (37/37) $1.75     26 min     1
 
 MITRE ATT&CK coverage: 20 of 22 target techniques at Full (91%)
                        2 Partial, 0 Missing
@@ -251,14 +257,16 @@ vs Protocol SIFT baseline:
 ```
 
 **VO** (18 s)
-> "Three cases. On the held-out SHIELDBASE, seventy-one percent of
-> claims verified on a single shot; the self-correcting loop with
-> libesedb-backed SRUM and inline LLM-check pushes that to eighty-nine
-> point nine percent — seventy-one of seventy-nine confirmed claims.
-> Twenty of twenty-two MITRE techniques at Full coverage. No shell,
-> no spoliation, every claim traceable. Sixty-points-of-accuracy lift
-> on ROCBA over the baseline; on STARK-APT, where the baseline didn't
-> even finish, we landed in twenty minutes for under two dollars."
+> "Five cases. On the held-out SHIELDBASE, seventy-one percent of
+> claims verified on a single shot; the self-correcting loop pushes
+> that to eighty-nine point nine percent. On the held-out VANKO-001
+> the prompt-fixed retry hit one hundred percent strict-verified —
+> thirty-seven of thirty-seven, twenty-six minutes, one dollar
+> seventy-five. Twenty of twenty-two MITRE techniques at Full
+> coverage. No shell, no spoliation, every claim traceable. Sixty
+> points of accuracy lift on ROCBA over the baseline; on STARK-APT,
+> where the baseline didn't even finish, we landed in twenty minutes
+> for under two dollars."
 
 **Screen — sub-scene 7b (4:48 - 5:00)**: closing card
 ```

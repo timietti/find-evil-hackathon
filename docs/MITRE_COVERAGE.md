@@ -1,4 +1,4 @@
-# MITRE ATT&CK coverage — SIFT-OWL v0.4 (38 MCP tools)
+# MITRE ATT&CK coverage — SIFT-OWL v0.5 (38 MCP tools)
 
 > Per-technique evaluation of the current typed MCP inventory's ability to
 > surface forensic evidence supporting detection. Cross-references the
@@ -10,11 +10,18 @@
 > W3-41 + W3-43). The MITRE coverage semantics they deliver are unchanged
 > from the original SrumECmd / PECmd output.
 >
-> Validator v6 (W3-50/52) tightens the rule-based pass — backticked
-> exec-id tokens no longer leak into the verifiable-token list, and
-> multi-tag bullet-list paragraphs scope each trailing `(exec_id …)`
-> cite to its own claim. Inline `--llm-check` (Haiku 4.5) auto-enables
-> when `ANTHROPIC_API_KEY` is in env (W3-45). Vol3 runs fully offline
+> Validator v7 (W3-50/52/54/56/57) tightens the rule-based pass —
+> backticked exec-id tokens no longer leak into the verifiable-token
+> list, multi-tag bullet-list paragraphs scope each trailing
+> `(exec_id …)` cite to its own claim, markdown-table claims with a
+> bare backticked UUID are accepted (bug C), and `.\\` dot-prefix
+> paths are normalised against the haystack (bug G). The companion
+> prompt v6 (W3-55 + W3-60) is a prompt-side fix that forbids
+> section-header `[CONFIRMED]` tags and tells the agent to quote
+> bare values rather than `field_name "value"` compounds — this
+> alone closed the VANKO held-out gap (36.4 % → 100.0 %, W3-59 vs
+> W3-61). Inline `--llm-check` (Haiku 4.5) auto-enables when
+> `ANTHROPIC_API_KEY` is in env (W3-45). Vol3 runs fully offline
 > after W3-53.
 
 ## Status legend

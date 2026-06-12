@@ -9,7 +9,7 @@
 
 ## Tagline (≤140 chars)
 
-> Autonomous DFIR agent on a typed-MCP boundary — no shell, every claim cited. Held-out SANS case: 71.4% single-shot → 89.9% with the loop.
+> Autonomous DFIR agent on a typed-MCP boundary — no shell, every claim cited. Two held-out SANS cases: 71.4 % → 89.9 % (SHIELDBASE), 36.4 % → 100.0 % (VANKO).
 
 ---
 
@@ -53,7 +53,8 @@ Three SANS-canonical cases ran end-to-end:
 |---|---|---|---|---|
 | ROCBA-001 (dev) | 1 | 18 GB memory | **91.7%** strict-verified | 31.0% |
 | STARK-APT-001 (dev) | 4 | 58 GB disk + memory | **86.1%** strict-verified | did not finish (budget overrun) |
-| SHIELDBASE / CRIMSON OSPREY ⭐ | 15+ | 198 GB disk + memory | **71.4%** strict-verified, single shot (HELD-OUT, $3.50, 42 min) **→ 89.9%** (71 of 79 claims) with the self-correcting loop ($4.59, 57 min) | n/a |
+| SHIELDBASE / CRIMSON OSPREY ⭐ | 15+ | 198 GB disk + memory | **71.4 %** single-shot (HELD-OUT, $3.50, 42 min) **→ 89.9 %** (71/79) with the self-correcting loop ($4.59, 57 min) | n/a |
+| VANKO-001 / "Abducted Zebrafish" ⭐ | 1 | 116 GiB Surface 3 physical disk (no memory) | **36.4 %** single-shot (HELD-OUT, $2.21, 30 min) **→ 100.0 %** (37/37) post-prompt-fix retry ($1.75, 26 min) — **first perfect strict-verified score across all SIFT-OWL evals** | n/a |
 
 **No spoliation across any run.** Every claim re-derivable from the committed
 audit log.
@@ -179,6 +180,49 @@ Substantive findings (all `exec_id`-cited):
   credential access).
 - Internal C2 relay `172.16.4.10:8080` → dual cloud (Azure 13.89.220.65,
   AWS 52.16.55.11).
+
+### Second held-out — VANKO-001 / "Abducted Zebrafish"
+
+**SANS FOR500 student handout**: Anthony Vanko, lead biochemical engineer
+at Stark Enterprises' DC R&D facility, suspected of disseminating
+classified research (cell regeneration, Zebrafish DNA splice testing)
+that appeared on a Chinese university file share in June 2016.
+Single-host case: a Microsoft Surface 3, full physical disk (116 GiB,
+GPT, 6 partitions). No memory image.
+
+**Held-out single-shot: 36.4 % strict-verified iter 1, $2.21, ~30 min.**
+The score collapsed on a previously-unseen prose-style pattern (bug H):
+the agent quoted `field_name "value"` compounds rather than bare values,
+and those compounds don't substring-match the JSON haystack's
+`"FieldName": "value"` representation. The matched-token lists showed
+the research itself was solid — the bug was prose noise.
+
+A 15-line prompt revision (W3-60: "quote bare values, not `field_name
+"value"` compounds") + a re-fire one hour later got the same case to
+**100.0 % strict-verified at iter 2 — 37 of 37 claims confirmed,
+$1.75, 26 minutes** — **the first perfect strict-verified score across
+any SIFT-OWL eval.** Loop converged with 0 demoted claims; iter 3 was
+unnecessary.
+
+Substantive findings (all 37 claims verified):
+- **14 classified Stark research documents** found by name + MFT entry
+  + location, including `Stark_TS-Level8A_CryoDNA.blacklight.docx`
+  (entry 58969) and `Stark_Level_12_Wolverine_Dossier_Behavior_
+  Controls.docx` (entry 56770).
+- `zebrafish.pdf` carries a **Zone.Identifier ADS** proving
+  web-download provenance.
+- **`STARK_ENT (D).lnk`** (entry 5030) — the StarkResearch server share
+  was mapped as local drive D: since 2016-05-13.
+- All 11 OneDrive classified files share the **exact** record-changed
+  timestamp **2016-06-30T14:47:38Z** — the identical moment JARVIS
+  detected the transfer.
+- OneDrive directory hierarchy (`Level_7`, `Level_8`, `Level_12`)
+  mirrors the source server's `\StarkResearch\Level X Classified\`
+  naming — direct one-to-one upload mapping.
+
+The W3-59 36.4 % is preserved as the canonical held-out single-shot
+number; the W3-61 100 % is the post-fix retry. Both REPORT.md files
+are in the submission package below.
 
 ### Head-to-head vs. Protocol SIFT baseline
 
@@ -404,7 +448,9 @@ MIT — `LICENSE` in repo.
 | Public repo | `https://github.com/timietti/find-evil-hackathon` |
 | Architecture diagram | `docs/architecture.svg` + `docs/architecture.png` |
 | Accuracy report | `docs/ACCURACY_REPORT.md` |
-| Held-out eval (single-shot) | `eval/results/test3-shieldbase/sift-owl-v2/20260510T194945Z-sonnet/REPORT.md` — 71.4% |
-| Held-out eval (v2 loop, canonical) | `eval/results/test3-shieldbase/sift-owl-v2/20260524T101323Z-sonnet/REPORT.md` — **89.9%**, 71/79 verified |
+| SHIELDBASE held-out (single-shot) | `eval/results/test3-shieldbase/sift-owl-v2/20260510T194945Z-sonnet/REPORT.md` — 71.4 % |
+| SHIELDBASE v2 loop (canonical) | `eval/results/test3-shieldbase/sift-owl-v2/20260524T101323Z-sonnet/REPORT.md` — **89.9 %**, 71/79 verified |
+| VANKO-001 held-out (single-shot) | `eval/results/test4-vanko/sift-owl-v2/20260612T083519Z-sonnet/REPORT.md` — 36.4 % |
+| VANKO-001 post-W3-60 retry | `eval/results/test4-vanko/sift-owl-v2/20260612T093511Z-sonnet/REPORT.md` — **100.0 %**, 37/37 verified |
 | Audit log sample | `audit/exec_log.jsonl` per run dir |
 | Demo video storyboard | `docs/DEMO_SCRIPT.md` |

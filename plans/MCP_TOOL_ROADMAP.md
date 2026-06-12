@@ -7,10 +7,28 @@
 
 ---
 
-## 0. Current state (2026-05-10)
+## 0. Current state (2026-06-12)
 
-20 tools shipped: 9 vol3 + 6 disk (TSK + EWF) + 4 EZ Tools (MFT, ShimCache, EVTX,
-Amcache) + `query_rows`. See `docs/ARCHITECTURE.md` § "MCP server function inventory".
+**38 tools shipped**: 17 vol3 + 6 disk (TSK + EWF) + 10 EZ Tools
+(MFT, ShimCache, EVTX, Amcache, Prefetch via libscca, JumpList,
+RecycleBin, SRUM via libesedb, scheduled-task XML,
+persistence_keys via RECmd) + 4 hunt/carve/hash (YARA,
+bulk_extractor, strings, sha-family hashing) + `query_rows`.
+Phase 1 + 1.5 + 3 all shipped. See `docs/ARCHITECTURE.md` §
+"MCP server function inventory" for the full table and
+`docs/MITRE_COVERAGE.md` for per-technique coverage at the
+current inventory.
+
+The two `EZT`-prefixed tools that wrapped a Linux-broken EZ Tool
+— Prefetch and SRUM — were rebuilt on libyal libraries
+(`libscca` / `libesedb`, W3-41 + W3-43); semantics are unchanged
+from the original .NET output.
+
+Held-out evals shipped on the 38-tool inventory: SHIELDBASE
+89.9 % strict-verified (W3-52, full stack), VANKO-001 100.0 %
+(W3-61, post W3-60 prompt fix). Remaining work on the *tool*
+side is Phase 5 — the rest of the EZ Tools suite (RECmd full,
+SQLECmd, LECmd, WxTCmd, SBECmd) — deferred as post-submission.
 
 ### Tool inventory present on this SIFT install but **not yet wrapped**
 

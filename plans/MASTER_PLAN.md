@@ -8,19 +8,20 @@
 
 ---
 
-## 0. Status snapshot (2026-05-10)
+## 0. Status snapshot (2026-06-12)
 
 | Track | Status |
 |---|---|
 | MCP server | **38 typed read-only tools** (17 vol3 + 6 disk + 10 EZ Tools + 4 hunt/carve/hash + query_rows). 284 unit tests green. Multi-section tools (SRUM, Amcache, persistence_keys) use iterative wire-size shrink (W3-47/48). |
-| Agents | v0 / v1 single-pass + **v2 self-correction loop** all shipped under `eval/agents/`. v2 loop plumbs `--llm-check` inline; auto-detect from `ANTHROPIC_API_KEY` (W3-45). |
-| Validator | v0..v4 shipped. v4 adds LLM-based prose check (Haiku 4.5; opt-in via `--llm-check`). |
-| Datasets | ROCBA-001 + STARK-APT-001 in active dev. **SHIELDBASE held out** for the final eval. |
-| Headline accuracy | ROCBA v2 loop iter 3 = **91.7%**; STARK-APT v2 loop iter 3 = **86.1%**; SHIELDBASE single-shot held-out **71.4%** → SHIELDBASE v2 loop w/ full stack **89.9%** (71 of 79 verified, W3-52). Variance band 60–92% across 4 v2-loop samples on SHIELDBASE. |
-| Baselines | Protocol SIFT baselines: ROCBA done (31% verified). STARK-APT *in progress 2026-05-10*. SHIELDBASE runs in held-out session. |
+| Agents | v0 / v1 single-pass + **v2 self-correction loop** all shipped under `eval/agents/`. v2 loop plumbs `--llm-check` inline; auto-detect from `ANTHROPIC_API_KEY` (W3-45). Harness skips directory `evidence:` entries gracefully (W3-59 CYLR fix). |
+| Validator | v0..**v7** shipped. v5 = W3-50/52 (bugs A/B). v6 = W3-54 (bugs C/D, markdown-table claims + path backtick guard). v7 = W3-56/57 (per-exec_id parsed-haystack cache, bugs F/G). LLM-based prose check (Haiku 4.5; opt-in via `--llm-check`). |
+| Prompt v6 | **W3-55 + W3-60 prompt-side fixes** — forbids section-header `[CONFIRMED]` tags + Good/Bad token-quoting table (quote bare values, not `field_name "value"` compounds). Closed bug H (~80 pp on VANKO held-out, no validator code change). |
+| Datasets | ROCBA-001 (memory) + ROCBA-001-disk + STARK-APT-001 dev. **SHIELDBASE + VANKO-001 held out** for final evals. |
+| Headline accuracy | ROCBA v2 memory iter-3 = **91.7%**; ROCBA W3-58 disk+memory iter-3 = **96.7%**; STARK-APT v2 iter-3 = **86.1%**; SHIELDBASE single-shot held-out **71.4%** → SHIELDBASE v2 loop full stack **89.9%** (71/79, W3-52); VANKO-001 single-shot held-out **36.4%** (bug H) → post-W3-60 retry **100.0%** (37/37 — *first perfect strict-verified score across all SIFT-OWL evals*). |
+| Baselines | Protocol SIFT baselines: ROCBA done (31% verified). STARK-APT done (did-not-finish $10.99 over budget). SHIELDBASE done (held-out session). |
 | Architecturally enforced | TB1-TB5 architectural; TB6/TB7 hybrid (rule-based + LLM). See `docs/ARCHITECTURE.md`. |
 
-**Remaining work:** AmcacheParser shipped (W3-15). Next: SHIELDBASE final eval → aggregate accuracy report → architecture SVG → Devpost submission → demo video.
+**Remaining work:** All evals complete. Next: demo-video recording (#33) → Devpost submission by 2026-06-15.
 
 ---
 

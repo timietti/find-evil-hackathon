@@ -110,11 +110,19 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 
 `ezt_srum_parse`, `ezt_amcache_parse`, and `ezt_persistence_keys_parse` produce a `{sections: {key: {count, rows}}}` shape where the default 50-rows-per-section cap multiplied by 6–9 sections overruns Claude Code's per-tool-result transport envelope (empirically: SRUM ~95 KB, Amcache ~160 KB, persistence ~111 KB — all 4–6× over the ~25 KB target). `_fit_sections_to_wire(parsed, truncate_fn)` walks an iterative ladder (50 → 25 → 12 → 6 → 3 → 1 rows/section), re-running the truncate fn + `json.dumps` until the payload fits; if even cap=1 doesn't fit, falls back to a `count`-only payload (rows dropped, section_counts retained, `query_rows` drill still available). Parser is invoked once; the ladder pass costs <1 ms on real 179K-row data. Status surfaced as `wire_cap_applied` / `wire_cap_reason` in the response and audit-row summary.
 
-### Validator (v6) — claim parser & token extractor
+### Validator (v7) — claim parser & token extractor
 
 - **Bug A fix (W3-50)**: backticked exec-id tokens preceded by an `exec_id`/`exec ids:` marker are excluded from `tokens.quoted` — mirroring the existing guard on `hex_hashes`. Otherwise the agent's `(exec_id `UUID`)` prose format leaks the UUID into the verifiable-token list and the verifier marks it "missing" from the cited tool's parsed output.
 - **Bug B fix (W3-52)**: in multi-tag paragraphs (e.g. bullet-list claims with `[CONFIRMED]` mid-bullet and `(exec_id ...)` after), each tag's trailing cite is detected via `_RE_TRAILING_CITE` and attached to *that* claim. The consumed cite advances `prev_end` so the next claim's slice starts after it — no cross-contamination between sibling claims.
+- **Bug C fix (W3-54)**: markdown-table claims like `| ts | desc | \`UUID\` |` were dropped by the prose-extractor because no `exec_id` marker prefixed the UUID. Fix: when `|` is present in the text and no marker-anchored matches were found, accept backticked strict-UUIDv7 tokens via `_RE_BACKTICKED_UUID`.
+- **Bug D fix (W3-54)**: `_RE_WIN_PATH` and `_RE_DRIVE_REF` character classes accidentally included the backtick, so a backticked path got its trailing backtick swept into the captured path string. Backtick added to the exclusion set.
+- **Bug F fix (W3-57)**: backticked UUID tokens were also being captured into `tokens.quoted` (after bug C), then verified-as-missing. Fix: a `_UUID_SHAPE` regex skips bare backticked strict-UUIDv7 tokens regardless of preceding marker.
+- **Bug G fix (W3-57)**: agent-written paths often start with `.\\Users\\...` while the haystack stores `\\Users\\...`. Fix: `p.lstrip(".")` on every extracted Windows path before verification.
+- **Bug H fix (W3-60 — prompt-side)**: the agent quoted `field_name "value"` compounds (e.g. `` `file_name "PC User"` ``) that don't substring-match the JSON haystack's `"FileName": "value"` representation. Fix is in the **prompt** (W3-60 token-quoting style guidance + Good/Bad table), not the validator — the agent now quotes bare values. ~80 % of the W3-59 VANKO held-out score deficit was bug H prose noise.
+- **Per-exec_id parsed-haystack cache (W3-56)**: `verify_claim_against_parsed` no longer re-loads + re-JSON-parses the raw output file per claim. A `parsed_cache: dict[exec_id, (tool_name, parsed_dict)]` keyed on exec_id collapses the dominant repeated I/O. On a 647 MB MFT JSON haystack: 16 min → 3 min wall (~5×).
 - **LLM-check (W3-45 + Haiku 4.5)** auto-enables when `ANTHROPIC_API_KEY` is in the environment; rescues prose-only `unverifiable` verdicts. ~$0.05 per 3-iter run.
+
+The companion **prompt v6** carries the W3-55 citation-discipline paragraph (forbids section-header `[CONFIRMED]` tags — each tag must be on a per-claim line with its own exec_id) and the W3-60 token-quoting Good/Bad table. The W3-55 + W3-60 paragraphs are prompt-side fixes, not validator code changes — they shape how the agent surfaces tokens so the unchanged rule-based extractor can match them against the JSON haystack.
 
 ### Memory (Volatility 3) — 11
 
@@ -218,7 +226,7 @@ This pattern produced **emergent self-correction** on STARK-APT-001: by iteratio
 
 ## Validator versions
 
-The validator has shipped across four iterations; each version is preserved as live code:
+The validator has shipped across seven iterations; each version is preserved as live code. The companion prompt v6 carries the W3-55 + W3-60 paragraphs as prompt-side fixes (they shape the agent's surface form, not the extractor):
 
 | Version | What it added | Trigger |
 |---|---|---|
@@ -226,9 +234,13 @@ The validator has shipped across four iterations; each version is preserved as l
 | v1 | Negation detection (`not in netscan`) | ROCBA v0 had 2 "failed" claims that were correct *negative* assertions |
 | v2 | Backslash normalisation (`\Users` vs `\\Users` in JSON), subject-clause negation heuristic, markdown strip pre-segmentation | Multiple false positives in ROCBA + STARK-APT v1 runs |
 | v3 | Per-tag claim segmentation (hybrid: single-tag = whole paragraph; multi-tag = per-tag slice), paren-aware negation, timestamp prefix matching | STARK-APT v2 EZT run surfaced multi-tag paragraphs the v2 splitter mangled |
-| **v4** | LLM-based prose check (Haiku 4.5) for unverifiable claims; opt-in via `--llm-check`; promotes/demotes based on structural support in cited tool's parsed data | Push past rule-based ceiling for prose-only claims |
+| v4 | LLM-based prose check (Haiku 4.5) for unverifiable claims; opt-in via `--llm-check`; promotes/demotes based on structural support in cited tool's parsed data | Push past rule-based ceiling for prose-only claims |
+| v5 (W3-50/52) | Bug A (backtick-guard on hex_hashes ext. to exec_id) + Bug B (multi-tag paragraph scoping with `_RE_TRAILING_CITE` + `consumed_end`) | SHIELDBASE retro-validation surfaced UUID-leak and cite-cross-contamination |
+| v6 (W3-54) | Bug C (`_RE_BACKTICKED_UUID` for markdown-table claims, no exec_id marker required) + Bug D (backtick removed from `_RE_WIN_PATH` / `_RE_DRIVE_REF` char-class) | ROCBA W3-54 disk+memory run on the new C: drive image |
+| **v7 (W3-56/57)** | Bug F (skip backticked UUIDv7 in `tokens.quoted` via `_UUID_SHAPE`) + Bug G (`.\\` dot-prefix path normalisation via `p.lstrip(".")`) + per-exec_id parsed-haystack cache (16 min → 3 min on 647 MB MFT) | ROCBA W3-57 retroactive re-validate + perf on large MFT JSON |
+| **prompt v6 (W3-55+W3-60)** | Prompt-side: W3-55 forbids section-header `[CONFIRMED]` tags (each claim on its own line with its own exec_id); W3-60 token-quoting Good/Bad table (quote bare values, not `field_name "value"` compounds) | Bug H surfaced on VANKO W3-59 held-out (36.4 %); W3-61 retry hit 100.0 % strict-verified with the prompt fix alone, no validator-code change |
 
-All versions ship in `agents/validator/`. Tests in `tests/test_validator.py` cover every regression that drove a version bump.
+All versions ship in `agents/validator/`. Tests in `tests/test_validator.py` cover every regression that drove a version bump (now 284 tests).
 
 ## Termination & safety
 

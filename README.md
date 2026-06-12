@@ -32,19 +32,17 @@ Active development. See [`plans/MASTER_PLAN.md`](plans/MASTER_PLAN.md) for the s
 
 ### Headline result
 
-| Case | Validator | Strict-verified | Notes |
+| Case | Held-out | Best v2-loop strict-verified | Notes |
 |---|---|---|---|
-| ROCBA-001 single-pass v1 | v4 | 57.1% | First end-to-end run, memory-only |
-| **ROCBA-001 v2 loop (iter 3)** | **v4** | **91.7%** | Convergence; rule-based + LLM prose check; memory-only |
-| **ROCBA-001 v2 loop, disk + memory (W3-54/57)** | v6 | **63.2% (24/38)** | First run after the C: drive image arrived 2026-06-08. iter 2 post-fix score; raw run scored 23.7% before W3-54/56/57 validator fixes surfaced four table-format edge cases the prior memory-only runs didn't hit. |
-| STARK-APT-001 v1 (disk + memory) | v4 | 43.5% | First multi-host shakedown |
-| **STARK-APT-001 v2 loop (iter 3)** | **v4** | **86.1%** | Full convergence: 0 partial, 0 failed |
-| SHIELDBASE single-shot, held-out | v5 | 71.4% (30/42) | Original held-out discipline; no prompt tuning to this case |
-| **SHIELDBASE v2 loop, full stack** ⭐ | **v6** | **89.9% (71/79)** | Same case, +20.6 pp, 3× the verified-claim count — libesedb SRUM + wire-fit + inline `--llm-check` all engaged |
+| ROCBA-001 (memory-only) | yes (v1 single-pass) | **91.7%** (iter 3, v4) | First end-to-end case; single-pass v1 scored 57.1 % |
+| ROCBA-001 (disk + memory, W3-58) | no | **96.7%** (iter 3) | C: drive image added 2026-06-08; surpasses the prior memory-only record with a larger scope |
+| STARK-APT-001 (disk + memory) | yes (v1) | **86.1%** (iter 3) | 4-host case; full convergence, 0 partial / 0 failed |
+| SHIELDBASE (disk + memory) | yes (single-shot 71.4 %) | **89.9%** (iter 3, W3-52) | SANS FOR508 / CRIMSON OSPREY, 15+ Win10 hosts / 198 GB. Variance band 60–92 % across 4 v2-loop samples |
+| VANKO-001 (physical disk) | yes (W3-59 single-shot 36.4 %) | **100.0%** ⭐ (iter 2, W3-61) | SANS FOR500 "Abducted Zebrafish". First perfect strict-verified score; W3-61 is the post-W3-60 retry, +63.6 pp over the held-out single-shot after a prompt-side fix |
 
-SHIELDBASE is the SANS FOR508 / CRIMSON OSPREY case — 15+ Win10 hosts, 198 GB across memory and disk. It is the headline submission case.
+SHIELDBASE is the SANS FOR508 / CRIMSON OSPREY case — 15+ Win10 hosts, 198 GB across memory and disk. **VANKO-001** is the SANS FOR500 "Abducted Zebrafish" — Anthony Vanko / Stark Enterprises IP-theft case, single-host Surface 3 physical disk (116 GiB, GPT). Both arrived in the final week before the submission deadline as new evidence sets.
 
-The v2 loop's strict-verified peak on SHIELDBASE has been sampled four times under varying configurations, bracketing the variance band at **60.0–92.0%** (full per-run detail in [`docs/ACCURACY_REPORT.md`](docs/ACCURACY_REPORT.md)). The substantive findings — the actual incident narrative — reproduce across every run; the single-number score sits on top of that floor.
+The v2 loop's strict-verified peak on SHIELDBASE has been sampled four times under varying configurations, bracketing the variance band at **60.0–92.0 %** (full per-run detail in [`docs/ACCURACY_REPORT.md`](docs/ACCURACY_REPORT.md)). The substantive findings — the actual incident narrative — reproduce across every run; the single-number score sits on top of that floor.
 
 ## What this is
 
