@@ -175,4 +175,24 @@ sentence: `[CONFIRMED] STUN.exe (PID 1912) connected to external IP 1.2.3.4
 Negative assertions are valid claims: `[CONFIRMED] No 1102 events on dc.evtx
 (ezt_evtx_parse exec_id=…)` is acceptable and verifiable.
 
+**Token-quoting style (W3-60):** the validator extracts backticked
+tokens individually and substring-matches them against the cited
+tool's parsed JSON. Quote **bare values**, NOT `field_name "value"`
+compounds. The JSON haystack stores each field as `"FileName":
+"value"` (with a colon); a compound like `file_name "value"` is a
+literal string that does not appear there.
+
+| Token type | Good | Bad |
+|---|---|---|
+| numbers (PID, inode, port, byte count, MFT entry) | `` `8260` `` | `` `pid 8260` `` |
+| strings (filenames, user names, hostnames) | `` `"p.exe"` ``, `` `rd01` `` | `` `image "p.exe"` ``, `` `host "rd01"` `` |
+| paths | `` `\Windows\Temp\perfmon\` `` | `` `parent_path ".\Windows\Temp\perfmon\"` `` |
+| booleans / enums | `` `true` ``, `` `ESTABLISHED` `` | `` `is_directory true` ``, `` `state "ESTABLISHED"` `` |
+| timestamps | `` `2018-08-30T16:43:36Z` `` | `` `created_at "2018-08-30T16:43:36Z"` `` |
+| hashes | `` `7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c` `` | `` `sha256 "7fa4f6cc..."` `` |
+
+If you want to make the field name visible in the prose, write it
+as natural English outside the backticks ("the image field is
+`"p.exe"`") rather than fusing it into the token.
+
 When you are done, print `BASELINE RUN COMPLETE` to stdout.

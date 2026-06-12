@@ -288,6 +288,26 @@ claim:
    hash, inode) so the validator can locate them in the cited
    tool's parsed output.
 
+**Critical — token-quoting style (W3-60):** the validator extracts
+backticked tokens individually and substring-matches them against
+the cited tool's parsed JSON. Quote **bare values**, NOT
+`field_name "value"` compounds. The JSON haystack stores each field
+as `"FileName": "value"` (with a colon); a compound like
+`file_name "value"` is a literal string that does not appear there.
+
+| Token type | Good | Bad |
+|---|---|---|
+| numbers (PID, inode, entry, port, byte count, MFT entry, sector) | `` `263009` `` | `` `entry 263009` `` |
+| strings (filenames, user names, hostnames) | `` `"PC User"` ``, `` `Stark_TS-Level8A_CryoDNA.docx` `` | `` `file_name "PC User"` ``, `` `name="Stark_..."` `` |
+| paths | `` `\Users\fredr\Documents\` `` | `` `parent_path ".\Users\fredr\Documents\"` `` |
+| booleans / enums | `` `true` ``, `` `INTERACTIVE` `` | `` `is_directory true` ``, `` `logon_type INTERACTIVE` `` |
+| timestamps | `` `2020-11-14T05:05:33Z` `` | `` `created_at "2020-11-14T05:05:33Z"` `` |
+| hashes | `` `7fa4f6cc4e1bb27da7d9af7a2a533e72751b025b063e1df4359ebe127fd2892c` `` | `` `sha256 "7fa4f6cc..."` `` |
+
+If you want to make the field name visible in the prose, write it
+as natural English outside the backticks ("the FileName field is
+`"PC User"`") rather than fusing it into the token.
+
 **Critical — citation discipline:** **every `[CONFIRMED]` tag must
 carry its own inline `exec_id` cite.** Do *not* use `[CONFIRMED]`
 as a section header introducing a child table whose rows carry the
