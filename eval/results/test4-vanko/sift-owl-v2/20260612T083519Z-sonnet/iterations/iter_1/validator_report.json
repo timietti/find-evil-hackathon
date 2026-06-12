@@ -1,0 +1,1274 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test4-vanko/sift-owl-v2/20260612T083519Z-sonnet/iterations/iter_1",
+    "total_claims": 31,
+    "confirmed_count": 22,
+    "inferred_count": 5,
+    "hypothesis_count": 0,
+    "gap_count": 4,
+    "other_count": 0,
+    "verified": 8,
+    "partial": 12,
+    "failed": 2,
+    "unverifiable": 0,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 0,
+    "confirmation_score": 0.364,
+    "llm_checked": 2,
+    "llm_verified": 0,
+    "llm_unsupported": 2,
+    "llm_unrelated": 0,
+    "llm_uncertain": 0,
+    "llm_total_cost_usd": 0.0021
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebaf9-01b0-7552-9311-4c95c580e3cd",
+        "exec_ids": [
+          "019ebaf9-01b0-7552-9311-4c95c580e3cd"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebaf9-01b0-7552-9311-4c95c580e3cd`]** EWF metadata confirms acquisition by Ovie Carroll on `2016-11-04T17:47:41Z` using FTK Imager (ADI 2.9.0.13), case number 20161104, evidence number 20161104-HD001. Media described as \"Live Physical / fixed disk\", 116 GiB (244,277,248 sectors \u00d7 512 bytes).",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebaf9-01b0-7552-9311-4c95c580e3cd`]",
+        "line_no": 58
+      },
+      "status": "partial",
+      "tool_name": "ewf_info",
+      "tool_names": [
+        "ewf_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "2.9.0.13"
+        ],
+        "timestamps": [
+          "2016-11-04T17:47:41Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-11-04T17:47:41Z"
+        ]
+      },
+      "matched": [
+        "2.9.0.13"
+      ],
+      "missing": [
+        "2016-11-04T17:47:41Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebaf9-026a-7542-b2a6-cfeafe68f55f",
+        "exec_ids": [
+          "019ebaf9-026a-7542-b2a6-cfeafe68f55f"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebaf9-026a-7542-b2a6-cfeafe68f55f`]** GPT partition table parsed. Slot 003 (Basic data partition) starts at sector `1411072`, length 230,883,328 sectors \u2014 the Windows C: volume. All subsequent TSK calls use `offset=1411072`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebaf9-026a-7542-b2a6-cfeafe68f55f`]",
+        "line_no": 60
+      },
+      "status": "partial",
+      "tool_name": "tsk_partition_table",
+      "tool_names": [
+        "tsk_partition_table"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "1411072",
+          "offset=1411072"
+        ]
+      },
+      "matched": [
+        "1411072"
+      ],
+      "missing": [
+        "offset=1411072"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebaf9-1802-7af1-8976-eaa8b74fe21f",
+        "exec_ids": [
+          "019ebaf9-1802-7af1-8976-eaa8b74fe21f"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebaf9-1802-7af1-8976-eaa8b74fe21f`]** NTFS volume confirmed on partition slot 003. Volume name `Windows`, serial `A420A4D720A4B1AA`, cluster size 4096 bytes.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebaf9-1802-7af1-8976-eaa8b74fe21f`]",
+        "line_no": 62
+      },
+      "status": "verified",
+      "tool_name": "tsk_fs_stat",
+      "tool_names": [
+        "tsk_fs_stat"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "A420A4D720A4B1AA"
+        ],
+        "quoted": [
+          "Windows",
+          "A420A4D720A4B1AA"
+        ]
+      },
+      "matched": [
+        "A420A4D720A4B1AA",
+        "Windows"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** MFT entry 263009 is directory `.\\\\Users\\\\PC User` (the sole interactive profile on the device). Computer hostname is `STARKSURFACE` (from `\\Windows\\Temp\\STARKSURFACE-*.log` files spanning March\u2013November 2016). The subject's Windows SID is `S-1-5-21-3739107332-290452467-3466442662-1001` (confirmed via SRUM push_notifications rows, inode SRUDB.dat inode 114124 / `019ebb02-8e6e-7de2-96db-4d07dbeacf5c`).",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 68
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "263009",
+          "114124"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "SRUDB.dat"
+        ],
+        "paths": [
+          "\\Windows\\Temp\\STARKSURFACE-*.log"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          ".\\\\Users\\\\PC User",
+          "STARKSURFACE",
+          "S-1-5-21-3739107332-290452467-3466442662-1001",
+          "\\Windows\\Temp\\STARKSURFACE-*.log"
+        ]
+      },
+      "matched": [
+        "263009",
+        "114124",
+        "SRUDB.dat",
+        "STARKSURFACE",
+        "S-1-5-21-3739107332-290452467-3466442662-1001"
+      ],
+      "missing": [
+        "\\Windows\\Temp\\STARKSURFACE-*.log",
+        ".\\\\Users\\\\PC User"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** NTUSER.DAT for `PC User` is MFT entry 263010, file size 4,194,304 bytes, `record_changed 2016-06-18T22:00:15Z`, last modified `2016-10-30T23:19:25Z`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 70
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "263010"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-18T22:00:15Z",
+          "2016-10-30T23:19:25Z"
+        ],
+        "filenames": [
+          "NTUSER.DAT"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-10-30T23:19:25Z",
+          "record_changed 2016-06-18T22:00:15Z",
+          "PC User"
+        ]
+      },
+      "matched": [
+        "263010",
+        "2016-06-18T22:00:15Z",
+        "2016-10-30T23:19:25Z",
+        "NTUSER.DAT",
+        "PC User"
+      ],
+      "missing": [
+        "record_changed 2016-06-18T22:00:15Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** All thirteen classified Stark Enterprises documents (spanning Level 7, Level 8, Level 12 classification tiers; topics: cell regeneration, Zebrafish DNA, cryo-DNA, blacklight DNA analysis) were present on Vanko's personal OneDrive sync folder. MFT confirms file names, inode numbers, parent paths, and timestamps above.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 96
+      },
+      "status": "failed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNSUPPORTED",
+      "llm_reason": "The parsed MFT data contains only aggregate statistics (file counts by extension, total deleted/in-use files) with no specific file names, inode numbers, parent paths, timestamps, or classification metadata needed to verify the claim about thirteen specific Stark Enterprises documents.",
+      "llm_cost_usd": 0.001113
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** Recent item LNK `Rapid cell regeneration research.docx.lnk` (inode 2232) in `\\Users\\PC User\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\` has `modified=2016-06-29T16:20:16Z` and `record_changed=2016-06-29T16:20:16Z`, placing active engagement with this classified document on June 29, 2016 \u2014 the day before the JARVIS alert.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 98
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "2232"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-29T16:20:16Z"
+        ],
+        "filenames": [
+          "research.docx"
+        ],
+        "paths": [
+          "\\Windows\\Recent",
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Rapid cell regeneration research.docx.lnk",
+          "modified=2016-06-29T16:20:16Z",
+          "\\Users\\PC User\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\",
+          "record_changed=2016-06-29T16:20:16Z"
+        ]
+      },
+      "matched": [
+        "2232",
+        "2016-06-29T16:20:16Z",
+        "research.docx",
+        "\\Windows\\Recent",
+        "\\Users\\PC",
+        "Rapid cell regeneration research.docx.lnk",
+        "\\Users\\PC User\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\"
+      ],
+      "missing": [
+        "modified=2016-06-29T16:20:16Z",
+        "record_changed=2016-06-29T16:20:16Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** `zebrafish.pdf` at inode 68394 carries an NTFS Zone.Identifier ADS (`zebrafish.pdf:Zone.Identifier`, 106 bytes), indicating it was downloaded from the internet or a network share. The PDF was last record-changed `2016-06-19T01:32:02Z`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 100
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "68394"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-19T01:32:02Z"
+        ],
+        "filenames": [
+          "zebrafish.pdf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-19T01:32:02Z",
+          "zebrafish.pdf:Zone.Identifier",
+          "zebrafish.pdf"
+        ]
+      },
+      "matched": [
+        "68394",
+        "2016-06-19T01:32:02Z",
+        "zebrafish.pdf",
+        "zebrafish.pdf:Zone.Identifier"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** Every classified document in `\\Users\\PC User\\OneDrive\\Documents\\` carries `record_changed=2016-06-30T14:47:38Z`. This is a single atomic MFT-record update across 10+ files \u2014 characteristic of a bulk copy event, not incremental document creation. The timestamp matches within seconds of the JARVIS detection on 2016-06-30.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 110
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:47:38Z"
+        ],
+        "filenames": [],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "record_changed=2016-06-30T14:47:38Z",
+          "\\Users\\PC User\\OneDrive\\Documents\\"
+        ]
+      },
+      "matched": [
+        "2016-06-30T14:47:38Z",
+        "\\Users\\PC",
+        "\\Users\\PC User\\OneDrive\\Documents\\"
+      ],
+      "missing": [
+        "record_changed=2016-06-30T14:47:38Z"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** `ONEDRIVE.EXE-CA84A5C1.pf` (Prefetch, inode 10575) was **created** `2016-06-30T14:46:54Z` \u2014 44 seconds before the bulk file record update at `14:47:38Z`. This sequence (OneDrive launch \u2192 files added to sync folder \u2192 MFT record update) is consistent with a bulk copy-and-sync operation initiated at 14:46 UTC on June 30, 2016.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 112
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "10575"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:46:54Z"
+        ],
+        "filenames": [
+          "ONEDRIVE.EXE",
+          "-CA84A5C1.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "ONEDRIVE.EXE-CA84A5C1.pf",
+          "2016-06-30T14:46:54Z",
+          "14:47:38Z"
+        ]
+      },
+      "matched": [
+        "10575",
+        "2016-06-30T14:46:54Z",
+        "ONEDRIVE.EXE",
+        "-CA84A5C1.pf",
+        "ONEDRIVE.EXE-CA84A5C1.pf",
+        "14:47:38Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebaff-f908-7cc3-b810-8936940e6e65",
+        "exec_ids": [
+          "019ebaff-f908-7cc3-b810-8936940e6e65"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebaff-f908-7cc3-b810-8936940e6e65`]** NTUSER.DAT Run key (HKCU Run) has value `OneDrive` \u2192 `\"C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\" /background`, confirming OneDrive auto-started at every login and would sync any new files placed in the OneDrive folder.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebaff-f908-7cc3-b810-8936940e6e65`]",
+        "line_no": 114
+      },
+      "status": "partial",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "NTUSER.DAT",
+          "OneDrive.exe"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [
+          "C:\\Users\\PC"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "OneDrive",
+          "\"C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\" /background"
+        ]
+      },
+      "matched": [
+        "OneDrive.exe",
+        "\\Users\\PC",
+        "C:\\Users\\PC",
+        "OneDrive"
+      ],
+      "missing": [
+        "NTUSER.DAT",
+        "\"C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\" /background"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb02-8e6e-7de2-96db-4d07dbeacf5c",
+        "exec_ids": [
+          "019ebb02-8e6e-7de2-96db-4d07dbeacf5c"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb02-8e6e-7de2-96db-4d07dbeacf5c`]** SRUDB.dat (inode 114124, 23 MB, last modified `2016-11-04T17:47:02Z`) was successfully parsed. The `network_usage` provider contains 272 rows documenting per-application, per-interface bytes_sent/bytes_recvd. The earliest SRUM record is from `2016-09-29` (SRUM retains approximately 30 days). Records from the 2016-06-30 exfiltration window are outside SRUM's retention horizon and are not available.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb02-8e6e-7de2-96db-4d07dbeacf5c`]",
+        "line_no": 118
+      },
+      "status": "partial",
+      "tool_name": "ezt_srum_parse",
+      "tool_names": [
+        "ezt_srum_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "114124"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-11-04T17:47:02Z"
+        ],
+        "filenames": [
+          "SRUDB.dat"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "network_usage",
+          "2016-11-04T17:47:02Z",
+          "2016-09-29"
+        ]
+      },
+      "matched": [
+        "network_usage",
+        "2016-09-29"
+      ],
+      "missing": [
+        "114124",
+        "2016-11-04T17:47:02Z",
+        "SRUDB.dat"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** All 10 classified Stark documents in `\\Users\\PC User\\OneDrive\\Documents\\` were placed in the OneDrive auto-sync folder. OneDrive.exe was confirmed running at `2016-06-30T14:46:54Z` (Prefetch inode 10575). The NTUSER.DAT Run key ensures OneDrive ran at every login. Files placed in this directory are automatically uploaded to the user's Microsoft cloud account \u2014 no further user action required after the copy.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 134
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "10575"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T14:46:54Z"
+        ],
+        "filenames": [
+          "NTUSER.DAT",
+          "OneDrive.exe"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-30T14:46:54Z",
+          "\\Users\\PC User\\OneDrive\\Documents\\"
+        ]
+      },
+      "matched": [
+        "10575",
+        "2016-06-30T14:46:54Z",
+        "NTUSER.DAT",
+        "OneDrive.exe",
+        "\\Users\\PC",
+        "\\Users\\PC User\\OneDrive\\Documents\\"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebaff-f908-7cc3-b810-8936940e6e65",
+        "exec_ids": [
+          "019ebaff-f908-7cc3-b810-8936940e6e65"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebaff-f908-7cc3-b810-8936940e6e65`]** HKCU Run key: `\"OneDrive\"` value `\"C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\" /background` (inode 263010 / exec_id `019ebafd-b670-70b1-b47d-98a733a56e74`). OneDrive version 17.3.6302 / 17.3.6386 (RunOnce cleanup entries visible in NTUSER.DAT).",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebaff-f908-7cc3-b810-8936940e6e65`]",
+        "line_no": 136
+      },
+      "status": "partial",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "263010"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "NTUSER.DAT",
+          "OneDrive.exe"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [
+          "C:\\Users\\PC"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "\"OneDrive\"",
+          "\"C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\" /background"
+        ]
+      },
+      "matched": [
+        "OneDrive.exe",
+        "\\Users\\PC",
+        "C:\\Users\\PC",
+        "\"OneDrive\""
+      ],
+      "missing": [
+        "263010",
+        "NTUSER.DAT",
+        "\"C:\\Users\\PC User\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\" /background"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb05-f629-78d2-aff8-1ff41e383eeb",
+        "exec_ids": [
+          "019ebb05-f629-78d2-aff8-1ff41e383eeb"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb05-f629-78d2-aff8-1ff41e383eeb`]** VeraCrypt.exe (prefetch hash `9E1B0240`) ran exactly **6 times** on June 29\u201330, 2016:\n- `2016-06-29T16:12:13Z` (first run \u2014 8 minutes after installation)\n- `2016-06-29T20:25:57Z`\n- `2016-06-29T20:32:27Z`\n- `2016-06-30T01:12:53Z`\n- `2016-06-30T01:40:51Z`\n- `2016-06-30T01:56:46Z` (last recorded run)",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb05-f629-78d2-aff8-1ff41e383eeb`]",
+        "line_no": 142
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2016-06-29T20:32:27Z",
+          "2016-06-30T01:12:53Z",
+          "2016-06-29T16:12:13Z",
+          "2016-06-30T01:40:51Z",
+          "2016-06-29T20:25:57Z",
+          "2016-06-30T01:56:46Z"
+        ],
+        "filenames": [
+          "VeraCrypt.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-29T20:32:27Z",
+          "2016-06-30T01:12:53Z",
+          "9E1B0240",
+          "2016-06-29T16:12:13Z",
+          "2016-06-30T01:40:51Z",
+          "2016-06-29T20:25:57Z",
+          "2016-06-30T01:56:46Z"
+        ]
+      },
+      "matched": [
+        "2016-06-29T20:32:27Z",
+        "2016-06-30T01:12:53Z",
+        "2016-06-29T16:12:13Z",
+        "2016-06-30T01:40:51Z",
+        "2016-06-29T20:25:57Z",
+        "2016-06-30T01:56:46Z",
+        "VeraCrypt.exe",
+        "9E1B0240"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** VeraCrypt Setup 1.17 was downloaded to `\\Users\\PC User\\Downloads\\VeraCrypt Setup 1.17.exe` (inode 32010, Zone.Identifier ADS present, `created 2016-06-29T15:51:16Z`) and installed at `2016-06-29T16:03:13Z` \u2014 the same day as the document-access session. VeraCrypt Format.exe ran (shimcache entry `executed=Yes`, inode 7775 Prefetch `VERACRYPT FORMAT.EXE-6EA86AF5.pf created 2016-06-29T16:12:33Z / modified 2016-06-30T01:14:52Z`), confirming a new encrypted container was created.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 150
+      },
+      "status": "partial",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "7775",
+          "32010"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-29T16:03:13Z",
+          "2016-06-29T15:51:16Z",
+          "2016-06-29T16:12:33Z",
+          "2016-06-30T01:14:52Z"
+        ],
+        "filenames": [
+          "-6EA86AF5.pf",
+          "1.17.exe",
+          "Format.exe",
+          "FORMAT.EXE"
+        ],
+        "paths": [
+          "\\Users\\PC"
+        ],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-29T16:03:13Z",
+          "created 2016-06-29T15:51:16Z",
+          "executed=Yes",
+          "\\Users\\PC User\\Downloads\\VeraCrypt Setup 1.17.exe"
+        ]
+      },
+      "matched": [
+        "7775",
+        "32010",
+        "2016-06-29T16:03:13Z",
+        "2016-06-29T15:51:16Z",
+        "2016-06-29T16:12:33Z",
+        "2016-06-30T01:14:52Z",
+        "-6EA86AF5.pf",
+        "1.17.exe",
+        "Format.exe",
+        "FORMAT.EXE",
+        "\\Users\\PC"
+      ],
+      "missing": [
+        "created 2016-06-29T15:51:16Z",
+        "executed=Yes",
+        "\\Users\\PC User\\Downloads\\VeraCrypt Setup 1.17.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb07-bc98-7522-8fdd-7a02c46d08e8",
+        "exec_ids": [
+          "019ebb07-bc98-7522-8fdd-7a02c46d08e8"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb07-bc98-7522-8fdd-7a02c46d08e8`]** Shimcache confirms `VeraCrypt.exe` `executed=Yes`, `VeraCrypt Format.exe` `executed=Yes`, `VeraCrypt Setup 1.17.exe` `executed=Yes`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb07-bc98-7522-8fdd-7a02c46d08e8`]",
+        "line_no": 152
+      },
+      "status": "partial",
+      "tool_name": "ezt_shimcache_parse",
+      "tool_names": [
+        "ezt_shimcache_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "VeraCrypt.exe",
+          "1.17.exe",
+          "Format.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "VeraCrypt.exe",
+          "VeraCrypt Setup 1.17.exe",
+          "VeraCrypt Format.exe",
+          "executed=Yes"
+        ]
+      },
+      "matched": [
+        "VeraCrypt.exe",
+        "1.17.exe",
+        "Format.exe",
+        "VeraCrypt Setup 1.17.exe",
+        "VeraCrypt Format.exe"
+      ],
+      "missing": [
+        "executed=Yes"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebaff-f908-7cc3-b810-8936940e6e65",
+        "exec_ids": [
+          "019ebaff-f908-7cc3-b810-8936940e6e65"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebaff-f908-7cc3-b810-8936940e6e65`]** NTUSER.DAT HKCU Run keys include:\n- `iCloudServices` \u2192 `C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudServices.exe`\n- `iCloudDrive` \u2192 `...iCloudDrive.exe`\n- `iCloudPhotos` \u2192 `...iCloudPhotos.exe`\n- `ApplePhotoStreams` \u2192 `...ApplePhotoStreams.exe`",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebaff-f908-7cc3-b810-8936940e6e65`]",
+        "line_no": 160
+      },
+      "status": "partial",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "NTUSER.DAT",
+          "iCloudDrive.exe",
+          "iCloudServices.exe",
+          "ApplePhotoStreams.exe",
+          "iCloudPhotos.exe"
+        ],
+        "paths": [],
+        "drive_refs": [
+          "C:\\Program"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "iCloudPhotos",
+          "ApplePhotoStreams",
+          "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudServices.exe",
+          "...iCloudPhotos.exe",
+          "...ApplePhotoStreams.exe",
+          "iCloudServices",
+          "iCloudDrive",
+          "...iCloudDrive.exe"
+        ]
+      },
+      "matched": [
+        "iCloudDrive.exe",
+        "iCloudServices.exe",
+        "ApplePhotoStreams.exe",
+        "iCloudPhotos.exe",
+        "C:\\Program",
+        "iCloudPhotos",
+        "ApplePhotoStreams",
+        "C:\\Program Files (x86)\\Common Files\\Apple\\Internet Services\\iCloudServices.exe",
+        "iCloudServices",
+        "iCloudDrive"
+      ],
+      "missing": [
+        "NTUSER.DAT",
+        "...iCloudPhotos.exe",
+        "...ApplePhotoStreams.exe",
+        "...iCloudDrive.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** Dropbox Client 12.4.22 is installed (`\\Program Files (x86)\\Dropbox\\Client_12.4.22\\`, MFT confirmed). Dropbox update log exists through `2016-11-04T13:24:41Z`. Prefetch `DROPBOXUPDATE.EXE-E72FEFE1.pf` (inode 3100) modified `2016-11-04T17:41:23Z`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 168
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "3100"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-11-04T13:24:41Z",
+          "2016-11-04T17:41:23Z"
+        ],
+        "filenames": [
+          "-E72FEFE1.pf",
+          "DROPBOXUPDATE.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "DROPBOXUPDATE.EXE-E72FEFE1.pf",
+          "2016-11-04T13:24:41Z",
+          "2016-11-04T17:41:23Z",
+          "\\Program Files (x86)\\Dropbox\\Client_12.4.22\\"
+        ]
+      },
+      "matched": [
+        "3100",
+        "2016-11-04T13:24:41Z",
+        "2016-11-04T17:41:23Z",
+        "-E72FEFE1.pf",
+        "DROPBOXUPDATE.EXE",
+        "DROPBOXUPDATE.EXE-E72FEFE1.pf",
+        "\\Program Files (x86)\\Dropbox\\Client_12.4.22\\"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebb07-bc98-7522-8fdd-7a02c46d08e8",
+        "exec_ids": [
+          "019ebb07-bc98-7522-8fdd-7a02c46d08e8"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebb07-bc98-7522-8fdd-7a02c46d08e8`]** Shimcache contains entries from at least three distinct removable media volumes:",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebb07-bc98-7522-8fdd-7a02c46d08e8`]",
+        "line_no": 174
+      },
+      "status": "failed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "UNSUPPORTED",
+      "llm_reason": "The parsed shimcache data shows only aggregated counts by extension, parent directory, and control set, with no individual entries, volume identifiers, or removable media designations that would support the claim of 'at least three distinct removable media volumes.'",
+      "llm_cost_usd": 0.000998
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** FTK Imager prefetch (inode 7683, `FTK IMAGER.EXE-9B6683F0.pf`) was **created** `2016-06-11T20:27:22Z` \u2014 before the JARVIS alert \u2014 and another instance (inode 3874, `FTK IMAGER.EXE-9A323C93.pf`) was created `2016-07-01T23:24:22Z`. Magnet RAM Capture prefetch (inode 6422) created `2016-07-01T23:26:46Z`, EDD prefetch (inode 388) created `2016-07-01T23:29:41Z`. The cluster of forensic-tool Prefetch entries on 2016-07-01 (the day after JARVIS suspended the account) is consistent with Vanko running a live-acquisition toolkit, possibly to image or inventory the classified data before or after the suspension.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 186
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "388",
+          "6422",
+          "3874",
+          "7683"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-07-01T23:26:46Z",
+          "2016-07-01T23:29:41Z",
+          "2016-06-11T20:27:22Z",
+          "2016-07-01T23:24:22Z"
+        ],
+        "filenames": [
+          "IMAGER.EXE",
+          "-9A323C93.pf",
+          "-9B6683F0.pf"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "FTK IMAGER.EXE-9A323C93.pf",
+          "2016-07-01T23:26:46Z",
+          "FTK IMAGER.EXE-9B6683F0.pf",
+          "2016-06-11T20:27:22Z",
+          "2016-07-01T23:29:41Z",
+          "2016-07-01T23:24:22Z"
+        ]
+      },
+      "matched": [
+        "388",
+        "6422",
+        "3874",
+        "7683",
+        "2016-07-01T23:26:46Z",
+        "2016-07-01T23:29:41Z",
+        "2016-06-11T20:27:22Z",
+        "2016-07-01T23:24:22Z",
+        "IMAGER.EXE",
+        "-9A323C93.pf",
+        "-9B6683F0.pf",
+        "FTK IMAGER.EXE-9A323C93.pf",
+        "FTK IMAGER.EXE-9B6683F0.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebafa-b072-74b2-9132-458c571e8c0b",
+        "exec_ids": [
+          "019ebafa-b072-74b2-9132-458c571e8c0b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]** VeraCrypt installed and Format.exe run on 2016-06-29 (day before JARVIS alert). VeraCrypt.exe ran 6 times, last at `2016-06-30T01:56:46Z` (exec_id `019ebb05-f629-78d2-aff8-1ff41e383eeb`). History.xml cleared/empty (inode 4397, 202 bytes, no recoverable content). This constitutes deliberate anti-forensic use of encryption to conceal the exfil container's location.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebafa-b072-74b2-9132-458c571e8c0b`]",
+        "line_no": 192
+      },
+      "status": "verified",
+      "tool_name": "ezt_mft_parse",
+      "tool_names": [
+        "ezt_mft_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "4397"
+        ],
+        "ips": [],
+        "timestamps": [
+          "2016-06-30T01:56:46Z"
+        ],
+        "filenames": [
+          "VeraCrypt.exe",
+          "Format.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2016-06-30T01:56:46Z"
+        ]
+      },
+      "matched": [
+        "4397",
+        "2016-06-30T01:56:46Z",
+        "VeraCrypt.exe",
+        "Format.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}

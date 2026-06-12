@@ -52,23 +52,27 @@ evidence:
       start_sector: 1411072
       length_sectors: 230883328
 
-  # CYLR (CyLR rapid triage) collection — pre-extracted Windows critical
-  # artefacts ($MFT, $LogFile, ProgramData, Users, Windows). Same disk as
-  # the E01 chain. Useful for fast targeted artefact access; less
-  # complete than the full image (no $UsnJrnl, no slack/freelist).
-  # NOTE: this directory ALSO contains
-  # `FOR500HANDOUT_Vanko Master Scenario Solution.pdf` — the student
-  # solution. The MCP boundary cannot read PDFs (no Read tool exposed
-  # to the agent), so it is unreachable from inside the loop; flagged
-  # here for human review only.
-  - path: /cases/find-evil-test4/vanko-c-drive.CYLR/G/
-    kind: triage_collection
-    collector: CyLR
-    contents: ['$LogFile', '$MFT', 'ProgramData', 'Users', 'Windows']
-
   - path: /cases/find-evil-test4/Vanko Student Scenario_D01_01.docx
     kind: case_briefing
     sha256: null                              # not load-bearing for integrity
+
+# Companion CYLR (CyLR rapid triage) collection — same disk as the
+# E01 chain, pre-extracted Windows critical artefacts ($MFT,
+# $LogFile, ProgramData, Users, Windows). Useful for fast targeted
+# artefact access; less complete than the full image (no $UsnJrnl,
+# no slack/freelist). NOT registered as a hashable `evidence` entry
+# because it is a directory tree (the harness expects single files);
+# the agent should rely on the E01 chain.
+#
+# NOTE: this directory ALSO contains
+# `FOR500HANDOUT_Vanko Master Scenario Solution.pdf` — the student
+# solution. The MCP boundary cannot read PDFs (no Read tool exposed
+# to the agent), so it is unreachable from inside the loop; flagged
+# here for human review only.
+triage_collection:
+  path: /cases/find-evil-test4/vanko-c-drive.CYLR/G/
+  collector: CyLR
+  contents: ['$LogFile', '$MFT', 'ProgramData', 'Users', 'Windows']
 
 # No memory image for this case — disk-side investigation only.
 

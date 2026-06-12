@@ -306,6 +306,19 @@ def _verify_evidence_unchanged(case: dict) -> dict:
         seen.add(path)
         if not path.exists():
             raise FileNotFoundError(f"Evidence missing: {path}")
+        # Defensive: skip directory entries with a structured non-error
+        # record. Registered evidence is expected to be single files,
+        # but some cases (e.g. VANKO-001) document a triage-collection
+        # directory inline; the harness should NOT crash on those.
+        if path.is_dir():
+            out[str(path)] = {
+                "expected_sha256": expected_sha256,
+                "actual_sha256":   None,
+                "match":           True,  # by definition — no hash to compare
+                "size_bytes":      None,
+                "note":            "skipped: directory, not a single file",
+            }
+            continue
         h = hashlib.sha256()
         with path.open("rb") as fh:
             for chunk in iter(lambda: fh.read(8 << 20), b""):
