@@ -88,6 +88,9 @@ export ANTHROPIC_API_KEY=sk-ant-api03-...
 ```
 
 Full installation / setup: [`INSTALL.md`](INSTALL.md).
+**Judges:** see [`JUDGES.md`](JUDGES.md) — self-contained
+10-step runbook for executing the agent against your own
+evidence directory.
 
 ## Running an investigation
 
