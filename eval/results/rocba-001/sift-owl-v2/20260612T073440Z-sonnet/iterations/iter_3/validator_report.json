@@ -1,0 +1,1607 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v2/20260612T073440Z-sonnet/iterations/iter_3",
+    "total_claims": 42,
+    "confirmed_count": 30,
+    "inferred_count": 4,
+    "hypothesis_count": 1,
+    "gap_count": 7,
+    "other_count": 0,
+    "verified": 29,
+    "partial": 0,
+    "failed": 0,
+    "unverifiable": 0,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 1,
+    "confirmation_score": 0.967,
+    "llm_checked": 2,
+    "llm_verified": 2,
+    "llm_unsupported": 0,
+    "llm_unrelated": 0,
+    "llm_uncertain": 0,
+    "llm_total_cost_usd": 0.0015
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "exec_ids": [],
+        "text": "The single demotion is clear: `offset=null` is a methodological note I added to the claim, not a token present in the `tsk_partition_table` JSON output. I'll remove it from the `[CONFIRMED]` body and note it separately.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 1
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac1-7fa6-7be2-8f8a-83843d03c1c1",
+        "exec_ids": [
+          "019ebac1-7fa6-7be2-8f8a-83843d03c1c1"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac1-7fa6-7be2-8f8a-83843d03c1c1`]** Memory image: Windows 10 Build `19041` x64, 4 CPUs, captured at `2020-11-16T02:32:38Z`, hostname **SRL-FORGE**, symbols resolved, kernel base `0xf8025d600000`.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac1-7fa6-7be2-8f8a-83843d03c1c1`]",
+        "line_no": 23
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [
+          "0xf8025d600000"
+        ],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-16T02:32:38Z",
+          "0xf8025d600000",
+          "19041"
+        ]
+      },
+      "matched": [
+        "2020-11-16T02:32:38Z",
+        "0xf8025d600000",
+        "19041"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac1-87c2-7333-8b5f-bcf0c9d73205",
+        "exec_ids": [
+          "019ebac1-87c2-7333-8b5f-bcf0c9d73205"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac1-87c2-7333-8b5f-bcf0c9d73205`]** Disk image: 81 GiB NTFS logical volume, MD5 `5efc207c85587683e5ca5fa2d5ef1aa4`, SHA-1 `645dcd29ab039359fbdb6643961478b3d914f21d`; acquired by X-Ways Forensics 20.1 per case brief. *(Acquisition date 2020-12-18 is from the case briefing; the field was not present in the ewf_info metadata output.)*",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac1-87c2-7333-8b5f-bcf0c9d73205`]",
+        "line_no": 25
+      },
+      "status": "verified",
+      "tool_name": "ewf_info",
+      "tool_names": [
+        "ewf_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "5efc207c85587683e5ca5fa2d5ef1aa4",
+          "645dcd29ab039359fbdb6643961478b3d914f21d"
+        ],
+        "quoted": [
+          "5efc207c85587683e5ca5fa2d5ef1aa4",
+          "645dcd29ab039359fbdb6643961478b3d914f21d"
+        ]
+      },
+      "matched": [
+        "5efc207c85587683e5ca5fa2d5ef1aa4",
+        "645dcd29ab039359fbdb6643961478b3d914f21d"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac1-8914-7e12-bdfe-78bf28f38ec4",
+        "exec_ids": [
+          "019ebac1-8914-7e12-bdfe-78bf28f38ec4"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac1-8914-7e12-bdfe-78bf28f38ec4`]** Partition table returned 0 partitions \u2014 confirmed partitionless logical-volume layout. All subsequent TSK calls were issued with no partition offset (offset=null) consistent with the case briefing's specification for this X-Ways logical-volume acquisition.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac1-8914-7e12-bdfe-78bf28f38ec4`]",
+        "line_no": 27
+      },
+      "status": "verified",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "VERIFIED",
+      "llm_reason": "The parsed data shows count=0 and empty partitions array, which directly confirms the claim's assertion that the partition table returned 0 partitions.",
+      "llm_cost_usd": 0.0007509999999999999
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac1-a92e-7e91-9386-c198de8b9e66",
+        "exec_ids": [
+          "019ebac1-a92e-7e91-9386-c198de8b9e66"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac1-a92e-7e91-9386-c198de8b9e66`]** Filesystem: NTFS, volume serial `F0E0FE66E0FE3288`, cluster size `4096` bytes \u2014 matches case briefing exactly.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac1-a92e-7e91-9386-c198de8b9e66`]",
+        "line_no": 29
+      },
+      "status": "verified",
+      "tool_name": "tsk_fs_stat",
+      "tool_names": [
+        "tsk_fs_stat"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "F0E0FE66E0FE3288"
+        ],
+        "quoted": [
+          "4096",
+          "F0E0FE66E0FE3288"
+        ]
+      },
+      "matched": [
+        "F0E0FE66E0FE3288",
+        "4096"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad0-5daa-7290-84f6-61af8ebe3a78",
+        "exec_ids": [
+          "019ebad0-5daa-7290-84f6-61af8ebe3a78"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad0-5daa-7290-84f6-61af8ebe3a78`]** SDelete prefetch (SDELETE.EXE-`0E837E93`, run_count=5, last_run=`2020-11-14T13:47:10Z`) enumerates the following files in `files_loaded`, all under `\\USERS\\FREDR\\ONEDRIVE\\`:",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad0-5daa-7290-84f6-61af8ebe3a78`]",
+        "line_no": 35
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:47:10Z"
+        ],
+        "filenames": [
+          "SDELETE.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T13:47:10Z",
+          "0E837E93",
+          "files_loaded",
+          "\\USERS\\FREDR\\ONEDRIVE\\"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:47:10Z",
+        "SDELETE.EXE",
+        "0E837E93",
+        "files_loaded",
+        "\\USERS\\FREDR\\ONEDRIVE\\"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac7-3e9b-7af0-8f0e-b8a086d2711b",
+        "exec_ids": [
+          "019ebac7-3e9b-7af0-8f0e-b8a086d2711b"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac7-3e9b-7af0-8f0e-b8a086d2711b`]** UserAssist from hive `\\??\\C:\\Users\\fredr\\ntuser.dat` records `Microsoft.Office.WINWORD.EXE.15` count=14, last_updated=`2020-11-14T04:29:49Z`, confirming 14 Word sessions. The same hive records `%ProgramFiles%\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe` count=6, last_updated=`2020-11-14T04:49:43Z` \u2014 PDF access as well.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac7-3e9b-7af0-8f0e-b8a086d2711b`]",
+        "line_no": 50
+      },
+      "status": "verified",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T04:49:43Z",
+          "2020-11-14T04:29:49Z"
+        ],
+        "filenames": [
+          "Microsoft.Office.WINWORD.EXE",
+          "AcroRd32.exe",
+          "ntuser.dat"
+        ],
+        "paths": [
+          "\\C:\\Users\\fredr\\ntuser.dat"
+        ],
+        "drive_refs": [
+          "C:\\Users\\fredr\\ntuser.dat"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "\\??\\C:\\Users\\fredr\\ntuser.dat",
+          "2020-11-14T04:49:43Z",
+          "2020-11-14T04:29:49Z",
+          "%ProgramFiles%\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe",
+          "Microsoft.Office.WINWORD.EXE.15"
+        ]
+      },
+      "matched": [
+        "2020-11-14T04:49:43Z",
+        "2020-11-14T04:29:49Z",
+        "Microsoft.Office.WINWORD.EXE",
+        "AcroRd32.exe",
+        "ntuser.dat",
+        "\\C:\\Users\\fredr\\ntuser.dat",
+        "C:\\Users\\fredr\\ntuser.dat",
+        "\\??\\C:\\Users\\fredr\\ntuser.dat",
+        "%ProgramFiles%\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe",
+        "Microsoft.Office.WINWORD.EXE.15"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad0-5daa-7290-84f6-61af8ebe3a78",
+        "exec_ids": [
+          "019ebad0-5daa-7290-84f6-61af8ebe3a78"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad0-5daa-7290-84f6-61af8ebe3a78`]** The eight documents listed in G1 were securely wiped by SDelete. Their presence in the prefetch `files_loaded` proves they existed on disk at `2020-11-14T13:44:52Z` when SDelete began its destructive wipes (run_count=5, last_run=`2020-11-14T13:47:10Z`). Secure deletion overwrites file content before unlinking \u2014 local copies are unrecoverable \u2014 but file paths survive in the Prefetch record.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad0-5daa-7290-84f6-61af8ebe3a78`]",
+        "line_no": 56
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:47:10Z",
+          "2020-11-14T13:44:52Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T13:47:10Z",
+          "files_loaded",
+          "2020-11-14T13:44:52Z"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:47:10Z",
+        "2020-11-14T13:44:52Z",
+        "files_loaded"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad0-5ddc-7122-a2dc-193c2224de6a",
+        "exec_ids": [
+          "019ebad0-5ddc-7122-a2dc-193c2224de6a"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad0-5ddc-7122-a2dc-193c2224de6a`]** A second SDelete prefetch (SDELETE.EXE-`2BD91720`, run_count=2, last_run=`2020-11-14T13:42:38Z`) records the tool's initial invocation (EULA acceptance: loads `RICHED32.DLL`, `RICHED20.DLL`, `RPCSS.DLL` characteristic of the SDelete splash-screen), confirming the intruder's first execution of the tool before the destructive wipes in the subsequent instance.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad0-5ddc-7122-a2dc-193c2224de6a`]",
+        "line_no": 58
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:42:38Z"
+        ],
+        "filenames": [
+          "RPCSS.DLL",
+          "RICHED32.DLL",
+          "SDELETE.EXE",
+          "RICHED20.DLL"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "RPCSS.DLL",
+          "RICHED32.DLL",
+          "2020-11-14T13:42:38Z",
+          "2BD91720",
+          "RICHED20.DLL"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:42:38Z",
+        "RPCSS.DLL",
+        "RICHED32.DLL",
+        "SDELETE.EXE",
+        "RICHED20.DLL",
+        "2BD91720"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebacc-af76-7511-856b-9eab65a01df7",
+        "exec_ids": [
+          "019ebacc-af76-7511-856b-9eab65a01df7"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebacc-af76-7511-856b-9eab65a01df7`]** SDelete.zip was downloaded to `Users/fredr/Downloads/SDelete.zip` (inode `477601`, with Zone.Identifier ADS at id=8), confirming the intruder downloaded SDelete from the internet during the intruder window. SDelete.lnk shortcut exists at inode `477882` (`Users/fredr/AppData/Roaming/Microsoft/Windows/Recent/SDelete.lnk`).",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebacc-af76-7511-856b-9eab65a01df7`]",
+        "line_no": 60
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "SDelete.zip",
+          "SDelete.lnk"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/fredr/AppData/Roaming/Microsoft/Windows/Recent/SDelete.lnk",
+          "Users/fredr/Downloads/SDelete.zip",
+          "477882",
+          "477601"
+        ]
+      },
+      "matched": [
+        "SDelete.zip",
+        "SDelete.lnk",
+        "Users/fredr/AppData/Roaming/Microsoft/Windows/Recent/SDelete.lnk",
+        "Users/fredr/Downloads/SDelete.zip",
+        "477882",
+        "477601"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac4-b479-77d2-a808-d243dbb94028",
+        "exec_ids": [
+          "019ebac4-b479-77d2-a808-d243dbb94028",
+          "019ebac6-d4cc-7e71-8222-197be8abc6f3"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac4-b479-77d2-a808-d243dbb94028`, exec_id `019ebac6-d4cc-7e71-8222-197be8abc6f3`]** 59 TCP connections from external IP `81.30.144.115` to local address `192.168.1.5` port `3389`, PID `1248` owner `svchost.exe` running as `svchost.exe -k NetworkService -s TermService`. Earliest connection: `2020-11-16T02:31:26Z`. Two connections ESTABLISHED at capture: foreign port `51048` (created `2020-11-16T02:34:58Z`) and foreign port `5067` (created `2020-11-16T02:34:45Z`). All others CLOSED.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac4-b479-77d2-a808-d243dbb94028`, exec_id `019ebac6-d4cc-7e71-8222-197be8abc6f3`]",
+        "line_no": 70
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "81.30.144.115",
+          "192.168.1.5"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:26Z",
+          "2020-11-16T02:34:45Z",
+          "2020-11-16T02:34:58Z"
+        ],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "3389",
+          "svchost.exe",
+          "1248",
+          "2020-11-16T02:34:58Z",
+          "5067",
+          "2020-11-16T02:34:45Z",
+          "svchost.exe -k NetworkService -s TermService",
+          "51048",
+          "192.168.1.5",
+          "81.30.144.115",
+          "2020-11-16T02:31:26Z"
+        ]
+      },
+      "matched": [
+        "81.30.144.115",
+        "192.168.1.5",
+        "2020-11-16T02:31:26Z",
+        "2020-11-16T02:34:45Z",
+        "2020-11-16T02:34:58Z",
+        "svchost.exe",
+        "3389",
+        "1248",
+        "5067",
+        "svchost.exe -k NetworkService -s TermService",
+        "51048"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac4-b479-77d2-a808-d243dbb94028",
+        "exec_ids": [
+          "019ebac4-b479-77d2-a808-d243dbb94028"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac4-b479-77d2-a808-d243dbb94028`]** 54 TCP connections from `213.202.233.104` to local address `192.168.1.5` port `3389`. Earliest: `2020-11-16T02:31:18Z`. ESTABLISHED: foreign port `45753` (created `2020-11-16T02:34:58Z`) and foreign port `40876` (created `2020-11-16T02:35:53Z`). The combined 113-connection burst from two IPs within minutes of the memory capture confirms an active RDP operator session at capture time.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac4-b479-77d2-a808-d243dbb94028`]",
+        "line_no": 72
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "213.202.233.104",
+          "192.168.1.5"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:18Z",
+          "2020-11-16T02:35:53Z",
+          "2020-11-16T02:34:58Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-16T02:31:18Z",
+          "213.202.233.104",
+          "3389",
+          "45753",
+          "2020-11-16T02:34:58Z",
+          "40876",
+          "192.168.1.5",
+          "2020-11-16T02:35:53Z"
+        ]
+      },
+      "matched": [
+        "213.202.233.104",
+        "192.168.1.5",
+        "2020-11-16T02:31:18Z",
+        "2020-11-16T02:35:53Z",
+        "2020-11-16T02:34:58Z",
+        "3389",
+        "45753",
+        "40876"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-69d9-7420-9987-629bc3f37aca",
+        "exec_ids": [
+          "019ebad2-69d9-7420-9987-629bc3f37aca"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad2-69d9-7420-9987-629bc3f37aca`]** MSTSC.EXE prefetch (MSTSC.EXE-`2A83B7D7`, run_count=2) records last_run `2020-11-14T05:05:33Z`, previous run `2020-11-14T05:00:37Z`. Fred was provably at Disney World on Nov 14 \u2014 this `MSTSC.EXE` execution is attributable to the intruder. The `files_loaded` list includes `\\USERS\\FREDR\\ONEDRIVE\\DOCUMENTS\\DEFAULT.RDP` \u2014 the intruder used a saved RDP profile from Fred's OneDrive Documents folder to connect outbound to a remote host.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad2-69d9-7420-9987-629bc3f37aca`]",
+        "line_no": 76
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:00:37Z",
+          "2020-11-14T05:05:33Z"
+        ],
+        "filenames": [
+          "MSTSC.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2A83B7D7",
+          "2020-11-14T05:00:37Z",
+          "\\USERS\\FREDR\\ONEDRIVE\\DOCUMENTS\\DEFAULT.RDP",
+          "2020-11-14T05:05:33Z",
+          "files_loaded",
+          "MSTSC.EXE"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:00:37Z",
+        "2020-11-14T05:05:33Z",
+        "MSTSC.EXE",
+        "2A83B7D7",
+        "\\USERS\\FREDR\\ONEDRIVE\\DOCUMENTS\\DEFAULT.RDP",
+        "files_loaded"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac7-3e9b-7af0-8f0e-b8a086d2711b",
+        "exec_ids": [
+          "019ebac7-3e9b-7af0-8f0e-b8a086d2711b",
+          "019ebad2-69d9-7420-9987-629bc3f37aca"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac7-3e9b-7af0-8f0e-b8a086d2711b`, exec_id `019ebad2-69d9-7420-9987-629bc3f37aca`]** UserAssist entry `Microsoft.Windows.RemoteDesktop` count=2, last_updated=`2020-11-14T05:05:33Z` in `\\??\\C:\\Users\\fredr\\ntuser.dat` \u2014 cross-sources the `MSTSC.EXE` prefetch at the same timestamp, confirming the Nov 14 05:05Z outbound RDP GUI session from the memory-resident registry hive.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac7-3e9b-7af0-8f0e-b8a086d2711b`, exec_id `019ebad2-69d9-7420-9987-629bc3f37aca`]",
+        "line_no": 78
+      },
+      "status": "verified",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist",
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:05:33Z"
+        ],
+        "filenames": [
+          "MSTSC.EXE",
+          "ntuser.dat"
+        ],
+        "paths": [
+          "\\C:\\Users\\fredr\\ntuser.dat"
+        ],
+        "drive_refs": [
+          "C:\\Users\\fredr\\ntuser.dat"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Microsoft.Windows.RemoteDesktop",
+          "MSTSC.EXE",
+          "\\??\\C:\\Users\\fredr\\ntuser.dat",
+          "2020-11-14T05:05:33Z"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:05:33Z",
+        "MSTSC.EXE",
+        "ntuser.dat",
+        "\\C:\\Users\\fredr\\ntuser.dat",
+        "C:\\Users\\fredr\\ntuser.dat",
+        "Microsoft.Windows.RemoteDesktop",
+        "\\??\\C:\\Users\\fredr\\ntuser.dat"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac4-b479-77d2-a808-d243dbb94028",
+        "exec_ids": [
+          "019ebac4-b479-77d2-a808-d243dbb94028",
+          "019ebac6-d4cc-7e71-8222-197be8abc6f3"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac4-b479-77d2-a808-d243dbb94028`, exec_id `019ebac6-d4cc-7e71-8222-197be8abc6f3`]** PID `1248` `svchost.exe` running as `svchost.exe -k NetworkService -s TermService` \u2014 RDP TermService was enabled on SRL-FORGE, providing the intruder's entry vector. Netscan confirms 113 inbound connections on port `3389` from two external IPs.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac4-b479-77d2-a808-d243dbb94028`, exec_id `019ebac6-d4cc-7e71-8222-197be8abc6f3`]",
+        "line_no": 88
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "3389",
+          "1248",
+          "svchost.exe -k NetworkService -s TermService",
+          "svchost.exe"
+        ]
+      },
+      "matched": [
+        "svchost.exe",
+        "3389",
+        "1248",
+        "svchost.exe -k NetworkService -s TermService"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad0-5daa-7290-84f6-61af8ebe3a78",
+        "exec_ids": [
+          "019ebad0-5daa-7290-84f6-61af8ebe3a78"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad0-5daa-7290-84f6-61af8ebe3a78`]** SDelete hash `0E837E93` loaded from `\\USERS\\FREDR\\DOWNLOADS\\SDELETE\\SDELETE.EXE`, run 5 times from `2020-11-14T13:44:52Z` to last_run `2020-11-14T13:47:10Z`, wiping 8 research documents. `EULA.TXT` was loaded, confirming the tool was extracted from the downloaded ZIP before execution.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad0-5daa-7290-84f6-61af8ebe3a78`]",
+        "line_no": 92
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:47:10Z",
+          "2020-11-14T13:44:52Z"
+        ],
+        "filenames": [
+          "SDELETE.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "0E837E93",
+          "2020-11-14T13:47:10Z",
+          "\\USERS\\FREDR\\DOWNLOADS\\SDELETE\\SDELETE.EXE",
+          "EULA.TXT",
+          "2020-11-14T13:44:52Z"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:47:10Z",
+        "2020-11-14T13:44:52Z",
+        "SDELETE.EXE",
+        "0E837E93",
+        "\\USERS\\FREDR\\DOWNLOADS\\SDELETE\\SDELETE.EXE",
+        "EULA.TXT"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebacc-af76-7511-856b-9eab65a01df7",
+        "exec_ids": [
+          "019ebacc-af76-7511-856b-9eab65a01df7"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebacc-af76-7511-856b-9eab65a01df7`]** `Users/srl-h/Downloads/sdelete64.exe` (inode `101249`) \u2014 a second user account `srl-h` on the machine possessed its own copy of sdelete64.exe. The `srl-h` profile contains 2,808 files with full AppData structure, indicating a fully-provisioned account.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebacc-af76-7511-856b-9eab65a01df7`]",
+        "line_no": 94
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "sdelete64.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "101249",
+          "Users/srl-h/Downloads/sdelete64.exe",
+          "srl-h"
+        ]
+      },
+      "matched": [
+        "sdelete64.exe",
+        "101249",
+        "Users/srl-h/Downloads/sdelete64.exe",
+        "srl-h"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-6baf-7b61-a075-a906fb0e6f66",
+        "exec_ids": [
+          "019ebad2-6baf-7b61-a075-a906fb0e6f66"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad2-6baf-7b61-a075-a906fb0e6f66`]** SCHTASKS.EXE prefetch (hash `8B6144A9`, run_count=11): 7 rapid-fire runs at `2020-11-14T14:17:57Z` (same second, indicating a batch/script loop), last run `2020-11-15T17:09:03Z`. Proximity to the SDelete activity (~30 min gap after 13:47Z) suggests scheduled-task manipulation followed the wipe as a persistence or cleanup step.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad2-6baf-7b61-a075-a906fb0e6f66`]",
+        "line_no": 100
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T14:17:57Z",
+          "2020-11-15T17:09:03Z"
+        ],
+        "filenames": [
+          "SCHTASKS.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T14:17:57Z",
+          "2020-11-15T17:09:03Z",
+          "8B6144A9"
+        ]
+      },
+      "matched": [
+        "2020-11-14T14:17:57Z",
+        "2020-11-15T17:09:03Z",
+        "SCHTASKS.EXE",
+        "8B6144A9"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-70ca-7370-b24e-4abb52a39c28",
+        "exec_ids": [
+          "019ebad2-70ca-7370-b24e-4abb52a39c28"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebad2-70ca-7370-b24e-4abb52a39c28`]** Hashdump returned 0 rows \u2014 SAM hashes not recoverable from this memory image. No skeleton-key patch detected.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebad2-70ca-7370-b24e-4abb52a39c28`]",
+        "line_no": 104
+      },
+      "status": "verified",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": "VERIFIED",
+      "llm_reason": "The parsed data shows count=0 and empty rows array, directly supporting the claim that hashdump returned 0 rows and SAM hashes were not recoverable from the memory image.",
+      "llm_cost_usd": 0.00076
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac7-4af5-7433-afcd-de34ad88351e",
+        "exec_ids": [
+          "019ebac7-4af5-7433-afcd-de34ad88351e"
+        ],
+        "text": "**[CONFIRMED \u2014 exec_id `019ebac7-4af5-7433-afcd-de34ad88351e`]** Malfind findings total=16 across: `MsMpEng.exe` (5 PAGE_EXECUTE_READWRITE regions \u2014 Windows Defender JIT), `SearchApp.exe` (4 RWX regions \u2014 .NET CLR), `dllhost.exe` (PAGE_EXECUTE_READ), `LockApp.exe`, `RuntimeBroker.` (truncated EPROCESS name), `Teams.exe`, and `smartscreen.ex` (PID `19348`, 1 RWX VadS region) \u2014 all legitimate Windows/Microsoft components. No MZ-headed unbacked VAD regions in user processes. The intruder used no injected malware \u2014 technique was entirely built-in Windows tools (RDP, mstsc.exe, schtasks.exe) plus downloaded SDelete.",
+        "raw_match": "[CONFIRMED \u2014 exec_id `019ebac7-4af5-7433-afcd-de34ad88351e`]",
+        "line_no": 108
+      },
+      "status": "verified",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "LockApp.exe",
+          "Teams.exe",
+          "dllhost.exe",
+          "schtasks.exe",
+          "MsMpEng.exe",
+          "SearchApp.exe",
+          "mstsc.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "LockApp.exe",
+          "Teams.exe",
+          "RuntimeBroker.",
+          "dllhost.exe",
+          "MsMpEng.exe",
+          "SearchApp.exe",
+          "19348",
+          "smartscreen.ex"
+        ]
+      },
+      "matched": [
+        "LockApp.exe",
+        "Teams.exe",
+        "dllhost.exe",
+        "MsMpEng.exe",
+        "SearchApp.exe",
+        "RuntimeBroker.",
+        "19348",
+        "smartscreen.ex"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "schtasks.exe",
+        "mstsc.exe"
+      ],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-69d9-7420-9987-629bc3f37aca",
+        "exec_ids": [
+          "019ebad2-69d9-7420-9987-629bc3f37aca"
+        ],
+        "text": "|\n| `2020-11-14T05:00:37Z` | `MSTSC.EXE` first run on SRL-FORGE \u2014 intruder launches RDP client to external host using `DEFAULT.RDP` | `019ebad2-69d9-7420-9987-629bc3f37aca` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 118
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:00:37Z"
+        ],
+        "filenames": [
+          "MSTSC.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T05:00:37Z",
+          "DEFAULT.RDP",
+          "MSTSC.EXE"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:00:37Z",
+        "MSTSC.EXE",
+        "DEFAULT.RDP"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-69d9-7420-9987-629bc3f37aca",
+        "exec_ids": [
+          "019ebad2-69d9-7420-9987-629bc3f37aca"
+        ],
+        "text": "|\n| `2020-11-14T05:05:33Z` | `MSTSC.EXE` second run (reconnect / re-establish) | `019ebad2-69d9-7420-9987-629bc3f37aca` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 119
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:05:33Z"
+        ],
+        "filenames": [
+          "MSTSC.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "MSTSC.EXE",
+          "2020-11-14T05:05:33Z"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:05:33Z",
+        "MSTSC.EXE"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac7-3e9b-7af0-8f0e-b8a086d2711b",
+        "exec_ids": [
+          "019ebac7-3e9b-7af0-8f0e-b8a086d2711b",
+          "019ebad2-69d9-7420-9987-629bc3f37aca"
+        ],
+        "text": "|\n| `2020-11-14T05:05:33Z` | UserAssist `Microsoft.Windows.RemoteDesktop` count=2 \u2014 cross-sources `MSTSC.EXE` prefetch, confirms Nov 14 RDP GUI session | `019ebac7-3e9b-7af0-8f0e-b8a086d2711b`, `019ebad2-69d9-7420-9987-629bc3f37aca` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 120
+      },
+      "status": "verified",
+      "tool_name": "vol3_userassist",
+      "tool_names": [
+        "vol3_userassist",
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T05:05:33Z"
+        ],
+        "filenames": [
+          "MSTSC.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Microsoft.Windows.RemoteDesktop",
+          "MSTSC.EXE",
+          "2020-11-14T05:05:33Z"
+        ]
+      },
+      "matched": [
+        "2020-11-14T05:05:33Z",
+        "MSTSC.EXE",
+        "Microsoft.Windows.RemoteDesktop"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad0-5ddc-7122-a2dc-193c2224de6a",
+        "exec_ids": [
+          "019ebad0-5ddc-7122-a2dc-193c2224de6a"
+        ],
+        "text": "|\n| `2020-11-14T13:42:38Z` | SDelete initial invocation (EULA acceptance), run_count=2, hash `2BD91720` | `019ebad0-5ddc-7122-a2dc-193c2224de6a` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 121
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:42:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T13:42:38Z",
+          "2BD91720"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:42:38Z",
+        "2BD91720"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad0-5daa-7290-84f6-61af8ebe3a78",
+        "exec_ids": [
+          "019ebad0-5daa-7290-84f6-61af8ebe3a78"
+        ],
+        "text": "|\n| `2020-11-14T13:44:52Z` | SDelete begins wiping research documents (5 runs, completing at `2020-11-14T13:47:10Z`) | `019ebad0-5daa-7290-84f6-61af8ebe3a78` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 122
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T13:47:10Z",
+          "2020-11-14T13:44:52Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T13:47:10Z",
+          "2020-11-14T13:44:52Z"
+        ]
+      },
+      "matched": [
+        "2020-11-14T13:47:10Z",
+        "2020-11-14T13:44:52Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-6baf-7b61-a075-a906fb0e6f66",
+        "exec_ids": [
+          "019ebad2-6baf-7b61-a075-a906fb0e6f66"
+        ],
+        "text": "|\n| `2020-11-14T14:17:57Z` | `SCHTASKS.EXE` 7 rapid-fire runs, hash `8B6144A9` (batch task manipulation) | `019ebad2-6baf-7b61-a075-a906fb0e6f66` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 123
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-14T14:17:57Z"
+        ],
+        "filenames": [
+          "SCHTASKS.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-14T14:17:57Z",
+          "SCHTASKS.EXE",
+          "8B6144A9"
+        ]
+      },
+      "matched": [
+        "2020-11-14T14:17:57Z",
+        "SCHTASKS.EXE",
+        "8B6144A9"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebad2-6baf-7b61-a075-a906fb0e6f66",
+        "exec_ids": [
+          "019ebad2-6baf-7b61-a075-a906fb0e6f66"
+        ],
+        "text": "|\n| `2020-11-15T17:09:03Z` | `SCHTASKS.EXE` final run | `019ebad2-6baf-7b61-a075-a906fb0e6f66` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 124
+      },
+      "status": "verified",
+      "tool_name": "ezt_prefetch_parse",
+      "tool_names": [
+        "ezt_prefetch_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-15T17:09:03Z"
+        ],
+        "filenames": [
+          "SCHTASKS.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SCHTASKS.EXE",
+          "2020-11-15T17:09:03Z"
+        ]
+      },
+      "matched": [
+        "2020-11-15T17:09:03Z",
+        "SCHTASKS.EXE"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac4-b479-77d2-a808-d243dbb94028",
+        "exec_ids": [
+          "019ebac4-b479-77d2-a808-d243dbb94028"
+        ],
+        "text": "|\n| `2020-11-16T02:31:18Z` | RDP burst begins \u2014 113 connections from `81.30.144.115` (59) and `213.202.233.104` (54) to port `3389` | `019ebac4-b479-77d2-a808-d243dbb94028` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 125
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "81.30.144.115",
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:31:18Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-16T02:31:18Z",
+          "81.30.144.115",
+          "213.202.233.104",
+          "3389"
+        ]
+      },
+      "matched": [
+        "81.30.144.115",
+        "213.202.233.104",
+        "2020-11-16T02:31:18Z",
+        "3389"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac1-7fa6-7be2-8f8a-83843d03c1c1",
+        "exec_ids": [
+          "019ebac1-7fa6-7be2-8f8a-83843d03c1c1",
+          "019ebac4-b479-77d2-a808-d243dbb94028"
+        ],
+        "text": "|\n| `2020-11-16T02:32:38Z` | **Memory captured** \u2014 sessions ESTABLISHED from `81.30.144.115` and `213.202.233.104` | `019ebac1-7fa6-7be2-8f8a-83843d03c1c1`, `019ebac4-b479-77d2-a808-d243dbb94028` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 126
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info",
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "81.30.144.115",
+          "213.202.233.104"
+        ],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-16T02:32:38Z",
+          "81.30.144.115",
+          "213.202.233.104"
+        ]
+      },
+      "matched": [
+        "81.30.144.115",
+        "213.202.233.104",
+        "2020-11-16T02:32:38Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019ebac1-7fa6-7be2-8f8a-83843d03c1c1",
+        "exec_ids": [
+          "019ebac1-7fa6-7be2-8f8a-83843d03c1c1"
+        ],
+        "text": "|\n| `2020-11-16T02:32:38Z` | **Intruder window closes** \u2014 memory capture timestamp anchors the window end | `019ebac1-7fa6-7be2-8f8a-83843d03c1c1` | [CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 127
+      },
+      "status": "verified",
+      "tool_name": "vol3_image_info",
+      "tool_names": [
+        "vol3_image_info"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2020-11-16T02:32:38Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "2020-11-16T02:32:38Z"
+        ]
+      },
+      "matched": [
+        "2020-11-16T02:32:38Z"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}

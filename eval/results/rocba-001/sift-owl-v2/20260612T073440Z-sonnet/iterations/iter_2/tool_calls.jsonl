@@ -1,0 +1,9 @@
+{"ts": "2026-06-12T07:58:56Z", "tool": "ToolSearch", "input": {"query": "select:mcp__sift-owl__query_rows", "max_results": 1}, "id": "toolu_01Uph4KtyBdbWovz1LXTXQT6"}
+{"ts": "2026-06-12T07:59:05Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac1-87c2-7333-8b5f-bcf0c9d73205", "limit": 20}, "id": "toolu_01CguzXBycnrvE2TWdnR5uFj"}
+{"ts": "2026-06-12T07:59:07Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac4-b479-77d2-a808-d243dbb94028", "filter_field": "foreign_addr", "filter_value": "81.30.144.115", "limit": 5}, "id": "toolu_016hAcsLkw2VUEMnqEtpPjwE"}
+{"ts": "2026-06-12T07:59:08Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac7-4af5-7433-afcd-de34ad88351e", "limit": 30}, "id": "toolu_016FcjK1yKcvqoGTj93iG7ah"}
+{"ts": "2026-06-12T07:59:08Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac7-3e9b-7af0-8f0e-b8a086d2711b", "limit": 30}, "id": "toolu_01V7VdPuWX4ZXsKnB512kpJb"}
+{"ts": "2026-06-12T07:59:09Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebad2-69d9-7420-9987-629bc3f37aca", "limit": 10}, "id": "toolu_0146915pF359pePYG2ELN298"}
+{"ts": "2026-06-12T08:00:20Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac7-3e9b-7af0-8f0e-b8a086d2711b", "filter_field": "name", "filter_value": "RemoteDesktop", "limit": 5}, "id": "toolu_01XUVBanahiY99DesJwPu6py"}
+{"ts": "2026-06-12T08:00:21Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac7-3e9b-7af0-8f0e-b8a086d2711b", "filter_field": "name", "filter_value": "AcroRd32", "limit": 5}, "id": "toolu_01A8SrTn3m1xqJCMhZcKutNK"}
+{"ts": "2026-06-12T08:00:22Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ebac6-d4cc-7e71-8222-197be8abc6f3", "filter_field": "pid", "filter_value": "1248", "limit": 5}, "id": "toolu_01BgGte9U7etA31eFiAjBLPQ"}
