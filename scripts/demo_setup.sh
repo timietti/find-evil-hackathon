@@ -57,6 +57,10 @@ BRIEFING="The evidence is at $EVIDENCE_DIR. \
 Briefly: SANS FOR500 'Abducted Zebrafish' — single-host insider \
 IP theft on a Microsoft Surface 3. Call the case '$CASE_ID'."
 
+# Echo the command on-screen for the viewer.
+printf '$ cat prompts/setup-new-case.md - | claude --model sonnet\n'
+printf '  (followed by:  %s)\n\n' "$BRIEFING"
+
 # Compose the input Claude sees: the setup prompt, then the case
 # briefing. Claude reads stdin, follows the setup prompt's
 # instructions, and acts autonomously.

@@ -48,6 +48,15 @@ if [[ -f .venv/bin/activate ]]; then
     source .venv/bin/activate
 fi
 
+CMD=(
+    python -m eval.agents.sift_owl_v2.run_loop
+    --case            "$CASE_ID"
+    --prompt-file     "$PROMPT_FILE"
+    --model           sonnet
+    --max-budget-usd  5.00
+    --max-iterations  3
+)
+
 # Show the invocation on-screen for the intro shot (~3 s).
 clear
 cat <<EOF
@@ -56,11 +65,12 @@ cat <<EOF
  prompt:                ${PROMPT_FILE}
 ─────────────────────────────────────────────────────────────────
 EOF
+printf '\n$ %s \\\n' "${CMD[0]} ${CMD[1]} ${CMD[2]}"
+printf '    %s %s \\\n' "${CMD[3]}" "${CMD[4]}"
+printf '    %s %s \\\n' "${CMD[5]}" "${CMD[6]}"
+printf '    %s %s \\\n' "${CMD[7]}" "${CMD[8]}"
+printf '    %s %s \\\n' "${CMD[9]}" "${CMD[10]}"
+printf '    %s %s\n\n'  "${CMD[11]}" "${CMD[12]}"
 sleep 3
 
-exec python -m eval.agents.sift_owl_v2.run_loop \
-    --case            "$CASE_ID" \
-    --prompt-file     "$PROMPT_FILE" \
-    --model           sonnet \
-    --max-budget-usd  5.00 \
-    --max-iterations  3
+exec "${CMD[@]}"

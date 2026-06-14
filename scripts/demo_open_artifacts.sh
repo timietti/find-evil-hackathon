@@ -66,6 +66,7 @@ for ((i=0; i < ${#clips[@]}; i+=2)); do
         *.yaml|*.yml) lang=yaml ;;
         *)            lang=markdown ;;
     esac
+    printf '\n$ bat --paging=always --language=%s %s\n\n' "$lang" "$file"
     "$BAT" --paging=always --style=plain --language="$lang" "$file"
 done
 
