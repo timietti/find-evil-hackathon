@@ -1,373 +1,219 @@
-# SIFT-OWL — Demo Video Script (5:00)
+# SIFT-OWL — Demo Video (5 min max)
 
-> Storyboard for the Devpost-required 5-minute submission video.
-> Voice-over (VO) is what the narrator says; the screen column describes
-> exactly what's on screen at that moment.
->
-> Tooling: 1920×1080 screen capture with `OBS Studio`, mic for VO,
-> post-edit in `kdenlive` or `DaVinci Resolve`. Cursor highlights via
-> `key-mon`. Audio cleanup in Audacity. Target file: ≤ 100 MB H.264 MP4.
->
-> **The Devpost rules require an explicit "self-correction sequence"** —
-> covered in scene 5 (3:00 - 4:00).
+Devpost requirement: *Screencast of live terminal execution with audio
+narration. Show the agent working against real case data, including at
+least one self-correction sequence.*
+
+Recipe is one live OBS take of the agent running on **VANKO-001** (the
+held-out FOR500 case). VANKO converges in two iterations
+(iter 1 = 65.8 %, iter 2 = 100.0 % / 37 verified) — so a single live
+run captures both the working-against-real-case requirement *and* a
+clean self-correction sequence inside the time budget. $1.75 / ~26 min
+wall.
+
+VO is recorded separately in Audacity and layered over the OBS take
+during edit.
 
 ---
 
-## Beat map
+## What's on screen, scene by scene
 
-| Time | Scene | Theme |
+| Time | Source on screen | What viewer sees |
 |---|---|---|
-| 0:00 - 0:15 | **Cold open** | Headline numbers, the punch |
-| 0:15 - 0:50 | **The baseline problem** | Why Protocol SIFT alone isn't enough |
-| 0:50 - 1:30 | **Architecture in 40 sec** | Typed MCP boundary, per-call audit, validator-in-loop |
-| 1:30 - 3:00 | **Live run — ROCBA-001** | Fire the loop, watch convergence |
-| 3:00 - 4:00 | **Self-correction sequence** | Single claim: flagged in iter 2 → corrected in iter 3 |
-| 4:00 - 4:30 | **Audit trail walkthrough** | One claim → exec_id → JSONL row → reproducibility |
-| 4:30 - 5:00 | **Results + close** | 3 cases, MITRE coverage, repo link |
+| 0:00 – 0:15 | terminal | the `run_loop` invocation + first stdout lines |
+| 0:15 – 1:30 | terminal, speed-ramp ~10× | iter 1 progress — MCP-call counter, validator running |
+| 1:30 – 2:15 | `iter_1/validator_report.md` | header (65.8 %, 25 V / 7 P / 0 F), one **partial** verdict spelled out |
+| 2:15 – 2:45 | `iter_2/prompt.md` scroll | "Iteration 1 validator flagged these claims …" section |
+| 2:45 – 4:00 | terminal, speed-ramp ~6× | iter 2 progress (the **self-correction**) |
+| 4:00 – 4:35 | `iter_2/validator_report.md` | header (100.0 %, 37/37, `Convergence: 0 demoted claims. Stopping.`) |
+| 4:35 – 5:00 | `final_response.md` scroll | top of the report + close |
 
----
-
-## Scene 1 — Cold open  (0:00 - 0:15)
-
-**Screen**
-- Full-frame card on dark background:
-  ```
-  SIFT-OWL
-  Autonomous DFIR agent on a typed-MCP boundary
-
-  ROCBA-001:        91.7%        memory-only · iter-3
-  ROCBA-001+disk:   96.7%        W3-58 disk+memory · iter-3
-  STARK-APT-001:    86.1%        4-host · iter-3
-  SHIELDBASE        71.4%        single-shot held-out · $3.50 · 42 min
-  SHIELDBASE  ⭐    89.9%        self-correcting loop · 71/79 V · $4.59 · 57 min
-  VANKO-001         36.4%        single-shot held-out · $2.21 · 30 min
-  VANKO-001   ⭐⭐  100.0%       post-W3-60 retry · 37/37 V · $1.75 · 26 min
-  ```
-- Bottom: `github.com/timietti/find-evil-hackathon · MIT`
-
-**VO** (12 s)
-> "SIFT-OWL is an autonomous DFIR agent that processes raw disk and
-> memory images end-to-end — no human in the loop, no shell access for
-> the model, and a per-call audit trail every claim has to cite. On a
-> held-out 15-host SANS case, three dollars and forty-two minutes of
-> compute got us seventy-one percent of claims strictly verified on a
-> single shot; the self-correcting loop with libesedb-backed SRUM gets
-> us to eighty-nine point nine percent with seventy-one of seventy-nine
-> verified. Here's how."
-
----
-
-## Scene 2 — The baseline problem  (0:15 - 0:50)
-
-**Screen**
-- Split screen.
-- **Left half**: Protocol SIFT baseline run — `eval/results/test2-stark-apt/baseline-protocol-sift/20260510T183123Z-sonnet/REPORT.md`
-  - Highlight: `Cost: $10.99 (37% over budget)`, `Exit code: 1`,
-    `Result subtype: error_max_budget_usd`, `Final report on disk: none`
-- **Right half**: Protocol SIFT's actual audit file — `/cases/find-evil-test/analysis/forensic_audit.log`. One line only:
-  ```
-  Sat May  9 05:31:43 UTC 2026:
-  ```
-
-**VO** (30 s)
-> "Protocol SIFT — the hackathon's published baseline — drives Claude
-> Code with an unrestricted Bash allow-list. On a single-host memory
-> case it gets thirty-one percent verified. On a four-host case it
-> spawns seven parallel sub-agents, blows past its budget, and gets
-> cut off mid-report. And the entire forensic audit log is this:
-> one line, a timestamp. There is no way to trace a finding back to
-> the specific shell command that produced it. Both of those are
-> architecturally fixable — we just had to replace the shell with
-> something the model can't escape."
-
----
-
-## Scene 3 — Architecture in 40 seconds  (0:50 - 1:30)
-
-**Screen**
-- Open `docs/architecture.svg` in browser.
-- Highlight in sequence (cursor zooms or animated focus rings):
-  1. The Orchestrator box (top) — "loop, 3 iters, hard budget cap"
-  2. The Investigator subprocess — note the red `--disallowed-tools` line
-  3. The `sift-mcp · FastMCP stdio server` — note the 4 grouped tool family tiles
-  4. The audit log box — the JSON row sample
-  5. The Validator column — the 5 numbered steps
-  6. The trust boundary callouts — TB1 through TB6
-
-**VO** (40 s)
-> "The architecture is one idea: replace the shell with a typed MCP
-> server, then make every call audited. The investigator can call
-> thirty-eight registered functions — that's it. No Bash. No Read.
-> No Write. No web access. Every function validates its arguments,
-> runs a forensic tool in a subprocess with argv lists — never
-> shell-equals-true — parses the output, and writes one JSON row to
-> the audit log with the exec ID, args, both hashes, and a parsed
-> summary. After each iteration the validator pulls every CONFIRMED
-> claim out of the report, resolves its cited exec ID, and re-checks
-> whether the parsed tool output structurally supports it. If not,
-> the next iteration's prompt tells the agent which claims to fix.
-> Six trust boundaries, all architecturally enforced, all tested."
-
----
-
-## Scene 4 — Live run on ROCBA-001  (1:30 - 3:00)
-
-**Screen — sub-scene 4a (1:30 - 1:50)**: terminal
-```
-$ python -m eval.agents.sift_owl_v2.run_loop \
-    --case rocba-001 \
-    --prompt-file prompt.md \
-    --model sonnet \
-    --max-budget-usd 5 \
-    --max-iterations 3
-[12:00:00] Pre-run hashes match. (2 files)
-[12:00:01] iter 1: launching claude...
-```
-
-**VO** (20 s)
-> "Here's the canonical case — ROCBA — a Windows 10 employee laptop,
-> eighteen-gig RAM image, single-host break-in. We fire the v2
-> self-correction loop with a five-dollar cap, three iterations,
-> Sonnet four-six. The loop builds a base prompt, spawns the
-> investigator, waits for it to write its tagged report, then runs
-> the validator."
-
-**Screen — sub-scene 4b (1:50 - 2:20)**: cut to a sped-up timelapse of `tool_calls.jsonl` filling up. Show the count climb: 30, 60, 80, 110. Then iter-1 `final_response.md` opens — scroll through the tagged claims.
-
-**VO** (30 s)
-> "Forty-eight tool calls in this iteration. The agent runs
-> vol3 image_info, psscan, pstree, cmdline, netscan, filescan,
-> malfind, svcscan, userassist, then drills with query_rows for the
-> specific PIDs and IPs it wants to verify. Every call gets one row
-> in the audit log. The investigator finishes, the validator runs,
-> we get our first score."
-
-**Screen — sub-scene 4c (2:20 - 3:00)**: open `validator_report.md` for ROCBA v2 iter 1.
-- Highlight: `Confirmation score: 48.3%`
-- Scroll to per-claim verdicts, point at one **partial** verdict.
-- Cut to iter 2 prompt (`iter_2/prompt.md`) — scroll to the "validator flagged the following claims" section, show 14 flagged claims.
-
-**VO** (40 s)
-> "Forty-eight percent strict-verified at iter one — not the headline
-> number yet. The validator flagged fourteen claims as partial — some
-> tokens matched, some didn't. The harness builds the next iteration's
-> prompt by appending the flagged claims, with the validator's notes
-> on *what* didn't match. Iter two doesn't restart — it picks up the
-> same audit log, the same exec IDs, and the agent decides which
-> claims to re-investigate."
-
----
-
-## Scene 5 — Self-correction sequence  (3:00 - 4:00)  ⭐ mandatory
-
-**Screen — sub-scene 5a (3:00 - 3:25)**: zoom in on a single flagged claim from `iter_2/prompt.md`. Pick the cleanest one. Example:
-
-```
-[3] partial — cited tool: vol3_netscan
-- note: 3 tokens matched (PID 1912, foreign IP 81.30.144.115);
-  1 missing: timestamp "2020-11-14T03:42:55Z" not in netscan parsed_summary
-> [CONFIRMED] STUN.exe (PID 1912) reached out to 81.30.144.115 at
-  2020-11-14T03:42:55Z (vol3_netscan exec_id=019e1372-...)
-```
-
-**VO** (25 s)
-> "Here's a single flagged claim. The agent said STUN-dot-exe
-> connected to a specific IP at a specific timestamp, citing the
-> network scan. The validator confirmed PID nineteen-twelve and the
-> IP are in the netscan output — but the timestamp it cited isn't.
-> So it's marked partial. The fix isn't to rerun netscan — netscan
-> doesn't carry per-connection wall-clock timestamps. The fix is
-> to cite a *different* tool that does."
-
-**Screen — sub-scene 5b (3:25 - 3:50)**: cut to iter 3's `final_response.md`. Find the corrected claim:
-
-```
-[CONFIRMED] STUN.exe (PID 1912) reached out to 81.30.144.115
-  (vol3_netscan  exec_id=019e1372-d58b-...)
-  at 2020-11-14T03:42:55Z
-  (vol3_cmdline  exec_id=019e1374-3eba-...)
-```
-
-**VO** (25 s)
-> "Iter three. Same claim, but now multi-cited: netscan for the
-> connection itself, cmdline for the process-start timestamp that
-> anchors the wall clock. The validator re-runs, both citations
-> resolve, both sets of tokens match, claim verified."
-
-**Screen — sub-scene 5c (3:50 - 4:00)**: validator_report.md for iter 3. Highlight:
-```
-Confirmation score: 91.7%  (54 verified / 60 testable)
-LLM-promoted: 1 (Haiku 4.5 prose check, $0.0013)
-```
-
-**VO** (10 s)
-> "Final score: ninety-one-point-seven percent strict-verified.
-> Three iterations, four dollars sixty-nine cents, twenty-four minutes."
-
----
-
-## Scene 6 — Audit trail walkthrough  (4:00 - 4:30)
-
-**Screen**
-- Terminal. Pick the same exec_id from the corrected claim above
-  (`019e1372-d58b-7042-bfd9-849d9fd58cba`).
-- Run:
-  ```
-  $ grep 019e1372-d58b audit/exec_log.jsonl | jq .
-  ```
-- Show the JSON row inline. Highlight the fields:
-  - `tool: "vol3_netscan"`
-  - `args: { "image": "/cases/find-evil-test/Rocba-Memory.raw" }`
-  - `input_hash` + `output_hash` (sha256)
-  - `parsed_summary` (truncated count of connections)
-  - `wall_ms: 7820`
-
-**VO** (30 s)
-> "Every confirmed claim cites an exec ID. Every exec ID is one row
-> in this JSONL file. The row has the tool name, the exact arguments,
-> the SHA-256 of the inputs and outputs, the wall time, and a parsed
-> summary. The raw output is on disk too, at a content-addressed path,
-> so you can re-derive every number in the report. This is what
-> traceability means architecturally — not a prompt instruction asking
-> the model to be helpful."
-
----
-
-## Scene 7 — Results + close  (4:30 - 5:00)
-
-**Screen — sub-scene 7a (4:30 - 4:48)**: results table
-
-```
-Case                            Strict-verified    Cost      Wall    Hosts
-─────────────────────────────────────────────────────────────────────────────
-ROCBA-001  dev (memory-only)       91.7%          $4.69     24 min     1
-ROCBA-001  W3-58 (disk+memory)     96.7%          $4.30     27 min     1
-STARK-APT  dev                     86.1%          $1.92     20 min     4
-SHIELDBASE held-out single shot    71.4%  (30/42) $3.50     42 min    15+
-SHIELDBASE self-correcting ⭐      89.9%  (71/79) $4.59     57 min    15+
-VANKO-001  held-out single shot    36.4%  ( 8/22) $2.21     30 min     1
-VANKO-001  post-W3-60 retry ⭐⭐    100.0% (37/37) $1.75     26 min     1
-
-MITRE ATT&CK coverage: 20 of 22 target techniques at Full (91%)
-                       2 Partial, 0 Missing
-
-vs Protocol SIFT baseline:
-   ROCBA      31.0%  →  91.7%       (+60.7 pp)
-   STARK-APT  did-not-finish ($10.99) → completed at $1.92
-```
-
-**VO** (18 s)
-> "Five cases. On the held-out SHIELDBASE, seventy-one percent of
-> claims verified on a single shot; the self-correcting loop pushes
-> that to eighty-nine point nine percent. On the held-out VANKO-001
-> the prompt-fixed retry hit one hundred percent strict-verified —
-> thirty-seven of thirty-seven, twenty-six minutes, one dollar
-> seventy-five. Twenty of twenty-two MITRE techniques at Full
-> coverage. No shell, no spoliation, every claim traceable. Sixty
-> points of accuracy lift on ROCBA over the baseline; on STARK-APT,
-> where the baseline didn't even finish, we landed in twenty minutes
-> for under two dollars."
-
-**Screen — sub-scene 7b (4:48 - 5:00)**: closing card
-```
-   SIFT-OWL
-   Open source · MIT · SANS SIFT 24.x
-
-   github.com/timietti/find-evil-hackathon
-   docs/ACCURACY_REPORT.md
-   docs/MITRE_COVERAGE.md
-```
-
-**VO** (12 s)
-> "Repo is open, MIT licensed. Full accuracy report, MITRE coverage
-> matrix, audit logs, every claim — committed. Run it on your case."
-
----
-
-## Production notes
-
-### Audio
-- Single-take VO is fine; pace at ~150 words/min averages over the 5
-  minutes (~750 words). The script is ~720 words.
-- Pause 0.5 s between scenes; lets background-music ducking work.
-- Background music: low-key ambient electronic, -22 LUFS, fade in/out
-  at scene cuts. Suggested: Suno-generated or royalty-free from
-  Pixabay/Bensound. CC-BY required if used.
-
-### Visual style
-- Dark terminal background (#0d1117 GitHub dark)
-- Cursor highlight: yellow circle outline, 30% opacity
-- Code highlights: red underline (3 px) for "flagged" claims, green for
-  "verified"
-- Architecture diagram: full-screen with animated zooms via Ken-Burns
-  effect (Resolve has a preset)
-
-### File targets
-- Output: 1920×1080 H.264 MP4, 30 fps, 6 Mbps target → ≤ 100 MB
-- Devpost upload limit: 100 MB direct; YouTube unlisted as backup link
-
-### Capture commands
-```bash
-# Pre-record: capture the ROCBA v2 loop output as the live demo source
-ANTHROPIC_API_KEY=$(cat ~/.anthropic_key) \
-  python -m eval.agents.sift_owl_v2.run_loop \
-    --case rocba-001 --prompt-file prompt.md \
-    --model sonnet --max-budget-usd 5 --max-iterations 3 \
-  2>&1 | tee /tmp/demo-rocba.log
-
-# We use the EXISTING ROCBA v2 run at
-# eval/results/rocba-001/sift-owl-v2/20260510T065909Z-sonnet/
-# for the scene-4 cuts, since that's the canonical 91.7% run.
-```
-
-### Cuts cheat sheet
-The clip uses three asynchronous tracks:
-- **Track 1** — terminal/IDE captures (the agent running)
-- **Track 2** — VO mic
-- **Track 3** — ambient music bed
-With overlays for:
-- Headline numbers (scene 1, 7a)
-- Cursor highlights (scenes 5-6)
-- Architecture diagram (scene 3)
-
----
-
-## Word count check
-
-| Scene | Words (approx) | Seconds | Words/sec |
-|---|---|---|---|
-| 1 — Cold open | 55 | 15 | 3.7 |
-| 2 — Baseline problem | 95 | 35 | 2.7 |
-| 3 — Architecture | 130 | 40 | 3.3 |
-| 4 — Live run | 195 | 90 | 2.2 |
-| 5 — Self-correction | 165 | 60 | 2.8 |
-| 6 — Audit trail | 75 | 30 | 2.5 |
-| 7 — Results + close | 60 | 30 | 2.0 |
-| **Total** | **775** | **300** | **2.6** |
-
-Comfortable narration pace (~150-160 wpm), leaves room for breathing
-and on-screen text reading.
+Every cut is a real artifact from the live capture — nothing is staged.
 
 ---
 
 ## Pre-record checklist
 
-- [ ] Microphone gain calibrated; one warm-up take recorded + listened to
-- [ ] Screen recorder set to 1920×1080, 30 fps, mouse pointer visible
-- [ ] Architecture SVG opens cleanly in browser at full screen
-- [ ] Terminal font ≥ 16 pt for legibility at 1080p
-- [ ] `audit/exec_log.jsonl` for the rocba-001 v2 run exists at
-      `eval/results/rocba-001/sift-owl-v2/20260510T065909Z-sonnet/audit/`
-- [ ] `jq` installed
-- [ ] All file paths cited in the script exist (per the checklist above)
-- [ ] Closing-card URL matches the actual repo URL
+1. Anthropic key on disk: `~/.anthropic_key` (already there).
+2. VANKO evidence at `/cases/find-evil-test4/` (already there).
+3. OBS profile: 1920×1080 @ 30 fps, H.264 MP4, CRF 18.
+4. Terminal: GNOME Terminal full-screen, font ≥ 16 pt, dark theme.
+5. Mic level test in Audacity — peaks at ≈ −12 dB.
+6. Free disk for raw capture: ~3 GB for 26 min at CRF 18.
 
 ---
 
-## Post-edit checklist
+## Step 1 — Live capture (one OBS take, ≈ 26 min)
 
-- [ ] Final file ≤ 100 MB
-- [ ] Captions burned in or as a `.vtt` sidecar
-- [ ] Music track credited if not original
-- [ ] YouTube unlisted upload as Devpost-failure fallback
-- [ ] Devpost submission references the video URL
+```bash
+# In OBS: load the "SIFT-OWL Demo" profile, set Display Capture to the
+# monitor with the terminal, hit F9 to start.
+
+bash scripts/demo_run.sh
+```
+
+`scripts/demo_run.sh` (committed) runs the v2 loop on VANKO with the
+canonical settings. When you see `BASELINE RUN COMPLETE` followed by
+the validator summary, F9 again to stop OBS.
+
+Output: `~/Videos/sift-owl-demo-raw.mp4` (≈ 25-26 min).
+
+## Step 2 — Cutaway captures (≈ 5 min total)
+
+Three short OBS clips of the file viewers. F9 / F9 per clip, ~30 s each:
+
+```bash
+bash scripts/demo_open_artifacts.sh
+```
+
+Opens each markdown file in `bat --paging=always` in the order the edit
+needs them:
+
+1. `iter_1/validator_report.md`        (scene 3)
+2. `iter_2/prompt.md`                  (scene 4 — scroll to "flagged" section)
+3. `iter_2/validator_report.md`        (scene 6)
+4. `final_response.md`                 (scene 7)
+
+For each: F9, scroll to the section, F9.
+
+## Step 3 — VO take (Audacity, ≈ 10 min)
+
+Open Audacity, mono 48 kHz/24-bit, record the script in one pass. Save
+as `~/Audio/sift-owl-vo.wav`. The full VO script is at the bottom of
+this file — ~720 words at 2.4 wps fits 5 minutes with room to breathe.
+
+## Step 4 — Edit (kdenlive or DaVinci Resolve, ≈ 45 min)
+
+Three tracks:
+
+| Track | Content |
+|---|---|
+| V1 | `sift-owl-demo-raw.mp4` (speed-ramp per the scene table above) + 4 cutaway clips inserted at the right cut points |
+| A1 | `sift-owl-vo.wav` aligned to scene boundaries |
+| A2 *(optional)* | royalty-free ambient bed at −22 LUFS |
+
+Speed-ramp targets (so iter-1 grind doesn't eat the budget):
+
+```
+00:00 - 00:15   raw  1×   (intro + invocation)
+00:15 - 01:30   raw 10×   (iter 1 progress)
+01:30 - 02:15   cut: iter_1/validator_report.md
+02:15 - 02:45   cut: iter_2/prompt.md
+02:45 - 04:00   raw  6×   (iter 2 progress)
+04:00 - 04:35   cut: iter_2/validator_report.md
+04:35 - 05:00   cut: final_response.md
+```
+
+Burn-in subtitles from the VO track (Resolve: `Edit → Subtitles → from
+audio`; kdenlive: install `subtitlecomposer`).
+
+## Step 5 — Export + verify
+
+```bash
+# kdenlive: Project → Render → MP4
+#   1920×1080, 30 fps, H.264, target 5 Mbps, AAC 192 kbps
+#   → ~90 MB at 5 min duration (under Devpost's 100 MB cap)
+
+ffprobe -i ~/Videos/sift-owl-demo-final.mp4 2>&1 | grep -E "Duration|bitrate"
+# Confirm Duration: 00:04:5x.xx (must be ≤ 5:00)
+
+# Loudness check
+ffmpeg -i ~/Videos/sift-owl-demo-final.mp4 -af loudnorm=print_format=json -f null -
+# Target: integrated_loudness ≈ -16 LUFS
+```
+
+## Step 6 — Upload
+
+```bash
+# Primary: Devpost direct upload (100 MB limit)
+# Backup: YouTube unlisted
+
+# Both URLs go on the submission form.
+```
+
+---
+
+## VO script (one continuous take, ~720 words)
+
+> ### 0:00 — Invocation (15 s)
+>
+> "This is SIFT-OWL — an autonomous DFIR agent running on a SANS SIFT
+> Workstation. I'm pointing it at VANKO-001, a hundred-and-sixteen-gig
+> physical disk from a SANS five-hundred case the agent has never
+> been tuned to. Five-dollar budget, three iterations, Sonnet four-six."
+>
+> ### 0:15 — Iter 1 (75 s — over the timelapse)
+>
+> "The agent runs inside a Claude Code subprocess with no shell, no
+> file system, and no network — its only callable surface is
+> thirty-eight typed read-only forensic functions registered by the
+> MCP server. You can see the iter-1 banner; underneath, the MCP-call
+> counter is climbing. Every call gets one row in
+> `audit/exec_log.jsonl` with an exec-ID, the arguments, the SHA-two-fifty-six
+> of inputs and outputs, and a parsed summary. The agent decides
+> which tools to fire from a high-level briefing — partition tables,
+> MFT extraction, EVTX, prefetch, SRUM — and writes its final report
+> at the end. Then the validator runs."
+>
+> ### 1:30 — Iter 1 validator report (45 s)
+>
+> "Iter one: sixty-five-point-eight percent strict-verified. Twenty-five
+> claims passed, seven came back as partial — the validator extracted
+> a token, looked it up in the cited tool's parsed JSON, and didn't
+> find an exact match. Here's one of them — a quoted compound where
+> the agent wrote `is_directory true` as a single token instead of
+> the bare value `true`. The validator can't substring-match that
+> against the JSON haystack."
+>
+> ### 2:15 — Iter 2 prompt (30 s)
+>
+> "This is what the loop hands the agent next. The harness prepends
+> the iter-1 prompt with the flagged claims and the validator's notes
+> on what exactly didn't match. The agent picks them up and decides
+> whether to re-investigate, re-cite, or demote each one."
+>
+> ### 2:45 — Iter 2 (75 s — over the timelapse)
+>
+> "Iter two — the self-correction. The agent rephrases the flagged
+> claims with bare-value tokens and adds the missing citations.
+> Notice the call count is much lower this time: it doesn't redo
+> the whole investigation, it surgically addresses the flagged
+> claims. The validator re-runs."
+>
+> ### 4:00 — Iter 2 validator report (35 s)
+>
+> "Iter two: one hundred percent strict-verified. Thirty-seven of
+> thirty-seven testable claims now pass. Validator prints
+> 'Convergence: zero demoted claims — stopping.' The loop terminates
+> at iter two; iter three doesn't fire. Total cost, a dollar
+> seventy-five; total wall, twenty-six minutes; thirteen MCP calls
+> across both iterations."
+>
+> ### 4:35 — Final report + close (25 s)
+>
+> "Final report. The agent reconstructed the full IP-theft spine:
+> fourteen classified documents in OneDrive, all sharing the exact
+> timestamp JARVIS detected the transfer; the mapped Stark-research
+> drive at letter D since May; the syncing OneDrive hierarchy. Every
+> claim is exec-ID-cited, every exec-ID is in the audit log, every
+> finding is reproducible. Repo: github.com/timietti slash
+> find-evil-hackathon. Open, MIT."
+
+---
+
+## Checklists
+
+### Pre-record
+- [ ] OBS profile loaded, mic input live, peak −12 dB
+- [ ] Terminal full-screen, font ≥ 16 pt
+- [ ] `~/.anthropic_key` readable; `/cases/find-evil-test4/` present
+- [ ] `scripts/demo_run.sh` and `scripts/demo_open_artifacts.sh` present + executable
+- [ ] `bat` and `ffmpeg` installed
+
+### Post-edit
+- [ ] Final duration ≤ 5:00 (target 4:55)
+- [ ] Subtitles burned in
+- [ ] Loudness ≈ −16 LUFS integrated
+- [ ] File ≤ 100 MB
+- [ ] YouTube unlisted backup uploaded
+- [ ] Devpost form has both URLs
