@@ -13,18 +13,30 @@
 #      and the loop exits, stop OBS (F9).
 #
 # Pre-reqs: see docs/DEMO_SCRIPT.md "Pre-record checklist".
+#
+# Usage:
+#   bash scripts/demo_run.sh                  # defaults to test4-vanko
+#   bash scripts/demo_run.sh vanko-demo       # case-id scaffolded by demo_setup.sh
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
+CASE_ID="${1:-test4-vanko}"
+PROMPT_FILE="eval/agents/sift_owl_v2/prompt-${CASE_ID}.md"
+CASE_YAML="eval/cases/${CASE_ID}/case.yaml"
+
 if [[ ! -f "$HOME/.anthropic_key" ]]; then
     echo "FATAL: ~/.anthropic_key not found." >&2
     exit 1
 fi
-if [[ ! -d /cases/find-evil-test4 ]]; then
-    echo "FATAL: /cases/find-evil-test4 not present." >&2
+if [[ ! -f "$CASE_YAML" ]]; then
+    echo "FATAL: $CASE_YAML not present — run scripts/demo_setup.sh first." >&2
+    exit 1
+fi
+if [[ ! -f "$PROMPT_FILE" ]]; then
+    echo "FATAL: $PROMPT_FILE not present." >&2
     exit 1
 fi
 
@@ -38,16 +50,17 @@ fi
 
 # Show the invocation on-screen for the intro shot (~3 s).
 clear
-cat <<'EOF'
+cat <<EOF
 ─────────────────────────────────────────────────────────────────
- SIFT-OWL v2 — VANKO-001 (FOR500 "Abducted Zebrafish", held-out)
+ SIFT-OWL v2 — case: ${CASE_ID}
+ prompt:                ${PROMPT_FILE}
 ─────────────────────────────────────────────────────────────────
 EOF
 sleep 3
 
 exec python -m eval.agents.sift_owl_v2.run_loop \
-    --case            test4-vanko \
-    --prompt-file     eval/agents/sift_owl_v2/prompt-test4-vanko.md \
+    --case            "$CASE_ID" \
+    --prompt-file     "$PROMPT_FILE" \
     --model           sonnet \
     --max-budget-usd  5.00 \
     --max-iterations  3
