@@ -1,0 +1,105 @@
+{
+  "run_id": "20260509T204853Z-sonnet",
+  "case": "test2-stark-apt",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_turns": 80,
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v1/prompt-test2-stark-apt-disk.md",
+  "started_utc": "2026-05-09T20:50:08Z",
+  "cwd": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v1/20260509T204853Z-sonnet",
+  "evidence_dir": "/cases",
+  "pre_run_hashes": {
+    "/cases/find-evil-test2/win2008R2-controller-c-drive/win2008R2-controller-c-drive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "389ea6b4969cc132ac9a3f28fa572ffc588442ca25ec04bea059b52fd6db4e7e",
+      "size_bytes": 14361240775,
+      "match": true
+    },
+    "/cases/find-evil-test2/win2008R2-controller-memory/win2008R2-controller-memory-raw.001": {
+      "expected_sha256": null,
+      "actual_sha256": "0980b543e6f659091ff4645c2b92771ede45c664e56dc754d420beeeae770edd",
+      "size_bytes": 2684354560,
+      "match": true
+    },
+    "/cases/find-evil-test2/win7-32-nromanoff-c-drive/win7-32-nromanoff-c-drive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "f92662135db8d1a5eb33de5b391186c1242b59641db1ba96b3e4ff52a5a1e5b6",
+      "size_bytes": 9689019743,
+      "match": true
+    },
+    "/cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.001": {
+      "expected_sha256": null,
+      "actual_sha256": "f40af394587fe1f6e6ed6b48e4840a4d4b5927c5d73d8e243d9d31225517d728",
+      "size_bytes": 2147483648,
+      "match": true
+    },
+    "/cases/find-evil-test2/win7-64-nfury-c-drive/win7-64-nfury-c-drive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "a5df0b38ec699656e8c9925ffa515945288aaa32cd29c284fb519cf06d1589c7",
+      "size_bytes": 12034347442,
+      "match": true
+    },
+    "/cases/find-evil-test2/win7-64-nfury-memory/win7-64-nfury-memory-raw.001": {
+      "expected_sha256": null,
+      "actual_sha256": "0b53c16973774007244b82d6e777f669ee17224e8aa8c5fc98954196a27c9f5b",
+      "size_bytes": 2147483648,
+      "match": true
+    },
+    "/cases/find-evil-test2/xp-tdungan-c-drive/xp-tdungan-c-drive.E01": {
+      "expected_sha256": null,
+      "actual_sha256": "117511847d05cf3a52397b6800015b98d77fa3c8a31088a2592709825e402eb0",
+      "size_bytes": 7035112594,
+      "match": true
+    },
+    "/cases/find-evil-test2/xp-tdungan-memory/xp-tdungan-memory-raw.001": {
+      "expected_sha256": null,
+      "actual_sha256": "bf5c4740cbc71fb10946596f55226240c0bd2553993eebf8e9d38f5c9b9775cc",
+      "size_bytes": 2147483648,
+      "match": true
+    }
+  },
+  "claude_version": "2.1.137 (Claude Code)",
+  "sift_mcp_inspect": "{\n  \"server\": \"sift-owl\",\n  \"audit_dir\": \"/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v1/20260509T204853Z-sonnet/audit\",\n  \"evidence_roots\": [\n    \"/cases\"\n  ],\n  \"tool_count\": 16,\n  \"tools\": [\n    {\n      \"name\": \"ewf_info\",\n      \"description\": \"E01 metadata \\u2014 case number, examiner, acquisition tool, sector count,\"\n    },\n    {\n      \"name\": \"ewf_verify\",\n      \"description\": \"Verify an E01 image against its stored MD5/SHA1 acquisition hashes.\"\n    },\n    {\n      \"name\": \"query_rows\",\n      \"description\": \"Drill into a previous tool's full row list by exec_id.\"\n    },\n    {\n      \"name\": \"tsk_fls_list\",\n      \"description\": \"`fls -i ewf -r -p -F [-o offset] <image>` \\u2014 recursive listing of all\"\n    },\n    {\n      \"name\": \"tsk_fs_stat\",\n      \"description\": \"`fsstat -i ewf [-o offset] <image>` \\u2014 filesystem type, cluster size,\"\n    },\n    {\n      \"name\": \"tsk_icat_extract\",\n      \"description\": \"Extract a single file from the E01 by inode/MFT entry. Writes to\"\n    },\n    {\n      \"name\": \"tsk_partition_table\",\n      \"description\": \"`mmls -i ewf <image>` \\u2014 list partitions and their start sectors.\"\n    },\n    {\n      \"name\": \"vol3_cmdline\",\n      \"description\": \"Per-process command-line arguments. Most-revealing single plugin for\"\n    },\n    {\n      \"name\": \"vol3_filescan\",\n      \"description\": \"File objects cached in pool memory \\u2014 every file open at capture time\"\n    },\n    {\n      \"name\": \"vol3_image_info\",\n      \"description\": \"Get OS / build / arch / CPU count / capture-time from a Windows memory image.\"\n    },\n    {\n      \"name\": \"vol3_malfind\",\n      \"description\": \"Suspicious VAD regions \\u2014 RWX, MZ-headed without on-disk backing,\"\n    },\n    {\n      \"name\": \"vol3_netscan\",\n      \"description\": \"TCP/UDP endpoints \\u2014 current + historical (pool-tag scan). Returns the\"\n    },\n    {\n      \"name\": \"vol3_psscan\",\n      \"description\": \"Pool-tag scan for processes \\u2014 finds hidden + exited processes that\"\n    },\n    {\n      \"name\": \"vol3_pstree\",\n      \"description\": \"Process parent/child tree from EPROCESS hierarchy. Use to spot LOLBins\"\n    },\n    {\n      \"name\": \"vol3_svcscan\",\n      \"description\": \"Service Control Manager + driver enumeration. Look for services with\"\n    },\n    {\n      \"name\": \"vol3_userassist\",\n      \"description\": \"UserAssist registry values \\u2014 Explorer-driven program-execution log\"\n    }\n  ],\n  \"now_utc\": \"2026-05-09T20:50:09Z\"\n}\n",
+  "disallowed_builtins": "Bash Edit Write Read NotebookEdit WebFetch WebSearch Agent Skill AskUserQuestion",
+  "allowed_mcp_tools": "mcp__sift-owl__vol3_image_info mcp__sift-owl__vol3_psscan mcp__sift-owl__vol3_pstree mcp__sift-owl__vol3_cmdline mcp__sift-owl__vol3_netscan mcp__sift-owl__vol3_filescan mcp__sift-owl__vol3_malfind mcp__sift-owl__vol3_svcscan mcp__sift-owl__vol3_userassist mcp__sift-owl__query_rows",
+  "mcp_config": {
+    "mcpServers": {
+      "sift-owl": {
+        "type": "stdio",
+        "command": "sift-mcp",
+        "args": [
+          "--audit-dir",
+          "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v1/20260509T204853Z-sonnet/audit",
+          "--evidence-root",
+          "/cases"
+        ],
+        "env": {}
+      }
+    }
+  },
+  "harness_git_rev": "735c397037ac81883ee0056022ee1720a4208117",
+  "cmd": [
+    "claude",
+    "-p",
+    "# SIFT-OWL v1 prompt \u2014 STARK-APT-001 (memory + disk)\n\n> Injected as the **first user message** to Claude Code. Built-in tools\n> (`Bash`, `Edit`, `Write`, `Read`, `NotebookEdit`, `WebFetch`, `WebSearch`,\n> `Agent`, `Skill`, `AskUserQuestion`) are **denied**. Only the 16 typed\n> functions registered by the `sift-owl` MCP server are callable\n> (9 memory + 6 disk + query_rows).\n\n---\n\nYou are operating as a Principal DFIR Orchestrator on the SANS SIFT Workstation.\n\n## Case STARK-APT-001 \u2014 SANS FOR508 Stark Research Labs Data Breach (legacy)\n\nThis is the classic SANS FOR508 v3-v4 lab dataset. Acquisition occurred\n2012-04-06 \u2192 2012-04-09 on subnet `10.3.58.0/24`. **Four hosts in scope, each\nwith a paired E01 disk image and a `.001` raw memory dump.**\n\n| Host id | Role | OS | IP | Memory image | Disk image |\n|---|---|---|---|---|---|\n| `dc` | Domain Controller | Win Server 2008 R2 SP1 x64 | 10.3.58.4 | `/cases/find-evil-test2/win2008R2-controller-memory/win2008R2-controller-memory-raw.001` | `/cases/find-evil-test2/win2008R2-controller-c-drive/win2008R2-controller-c-drive.E01` |\n| `nromanoff` | Workstation | Win 7 SP1 x86 (PAE) | 10.3.58.5 | `/cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.001` | `/cases/find-evil-test2/win7-32-nromanoff-c-drive/win7-32-nromanoff-c-drive.E01` |\n| `nfury` | Workstation | Win 7 SP1 x64 | 10.3.58.6 | `/cases/find-evil-test2/win7-64-nfury-memory/win7-64-nfury-memory-raw.001` | `/cases/find-evil-test2/win7-64-nfury-c-drive/win7-64-nfury-c-drive.E01` |\n| `tdungan` | Workstation | Win XP SP3 x86 | 10.3.58.7 | `/cases/find-evil-test2/xp-tdungan-memory/xp-tdungan-memory-raw.001` | `/cases/find-evil-test2/xp-tdungan-c-drive/xp-tdungan-c-drive.E01` |\n\nThe previous (memory-only) SIFT-OWL v1 run on this case identified:\n- A C2 implant `usboesrv.exe` on the DC with live connections to `96.255.98.154:29932`\n- The trojanized installer chain (`Temp1_usb-over-ethernet.zip\\setup.exe`)\n- `spinlock.exe` cross-deployed on DC + tdungan\n- `vibranium` as the attacker's interactive RDP account on DC\n\nThe unresolved gaps from that run were all **disk-side**:\n- nromanoff initial access vector (Vol3 PDB issue blocked memory analysis)\n- Specific files staged before sdelete cleanup\n- Registry-based persistence\n- Files actually transferred over RDP / 96.255.98.154\n\n**Your job is to close those gaps using the disk images.**\n\n## Tool inventory\n\n### Memory plugins (9 \u2014 same as before)\n\n`vol3_image_info`, `vol3_psscan`, `vol3_pstree`, `vol3_cmdline`,\n`vol3_netscan`, `vol3_filescan`, `vol3_malfind`, `vol3_svcscan`,\n`vol3_userassist`. Each returns summary + first 50 rows; full data\nreachable via `query_rows`.\n\n### Disk-side plugins (6 \u2014 new since the previous run)\n\n| Tool | Wraps | Use for |\n|---|---|---|\n| `ewf_info(image)` | `ewfinfo` | Image metadata, case info, sector count, stored MD5/SHA1 |\n| `ewf_verify(image)` | `ewfverify` | Chain-of-custody hash verification (slow \u2014 re-reads every byte) |\n| `tsk_partition_table(image)` | `mmls -i ewf` | Partition table. **STARK-APT images are logical drives** \u2014 this returns 0 partitions, which is correct, and you should pass `offset=null` (or omit) to fsstat / fls / icat. |\n| `tsk_fs_stat(image, offset?)` | `fsstat -i ewf` | FS type, cluster size, volume serial |\n| `tsk_fls_list(image, offset?)` | `fls -i ewf -r -p -F` | Recursive listing of regular files with `by_extension` / `by_top_dir` aggregates. Truncated to 50 rows; drill with `query_rows`. |\n| `tsk_icat_extract(image, inode, offset?)` | `icat -i ewf` | Extract one file by inode. Writes to `audit/raw/extracts/<exec_id>.bin`. Returns size + sha256. Use sparingly \u2014 full file extraction is for triage of specific high-signal files (suspected malware, key registry hives, etc.). |\n\n### Drill helper\n\n`query_rows(exec_id, filter_field?, filter_value?, limit, offset)` \u2014\nsubstring-match into the full row list of any prior call. Works for\n`tsk_fls_list.files` (filter on `path` to find specific filenames) just\nas it does for `vol3_*.{processes, files, connections, ...}`.\n\n## Suggested triage pattern\n\n1. **`ewf_info` on each of the 4 disk images** (4 cheap calls). Confirms\n   chain of custody and image type.\n2. **`tsk_partition_table` once on a representative image** to confirm\n   logical-drive shape \u2014 saves time vs running it 4\u00d7.\n3. **`vol3_image_info` on each of the 4 memory images** if you haven't\n   already. nromanoff will fail (PDB issue \u2014 known); flag `[GAP]` and move on.\n4. **Pivot to deep-dive on the host(s) the prior run flagged.** The\n   prior run already established DC and tdungan have the most attacker\n   activity; focus there. nfury was clean.\n5. **Use `tsk_fls_list` + `query_rows` to find specific artifacts:**\n   - `query_rows(<fls_exec_id>, \"path\", \"spinlock\")` \u2014 recover the\n     malware binary even though it was sdeleted from disk **(or\n     confirm it's gone on disk too)**.\n   - `query_rows(<fls_exec_id>, \"path\", \"ntuser.dat\")` \u2014 locate user\n     hives for registry-based persistence analysis.\n   - `query_rows(<fls_exec_id>, \"path\", \"Prefetch\")` \u2014 Windows execution evidence.\n   - `query_rows(<fls_exec_id>, \"path\", \".evtx\")` \u2014 event log paths.\n   - `query_rows(<fls_exec_id>, \"path\", \"usb-over-ethernet\")` \u2014 the\n     trojanized zip if it survives.\n6. **Use `tsk_icat_extract` to pull specific files** that matter (e.g.,\n   the SYSTEM hive for ShimCache analysis, or `usboesrv.exe` for hashing).\n   Then surface the path + sha256 in your findings.\n7. **Cross-reference with memory.** A file on disk should match a process\n   in memory (or be missing from memory if it never ran).\n\n## Investigation goals\n\nThe same six goals as the prior memory-only run, with the added expectation\nthat you can now answer the goals that needed disk:\n\n1. **G1** Initial compromise vector and patient-zero host \u2014 *now resolvable\n   for nromanoff via disk artifacts (browser history, Downloads, recent items)*.\n2. **G2** Lateral movement across the four hosts.\n3. **G3** Implants + persistence mechanisms \u2014 *now including registry\n   Run keys, scheduled tasks, services configured on disk*.\n4. **G4** Exfiltration: what was staged, packaged, where it went.\n5. **G5** Unified incident timeline (UTC) across memory + disk evidence.\n6. **G6** Credentials stolen / abused, and from which host.\n\n## Reporting requirements\n\nFinal report **as your last message text** (no `Write`). Tag every claim:\n\n- `[CONFIRMED \u2014 exec_id A]` \u2014 single-source observation. Cite the `exec_id`.\n- `[CONFIRMED \u2014 exec_id A, exec_id B]` \u2014 multi-source: claim spans plugins\n  (e.g. PID from psscan + connection from netscan + binary file from fls).\n  **Cite all relevant exec_ids.** The validator now understands multi-cite.\n- `[INFERRED \u2014 exec_id A]` \u2014 derived with explicit reasoning.\n- `[HYPOTHESIS]` \u2014 plausible but not yet supported.\n- `[GAP]` \u2014 flag what's unknown and what evidence would resolve it.\n\nNegative findings (`No X was found in Y`) are valid CONFIRMED claims \u2014\nthe validator now distinguishes positive assertions from absence claims.\n\nIf you encounter ambiguity, don't hallucinate. Flag the gap.\n\nWhen done, end with the line `SIFT-OWL RUN COMPLETE`.\n",
+    "--model",
+    "sonnet",
+    "--max-budget-usd",
+    "5.0",
+    "--max-turns",
+    "80",
+    "--mcp-config",
+    "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v1/20260509T204853Z-sonnet/mcp_config.json",
+    "--strict-mcp-config",
+    "--allowed-tools",
+    "mcp__sift-owl__vol3_image_info mcp__sift-owl__vol3_psscan mcp__sift-owl__vol3_pstree mcp__sift-owl__vol3_cmdline mcp__sift-owl__vol3_netscan mcp__sift-owl__vol3_filescan mcp__sift-owl__vol3_malfind mcp__sift-owl__vol3_svcscan mcp__sift-owl__vol3_userassist mcp__sift-owl__query_rows",
+    "--disallowed-tools",
+    "Bash Edit Write Read NotebookEdit WebFetch WebSearch Agent Skill AskUserQuestion",
+    "--output-format",
+    "stream-json",
+    "--include-partial-messages",
+    "--no-session-persistence",
+    "--verbose"
+  ],
+  "dry_run": true
+}

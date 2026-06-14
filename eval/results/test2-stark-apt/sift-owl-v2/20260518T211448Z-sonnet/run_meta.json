@@ -1,0 +1,14 @@
+{
+  "run_id": "20260518T211448Z-sonnet",
+  "case": "test2-stark-apt",
+  "model": "sonnet",
+  "max_budget_usd": 6.0,
+  "max_iterations": 3,
+  "started_utc": "2026-05-18T21:14:48Z",
+  "evidence_dir": "/cases/find-evil-test2",
+  "pre_run_hashes": {},
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v2/prompt-test2-stark-apt-v3.md",
+  "claude_version": "2.1.141 (Claude Code)",
+  "harness_git_rev": "304a79f76e9494d24afb014efdd2c5559123f838",
+  "dry_run": true
+}

@@ -1,0 +1,68 @@
+{
+  "run_id": "20260509T174440Z-sonnet",
+  "case": "rocba-001",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_turns": 80,
+  "started_utc": "2026-05-09T17:45:06Z",
+  "cwd": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v1/20260509T174440Z-sonnet",
+  "evidence_dir": "/cases/find-evil-test",
+  "pre_run_hashes": {
+    "/cases/find-evil-test/Rocba-Memory.raw": {
+      "expected_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "actual_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "size_bytes": 19050528768,
+      "match": true
+    },
+    "/cases/find-evil-test/ROCBA-BACKGROUND.pptx": {
+      "expected_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "actual_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "size_bytes": 40148560,
+      "match": true
+    }
+  },
+  "claude_version": "2.1.137 (Claude Code)",
+  "sift_mcp_inspect": "{\n  \"server\": \"sift-owl\",\n  \"audit_dir\": \"/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v1/20260509T174440Z-sonnet/audit\",\n  \"evidence_roots\": [\n    \"/cases/find-evil-test\"\n  ],\n  \"tool_count\": 10,\n  \"tools\": [\n    {\n      \"name\": \"query_rows\",\n      \"description\": \"Drill into a previous tool's full row list by exec_id.\"\n    },\n    {\n      \"name\": \"vol3_cmdline\",\n      \"description\": \"Per-process command-line arguments. Most-revealing single plugin for\"\n    },\n    {\n      \"name\": \"vol3_filescan\",\n      \"description\": \"File objects cached in pool memory \\u2014 every file open at capture time\"\n    },\n    {\n      \"name\": \"vol3_image_info\",\n      \"description\": \"Get OS / build / arch / CPU count / capture-time from a Windows memory image.\"\n    },\n    {\n      \"name\": \"vol3_malfind\",\n      \"description\": \"Suspicious VAD regions \\u2014 RWX, MZ-headed without on-disk backing,\"\n    },\n    {\n      \"name\": \"vol3_netscan\",\n      \"description\": \"TCP/UDP endpoints \\u2014 current + historical (pool-tag scan). Returns the\"\n    },\n    {\n      \"name\": \"vol3_psscan\",\n      \"description\": \"Pool-tag scan for processes \\u2014 finds hidden + exited processes that\"\n    },\n    {\n      \"name\": \"vol3_pstree\",\n      \"description\": \"Process parent/child tree from EPROCESS hierarchy. Use to spot LOLBins\"\n    },\n    {\n      \"name\": \"vol3_svcscan\",\n      \"description\": \"Service Control Manager + driver enumeration. Look for services with\"\n    },\n    {\n      \"name\": \"vol3_userassist\",\n      \"description\": \"UserAssist registry values \\u2014 Explorer-driven program-execution log\"\n    }\n  ],\n  \"now_utc\": \"2026-05-09T17:45:07Z\"\n}\n",
+  "disallowed_builtins": "Bash Edit Write Read NotebookEdit WebFetch WebSearch Agent Skill AskUserQuestion",
+  "allowed_mcp_tools": "mcp__sift-owl__vol3_image_info mcp__sift-owl__vol3_psscan mcp__sift-owl__vol3_pstree mcp__sift-owl__vol3_cmdline mcp__sift-owl__vol3_netscan mcp__sift-owl__vol3_filescan mcp__sift-owl__vol3_malfind mcp__sift-owl__vol3_svcscan mcp__sift-owl__vol3_userassist mcp__sift-owl__query_rows",
+  "mcp_config": {
+    "mcpServers": {
+      "sift-owl": {
+        "type": "stdio",
+        "command": "sift-mcp",
+        "args": [
+          "--audit-dir",
+          "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v1/20260509T174440Z-sonnet/audit",
+          "--evidence-root",
+          "/cases/find-evil-test"
+        ],
+        "env": {}
+      }
+    }
+  },
+  "harness_git_rev": "89efe428cf796a83b44b2d90b19d525f52350126",
+  "cmd": [
+    "claude",
+    "-p",
+    "# SIFT-OWL v1 prompt \u2014 ROCBA-001\n\n> Injected as the **first user message** to Claude Code. The agent has been\n> launched with `--strict-mcp-config` pointing at the SIFT-OWL MCP server,\n> and the following built-in tools are explicitly **denied**: `Bash`, `Edit`,\n> `Write`, `Read`, `NotebookEdit`, `WebFetch`, `WebSearch`, `Agent`, `Skill`,\n> `AskUserQuestion`. The only callable tools are the 10 typed functions\n> registered by the `sift-owl` MCP server (9 forensic + 1 query helper).\n\n---\n\nYou are operating as a Principal DFIR Orchestrator on the SANS SIFT Workstation.\n\n## Case ROCBA-001 \u2014 Fred Rocba / SRL break-in & IP theft\n\nFred Rocba is a technical engineer hired by Stark Research Labs (SRL) on **2020-10-24** and\nshipped a Microsoft Surface for remote work. He used it from home with O365, OneDrive,\nDropbox, Google Drive, iCloud, and Zoom. Browsers installed: Edge, Firefox, Chrome.\nPersonal identities: `fred.rocba@gmail.com`, `fred.rocba@outlook.com`, iPhone +1-339-223-3317.\nCorporate email: `frocba@stark-research-labs.com`.\n\nOn **2020-11-10 morning EST** Fred and his family flew to Disney World on a planned vacation.\nOn the evening of **2020-11-13 EST** his residence was broken into. The intruders accessed\nhis SRL Surface (left logged in). Fred returned **2020-11-15 PM EST**, did not touch the\nlaptop, and SRL captured RAM at **2020-11-15 21:32:38 EST** (`2020-11-16T02:32:38Z`).\n\n**Temporal alibi:** any user-driven activity inside `2020-11-13T22:00Z .. 2020-11-16T02:32Z`\nthat is not iCloud / Dropbox / OneDrive / GoogleDrive / O365 sync is the intruder.\n\n## Evidence (read-only, do not modify)\n\n- `/cases/find-evil-test/Rocba-Memory.raw` \u2014 18 GB Windows 10 build 19041 (x64) RAM capture.\n\nYou have **no shell access**, **no filesystem access**, and **no web access**. The only\noperations available to you are the 10 MCP tools described below. Each forensic call\nreturns structured JSON with an `exec_id` you must cite for every claim derived from it.\n\n## Your task\n\nConduct a full memory-only investigation of the Rocba-Memory.raw image and answer all\nfive investigation goals:\n\n1. **G1** What key projects did Fred have access to?\n2. **G2** What was stolen?\n3. **G3** Where was it transferred to (cloud / USB / network share / etc.)?\n4. **G4** How was it stolen (tooling / technique)?\n5. **G5** When did the activity occur (correlate with break-in window)?\n\n## Tool inventory (10 tools)\n\nThe 9 forensic functions each take `image: str` and return:\n\n- `exec_id` \u2014 unique ID of this tool execution. **Cite this for every claim.**\n- High-signal aggregates (`count`, `by_image`, `foreign_ip_counts`, etc.).\n- A **truncated row sample** (first 50 rows by default), plus:\n  - `<rowkey>_total` \u2014 actual total row count\n  - `<rowkey>_truncated` \u2014 `true` when the sample is a subset\n\n| Tool | Plugin | Use for |\n|---|---|---|\n| `vol3_image_info` | `windows.info` | OS profile + capture time anchor |\n| `vol3_psscan` | `windows.psscan` | All processes incl. hidden / exited (rowkey: `processes`) |\n| `vol3_pstree` | `windows.pstree` | Parent/child relationships (rowkey: `nodes`) |\n| `vol3_cmdline` | `windows.cmdline` | Command-line args per process (rowkey: `rows`) |\n| `vol3_netscan` | `windows.netscan` | TCP/UDP connections (rowkey: `connections`) |\n| `vol3_filescan` | `windows.filescan` | File objects in pool memory (rowkey: `files`) \u2014 slowest |\n| `vol3_malfind` | `windows.malfind` | RWX/MZ injection (rowkey: `findings`) |\n| `vol3_svcscan` | `windows.svcscan` | Services + drivers (rowkey: `services`) |\n| `vol3_userassist` | `windows.registry.userassist` | Explorer execution log (rowkey: `entries`) |\n\nThe 10th tool drills into the full row list of any prior call:\n\n- `query_rows(exec_id, filter_field?, filter_value?, limit=50, offset=0)`\n  - `exec_id` \u2014 from a previous `vol3_*` call\n  - `filter_field` \u2014 e.g. `pid`, `image`, `name`, `foreign_addr`, `process`\n  - `filter_value` \u2014 case-insensitive substring for strings, exact for numbers\n  - Returns `total_rows`, `matched_rows`, `returned_rows`, `rows`\n\n**Patterns the agent should use:**\n\n- After `vol3_psscan`, drill: `query_rows(<psscan_exec_id>, \"image\", \"MRC\")`\n- After `vol3_filescan`, search: `query_rows(<filescan_exec_id>, \"name\", \"StarFury\")`\n- After `vol3_netscan`, find a specific IP: `query_rows(<netscan_exec_id>, \"foreign_addr\", \"81.30.144.115\")`\n- Paginate: `query_rows(<exec_id>, limit=50, offset=50)`\n\nA reasonable triage sequence:\n\n1. `vol3_image_info` \u2014 confirm OS profile + capture time.\n2. `vol3_psscan` + `vol3_pstree` \u2014 process discovery; drill suspicious PIDs via `query_rows`.\n3. `vol3_cmdline` \u2014 command lines; drill specific PIDs via `query_rows`.\n4. `vol3_netscan` \u2014 exfil destinations; drill non-cloud foreign IPs via `query_rows`.\n5. `vol3_filescan` \u2014 recently-cached files; drill by filename substring (project names, .zip, .pst, ...) via `query_rows`.\n6. `vol3_userassist` \u2014 Explorer-driven execution per user hive (often returns full data inline).\n7. `vol3_svcscan` \u2014 services for persistence; drill non-system binary paths.\n8. `vol3_malfind` \u2014 code injection; triage hits manually.\n\n## Reporting requirements\n\nProduce a final report **as your last message text**. For every claim, **tag it explicitly**:\n\n- `[CONFIRMED \u2014 exec_id ...]` \u2014 observed in tool output. Cite the `exec_id`.\n- `[INFERRED \u2014 exec_id ...]` \u2014 derived from observed evidence with explicit reasoning.\n- `[HYPOTHESIS]` \u2014 plausible but not yet supported.\n- `[GAP]` \u2014 flag what's unknown and what evidence would resolve it.\n\nIf you encounter ambiguity, do not hallucinate \u2014 flag the gap.\n\nWhen you are done, end with the line `SIFT-OWL RUN COMPLETE`.\n",
+    "--model",
+    "sonnet",
+    "--max-budget-usd",
+    "5.0",
+    "--max-turns",
+    "80",
+    "--mcp-config",
+    "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v1/20260509T174440Z-sonnet/mcp_config.json",
+    "--strict-mcp-config",
+    "--allowed-tools",
+    "mcp__sift-owl__vol3_image_info mcp__sift-owl__vol3_psscan mcp__sift-owl__vol3_pstree mcp__sift-owl__vol3_cmdline mcp__sift-owl__vol3_netscan mcp__sift-owl__vol3_filescan mcp__sift-owl__vol3_malfind mcp__sift-owl__vol3_svcscan mcp__sift-owl__vol3_userassist mcp__sift-owl__query_rows",
+    "--disallowed-tools",
+    "Bash Edit Write Read NotebookEdit WebFetch WebSearch Agent Skill AskUserQuestion",
+    "--output-format",
+    "stream-json",
+    "--include-partial-messages",
+    "--no-session-persistence",
+    "--verbose"
+  ],
+  "dry_run": true
+}

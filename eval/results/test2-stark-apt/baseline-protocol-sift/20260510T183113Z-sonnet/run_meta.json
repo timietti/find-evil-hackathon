@@ -1,0 +1,32 @@
+{
+  "run_id": "20260510T183113Z-sonnet",
+  "case": "test2-stark-apt",
+  "model": "sonnet",
+  "max_budget_usd": 8.0,
+  "max_turns": 150,
+  "started_utc": "2026-05-10T18:31:13Z",
+  "cwd": "/cases/find-evil-test2",
+  "evidence_dir": "/cases/find-evil-test2",
+  "prompt_file": "eval/baselines/protocol_sift/prompt_stark_apt.md",
+  "pre_run_hashes": {},
+  "claude_version": "2.1.137 (Claude Code)",
+  "cmd": [
+    "claude",
+    "-p",
+    "# Protocol SIFT baseline prompt \u2014 STARK-APT-001\n\n> Injected as the **first user message** to vanilla Claude Code (Protocol SIFT global\n> config + skill files installed). Working directory at launch: `/cases/find-evil-test2/`.\n> The agent has full Protocol SIFT permissions: shell access, allow-listed forensic CLIs,\n> deny-list for `rm -rf:* / dd:* / wget:* / curl:* / ssh:* / WebFetch`.\n\n---\n\nYou are operating as a Principal DFIR Orchestrator on the SANS SIFT Workstation.\n\n## Case STARK-APT-001 \u2014 SANS FOR508 Stark Research Labs Data Breach (legacy)\n\nThis is the canonical SANS FOR508 v3-v4 multi-host APT case. Acquisition: FTK Imager\n**2012-04-06 \u2192 2012-04-09**. Four hosts on subnet **10.3.58.0/24**:\n\n| Host dir | OS | Role | Persona |\n|---|---|---|---|\n| `win2008R2-controller-c-drive` + `-memory` | Windows Server 2008 R2 x64 | Domain Controller | (DC) \u2014 `10.3.58.4` |\n| `win7-32-nromanoff-c-drive` + `-memory` | Windows 7 x86 SP1 | Workstation | Natasha Romanoff \u2014 `10.3.58.5` |\n| `win7-64-nfury-c-drive` + `-memory` | Windows 7 x64 | Workstation | Nick Fury |\n| `xp-tdungan-c-drive` + `-memory` | Windows XP SP3 (build `2600.xpsp_sp3_gdr.111025-1629`) | Workstation | Tom Dungan |\n\nEach host has both a paired E01 disk image and a `.001` raw memory dump.\n\nThe `precooked/` directories under each disk contain analyst-validated outputs\n(Volatility, Plaso super-timelines, Redline). **Do NOT read `precooked/` \u2014 it is\nground truth, not agent input.** If you accidentally open something from that path,\ndiscard the finding.\n\n## Working hypothesis\n\nExternal attacker reached one of the workstations, pivoted into the domain\n(credential theft on the workstation \u2192 DC compromise), then propagated to the\nremaining workstations to harvest documents / credentials. Expected APT-class TTPs:\n\n- HTRAN / WEBC2 / BACKDOOR.BARKIOFORK family implants\n- Manticore / GREENCAT-style C2\n- DCSync / hash-dumping, then Kerberos abuse from a workstation\n- Targeted document exfil (defense / R&D themes \u2014 \"Stark Research Labs\")\n\nSpecific implants, exfil paths, and entry vector are the case to solve.\n\n## Evidence (read-only, do not modify)\n\nAll under `/cases/find-evil-test2/`. Memory `.001` files are raw RAM dumps. Disk\n`.E01` files are FTK Imager E01 segments \u2014 Vol3 reads them directly with\n`-f path/to/disk.E01`; Sleuth Kit reads E01 with `-i ewf`.\n\n```\n/cases/find-evil-test2/win2008R2-controller-c-drive/win2008R2-controller-c-drive.E01     14 GB\n/cases/find-evil-test2/win2008R2-controller-memory/win2008R2-controller-memory-raw.001    3 GB\n/cases/find-evil-test2/win7-32-nromanoff-c-drive/win7-32-nromanoff-c-drive.E01           11 GB\n/cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.001          4 GB\n/cases/find-evil-test2/win7-64-nfury-c-drive/win7-64-nfury-c-drive.E01                   12 GB\n/cases/find-evil-test2/win7-64-nfury-memory/win7-64-nfury-memory-raw.001                  2 GB\n/cases/find-evil-test2/xp-tdungan-c-drive/xp-tdungan-c-drive.E01                          7 GB\n/cases/find-evil-test2/xp-tdungan-memory/xp-tdungan-memory-raw.001                        4 GB\n```\n\nNote: Vol3 fails on `win7-32-nromanoff-memory` because the Win7-x86 PAE PDB symbol\ntable (`ntkrpamp.pdb` GUID `CE18EBF87B6A4C5CBF77806534BD9478`) is not auto-downloadable.\nDocument this as `[GAP]` and proceed with disk-side analysis on that host.\n\n## Your task\n\nConduct a full multi-host investigation and answer all six goals:\n\n1. **G1** Initial compromise vector and patient-zero host.\n2. **G2** Lateral movement across the four hosts.\n3. **G3** Implants / persistence mechanisms (process, service, scheduled task, registry).\n4. **G4** Exfiltration: what was staged, packaged, and where it went.\n5. **G5** Unified incident timeline (UTC) across all four hosts.\n6. **G6** Credential-theft mechanism and which accounts were compromised.\n\nUse the SIFT-installed toolset (Volatility 3, Memory Baseliner, Sleuth Kit + EWF,\nPlaso, EZ Tools, bulk_extractor, YARA). Consult the relevant skill files in\n`~/.claude/skills/`.\n\nNote: on this instance Volatility 3 is in `$PATH` as `vol` (the global CLAUDE.md\npath `/opt/volatility3-2.20.0/vol.py` is stale). Use `vol -f <image> <plugin>`.\n\nWrite all output to `./analysis/`, `./exports/`, and `./reports/` (relative to\nthe cwd `/cases/find-evil-test2/`). Final report:\n`./reports/stark_apt_findings.md`.\n\nFor every claim in the final report, **tag it explicitly** as one of:\n\n- `[CONFIRMED]` \u2014 directly observed in tool output (cite the exact tool + plugin + line)\n- `[INFERRED]` \u2014 derived from observed evidence with explicit reasoning\n- `[HYPOTHESIS]` \u2014 plausible but not yet supported\n\nIf you encounter ambiguity, do not hallucinate \u2014 flag the gap with `[GAP]` instead.\n\nWhen you are done, print a one-line summary `BASELINE RUN COMPLETE` to stdout so\nthe harness knows to stop streaming.\n",
+    "--model",
+    "sonnet",
+    "--max-budget-usd",
+    "8.0",
+    "--max-turns",
+    "150",
+    "--output-format",
+    "stream-json",
+    "--include-partial-messages",
+    "--include-hook-events",
+    "--no-session-persistence",
+    "--verbose"
+  ],
+  "harness_git_rev": "456d49b870d8db9ce4794c5efa97d688338b87e0",
+  "dry_run": true
+}

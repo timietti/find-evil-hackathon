@@ -1,0 +1,1098 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test3-shieldbase/sift-owl-v2/20260519T191456Z-sonnet/iterations/iter_2",
+    "total_claims": 33,
+    "confirmed_count": 24,
+    "inferred_count": 6,
+    "hypothesis_count": 0,
+    "gap_count": 3,
+    "other_count": 0,
+    "verified": 16,
+    "partial": 4,
+    "failed": 0,
+    "unverifiable": 0,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 4,
+    "confirmation_score": 0.667,
+    "llm_checked": 0,
+    "llm_verified": 0,
+    "llm_unsupported": 0,
+    "llm_unrelated": 0,
+    "llm_uncertain": 0,
+    "llm_total_cost_usd": 0.0
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "**[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 28
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41c1-409b-7de2-a889-559e1dda0921",
+        "text": "**[CONFIRMED]** Initial access was delivered via a **malicious email exploit targeting Outlook**. `vol3_malfind` detected two private PAGE_EXECUTE_READWRITE (RWX) memory regions in OUTLOOK.EXE (PID 8128), consistent with shellcode injection from a weaponized email document. Both regions are tagged VadS, private_memory=1, confirming unbacked anonymous allocations (vol3_malfind exec_id=019e41c1-409b-7de2-a889-559e1dda0921).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 30
+      },
+      "status": "partial",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [
+          "8128"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "OUTLOOK.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "vol3_malfind"
+        ]
+      },
+      "matched": [
+        "8128",
+        "OUTLOOK.EXE"
+      ],
+      "missing": [
+        "vol3_malfind"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "**[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 32
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41c1-409b-7de2-a889-559e1dda0921",
+        "text": "**[CONFIRMED]** powershell.exe (PID 8712) carries **three** PAGE_EXECUTE_READWRITE private memory regions (all VadS, unbacked), indicating in-memory shellcode injection concurrent with the initial WMI foothold (vol3_malfind exec_id=019e41c1-409b-7de2-a889-559e1dda0921).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 34
+      },
+      "status": "verified",
+      "tool_name": "vol3_malfind",
+      "tool_names": [
+        "vol3_malfind"
+      ],
+      "tokens": {
+        "pids": [
+          "8712"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "powershell.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "8712",
+        "powershell.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41ae-9c92-7ba1-8cc6-363cadff189b",
+        "text": "**[CONFIRMED]** p.exe (PID 8260) runs from `c:\\windows\\temp\\perfmon\\p.exe` \u2014 a Temp subdirectory impersonating the Windows Performance Monitor folder name (vol3_cmdline exec_id=019e41ae-9c92-7ba1-8cc6-363cadff189b).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 42
+      },
+      "status": "partial",
+      "tool_name": "vol3_cmdline",
+      "tool_names": [
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [
+          "c:\\windows\\temp\\perfmon\\p.exe`"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "c:\\windows\\temp\\perfmon\\p.exe"
+        ]
+      },
+      "matched": [
+        "8260",
+        "p.exe",
+        "c:\\windows\\temp\\perfmon\\p.exe"
+      ],
+      "missing": [
+        "c:\\windows\\temp\\perfmon\\p.exe`"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41ae-9c92-7ba1-8cc6-363cadff189b",
+        "text": "**[CONFIRMED]** powershell.exe (PID 5848) and p.exe (PID 8260) spawned **9 rundll32.exe** processes all with args=null (no command-line arguments), the definitive indicator of process hollowing (vol3_cmdline exec_id=019e41ae-9c92-7ba1-8cc6-363cadff189b). PIDs: 6768, 5452, 5588, 2216, 4108, 8148, 5768, 1424, 7552.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 52
+      },
+      "status": "verified",
+      "tool_name": "vol3_cmdline",
+      "tool_names": [
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "5848",
+          "8260"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "powershell.exe",
+          "rundll32.exe",
+          "p.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "5848",
+        "8260",
+        "powershell.exe",
+        "rundll32.exe",
+        "p.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41af-df5d-7672-9d1f-3a6834316f92",
+        "text": "**[CONFIRMED]** On the mail server, rundll32.exe (PID 15116) has been running since **2018-08-31T19:47:10Z** and carries cmdline args `C:\\Windows\\System32\\rundll32.exe` (no DLL or export specified \u2014 bare self-invocation consistent with process hollowing). Still running at capture 2018-09-05 (vol3_psscan exec_id=019e41af-df5d-7672-9d1f-3a6834316f92, vol3_cmdline exec_id=019e41b1-b880-7151-aa22-35b6b8378172).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 56
+      },
+      "status": "partial",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "15116"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-08-31T19:47:10Z"
+        ],
+        "filenames": [
+          "rundll32.exe"
+        ],
+        "paths": [
+          "\\Windows\\System32\\rundll32.exe`"
+        ],
+        "drive_refs": [
+          "C:\\Windows\\System32\\rundll32.exe`"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "C:\\Windows\\System32\\rundll32.exe"
+        ]
+      },
+      "matched": [
+        "15116",
+        "2018-08-31T19:47:10Z",
+        "rundll32.exe",
+        "C:\\Windows\\System32\\rundll32.exe"
+      ],
+      "missing": [
+        "\\Windows\\System32\\rundll32.exe`",
+        "C:\\Windows\\System32\\rundll32.exe`"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-c2d5-74d0-935e-28631b698d07",
+        "text": "**[CONFIRMED]** powershell.exe (PID 3164, ppid=4072, created 2018-08-28T22:08:26Z) on the file server (172.16.4.5) maintains a CLOSE_WAIT TCP connection to **172.16.4.10:8080** \u2014 the same C2 relay as rd01 \u2014 and is parent to **28 exited rundll32.exe** processes for lateral movement (vol3_netscan exec_id=019e41b1-c2d5-74d0-935e-28631b698d07, vol3_psscan exec_id=019e41af-ad5a-78c3-ac02-fdd7a66342eb).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 60
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan",
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "3164"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.4.5",
+          "172.16.4.10"
+        ],
+        "timestamps": [
+          "2018-08-28T22:08:26Z"
+        ],
+        "filenames": [
+          "powershell.exe",
+          "rundll32.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "3164",
+        "172.16.4.5",
+        "172.16.4.10",
+        "2018-08-28T22:08:26Z",
+        "powershell.exe",
+        "rundll32.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-c2d5-74d0-935e-28631b698d07",
+        "text": "**[CONFIRMED]** rubyw.exe (PID 1156) on the file server has an ESTABLISHED TCP connection from **10.10.4.5:59361 \u2192 10.10.254.1:61613** (port 61613 = Apache ActiveMQ STOMP, used by Metasploit). The local address 10.10.4.5 confirms the file server is dual-homed (primary 172.16.4.5, secondary 10.10.4.5). Two connections confirmed (ESTABLISHED + CLOSED) (vol3_netscan exec_id=019e41b1-c2d5-74d0-935e-28631b698d07).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 64
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [
+          "10.10.4.5",
+          "172.16.4.5",
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "1156",
+        "10.10.4.5",
+        "172.16.4.5",
+        "10.10.254.1",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b4-b4c9-7521-aea3-1ad22a29990b",
+        "text": "**[CONFIRMED]** McAfee VirusScan Enterprise quarantined **6 malware items** from rd01 \u2014 .bup files at inodes 61638, 80282, 20402, 80700, 18423, 18084, all under path `Quarantine/` (tsk_fls_list exec_id=019e41b4-b4c9-7521-aea3-1ad22a29990b). Their content was not decoded within budget (proprietary McAfee .bup format).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 72
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Quarantine/"
+        ]
+      },
+      "matched": [
+        "Quarantine/"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "**[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 78
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41ab-901c-7111-be73-9b96e3f9c9be",
+        "text": "**[CONFIRMED]** rd01 \u2192 **172.16.7.15:445 ESTABLISHED**: SMB lateral movement to workstation subnet (vol3_netscan exec_id=019e41ab-901c-7111-be73-9b96e3f9c9be).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 80
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.7.15"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "172.16.7.15"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41ab-901c-7111-be73-9b96e3f9c9be",
+        "text": "**[CONFIRMED]** rd01 \u2192 **172.16.4.5:445 ESTABLISHED**: SMB lateral movement to file server (172.16.6.11:49763 \u2192 172.16.4.5:445) (vol3_netscan exec_id=019e41ab-901c-7111-be73-9b96e3f9c9be).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 82
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.6.11",
+          "172.16.4.5"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "172.16.6.11",
+        "172.16.4.5"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-c2d5-74d0-935e-28631b698d07",
+        "text": "**[CONFIRMED]** File server (172.16.4.5) active SMB connections to: 172.16.6.13:49889 (ESTABLISHED), 172.16.6.14:54993 (ESTABLISHED) (R&D subnet RDS hosts), 172.16.7.13 (port 445, ESTABLISHED), 172.16.7.14:445 (ESTABLISHED) \u2014 bi-directional SMB pivoting across three subnets (vol3_netscan exec_id=019e41b1-c2d5-74d0-935e-28631b698d07).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 84
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.6.13",
+          "172.16.4.5",
+          "172.16.7.13",
+          "172.16.7.14",
+          "172.16.6.14"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "172.16.6.13",
+        "172.16.4.5",
+        "172.16.7.13",
+        "172.16.7.14",
+        "172.16.6.14"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-c2d5-74d0-935e-28631b698d07",
+        "text": "**[CONFIRMED]** Uninstall.exe (PID 2340) on the file server initiated a connection to **172.16.7.12:135** (RPC, workstation subnet) \u2014 CLOSED at capture time (vol3_netscan exec_id=019e41b1-c2d5-74d0-935e-28631b698d07).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 86
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2340"
+        ],
+        "inodes": [],
+        "ips": [
+          "172.16.7.12"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "Uninstall.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2340",
+        "172.16.7.12",
+        "Uninstall.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-c2d5-74d0-935e-28631b698d07",
+        "text": "**[CONFIRMED]** File server executed WinRM connections to **172.16.5.21:5985** \u2014 6 total connection records (all CLOSED), indicating lateral movement via PowerShell Remoting to an unlisted management host (vol3_netscan exec_id=019e41b1-c2d5-74d0-935e-28631b698d07).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 88
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.5.21"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "172.16.5.21"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41af-df5d-7672-9d1f-3a6834316f92",
+        "text": "**[CONFIRMED]** Mail server compromised: rundll32.exe (PID 15116) running from 2018-08-31T19:47:10Z (vol3_psscan exec_id=019e41af-df5d-7672-9d1f-3a6834316f92). powershell.exe (PID 5144) opened an Exchange Management Shell session (`Connect-ExchangeServer -auto`) starting 2018-09-05T12:05:44Z (vol3_psscan exec_id=019e41af-df5d-7672-9d1f-3a6834316f92, vol3_cmdline exec_id=019e41b1-b880-7151-aa22-35b6b8378172).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 90
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan",
+        "vol3_cmdline"
+      ],
+      "tokens": {
+        "pids": [
+          "5144",
+          "15116"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T12:05:44Z",
+          "2018-08-31T19:47:10Z"
+        ],
+        "filenames": [
+          "powershell.exe",
+          "rundll32.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Connect-ExchangeServer -auto"
+        ]
+      },
+      "matched": [
+        "5144",
+        "15116",
+        "2018-09-05T12:05:44Z",
+        "2018-08-31T19:47:10Z",
+        "powershell.exe",
+        "rundll32.exe",
+        "Connect-ExchangeServer -auto"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41aa-4fcd-7bf3-89c3-06cd24f2f663",
+        "text": "**[CONFIRMED]** lsass.exe (PID 772, ppid=632, Session 0) is running on rd01 and accessible to attacker processes operating in Session 0 via the WMI/PowerShell chain (vol3_psscan exec_id=019e41aa-4fcd-7bf3-89c3-06cd24f2f663).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 103
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "772"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "lsass.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "772",
+        "lsass.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41ac-1aca-74d0-8057-09bb31dbf9fc",
+        "text": "**[CONFIRMED]** The DC psscan shows tasklist.exe processes (2 instances, PIDs 7284 and 7612) and cmd.exe processes spanning 2018-09-01 through 2018-09-06, confirming domain enumeration was performed on the DC (vol3_psscan exec_id=019e41ac-1aca-74d0-8057-09bb31dbf9fc).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 107
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "cmd.exe",
+          "tasklist.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "cmd.exe",
+        "tasklist.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "**[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 109
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41af-ad5a-78c3-ac02-fdd7a66342eb",
+        "text": "**[CONFIRMED]** Data staging: Rar.exe (PID 2524, ppid=6352) ran on the **file server** for approximately 10 minutes, **2018-09-05T14:43:11Z \u2192 14:52:56Z**, then exited cleanly \u2014 WinRAR archiving operation consistent with staging data for exfiltration (vol3_psscan exec_id=019e41af-ad5a-78c3-ac02-fdd7a66342eb).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 117
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "2524"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2018-09-05T14:43:11Z"
+        ],
+        "filenames": [
+          "Rar.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "2524",
+        "2018-09-05T14:43:11Z",
+        "Rar.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-c2d5-74d0-935e-28631b698d07",
+        "text": "**[CONFIRMED]** Exfiltration channel via Metasploit: rubyw.exe (PID 1156) on the file server has an ESTABLISHED TCP connection from 10.10.4.5:59361 \u2192 **10.10.254.1:61613** (Metasploit STOMP/ActiveMQ). The 10.10.x.x network interface (10.10.4.5 confirmed as local address) provides a secondary exfiltration path not on the primary monitored VLAN (vol3_netscan exec_id=019e41b1-c2d5-74d0-935e-28631b698d07).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 119
+      },
+      "status": "partial",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [
+          "1156"
+        ],
+        "inodes": [],
+        "ips": [
+          "10.10.4.5",
+          "10.10.254.1"
+        ],
+        "timestamps": [],
+        "filenames": [
+          "rubyw.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "1156",
+        "10.10.254.1",
+        "rubyw.exe"
+      ],
+      "missing": [],
+      "negation_violations": [
+        "10.10.4.5"
+      ],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41ab-901c-7111-be73-9b96e3f9c9be",
+        "text": "**[CONFIRMED]** External HTTPS connections from rd01 (172.16.6.11): 172.16.6.11:49782 \u2192 13.89.220.65:443 CLOSED (Azure) and 172.16.6.11:49360 \u2192 52.16.55.11:443 CLOSED (AWS). Both HTTPS to cloud IPs \u2014 secondary C2 or data exfiltration channels (vol3_netscan exec_id=019e41ab-901c-7111-be73-9b96e3f9c9be).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 121
+      },
+      "status": "verified",
+      "tool_name": "vol3_netscan",
+      "tool_names": [
+        "vol3_netscan"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [
+          "172.16.6.11",
+          "52.16.55.11",
+          "13.89.220.65"
+        ],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "172.16.6.11",
+        "52.16.55.11",
+        "13.89.220.65"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e41b1-b880-7151-aa22-35b6b8378172",
+        "text": "**[CONFIRMED]** The mail server Exchange Management Shell (powershell.exe PID 5144, full cmdline `. 'C:\\Program Files\\Microsoft\\Exchange Server\\V15\\bin\\RemoteExchange.ps1'; Connect-ExchangeServer -auto -ClientApplication:ManagementShell`) was active as of the 2018-09-05 memory capture, enabling mailbox enumeration and export (vol3_cmdline exec_id=019e41b1-b880-7151-aa22-35b6b8378172, vol3_psscan exec_id=019e41af-df5d-7672-9d1f-3a6834316f92).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 123
+      },
+      "status": "verified",
+      "tool_name": "vol3_cmdline",
+      "tool_names": [
+        "vol3_cmdline",
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "5144"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "powershell.exe",
+          "RemoteExchange.ps1"
+        ],
+        "paths": [],
+        "drive_refs": [
+          "C:\\Program"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "5144",
+        "powershell.exe",
+        "RemoteExchange.ps1",
+        "C:\\Program"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}

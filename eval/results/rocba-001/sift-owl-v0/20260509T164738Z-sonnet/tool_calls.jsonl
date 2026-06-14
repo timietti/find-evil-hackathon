@@ -1,0 +1,6 @@
+{"ts": "2026-05-09T16:48:14Z", "tool": "ToolSearch", "input": {"query": "select:mcp__sift-owl__vol3_image_info,mcp__sift-owl__vol3_psscan,mcp__sift-owl__vol3_pstree,mcp__sift-owl__vol3_cmdline,mcp__sift-owl__vol3_netscan", "max_results": 5}, "id": "toolu_01NrHCuuCkpwztGFUi4BbioQ"}
+{"ts": "2026-05-09T16:48:18Z", "tool": "mcp__sift-owl__vol3_image_info", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01D9g1nbVZgkQ16ZbSqZyoMt"}
+{"ts": "2026-05-09T16:48:18Z", "tool": "mcp__sift-owl__vol3_psscan", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_0182PuvSAAwjfBQReMCWmqyK"}
+{"ts": "2026-05-09T16:48:18Z", "tool": "mcp__sift-owl__vol3_pstree", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01DZVjwBZMFsGnpm5UfeRKxu"}
+{"ts": "2026-05-09T16:48:19Z", "tool": "mcp__sift-owl__vol3_cmdline", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_01Xge5GZh4J6575D2SQcwEoZ"}
+{"ts": "2026-05-09T16:48:19Z", "tool": "mcp__sift-owl__vol3_netscan", "input": {"image": "/cases/find-evil-test/Rocba-Memory.raw"}, "id": "toolu_018QquH32jNs6YEbR8sGJN3s"}

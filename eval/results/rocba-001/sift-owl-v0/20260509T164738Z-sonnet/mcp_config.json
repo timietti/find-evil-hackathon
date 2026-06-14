@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "sift-owl": {
+      "type": "stdio",
+      "command": "sift-mcp",
+      "args": [
+        "--audit-dir",
+        "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v0/20260509T164738Z-sonnet/audit",
+        "--evidence-root",
+        "/cases/find-evil-test"
+      ],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,1731 @@
+{
+  "summary": {
+    "run_dir": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/test2-stark-apt/sift-owl-v2/20260518T203442Z-sonnet/iterations/iter_1",
+    "total_claims": 45,
+    "confirmed_count": 38,
+    "inferred_count": 2,
+    "hypothesis_count": 0,
+    "gap_count": 5,
+    "other_count": 0,
+    "verified": 16,
+    "partial": 9,
+    "failed": 3,
+    "unverifiable": 6,
+    "exec_id_not_found": 0,
+    "tool_not_supported": 0,
+    "not_confirmed": 4,
+    "confirmation_score": 0.421,
+    "llm_checked": 0,
+    "llm_verified": 0,
+    "llm_unsupported": 0,
+    "llm_unrelated": 0,
+    "llm_uncertain": 0,
+    "llm_total_cost_usd": 0.0
+  },
+  "verdicts": [
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cce-2345-7761-b338-3d973993f499",
+        "text": "[CONFIRMED] `AdbeRdr910_en_US.exe` (trojanized Adobe Reader 9.1.0 installer) confirmed present in Dropbox cache on tdungan disk, deleted but still recoverable: path `Documents and Settings/tdungan/My Documents/Dropbox/.dropbox.cache/2012-04-02/AdbeRdr910_en_US (deleted 4f799e4f-1980380-08f01636).exe`, inode 23296 (tsk_fls_list exec_id=019e3cce-2345-7761-b338-3d973993f499).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 51
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "23296"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "AdbeRdr910_en_US.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "AdbeRdr910_en_US.exe"
+        ]
+      },
+      "matched": [
+        "23296",
+        "AdbeRdr910_en_US.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cce-2345-7761-b338-3d973993f499",
+        "text": "[CONFIRMED] Execution confirmed by Prefetch artifact: `WINDOWS/Prefetch/ADBERDR910_EN_US.EXE-2CFF2AE5.pf`, inode 23294 (exec_id=019e3cce-2345-7761-b338-3d973993f499).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 53
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "23294"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "-2CFF2AE5.pf",
+          "ADBERDR910_EN_US.EXE"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "WINDOWS/Prefetch/ADBERDR910_EN_US.EXE-2CFF2AE5.pf"
+        ]
+      },
+      "matched": [
+        "23294",
+        "-2CFF2AE5.pf",
+        "ADBERDR910_EN_US.EXE",
+        "WINDOWS/Prefetch/ADBERDR910_EN_US.EXE-2CFF2AE5.pf"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccf-e989-70b3-b29c-39be292a3b81",
+        "text": "[CONFIRMED] `usboesrv.exe` (C2 implant) installed as a Windows service on the DC. Two copies of the binary found on disk:  \n- **Legitimate:** `Program Files/USB over Ethernet/usboesrv.exe` inode 71488  \n- **Trojanized:** `Windows/System32/usboesrv.exe` inode 71670, 571,392 bytes, SHA-256 `5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec`, MD5 `fd05be1a86af4b6328f161ec2d9f22cd` (hash_file exec_id=019e3ccf-e989-70b3-b29c-39be292a3b81)",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 61
+      },
+      "status": "partial",
+      "tool_name": "hash_file",
+      "tool_names": [
+        "hash_file"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "71488",
+          "71670"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec",
+          "fd05be1a86af4b6328f161ec2d9f22cd"
+        ],
+        "quoted": [
+          "fd05be1a86af4b6328f161ec2d9f22cd",
+          "5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec",
+          "Program Files/USB over Ethernet/usboesrv.exe",
+          "usboesrv.exe",
+          "Windows/System32/usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec",
+        "fd05be1a86af4b6328f161ec2d9f22cd"
+      ],
+      "missing": [
+        "71488",
+        "71670",
+        "usboesrv.exe",
+        "Program Files/USB over Ethernet/usboesrv.exe",
+        "Windows/System32/usboesrv.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccc-df9a-7c13-a478-54ed19ecbf3d",
+        "text": "[CONFIRMED] Service execution confirmed in memory: PID 27304 (`usboesrv.exe`) with PPID 556 (`services.exe`/SCM), Session 0, started 2012-03-20T17:58:12Z (vol3_psscan exec_id=019e3ccc-df9a-7c13-a478-54ed19ecbf3d). The service relationship with the SCM confirms T1543.003 (Create or Modify System Process: Windows Service).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 65
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "27304"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-03-20T17:58:12Z"
+        ],
+        "filenames": [
+          "services.exe",
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "services.exe",
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "27304",
+        "2012-03-20T17:58:12Z",
+        "services.exe",
+        "usboesrv.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 67
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccc-df9a-7c13-a478-54ed19ecbf3d",
+        "text": "[CONFIRMED] Companion process `usboe.exe` (PID 27144, PPID 8512, Session 2) running on DC as interactive component of the USB-over-Ethernet C2 relay, started 2012-03-20T18:54:16Z (vol3_psscan exec_id=019e3ccc-df9a-7c13-a478-54ed19ecbf3d).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 69
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "27144"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-03-20T18:54:16Z"
+        ],
+        "filenames": [
+          "usboe.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "usboe.exe"
+        ]
+      },
+      "matched": [
+        "27144",
+        "2012-03-20T18:54:16Z",
+        "usboe.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-1f7f-7fa2-b5ad-0e825ccdaaa3",
+        "text": "[CONFIRMED] `spinlock.exe` (email harvester) executed on the DC \u2014 confirmed by Windows Error Reporting crash artifacts: `ProgramData/Microsoft/Windows/WER/ReportQueue/NonCritical_spinlock.exe_f55bbffa8ebc6a99e6cbf535420484d134edcb1_cab_436b9004/Report.wer` (inode 74152) and associated files (tsk_fls_list exec_id=019e3ccd-1f7f-7fa2-b5ad-0e825ccdaaa3). The binary itself was deleted from the DC disk.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 71
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "74152"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "spinlock.exe"
+        ]
+      },
+      "matched": [
+        "74152",
+        "spinlock.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccc-d648-7af3-a5ef-c03dc71f93a5",
+        "text": "[CONFIRMED] DC scheduled task `At2` created during attack window: creation_time 2012-04-04T17:49:59Z, last_run_time 2012-04-04T17:45:36Z, enabled, Time trigger (vol3_scheduled_tasks exec_id=019e3ccc-d648-7af3-a5ef-c03dc71f93a5). Action content not captured by the in-memory vol3 plugin.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 73
+      },
+      "status": "verified",
+      "tool_name": "vol3_scheduled_tasks",
+      "tool_names": [
+        "vol3_scheduled_tasks"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2012-04-04T17:45:36Z",
+          "2012-04-04T17:49:59Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "At2"
+        ]
+      },
+      "matched": [
+        "2012-04-04T17:45:36Z",
+        "2012-04-04T17:49:59Z",
+        "At2"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd0-9f4a-7cb0-a712-9f05050a8500",
+        "text": "[CONFIRMED] DC HKLM SOFTWARE Run keys contain only legitimate entries (VMware Tools, McAfee HIP, DWTRIG20) \u2014 no implant Run key on DC (ezt_persistence_keys_parse exec_id=019e3cd0-9f4a-7cb0-a712-9f05050a8500).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 75
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd0-bfaf-70f0-9960-98b6bf517a89",
+        "text": "[CONFIRMED] Malicious HKLM Run key extracted from nromanoff SOFTWARE hive (exec_id=019e3cd0-bfaf-70f0-9960-98b6bf517a89):  \n```\nKey: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\nValue name: svchost\nValue data: c:\\windows\\system32\\dllhost\\svchost.exe\n```\nThis is T1547.001 (Boot/Logon Autostart: Registry Run Keys) + T1036.005 (Masquerade: Match Legitimate Name/Location) \u2014 a process named `svchost.exe` placed inside a non-standard `dllhost` subdirectory of System32.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 79
+      },
+      "status": "verified",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [
+          "\\Windows\\CurrentVersion\\Run"
+        ],
+        "drive_refs": [
+          "c:\\windows\\system32\\dllhost\\svchost.exe"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "dllhost",
+          "svchost.exe"
+        ]
+      },
+      "matched": [
+        "svchost.exe",
+        "\\Windows\\CurrentVersion\\Run",
+        "c:\\windows\\system32\\dllhost\\svchost.exe",
+        "dllhost"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd2-0681-7bb1-9219-dd65397189c1",
+        "text": "[CONFIRMED] Binary `Windows/System32/dllhost/svchost.exe` physically present on nromanoff disk: inode 60768, 102,400 bytes, SHA-256 `f293fdb96e6ed7e4ede7a173e5e47dd69a30edc6216e550787e7481d2df43cef`, MD5 `4c7906e2f2a82fdfad74b47c90350771` (hash_file exec_id=019e3cd2-0681-7bb1-9219-dd65397189c1, tsk_icat_extract exec_id=019e3cd1-b076-7201-8aae-b8ecb7bc1bce).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 87
+      },
+      "status": "partial",
+      "tool_name": "hash_file",
+      "tool_names": [
+        "hash_file",
+        "tsk_icat_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "60768"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "4c7906e2f2a82fdfad74b47c90350771",
+          "f293fdb96e6ed7e4ede7a173e5e47dd69a30edc6216e550787e7481d2df43cef"
+        ],
+        "quoted": [
+          "Windows/System32/dllhost/svchost.exe",
+          "4c7906e2f2a82fdfad74b47c90350771",
+          "f293fdb96e6ed7e4ede7a173e5e47dd69a30edc6216e550787e7481d2df43cef"
+        ]
+      },
+      "matched": [
+        "60768",
+        "4c7906e2f2a82fdfad74b47c90350771",
+        "f293fdb96e6ed7e4ede7a173e5e47dd69a30edc6216e550787e7481d2df43cef"
+      ],
+      "missing": [
+        "svchost.exe",
+        "Windows/System32/dllhost/svchost.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 89
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd2-0903-7842-9190-4d2b2767f1f6",
+        "text": "[CONFIRMED] YARA on nromanoff `dllhost/svchost.exe`: 0 rule matches (yara_scan_extract exec_id=019e3cd2-0903-7842-9190-4d2b2767f1f6).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 91
+      },
+      "status": "failed",
+      "tool_name": "yara_scan_extract",
+      "tool_names": [
+        "yara_scan_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "dllhost/svchost.exe"
+        ]
+      },
+      "matched": [],
+      "missing": [
+        "svchost.exe",
+        "dllhost/svchost.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd0-cc5e-7413-af03-dc30946ed02a",
+        "text": "[CONFIRMED] Malicious HKLM Run key extracted from tdungan SOFTWARE hive (exec_id=019e3cd0-cc5e-7413-af03-dc30946ed02a):  \n```\nKey: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\nValue name: svchost\nValue data: c:\\windows\\system32\\dllhost\\svchost.exe\n```\nIdentical Run key name and binary path as nromanoff \u2014 same implant toolkit, T1547.001 + T1036.005.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 95
+      },
+      "status": "verified",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [
+          "\\Windows\\CurrentVersion\\Run"
+        ],
+        "drive_refs": [
+          "c:\\windows\\system32\\dllhost\\svchost.exe"
+        ],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [
+        "svchost.exe",
+        "\\Windows\\CurrentVersion\\Run",
+        "c:\\windows\\system32\\dllhost\\svchost.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cce-2345-7761-b338-3d973993f499",
+        "text": "[CONFIRMED] Binary `WINDOWS/system32/dllhost/svchost.exe` physically present on tdungan disk: inode 3022 (tsk_fls_list exec_id=019e3cce-2345-7761-b338-3d973993f499).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 103
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "3022"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "svchost.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "WINDOWS/system32/dllhost/svchost.exe"
+        ]
+      },
+      "matched": [
+        "3022",
+        "svchost.exe",
+        "WINDOWS/system32/dllhost/svchost.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd1-b97f-7de1-86ef-63360b30dace",
+        "text": "[CONFIRMED] Companion installer `WINDOWS/system32/dllhost/winclient.reg` present on tdungan disk: inode 3023, 342 bytes (tsk_icat_extract exec_id=019e3cd1-b97f-7de1-86ef-63360b30dace).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 105
+      },
+      "status": "partial",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "3023"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "winclient.reg"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "WINDOWS/system32/dllhost/winclient.reg"
+        ]
+      },
+      "matched": [
+        "3023"
+      ],
+      "missing": [
+        "winclient.reg",
+        "WINDOWS/system32/dllhost/winclient.reg"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd0-aee9-7721-91ee-9db909b1101c",
+        "text": "[CONFIRMED] No malicious HKLM Run keys in nfury SOFTWARE hive \u2014 only VMware Tools, McAfee HIP, and WerFault (ezt_persistence_keys_parse exec_id=019e3cd0-aee9-7721-91ee-9db909b1101c).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 109
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd1-a962-7d92-a2b3-2e6287026874",
+        "text": "[CONFIRMED] No malicious HKCU Run keys in `vibranium` NTUSER.DAT on nfury \u2014 only legitimate Sidebar.exe and mctadmin.exe RunOnce (ezt_persistence_keys_parse exec_id=019e3cd1-a962-7d92-a2b3-2e6287026874).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 111
+      },
+      "status": "partial",
+      "tool_name": "ezt_persistence_keys_parse",
+      "tool_names": [
+        "ezt_persistence_keys_parse"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "Sidebar.exe",
+          "mctadmin.exe",
+          "NTUSER.DAT"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "vibranium"
+        ]
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [
+        "Sidebar.exe",
+        "mctadmin.exe"
+      ],
+      "verified_absences": [
+        "NTUSER.DAT",
+        "vibranium"
+      ],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccf-f050-7a70-8332-a3825d9c37ae",
+        "text": "[CONFIRMED] `spinlock.exe` (PyInstaller email harvester) installed at `Windows/System32/spinlock.exe` on nfury: inode 540, 2,271,885 bytes, SHA-256 `6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead`, MD5 `6bff2aebb8852fc2658b9768d2166ece` (hash_file exec_id=019e3ccf-f050-7a70-8332-a3825d9c37ae).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 113
+      },
+      "status": "partial",
+      "tool_name": "hash_file",
+      "tool_names": [
+        "hash_file"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "540"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "6bff2aebb8852fc2658b9768d2166ece",
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
+        ],
+        "quoted": [
+          "6bff2aebb8852fc2658b9768d2166ece",
+          "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead",
+          "spinlock.exe",
+          "Windows/System32/spinlock.exe"
+        ]
+      },
+      "matched": [
+        "6bff2aebb8852fc2658b9768d2166ece",
+        "6eef2381040cd38ce5974ef954121e136bd93ec4039d49925438c92ef5f3dead"
+      ],
+      "missing": [
+        "540",
+        "spinlock.exe",
+        "Windows/System32/spinlock.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccf-f3f5-7ff3-8135-da2b564ab871",
+        "text": "[CONFIRMED] PyInstaller packing confirmed on spinlock.exe via YARA rule `SIFTOWL_PyInstaller_Packed` (T1027.002 \u2014 Software Packing), hit at offsets 0x14400 and 0x14468 on strings `_MEIPASS2` and `_MEIPASS` (yara_scan_extract exec_id=019e3ccf-f3f5-7ff3-8135-da2b564ab871).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 115
+      },
+      "status": "partial",
+      "tool_name": "yara_scan_extract",
+      "tool_names": [
+        "yara_scan_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "SIFTOWL_PyInstaller_Packed",
+          "_MEIPASS",
+          "_MEIPASS2"
+        ]
+      },
+      "matched": [
+        "SIFTOWL_PyInstaller_Packed",
+        "_MEIPASS",
+        "_MEIPASS2"
+      ],
+      "missing": [
+        "spinlock.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-91fc-7053-b4d8-be000ac80c15",
+        "text": "[CONFIRMED] `vibranium` domain account (SHIELDBASE domain) has an active user profile on the nfury disk, confirming interactive logon: `Users/vibranium/` directory containing NTUSER.DAT (inode 80342), Explorer thumbnail caches, and profile artifacts (tsk_fls_list exec_id=019e3ccd-91fc-7053-b4d8-be000ac80c15, vibranium query exec_id=same).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 125
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "80342"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "NTUSER.DAT"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/vibranium/",
+          "vibranium"
+        ]
+      },
+      "matched": [
+        "80342",
+        "NTUSER.DAT",
+        "Users/vibranium/",
+        "vibranium"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-91fc-7053-b4d8-be000ac80c15",
+        "text": "[CONFIRMED] Attacker accessed `VIBRANIUM.docx` on nfury's nfury account: `Users/nfury/Documents/VIBRANIUM.docx` (inode 44732) and jump list artifact `Users/nfury/AppData/Roaming/Microsoft/Office/Recent/VIBRANIUM.LNK` (inode 43082), confirming targeted document access (exec_id=019e3ccd-91fc-7053-b4d8-be000ac80c15).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 127
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "44732",
+          "43082"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "VIBRANIUM.docx",
+          "VIBRANIUM.LNK"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/nfury/AppData/Roaming/Microsoft/Office/Recent/VIBRANIUM.LNK",
+          "VIBRANIUM.docx",
+          "Users/nfury/Documents/VIBRANIUM.docx"
+        ]
+      },
+      "matched": [
+        "44732",
+        "43082",
+        "VIBRANIUM.docx",
+        "VIBRANIUM.LNK",
+        "Users/nfury/AppData/Roaming/Microsoft/Office/Recent/VIBRANIUM.LNK",
+        "Users/nfury/Documents/VIBRANIUM.docx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccc-df9a-7c13-a478-54ed19ecbf3d",
+        "text": "[CONFIRMED] Two USB-over-Ethernet C2 processes on DC demonstrate relay architecture:  \n- `usboesrv.exe` (PID 27304, service, Session 0) = server-side C2 listener  \n- `usboe.exe` (PID 27144, Session 2) = client-side relay in interactive/RDP session  \nThis dual-process pattern (service + interactive) is consistent with the attacker's SSH/RDP pivot through the DC (vol3_psscan exec_id=019e3ccc-df9a-7c13-a478-54ed19ecbf3d).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 131
+      },
+      "status": "verified",
+      "tool_name": "vol3_psscan",
+      "tool_names": [
+        "vol3_psscan"
+      ],
+      "tokens": {
+        "pids": [
+          "27144",
+          "27304"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe",
+          "usboe.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "usboesrv.exe",
+          "usboe.exe"
+        ]
+      },
+      "matched": [
+        "27144",
+        "27304",
+        "usboesrv.exe",
+        "usboe.exe"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cd1-4685-7cf3-90bc-ea472a34ddd4",
+        "text": "[CONFIRMED] `a.exe` (HTTPPUMP dropper/tool) present in vibranium's Temp folder: `Users/vibranium/AppData/Local/Temp/a.exe`, inode 80517, 9,216 bytes, SHA-256 `598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec`, MD5 `c4b0458c04abdaa773348c2668212b45` (tsk_icat_extract exec_id=019e3cd1-4685-7cf3-90bc-ea472a34ddd4, hash_file exec_id=019e3cd1-9e51-7bb2-9768-aea2c91ee3b3). At 9KB this binary is anomalously small \u2014 likely a loader stub or shellcode dropper. YARA: 0 rule matches (exec_id=019e3cd1-a1f7-7c93-b44c-8e10b670b2d7).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 138
+      },
+      "status": "partial",
+      "tool_name": "tsk_icat_extract",
+      "tool_names": [
+        "tsk_icat_extract",
+        "hash_file",
+        "yara_scan_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "80517"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "a.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
+          "c4b0458c04abdaa773348c2668212b45"
+        ],
+        "quoted": [
+          "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
+          "Users/vibranium/AppData/Local/Temp/a.exe",
+          "a.exe",
+          "c4b0458c04abdaa773348c2668212b45"
+        ]
+      },
+      "matched": [
+        "80517",
+        "598e53b69c71643db559c197db757363c48a30bb26b6486db2153bd417701dec",
+        "c4b0458c04abdaa773348c2668212b45"
+      ],
+      "missing": [
+        "a.exe",
+        "Users/vibranium/AppData/Local/Temp/a.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-80e2-7302-9cc6-487df9f78dfb",
+        "text": "[CONFIRMED] vol3_cachedump on nfury extracted 6 domain accounts' DCC2/MSCASH hashes \u2014 all are offline cracking targets (exec_id=019e3ccd-80e2-7302-9cc6-487df9f78dfb):",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 146
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccc-c920-7c43-af40-c0019b711c80",
+        "text": "[CONFIRMED] DC vol3_hashdump returned only Administrator and Guest with null NT hashes (exec_id=019e3ccc-c920-7c43-af40-c0019b711c80) \u2014 SAM database locked/inaccessible in the memory image at acquisition time.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 161
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccc-d04e-7cc3-aea6-83adcaebb615",
+        "text": "[CONFIRMED] DC vol3_cachedump returned 0 cached credentials (exec_id=019e3ccc-d04e-7cc3-aea6-83adcaebb615) \u2014 expected behavior; domain controllers do not cache domain credentials locally.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 163
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-7b48-7b61-b1c2-3e08bfb253cb",
+        "text": "[CONFIRMED] nfury vol3_hashdump returned Administrator, Guest, SRL-Helpdesk with null NT hashes (exec_id=019e3ccd-7b48-7b61-b1c2-3e08bfb253cb) \u2014 SAM locked at acquisition.",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 167
+      },
+      "status": "unverifiable",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim has no extractable tokens (prose only)",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-91fc-7053-b4d8-be000ac80c15",
+        "text": "[CONFIRMED] `VIBRANIUM.docx` is the targeted document, resident at `Users/nfury/Documents/VIBRANIUM.docx` (inode 44732) on nfury. Access evidenced by Office Recent LNK: `Users/nfury/AppData/Roaming/Microsoft/Office/Recent/VIBRANIUM.LNK` (inode 43082) (exec_id=019e3ccd-91fc-7053-b4d8-be000ac80c15).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 175
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [
+          "44732",
+          "43082"
+        ],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "VIBRANIUM.docx",
+          "VIBRANIUM.LNK"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "Users/nfury/AppData/Roaming/Microsoft/Office/Recent/VIBRANIUM.LNK",
+          "VIBRANIUM.docx",
+          "Users/nfury/Documents/VIBRANIUM.docx"
+        ]
+      },
+      "matched": [
+        "44732",
+        "43082",
+        "VIBRANIUM.docx",
+        "VIBRANIUM.LNK",
+        "Users/nfury/AppData/Roaming/Microsoft/Office/Recent/VIBRANIUM.LNK",
+        "Users/nfury/Documents/VIBRANIUM.docx"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-1f7f-7fa2-b5ad-0e825ccdaaa3",
+        "text": "[CONFIRMED \u2014 negative] `EXFIL.pst` (email staging container) not found on DC disk (FLS search returned 0 matches, exec_id=019e3ccd-1f7f-7fa2-b5ad-0e825ccdaaa3). File was likely deleted after exfiltration over the C2 channel.",
+        "raw_match": "[CONFIRMED \u2014 negative]",
+        "line_no": 179
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "EXFIL.pst"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "EXFIL.pst"
+        ]
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [
+        "EXFIL.pst"
+      ],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "[CONFIRMED \u2014 negative] Neither `hydrakatz.exe` nor `hotcorewin2k.sys` found in FLS for any host disk image. These were staged and executed transiently, consistent with a live-off-the-land / run-and-delete approach.",
+        "raw_match": "[CONFIRMED \u2014 negative]",
+        "line_no": 183
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-1f7f-7fa2-b5ad-0e825ccdaaa3",
+        "text": "[CONFIRMED] spinlock.exe WER crash report on DC confirms execution on the domain controller. The email harvester ran on DC (targeting hMailServer \u2014 `hMailServer.ex` process visible in DC psscan) before crashing. WER artifacts: `ProgramData/Microsoft/Windows/WER/ReportQueue/NonCritical_spinlock.exe_f55bbffa8ebc6a99e6cbf535420484d134edcb1_cab_436b9004/` (exec_id=019e3ccd-1f7f-7fa2-b5ad-0e825ccdaaa3).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 187
+      },
+      "status": "verified",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "spinlock.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "hMailServer.ex"
+        ]
+      },
+      "matched": [
+        "spinlock.exe",
+        "hMailServer.ex"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccf-e989-70b3-b29c-39be292a3b81",
+        "text": "[CONFIRMED] `usboesrv.exe` on DC (PID 27304, started 2012-03-20T17:58:12Z) is the primary C2 implant communicating to `96.255.98.154:29932` (from prior netscan analysis; not re-confirmed this iteration). Binary: 571,392 bytes, SHA-256 `5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec` (exec_id=019e3ccf-e989-70b3-b29c-39be292a3b81).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 195
+      },
+      "status": "partial",
+      "tool_name": "hash_file",
+      "tool_names": [
+        "hash_file"
+      ],
+      "tokens": {
+        "pids": [
+          "27304"
+        ],
+        "inodes": [],
+        "ips": [
+          "96.255.98.154"
+        ],
+        "timestamps": [
+          "2012-03-20T17:58:12Z"
+        ],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec"
+        ],
+        "quoted": [
+          "5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec",
+          "96.255.98.154:29932",
+          "usboesrv.exe"
+        ]
+      },
+      "matched": [
+        "5420d06d802ce015301578347c529405f7015a59a47097af26616a8ab57b39ec"
+      ],
+      "missing": [
+        "27304",
+        "96.255.98.154",
+        "2012-03-20T17:58:12Z",
+        "usboesrv.exe",
+        "96.255.98.154:29932"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3cce-d9fe-7540-9ba1-4e84ac7cafe3",
+        "text": "[CONFIRMED \u2014 negative] YARA on usboesrv.exe in-memory (PID 27304): 0 rule matches \u2014 no Mimikatz, Cobalt Strike, PyInstaller, or other bundled signatures detected in memory (vol3_vadyarascan exec_id=019e3cce-d9fe-7540-9ba1-4e84ac7cafe3).",
+        "raw_match": "[CONFIRMED \u2014 negative]",
+        "line_no": 197
+      },
+      "status": "failed",
+      "tool_name": "vol3_vadyarascan",
+      "tool_names": [
+        "vol3_vadyarascan"
+      ],
+      "tokens": {
+        "pids": [
+          "27304"
+        ],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [
+        "27304",
+        "usboesrv.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccf-eacd-7e51-9a48-b745ed0ccfbd",
+        "text": "[CONFIRMED \u2014 negative] YARA on usboesrv.exe binary (disk): 0 rule matches (yara_scan_extract exec_id=019e3ccf-eacd-7e51-9a48-b745ed0ccfbd). The binary does not match any of the 38 bundled signature sets, suggesting custom or proprietary C2 framework.",
+        "raw_match": "[CONFIRMED \u2014 negative]",
+        "line_no": 199
+      },
+      "status": "failed",
+      "tool_name": "yara_scan_extract",
+      "tool_names": [
+        "yara_scan_extract"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "usboesrv.exe"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [
+        "usboesrv.exe"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-91fc-7053-b4d8-be000ac80c15",
+        "text": "[CONFIRMED] `vibranium` account belongs to domain `SHIELDBASE` (confirmed from `ProgramData/Microsoft/User Account Pictures/SHIELDBASE+vibranium.dat` on nfury, exec_id=019e3ccd-91fc-7053-b4d8-be000ac80c15). DCC2 hash `7b3b37913cb06808b6793d8df35b1578` cached on nfury (vol3_cachedump exec_id=019e3ccd-80e2-7302-9cc6-487df9f78dfb).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 205
+      },
+      "status": "partial",
+      "tool_name": "tsk_fls_list",
+      "tool_names": [
+        "tsk_fls_list",
+        "vol3_cachedump"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [
+          "vibranium.dat"
+        ],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [
+          "7b3b37913cb06808b6793d8df35b1578"
+        ],
+        "quoted": [
+          "ProgramData/Microsoft/User Account Pictures/SHIELDBASE+vibranium.dat",
+          "vibranium",
+          "SHIELDBASE",
+          "7b3b37913cb06808b6793d8df35b1578"
+        ]
+      },
+      "matched": [
+        "vibranium.dat",
+        "ProgramData/Microsoft/User Account Pictures/SHIELDBASE+vibranium.dat",
+        "vibranium",
+        "SHIELDBASE"
+      ],
+      "missing": [
+        "7b3b37913cb06808b6793d8df35b1578"
+      ],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": null,
+        "text": "[CONFIRMED]",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 213
+      },
+      "status": "not_confirmed",
+      "tool_name": null,
+      "tool_names": [],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": []
+      },
+      "matched": [],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "claim is tagged CONFIRMED but cites no exec_id",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    },
+    {
+      "claim": {
+        "tag": "CONFIRMED",
+        "exec_id": "019e3ccd-85b3-7920-8e48-29e640699c2b",
+        "text": "[CONFIRMED] `GoogleUpdateTaskUserS-1-5-21-2036804247-3058324640-2116585241-1105Core` task on nfury has creation_time 2012-04-06T04:49:00Z (attack window), last_run_time 2011-08-15T14:19:06Z. The creation timestamp postdates the last run time by >7 months, which is anomalous and may indicate task re-creation or timestamp manipulation (vol3_scheduled_tasks exec_id=019e3ccd-85b3-7920-8e48-29e640699c2b).",
+        "raw_match": "[CONFIRMED]",
+        "line_no": 217
+      },
+      "status": "verified",
+      "tool_name": "vol3_scheduled_tasks",
+      "tool_names": [
+        "vol3_scheduled_tasks"
+      ],
+      "tokens": {
+        "pids": [],
+        "inodes": [],
+        "ips": [],
+        "timestamps": [
+          "2011-08-15T14:19:06Z",
+          "2012-04-06T04:49:00Z"
+        ],
+        "filenames": [],
+        "paths": [],
+        "drive_refs": [],
+        "brace_guids": [],
+        "emails": [],
+        "hex_offsets": [],
+        "hex_hashes": [],
+        "quoted": [
+          "GoogleUpdateTaskUserS-1-5-21-2036804247-3058324640-2116585241-1105Core"
+        ]
+      },
+      "matched": [
+        "2011-08-15T14:19:06Z",
+        "2012-04-06T04:49:00Z",
+        "GoogleUpdateTaskUserS-1-5-21-2036804247-3058324640-2116585241-1105Core"
+      ],
+      "missing": [],
+      "negation_violations": [],
+      "verified_absences": [],
+      "notes": "",
+      "llm_verdict": null,
+      "llm_reason": null,
+      "llm_cost_usd": 0.0
+    }
+  ]
+}

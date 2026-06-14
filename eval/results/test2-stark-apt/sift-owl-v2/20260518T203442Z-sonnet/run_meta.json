@@ -1,0 +1,98 @@
+{
+  "run_id": "20260518T203442Z-sonnet",
+  "case": "test2-stark-apt",
+  "model": "sonnet",
+  "max_budget_usd": 6.0,
+  "max_iterations": 3,
+  "started_utc": "2026-05-18T20:34:42Z",
+  "evidence_dir": "/cases/find-evil-test2",
+  "pre_run_hashes": {},
+  "prompt_file": "/home/sansforensics/Tools/find-evil-hackathon/eval/agents/sift_owl_v2/prompt-test2-stark-apt-v3.md",
+  "claude_version": "2.1.141 (Claude Code)",
+  "harness_git_rev": "fac2aa44e0e91451146331c91a3b516bb565871e",
+  "finished_utc": "2026-05-18T21:05:02Z",
+  "total_cost_usd": 3.1142734,
+  "iterations": [
+    {
+      "iteration": 1,
+      "exit_code": 0,
+      "wall_seconds": 584.2975609302521,
+      "cost_usd": 1.7236523000000004,
+      "tool_use_count": 85,
+      "confirmed_count": 38,
+      "verified_count": 16,
+      "demoted_count": 16
+    },
+    {
+      "iteration": 2,
+      "exit_code": 0,
+      "wall_seconds": 588.5701541900635,
+      "cost_usd": 0.75401765,
+      "tool_use_count": 22,
+      "confirmed_count": 40,
+      "verified_count": 27,
+      "demoted_count": 7
+    },
+    {
+      "iteration": 3,
+      "exit_code": 0,
+      "wall_seconds": 616.7273292541504,
+      "cost_usd": 0.63660345,
+      "tool_use_count": 6,
+      "confirmed_count": 37,
+      "verified_count": 28,
+      "demoted_count": 2
+    }
+  ],
+  "post_run_hashes": {
+    "/cases/find-evil-test2/win2008R2-controller-c-drive/win2008R2-controller-c-drive.E01": {
+      "expected_sha256": "389ea6b4969cc132ac9a3f28fa572ffc588442ca25ec04bea059b52fd6db4e7e",
+      "actual_sha256": "389ea6b4969cc132ac9a3f28fa572ffc588442ca25ec04bea059b52fd6db4e7e",
+      "match": true,
+      "size_bytes": 14361240775
+    },
+    "/cases/find-evil-test2/win2008R2-controller-memory/win2008R2-controller-memory-raw.001": {
+      "expected_sha256": "0980b543e6f659091ff4645c2b92771ede45c664e56dc754d420beeeae770edd",
+      "actual_sha256": "0980b543e6f659091ff4645c2b92771ede45c664e56dc754d420beeeae770edd",
+      "match": true,
+      "size_bytes": 2684354560
+    },
+    "/cases/find-evil-test2/win7-32-nromanoff-c-drive/win7-32-nromanoff-c-drive.E01": {
+      "expected_sha256": "f92662135db8d1a5eb33de5b391186c1242b59641db1ba96b3e4ff52a5a1e5b6",
+      "actual_sha256": "f92662135db8d1a5eb33de5b391186c1242b59641db1ba96b3e4ff52a5a1e5b6",
+      "match": true,
+      "size_bytes": 9689019743
+    },
+    "/cases/find-evil-test2/win7-32-nromanoff-memory/win7-32-nromanoff-memory-raw.001": {
+      "expected_sha256": "f40af394587fe1f6e6ed6b48e4840a4d4b5927c5d73d8e243d9d31225517d728",
+      "actual_sha256": "f40af394587fe1f6e6ed6b48e4840a4d4b5927c5d73d8e243d9d31225517d728",
+      "match": true,
+      "size_bytes": 2147483648
+    },
+    "/cases/find-evil-test2/win7-64-nfury-c-drive/win7-64-nfury-c-drive.E01": {
+      "expected_sha256": "a5df0b38ec699656e8c9925ffa515945288aaa32cd29c284fb519cf06d1589c7",
+      "actual_sha256": "a5df0b38ec699656e8c9925ffa515945288aaa32cd29c284fb519cf06d1589c7",
+      "match": true,
+      "size_bytes": 12034347442
+    },
+    "/cases/find-evil-test2/win7-64-nfury-memory/win7-64-nfury-memory-raw.001": {
+      "expected_sha256": "0b53c16973774007244b82d6e777f669ee17224e8aa8c5fc98954196a27c9f5b",
+      "actual_sha256": "0b53c16973774007244b82d6e777f669ee17224e8aa8c5fc98954196a27c9f5b",
+      "match": true,
+      "size_bytes": 2147483648
+    },
+    "/cases/find-evil-test2/xp-tdungan-c-drive/xp-tdungan-c-drive.E01": {
+      "expected_sha256": "117511847d05cf3a52397b6800015b98d77fa3c8a31088a2592709825e402eb0",
+      "actual_sha256": "117511847d05cf3a52397b6800015b98d77fa3c8a31088a2592709825e402eb0",
+      "match": true,
+      "size_bytes": 7035112594
+    },
+    "/cases/find-evil-test2/xp-tdungan-memory/xp-tdungan-memory-raw.001": {
+      "expected_sha256": "bf5c4740cbc71fb10946596f55226240c0bd2553993eebf8e9d38f5c9b9775cc",
+      "actual_sha256": "bf5c4740cbc71fb10946596f55226240c0bd2553993eebf8e9d38f5c9b9775cc",
+      "match": true,
+      "size_bytes": 2147483648
+    }
+  },
+  "evidence_unchanged": true
+}

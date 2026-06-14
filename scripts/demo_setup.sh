@@ -54,8 +54,7 @@ EOF
 sleep 3
 
 BRIEFING="The evidence is at $EVIDENCE_DIR. \
-Briefly: SANS FOR500 'Abducted Zebrafish' — single-host insider \
-IP theft on a Microsoft Surface 3. Call the case '$CASE_ID'."
+Briefly: A single-host insider IP theft on a Microsoft Surface 3. Call the case '$CASE_ID'."
 
 # Echo the command on-screen for the viewer.
 printf '$ cat prompts/setup-new-case.md - | claude --model sonnet\n'

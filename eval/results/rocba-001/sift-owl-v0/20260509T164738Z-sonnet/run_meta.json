@@ -1,0 +1,170 @@
+{
+  "run_id": "20260509T164738Z-sonnet",
+  "case": "rocba-001",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_turns": 80,
+  "started_utc": "2026-05-09T16:48:05Z",
+  "cwd": "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v0/20260509T164738Z-sonnet",
+  "evidence_dir": "/cases/find-evil-test",
+  "pre_run_hashes": {
+    "/cases/find-evil-test/Rocba-Memory.raw": {
+      "expected_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "actual_sha256": "eb33bdf63730858a805463d171245b233335dd6d89ed458bc681f7d282e10563",
+      "size_bytes": 19050528768,
+      "match": true
+    },
+    "/cases/find-evil-test/ROCBA-BACKGROUND.pptx": {
+      "expected_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "actual_sha256": "44a12c54d13243397803e6e44112fa7bc365ed7f9bcb48e6769d7e91d8980834",
+      "size_bytes": 40148560,
+      "match": true
+    }
+  },
+  "claude_version": "2.1.137 (Claude Code)",
+  "sift_mcp_inspect": "{\n  \"server\": \"sift-owl\",\n  \"audit_dir\": \"/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v0/20260509T164738Z-sonnet/audit\",\n  \"evidence_roots\": [\n    \"/cases/find-evil-test\"\n  ],\n  \"tool_count\": 9,\n  \"tools\": [\n    {\n      \"name\": \"vol3_cmdline\",\n      \"description\": \"Per-process command-line arguments. Most-revealing single plugin for\"\n    },\n    {\n      \"name\": \"vol3_filescan\",\n      \"description\": \"File objects cached in pool memory \\u2014 every file open at capture time\"\n    },\n    {\n      \"name\": \"vol3_image_info\",\n      \"description\": \"Get OS / build / arch / CPU count / capture-time from a Windows memory image.\"\n    },\n    {\n      \"name\": \"vol3_malfind\",\n      \"description\": \"Suspicious VAD regions \\u2014 RWX, MZ-headed without on-disk backing,\"\n    },\n    {\n      \"name\": \"vol3_netscan\",\n      \"description\": \"TCP/UDP endpoints \\u2014 current + historical (pool-tag scan). Returns the\"\n    },\n    {\n      \"name\": \"vol3_psscan\",\n      \"description\": \"Pool-tag scan for processes \\u2014 finds hidden + exited processes that\"\n    },\n    {\n      \"name\": \"vol3_pstree\",\n      \"description\": \"Process parent/child tree from EPROCESS hierarchy. Use to spot LOLBins\"\n    },\n    {\n      \"name\": \"vol3_svcscan\",\n      \"description\": \"Service Control Manager + driver enumeration. Look for services with\"\n    },\n    {\n      \"name\": \"vol3_userassist\",\n      \"description\": \"UserAssist registry values \\u2014 Explorer-driven program-execution log\"\n    }\n  ],\n  \"now_utc\": \"2026-05-09T16:48:05Z\"\n}\n",
+  "disallowed_builtins": "Bash Edit Write Read NotebookEdit WebFetch WebSearch Agent Skill AskUserQuestion",
+  "mcp_config": {
+    "mcpServers": {
+      "sift-owl": {
+        "type": "stdio",
+        "command": "sift-mcp",
+        "args": [
+          "--audit-dir",
+          "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v0/20260509T164738Z-sonnet/audit",
+          "--evidence-root",
+          "/cases/find-evil-test"
+        ],
+        "env": {}
+      }
+    }
+  },
+  "harness_git_rev": "85064577fde382f91d0bb353ac1716ffe5b71fdf",
+  "cmd": [
+    "claude",
+    "-p",
+    "# SIFT-OWL v0 prompt \u2014 ROCBA-001\n\n> Injected as the **first user message** to Claude Code. The agent has been\n> launched with `--strict-mcp-config` pointing at the SIFT-OWL MCP server,\n> and the following built-in tools are explicitly **denied**: `Bash`, `Edit`,\n> `Write`, `Read`, `NotebookEdit`, `WebFetch`, `WebSearch`, `Agent`, `Skill`,\n> `AskUserQuestion`. The only callable tools are the 9 typed functions\n> registered by the `sift-owl` MCP server.\n\n---\n\nYou are operating as a Principal DFIR Orchestrator on the SANS SIFT Workstation.\n\n## Case ROCBA-001 \u2014 Fred Rocba / SRL break-in & IP theft\n\nFred Rocba is a technical engineer hired by Stark Research Labs (SRL) on **2020-10-24** and\nshipped a Microsoft Surface for remote work. He used it from home with O365, OneDrive,\nDropbox, Google Drive, iCloud, and Zoom. Browsers installed: Edge, Firefox, Chrome.\nPersonal identities: `fred.rocba@gmail.com`, `fred.rocba@outlook.com`, iPhone +1-339-223-3317.\nCorporate email: `frocba@stark-research-labs.com`.\n\nOn **2020-11-10 morning EST** Fred and his family flew to Disney World on a planned vacation.\nOn the evening of **2020-11-13 EST** his residence was broken into. The intruders accessed\nhis SRL Surface (left logged in). Fred returned **2020-11-15 PM EST**, did not touch the\nlaptop, and SRL captured RAM at **2020-11-15 21:32:38 EST** (`2020-11-16T02:32:38Z`).\n\n**Temporal alibi:** any user-driven activity inside `2020-11-13T22:00Z .. 2020-11-16T02:32Z`\nthat is not iCloud / Dropbox / OneDrive / GoogleDrive / O365 sync is the intruder.\n\n## Evidence (read-only, do not modify)\n\n- `/cases/find-evil-test/Rocba-Memory.raw` \u2014 18 GB Windows 10 build 19041 (x64) RAM capture.\n\nYou have **no shell access**, **no filesystem access** (`Read`/`Write`/`Edit` are denied),\nand **no web access**. The only operations available to you are the typed forensic\nfunctions exposed by the `sift-owl` MCP server. Each function returns structured JSON\nwith an `exec_id` you must cite for every claim derived from its output.\n\n## Your task\n\nConduct a full memory-only investigation of the Rocba-Memory.raw image and answer all\nfive investigation goals:\n\n1. **G1** What key projects did Fred have access to?\n2. **G2** What was stolen?\n3. **G3** Where was it transferred to (cloud / USB / network share / etc.)?\n4. **G4** How was it stolen (tooling / technique)?\n5. **G5** When did the activity occur (correlate with break-in window)?\n\n## How to use the tools\n\nEach `vol3_*` function takes a single `image` argument and returns:\n\n- `exec_id` \u2014 unique ID of this tool execution. **Cite this for every claim.**\n- High-signal aggregates (`count`, `by_image`, `foreign_ip_counts`, etc.).\n- A full row list (`processes` / `services` / `connections` / `files` / etc.) for deeper analysis.\n\nA reasonable triage sequence (you are free to depart from it):\n\n1. `vol3_image_info` \u2014 confirm OS profile + capture time.\n2. `vol3_psscan` + `vol3_pstree` \u2014 process discovery, parent/child anomalies.\n3. `vol3_cmdline` \u2014 command lines (most-revealing single source).\n4. `vol3_netscan` \u2014 exfiltration destinations.\n5. `vol3_filescan` \u2014 files cached in pool memory (slow \u2014 ~3 min \u2014 but covers the\n   stolen-files question).\n6. `vol3_userassist` \u2014 Explorer-driven program execution per user hive.\n7. `vol3_svcscan` \u2014 service / driver enumeration for persistence.\n8. `vol3_malfind` \u2014 code injection (slow, often false-positive on Defender / .NET).\n\nYou do not need to run all of them \u2014 choose what the case calls for and explain\nwhy you picked the sequence you did.\n\n## Reporting requirements\n\nProduce a final report **as your last message text** (no `Write` is available). For every\nclaim, **tag it explicitly** as one of:\n\n- `[CONFIRMED \u2014 exec_id ...]` \u2014 observed in tool output. Cite the specific `exec_id`.\n- `[INFERRED \u2014 exec_id ...]` \u2014 derived from observed evidence with explicit reasoning.\n- `[HYPOTHESIS]` \u2014 plausible but not yet supported.\n\nIf you encounter ambiguity, do not hallucinate \u2014 flag the gap as `[GAP]` with what\nevidence would resolve it.\n\nWhen you are done, end your final message with the line `SIFT-OWL RUN COMPLETE`.\n",
+    "--model",
+    "sonnet",
+    "--max-budget-usd",
+    "5.0",
+    "--max-turns",
+    "80",
+    "--mcp-config",
+    "/home/sansforensics/Tools/find-evil-hackathon/eval/results/rocba-001/sift-owl-v0/20260509T164738Z-sonnet/mcp_config.json",
+    "--strict-mcp-config",
+    "--disallowed-tools",
+    "Bash Edit Write Read NotebookEdit WebFetch WebSearch Agent Skill AskUserQuestion",
+    "--output-format",
+    "stream-json",
+    "--include-partial-messages",
+    "--no-session-persistence",
+    "--verbose"
+  ],
+  "result_event": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "api_error_status": null,
+    "duration_ms": 17921,
+    "duration_api_ms": 19296,
+    "num_turns": 7,
+    "result": "The MCP tool calls were blocked pending your approval. Please grant permission for the `mcp__sift-owl__*` tools so the investigation can proceed \u2014 all five were submitted simultaneously. Once approved, I'll run the full triage sequence autonomously.",
+    "stop_reason": "end_turn",
+    "session_id": "d1445652-e425-4722-bf73-9691fe4f5ce9",
+    "total_cost_usd": 0.0750884,
+    "usage": {
+      "input_tokens": 6,
+      "cache_creation_input_tokens": 13986,
+      "cache_read_input_tokens": 25533,
+      "output_tokens": 884,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 13986,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [
+        {
+          "input_tokens": 1,
+          "output_tokens": 236,
+          "cache_read_input_tokens": 13232,
+          "cache_creation_input_tokens": 754,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 754
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "modelUsage": {
+      "claude-haiku-4-5-20251001": {
+        "inputTokens": 1613,
+        "outputTokens": 18,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 0,
+        "webSearchRequests": 0,
+        "costUSD": 0.001703,
+        "contextWindow": 200000,
+        "maxOutputTokens": 32000
+      },
+      "claude-sonnet-4-6": {
+        "inputTokens": 6,
+        "outputTokens": 884,
+        "cacheReadInputTokens": 25533,
+        "cacheCreationInputTokens": 13986,
+        "webSearchRequests": 0,
+        "costUSD": 0.0733854,
+        "contextWindow": 200000,
+        "maxOutputTokens": 32000
+      }
+    },
+    "permission_denials": [
+      {
+        "tool_name": "mcp__sift-owl__vol3_image_info",
+        "tool_use_id": "toolu_01D9g1nbVZgkQ16ZbSqZyoMt",
+        "tool_input": {
+          "image": "/cases/find-evil-test/Rocba-Memory.raw"
+        }
+      },
+      {
+        "tool_name": "mcp__sift-owl__vol3_psscan",
+        "tool_use_id": "toolu_0182PuvSAAwjfBQReMCWmqyK",
+        "tool_input": {
+          "image": "/cases/find-evil-test/Rocba-Memory.raw"
+        }
+      },
+      {
+        "tool_name": "mcp__sift-owl__vol3_pstree",
+        "tool_use_id": "toolu_01DZVjwBZMFsGnpm5UfeRKxu",
+        "tool_input": {
+          "image": "/cases/find-evil-test/Rocba-Memory.raw"
+        }
+      },
+      {
+        "tool_name": "mcp__sift-owl__vol3_cmdline",
+        "tool_use_id": "toolu_01Xge5GZh4J6575D2SQcwEoZ",
+        "tool_input": {
+          "image": "/cases/find-evil-test/Rocba-Memory.raw"
+        }
+      },
+      {
+        "tool_name": "mcp__sift-owl__vol3_netscan",
+        "tool_use_id": "toolu_018QquH32jNs6YEbR8sGJN3s",
+        "tool_input": {
+          "image": "/cases/find-evil-test/Rocba-Memory.raw"
+        }
+      }
+    ],
+    "terminal_reason": "completed",
+    "fast_mode_state": "off",
+    "uuid": "4e0cac30-26a7-4a65-a92a-647c0a932d57"
+  },
+  "finished_utc": "2026-05-09T16:48:27Z"
+}
