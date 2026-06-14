@@ -564,13 +564,18 @@ def main(
     # Resolve prompt-file path (mirrors v1 logic).
     prompt_path = Path(prompt_file)
     if not prompt_path.is_absolute():
-        # Try v1 prompts dir first, fall back to v2 dir
-        for candidate_root in (
-            REPO_ROOT / "eval" / "agents" / "sift_owl_v1",
-            REPO_ROOT / "eval" / "agents" / "sift_owl_v2",
+        # Try, in order: the path as given (CWD-relative), relative to the
+        # repo root, then joined under the v1/v2 prompt dirs. This handles both
+        # bare prompt names (e.g. "prompt-vanko-demo.md") and repo-relative
+        # paths (e.g. "eval/agents/sift_owl_v2/prompt-vanko-demo.md").
+        for candidate in (
+            Path(prompt_file),
+            REPO_ROOT / prompt_file,
+            REPO_ROOT / "eval" / "agents" / "sift_owl_v1" / prompt_file,
+            REPO_ROOT / "eval" / "agents" / "sift_owl_v2" / prompt_file,
         ):
-            if (candidate_root / prompt_file).exists():
-                prompt_path = candidate_root / prompt_file
+            if candidate.exists():
+                prompt_path = candidate
                 break
         else:
             prompt_path = REPO_ROOT / "eval" / "agents" / "sift_owl_v1" / prompt_file
