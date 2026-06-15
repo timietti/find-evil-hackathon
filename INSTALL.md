@@ -8,9 +8,9 @@
 |---|---|
 | SANS SIFT Workstation | Volatility 3, Sleuth Kit, EWF tools, EZ Tools, YARA, bulk_extractor pre-installed at SIFT-default paths |
 | Python 3.12+ | `python3 --version` |
-| Claude Code CLI | `claude --version` — the agent harness invokes `claude -p ...` |
+| Claude Code CLI | `claude --version` — the agent harness invokes `claude -p ...`. Authenticate it with **either** a Claude Pro/Max subscription (`claude login`) **or** an Anthropic API key; the investigator runs on whichever the CLI is logged in with. |
 | .NET 9 runtime | `dotnet --info` — EZ Tools target `net9.0` |
-| Anthropic API key | `export ANTHROPIC_API_KEY=...` — recommended; the v2 loop auto-enables `--llm-check` when set (~$0.05 / 3-iter run). Optional. |
+| Anthropic API key | `export ANTHROPIC_API_KEY=...` — **optional.** Not needed to run the agent if you logged in with a subscription; it's required *only* for the validator's optional `--llm-check` LLM-rescue, which the SDK can't drive from the subscription credential (~$0.05 / 3-iter run). |
 | Disk space | ~1 GB for the Vol3 community symbol pack (under `/opt/sift-owl/vol3-symbols/`); ≥ 5 GB free under `audit/` per full multi-host run |
 
 ## Install

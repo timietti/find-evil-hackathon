@@ -21,7 +21,7 @@ evidence directory you point it at.
 |---|---|
 | Target OS | SANS SIFT Workstation (Ubuntu 22.04 / 24.x, x86-64) |
 | Python | 3.12 |
-| LLM access | Claude via the Claude Code CLI — requires an Anthropic API key |
+| LLM access | The investigator runs via the Claude Code CLI — authenticate with **either** a Claude Pro/Max subscription (`claude login`) **or** an Anthropic API key. An API key is needed *only* for the optional validator LLM-rescue (`--llm-check`, Step 7); the agent itself runs fine on a subscription. |
 | Typical cost / run | $1.75 – $4.69 |
 | Typical wall time | 15 min – 1 h depending on case size |
 | Network egress | None — Vol3 runs fully offline after step 4 |
@@ -33,7 +33,13 @@ evidence directory you point it at.
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 claude --version    # confirm
+claude login        # authenticate — a Claude Pro/Max subscription works here
 ```
+
+The agent drives Claude through this CLI, so it uses whatever credential
+the CLI is logged in with. A **Claude Pro/Max subscription is sufficient**;
+an Anthropic API key (Step 7) is an alternative and is only *required* for
+the optional validator rescue.
 
 ## Step 2 — Clone the repo
 
@@ -106,15 +112,22 @@ spells out exactly which sections Claude must fill in vs. copy
 verbatim from the bundled templates — especially the
 token-quoting style block, which must not be edited.
 
-## Step 7 — Provide the Anthropic API key
+## Step 7 — (Optional) Anthropic API key for the validator rescue
+
+**Skip this if you authenticated with a subscription in Step 1** — the
+agent already has what it needs. This key only powers the *optional*
+validator LLM-rescue.
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-api03-...
 ```
 
-The v2 self-correction loop auto-enables Haiku 4.5 LLM-rescue
-when this is set (~$0.05/run extra). Without it, pure rule-based
-validation still runs.
+When set, the v2 loop auto-enables the Haiku 4.5 LLM-rescue on
+unverifiable prose claims (~$0.05/run extra). Without it, pure
+rule-based validation still runs — the loop completes either way.
+(The validator calls the Anthropic SDK directly, which does **not**
+read the Claude Code subscription credential, so this rescue
+specifically needs the API key.)
 
 ## Step 8 — Run the agent
 

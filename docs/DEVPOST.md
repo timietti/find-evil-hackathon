@@ -411,10 +411,16 @@ sift-mcp inspect                        # prints the 38-tool inventory
 pytest -x --deselect tests/test_disk_e2e.py \
           --deselect tests/test_vol3_memory_e2e.py \
           --deselect tests/test_ez_tools_e2e.py
-# 279 unit tests pass
+# 283 pass, 1 skipped
 
-# Optional: set ANTHROPIC_API_KEY so the v2 loop auto-enables
-# `--llm-check` (Haiku 4.5 rescue on Unverifiable verdicts, ~$0.05).
+# Authenticate the Claude Code CLI that drives the agent — a Claude
+# Pro/Max subscription works (`claude login`), or use an API key.
+claude login
+
+# Optional: set ANTHROPIC_API_KEY. Not needed to run the agent if you
+# logged in above — it only enables the validator's `--llm-check`
+# (Haiku 4.5 rescue on Unverifiable verdicts, ~$0.05), which the SDK
+# can't drive from the subscription credential.
 export ANTHROPIC_API_KEY=sk-ant-api03-...
 
 # Run on a case:
