@@ -95,6 +95,24 @@ Project codename: **`SIFT-OWL`** (Operate, Witness, Learn). Working name only; w
 
 ## 3. System Architecture (target state)
 
+> **As-built vs. target (2026-06-15).** The diagram below is the *target*
+> design from Week 1. What actually shipped is a deliberately leaner
+> subset — the architectural guardrails are identical, the agent topology
+> is simpler:
+>
+> | Aspect | Target (this diagram) | As-built (shipped) |
+> |---|---|---|
+> | Agent topology | Orchestrator + parallel Memory/Disk/Windows specialist sub-agents with A2A messaging | **Single investigator agent per iteration** in a self-correction loop (`run_loop.py`); A2A messaging deferred — one agent proved sufficient |
+> | Models | Opus 4.7 orchestrator + Sonnet/Haiku specialists | **Sonnet 4.6 investigator** + **Haiku 4.5** validator prose-check rescue |
+> | Cross-source correlation | Dedicated correlator agent | Done inline by the single agent + the validator; standalone correlator is roadmap Phase 6 |
+> | Evidence integrity | Bind-mount RO + `chattr +i` + capability drop | **Path allow-list + no write/network tools at the MCP boundary** (TB2/TB3); `chattr +i` + RO bind-mounts deferred (equivalent protection at the API boundary — see `docs/ARCHITECTURE.md`) |
+> | Audit | `exec_log.jsonl` + `agent_msgs.jsonl` | `exec_log.jsonl` per call (+ per-iteration `transcript.jsonl`/`tool_calls.jsonl`); no `agent_msgs.jsonl` since there is one agent |
+>
+> The trust boundaries that win criterion 4 (architectural, not prose) are
+> all present as shipped — TB1–TB5 in `docs/ARCHITECTURE.md`. The simpler
+> topology is why depth-on-few beat the multi-agent plan within the
+> hackathon window.
+
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                         SIFT-OWL (Orchestrator)                          │
