@@ -1,0 +1,4 @@
+{"ts": "2026-06-14T22:03:33Z", "tool": "ToolSearch", "input": {"query": "select:query_rows", "max_results": 3}, "id": "toolu_01GXAWWfszrHRQZXancyhq9H"}
+{"ts": "2026-06-14T22:03:36Z", "tool": "ToolSearch", "input": {"query": "sift-owl query rows drill", "max_results": 5}, "id": "toolu_017R3j2E1NoqMw5kU6Mufy5j"}
+{"ts": "2026-06-14T22:03:46Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ec823-944e-7840-abd1-5edfeb08a4bc", "filter_field": "value_name", "filter_value": "OneDrive", "limit": 10}, "id": "toolu_01MPDiiTXQ9Ct5RrsbYPo7c8"}
+{"ts": "2026-06-14T22:04:03Z", "tool": "mcp__sift-owl__query_rows", "input": {"exec_id": "019ec823-944e-7840-abd1-5edfeb08a4bc", "limit": 50}, "id": "toolu_01JheCr6QDcy5QawExjrc7LD"}

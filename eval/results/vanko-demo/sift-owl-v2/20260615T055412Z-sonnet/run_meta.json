@@ -1,0 +1,75 @@
+{
+  "run_id": "20260615T055412Z-sonnet",
+  "case": "vanko-demo",
+  "model": "sonnet",
+  "max_budget_usd": 5.0,
+  "max_iterations": 3,
+  "started_utc": "2026-06-15T05:54:27Z",
+  "evidence_dir": "/cases/find-evil-test4",
+  "pre_run_hashes": {
+    "/cases/find-evil-test4/surface_physical.E01": {
+      "expected_sha256": "0a44ad8d57bad44eb40a59bdaa8110b79ac019a791b8fd388f6efe09c7aa3b1c",
+      "actual_sha256": "0a44ad8d57bad44eb40a59bdaa8110b79ac019a791b8fd388f6efe09c7aa3b1c",
+      "match": true,
+      "size_bytes": 2147328814
+    },
+    "/cases/find-evil-test4/Vanko Student Scenario_D01_01.docx": {
+      "expected_sha256": "7c7950baacd57ed7d669d55a0ebdb95e1e2a2799cd4c9916b37c8d5cc4b8f254",
+      "actual_sha256": "7c7950baacd57ed7d669d55a0ebdb95e1e2a2799cd4c9916b37c8d5cc4b8f254",
+      "match": true,
+      "size_bytes": 23711
+    }
+  },
+  "prompt_file": "eval/agents/sift_owl_v2/prompt-vanko-demo.md",
+  "claude_version": "2.1.177 (Claude Code)",
+  "harness_git_rev": "31b9dfd58346bc17a9749566d6b085663cb204fb",
+  "finished_utc": "2026-06-15T06:31:08Z",
+  "total_cost_usd": 2.7082449499999997,
+  "iterations": [
+    {
+      "iteration": 1,
+      "exit_code": 0,
+      "wall_seconds": 822.810355424881,
+      "cost_usd": 1.4525061499999998,
+      "tool_use_count": 52,
+      "confirmed_count": 20,
+      "verified_count": 6,
+      "demoted_count": 14
+    },
+    {
+      "iteration": 2,
+      "exit_code": 0,
+      "wall_seconds": 633.4878025054932,
+      "cost_usd": 0.6294556499999999,
+      "tool_use_count": 21,
+      "confirmed_count": 21,
+      "verified_count": 11,
+      "demoted_count": 10
+    },
+    {
+      "iteration": 3,
+      "exit_code": 0,
+      "wall_seconds": 571.8235900402069,
+      "cost_usd": 0.6262831499999999,
+      "tool_use_count": 11,
+      "confirmed_count": 20,
+      "verified_count": 16,
+      "demoted_count": 4
+    }
+  ],
+  "post_run_hashes": {
+    "/cases/find-evil-test4/surface_physical.E01": {
+      "expected_sha256": "0a44ad8d57bad44eb40a59bdaa8110b79ac019a791b8fd388f6efe09c7aa3b1c",
+      "actual_sha256": "0a44ad8d57bad44eb40a59bdaa8110b79ac019a791b8fd388f6efe09c7aa3b1c",
+      "match": true,
+      "size_bytes": 2147328814
+    },
+    "/cases/find-evil-test4/Vanko Student Scenario_D01_01.docx": {
+      "expected_sha256": "7c7950baacd57ed7d669d55a0ebdb95e1e2a2799cd4c9916b37c8d5cc4b8f254",
+      "actual_sha256": "7c7950baacd57ed7d669d55a0ebdb95e1e2a2799cd4c9916b37c8d5cc4b8f254",
+      "match": true,
+      "size_bytes": 23711
+    }
+  },
+  "evidence_unchanged": true
+}
