@@ -1,6 +1,6 @@
 # SIFT-OWL — MCP tool roadmap
 
-> Plan for expanding the typed MCP function inventory beyond the current 20 tools.
+> Plan for expanding the typed MCP function inventory beyond the current 38 tools.
 > Optimised for **two goals at once**: (a) win the hackathon — strengthen the
 > SHIELDBASE final-eval pipeline; (b) leave a tool that is broadly useful for
 > general DFIR after the hackathon, including legacy Windows (Win7-x86, WinXP).
@@ -30,30 +30,33 @@ Held-out evals shipped on the 38-tool inventory: SHIELDBASE
 side is Phase 5 — the rest of the EZ Tools suite (RECmd full,
 SQLECmd, LECmd, WxTCmd, SBECmd) — deferred as post-submission.
 
-### Tool inventory present on this SIFT install but **not yet wrapped**
+### Tool inventory present on this SIFT install but **not yet wrapped** (Phase 5 targets)
+
+> Pruned 2026-06-15: `JLECmd` (jumplist), `RBCmd` (recyclebin),
+> `bstrings` (strings_extract), and `bulk_extractor` (bulk_extract)
+> moved out of this table — all shipped in the 38-tool inventory.
 
 | Tool | Location | What it gives us |
 |---|---|---|
 | `LECmd.dll` | `/opt/zimmermantools/` | Single `.lnk` parsing — target path, MAC times, drive serial |
-| `JLECmd.dll` | `/opt/zimmermantools/` | Jump Lists (`.automaticDestinations-ms` / `.customDestinations-ms`) — recent files per app, MUTI-IMPORTANT for hands-on-keyboard evidence |
-| `RBCmd.dll` | `/opt/zimmermantools/` | Recycle Bin (`$Recycle.Bin/$I*` records) — deleted-by-user evidence |
 | `SBECmd.dll` | `/opt/zimmermantools/` | Shellbags — every folder the user opened in Explorer, including external drives no longer attached |
 | `WxTCmd.dll` | `/opt/zimmermantools/` | Win10 Timeline (`ActivitiesCache.db`) — per-user activity feed |
 | `RecentFileCacheParser.dll` | `/opt/zimmermantools/` | Win7 `RecentFileCache.bcf` — Amcache predecessor |
-| `RECmd/RECmd.dll` | `/opt/zimmermantools/RECmd/` | Registry Explorer with 200+ plugins — Run keys, Services, USB devices, BAM, AppCompat, SAM, etc. |
+| `RECmd/RECmd.dll` | `/opt/zimmermantools/RECmd/` | Registry Explorer with 200+ plugins — Run keys, Services, USB devices, BAM, AppCompat, SAM, etc. (Note: a curated RECmd persistence batch already ships as `ezt_persistence_keys_parse`; Phase 5 generalises it) |
 | `SQLECmd/SQLECmd.dll` | `/opt/zimmermantools/SQLECmd/` | SQLite parsing with plugin packs (Chrome / Edge / Firefox / Skype / Teams history) |
-| `bstrings.dll` | `/opt/zimmermantools/` | High-perf strings extractor with regex filters |
-| `bulk_extractor` | `/usr/bin/` | Feature extraction (URLs, emails, BTC, IPs, phone, ZIP/RAR signatures) over raw bytes — works on disk AND memory |
 
 ### Tool inventory **missing on this install** — would need install routine entries
 
+> Updated 2026-06-15: YARA now installed + wrapped (`yara_scan_extract`);
+> Prefetch + SRUM rebuilt on libyal (`libscca` / `libesedb`) so PECmd /
+> SrumECmd are no longer required. Remaining gaps are Vol2 + Memory
+> Baseliner, both post-submission.
+
 | Tool | Why we need it | Install |
 |---|---|---|
-| **YARA binary** (`yara`) | YARA scanning of files + disk regions; `yara-python` is installed but a CLI tool is cleaner for subprocess wrappers. CLAUDE.md says v4.1.0 at `/usr/local/bin/yara` but it's absent on this image. | `apt install yara` or build from source |
-| **PECmd** (Prefetch parser, .NET) | **High-signal** Win10/Win11 program execution — `.pf` files include the executable name + last 8 run times + file accesses. Standard EZ Tools bundle ships this; this install is missing it. | Download from `https://github.com/EricZimmerman/PECmd/releases` to `/opt/zimmermantools/` |
-| **SrumECmd** (SRUM, .NET) | Win8+ System Resource Usage Monitor: per-process network bytes + per-app wall time + push notifications. Killer for exfil detection. | Download to `/opt/zimmermantools/` |
-| **Volatility 2** (`vol.py` v2.6.x, Python 2) | **Required** for Win7-x86 PAE + WinXP memory images — Vol3's PDB-symbol approach can't auto-download symbols for these. Vol2 has built-in profiles. | `pip2 install volatility` (Python 2) OR `apt install volatility` (Ubuntu ships 2.6) |
+| **Volatility 2** (`vol.py` v2.6.x, Python 2) | **Required** for Win7-x86 PAE + WinXP memory images — Vol3's PDB-symbol approach can't auto-download symbols for these. Vol2 has built-in profiles. (Phase 2) | `pip2 install volatility` (Python 2) OR `apt install volatility` (Ubuntu ships 2.6) |
 | **Memory Baseliner** (`baseline.py`) | Compare two memory images (suspect vs clean baseline) → diff of non-baseline processes/services/connections. CLAUDE.md references `/opt/memory-baseliner/baseline.py` but the dir doesn't exist on this image. | `git clone https://github.com/FSecureLABS/Memory-Baseliner /opt/memory-baseliner` |
+| **Zeek** (`zeek`) | PCAP → structured `conn`/`dns`/`http`/`ssl` logs for network-evidence analysis (Phase 8). | `apt install zeek` or build from source |
 
 ### Plan for install-routine additions
 
@@ -112,32 +115,31 @@ went out per process — the exfil detector we've been missing.
 
 ---
 
-### Phase 1.5 — MITRE-driven Vol3 plugin gaps (5 high-leverage wrappers) 🎯 *next up*
+### Phase 1.5 — MITRE-driven Vol3 plugin gaps (5 high-leverage wrappers) ✅ *shipped*
 
 Surfaced by the MITRE ATT&CK coverage audit (`docs/MITRE_COVERAGE.md`). Each
 wrapper closes a Partial-coverage technique to Full. All target Vol3 plugins
 already installed on this SIFT (`vol -h | grep windows.<plugin>` confirms).
 
-| # | New tool | Wraps | Closes |
-|---|---|---|---|
-| 1.5.1 | `vol3_scheduled_tasks(image)` | `windows.scheduled_tasks` | **T1053** Scheduled Task/Job |
-| 1.5.2 | `vol3_skeleton_key_check(image)` | `windows.skeleton_key_check` | **T1558** Steal/Forge Kerberos Tickets (skeleton key) |
-| 1.5.3 | `vol3_hashdump(image)` | `windows.hashdump` | **T1003** OS Credential Dumping |
-| 1.5.4 | `vol3_envars(image, pid?)` | `windows.envars` | **T1574** Hijack Execution Flow (Path interception) |
-| 1.5.5 | `vol3_dnscache(image)` | `windows.cachedump` (DNS slice) **or** dedicated DNS-cache plugin | **T1071** Application Layer Protocol (DNS) |
+| # | New tool | Wraps | Closes | Status |
+|---|---|---|---|---|
+| 1.5.1 | `vol3_scheduled_tasks(image)` | `windows.scheduled_tasks` | **T1053** Scheduled Task/Job | ✅ |
+| 1.5.2 | `vol3_skeleton_key_check(image)` | `windows.skeleton_key_check` | **T1558** Steal/Forge Kerberos Tickets (skeleton key) | ✅ |
+| 1.5.3 | `vol3_hashdump(image)` | `windows.hashdump` | **T1003** OS Credential Dumping | ✅ |
+| 1.5.4 | `vol3_envars(image, pid?)` | `windows.envars` | **T1574** Hijack Execution Flow (Path interception) | ✅ |
+| 1.5.5 | `vol3_cachedump(image)` | `windows.cachedump` (LSA cached domain creds) | **T1003.005** DCC2/MSCASH | ✅ |
 
-Total inventory after this phase: **26 → 31 tools**.
+**Shipped substitution:** 1.5.5 landed as `vol3_cachedump` (LSA cached
+domain credentials, T1003.005) rather than the originally-scoped
+`vol3_dnscache` — cached-credential theft was the higher-signal gap on
+the SHIELDBASE/STARK AD cases. A dedicated DNS-cache wrapper (T1071) is
+folded into the Phase 8 network work below.
 
-**Effort:** ~2 hours. All five follow the existing `_run_jsonl_plugin` shape;
-parsers are flat row-oriented. `vol3_envars` mirrors `vol3_dlllist`'s optional
-pid filter; the other four are image-only.
+**Effort:** ~2 hours (actual). All five followed the existing
+`_run_jsonl_plugin` shape; parsers are flat row-oriented. `vol3_envars`
+mirrors `vol3_dlllist`'s optional pid filter; the other four are image-only.
 
 **Install touches:** none — all plugins already present in Vol3 on SIFT 24.x.
-
-**Why before Phase 2:** Phase 2 is general-DFIR value (Win7-x86/XP). Phase 1.5
-directly improves SHIELDBASE-class Win10/11 detection coverage with negligible
-effort. Should ship even before Phase 3 (YARA) if a SHIELDBASE re-run is on
-the table.
 
 ---
 
@@ -215,15 +217,17 @@ Tool that can't analyse a Win7-x86 memory dump is not a general-purpose DFIR too
 
 ---
 
-### Phase 3 — Threat-hunt + carving + cross-source
+### Phase 3 — Threat-hunt + carving + cross-source ✅ *shipped*
 
-| # | New tool | Wraps | Notes |
-|---|---|---|---|
-| 3.1 | `yara_scan_extract(extract_exec_id, ruleset)` | `yara -r <rules> <file>` | Scan a previously-extracted file |
-| 3.2 | `vol3_vadyarascan(image, ruleset, pid?)` | `windows.vadyarascan` | YARA against per-process memory; per-PID is fast |
-| 3.3 | `bulk_extract(image)` | `bulk_extractor -j 4 -o <out>` | Feature files: URLs, emails, IPs, BTC, ZIP/RAR. Works on disk + memory. |
-| 3.4 | `strings_extract(extract_exec_id, encoding, min_len)` | `bstrings -f <file>` | High-perf strings with regex filter |
-| 3.5 | `hash_file(extract_exec_id)` | Python `hashlib` + ssdeep | MD5/SHA-1/SHA-256/ssdeep on extracted bytes |
+All five shipped and are in the 38-tool inventory.
+
+| # | New tool | Wraps | Notes | Status |
+|---|---|---|---|---|
+| 3.1 | `yara_scan_extract(extract_exec_id, ruleset)` | `yara -r <rules> <file>` | Scan a previously-extracted file | ✅ |
+| 3.2 | `vol3_vadyarascan(image, ruleset, pid?)` | `windows.vadyarascan` | YARA against per-process memory; per-PID is fast | ✅ |
+| 3.3 | `bulk_extract(image)` | `bulk_extractor -j 4 -o <out>` | Feature files: URLs, emails, IPs, BTC, ZIP/RAR. Works on disk + memory. | ✅ |
+| 3.4 | `strings_extract(extract_exec_id, encoding, min_len)` | `bstrings -f <file>` | High-perf strings with regex filter | ✅ |
+| 3.5 | `hash_file(extract_exec_id)` | Python `hashlib` + ssdeep | MD5/SHA-1/SHA-256/ssdeep on extracted bytes | ✅ |
 
 **Bundled YARA ruleset:** Ship a curated minimal set under `mcp_server/yara_rules/`:
 - `apt_implants_basic.yar` — HTRAN, WEBC2, GREENCAT signatures
@@ -303,12 +307,70 @@ in the post-submission roadmap.
 
 ---
 
+### Phase 8 — Network / PCAP evidence (Zeek-first, post-submission)
+
+Today the only network signal is `vol3_netscan` (memory sockets at capture
+time) and `bulk_extract` (IP/URL carving from raw bytes). A real intrusion
+case ships PCAP — C2 beaconing, DNS tunnelling, and exfil live there.
+**Zeek-first:** rather than re-deriving protocol logic per query with
+`tshark` display filters, run Zeek once to produce structured `*.log`
+files, then parse those — it gives connection/DNS/HTTP/TLS context "for
+free" and the same flat-row parser shape the rest of the inventory uses.
+`tshark` stays available for object extraction where Zeek has no analyser.
+
+| # | New tool | Wraps | Notes |
+|---|---|---|---|
+| 8.1 | `zeek_analyze(pcap)` | `zeek -r <pcap> LogAscii::use_json=T` | One run → `conn`/`dns`/`http`/`ssl`/`files`/`weird` logs under `audit/raw/<exec_id>/`; returns per-log row counts + summary |
+| 8.2 | `zeek_log_query(exec_id, log, filter?)` | re-parse a prior `zeek_analyze` log (`conn.log`, `dns.log`, …) | Drill/filter a single Zeek log by field — mirrors `query_rows` semantics |
+| 8.3 | `pcap_conversations(pcap)` | `tshark -q -z conv,tcp -z conv,udp` | Flow/talker summary when a fast top-N is wanted without full Zeek |
+| 8.4 | `pcap_extract_objects(pcap, proto)` | `tshark --export-objects <http\|smb\|tftp>` | Carve transferred files into the extract chain (→ feed `ezt_*` / `hash_file` / `yara_scan_extract`) |
+| 8.5 | `pcap_dns(pcap)` | Zeek `dns.log` (or `tshark -Y dns`) | Beaconing / DGA / tunnelling indicators; closes the deferred **T1071** (Application Layer Protocol: DNS) |
+
+**Effort:** ~6-8 hours. Zeek JSON logs are flat NDJSON → reuse the existing
+`_run_jsonl_plugin`-style parser; `tshark` paths add a thin text/JSON parser.
+
+**Install touches:** `apt install zeek` (or build); add to
+`scripts/bootstrap_sift_tools.sh` with a sanity check. `tshark` ships with
+Wireshark on SIFT.
+
+**Architectural fit:** PCAP files arrive as evidence under the `/cases/`
+allow-list → typed `pcap: str` input (same validation as `image`); all
+output under `audit/raw/<exec_id>/`; one exec-log row per call; row lists
+truncated at the wire with full logs drillable via `zeek_log_query`.
+
+---
+
+### Phase 9 — Log aggregation / non-Windows logs (post-submission)
+
+EVTX is covered (`ezt_evtx_parse`), but Linux/Unix hosts, network
+appliances, and application logs are not. For multi-host enterprise cases
+(and the post-hackathon general-DFIR goal) a normalised, time-windowed log
+ingester feeds the Phase 6 correlator across host boundaries.
+
+| # | New tool | Wraps / does | Notes |
+|---|---|---|---|
+| 9.1 | `linux_auth_parse(extract_exec_id)` | parse `auth.log` / `secure` | SSH logins, sudo, su, cron, useradd — T1078 / T1098 / T1136 on Linux |
+| 9.2 | `journald_parse(extract_exec_id, unit?)` | `journalctl --file <journal> -o json` | systemd journal export from an extracted `*.journal` |
+| 9.3 | `syslog_parse(extract_exec_id, facility?)` | RFC3164/5424 line parser | Generic syslog (firewall/router/appliance) → normalised rows |
+| 9.4 | `log_aggregate(exec_ids, since?, until?)` | merge prior log-parse outputs | Time-window union across hosts/sources → one sorted timeline of events, normalised `{ts, host, source, event}` rows for the correlator |
+
+**Effort:** ~5-7 hours. Mostly line-regex parsers + a merge/sort pass;
+no new external binary (journald needs `systemd`'s `journalctl`, already
+present on SIFT).
+
+**Architectural fit:** non-Windows log files enter via `tsk_icat_extract`
+(disk) or a `cylr_collection`-style triage drop, so tools take
+`extract_exec_id`, never paths. `log_aggregate` is pure-Python over the
+audit log — same family as the Phase 6 correlator meta-tools.
+
+---
+
 ## 2. Recommended sequencing
 
-Working backwards from SHIELDBASE final eval:
+What actually shipped for submission, then the post-submission queue:
 
 ```
-Phase 1 ✓ (Prefetch + JLE + SBE + RBE + SRUM + dlllist + handles)  ← done
+Phase 1 ✓ (Prefetch + JLE + SBE + RBE + SRUM + dlllist + handles)  ← shipped
     │
     ▼
 SHIELDBASE final eval run ✓                                        ← 71.4% single-shot held-out;
@@ -316,30 +378,44 @@ SHIELDBASE final eval run ✓                                        ← 71.4% s
                                                                      + libesedb SRUM + LLM-check (W3-52)
     │
     ▼
-Phase 1.5 (5 Vol3 plugin gaps from MITRE audit)                    ← 2 hr — NEXT
+Phase 1.5 ✓ (5 Vol3 plugin gaps from MITRE audit)                  ← shipped (1.5.5 as cachedump)
     │
     ▼
-Phase 3 (YARA + bulk_extractor + strings)                          ← 6-8 hr
+Phase 3 ✓ (YARA + vadyarascan + bulk_extractor + strings + hash)  ← shipped
     │
     ▼
-Phase 2 (Vol2 fallback for Win7-x86 / WinXP)                       ← 6-8 hr
+VANKO-001 held-out eval ✓                                          ← 36.4% single-shot → 100.0% (W3-61)
     │
     ▼
-Phase 5 (RECmd / SQLECmd / LECmd / WxTCmd) ⚠ promoted              ← 4-6 hr
-    │                                                                 (covers
-    │                                                                  T1547,
-    │                                                                  T1078, T1098,
-    │                                                                  T1091, T1136,
-    │                                                                  T1574, T1071 —
-    │                                                                  highest cross-
-    │                                                                  technique impact
-    │                                                                  in the audit)
-    ▼
-Submission deliverables                                            ← #30/#31/#32
+Submission ✓                                                       ← repo public + video + Devpost
     │
     ▼
-[Post-submission] Phase 6 (correlator) → Phase 7 (Linux/mac)
+═══ POST-SUBMISSION QUEUE (none shipped yet) ═══
+    │
+    ▼
+Phase 5 (RECmd / SQLECmd / LECmd / WxTCmd / RecentFileCache)       ← 4-6 hr  (T1547/T1078/T1098/
+    │                                                                          T1091/T1136/T1574)
+    ▼
+Phase 2 (Vol2 fallback for Win7-x86 / WinXP)                       ← 6-8 hr  (general-DFIR legacy)
+    │
+    ▼
+Phase 6 (cross-source correlator meta-tools)                       ← 3-4 hr
+    │
+    ▼
+Phase 8 (Zeek-first network / PCAP)                                ← 6-8 hr  (closes T1071 DNS)
+    │
+    ▼
+Phase 9 (log aggregation / non-Windows logs)                       ← 5-7 hr
+    │
+    ▼
+Phase 7 (Linux/macOS memory)                                       ← stretch
 ```
+
+> **Note:** Phase 5 was promoted to "pre-submission" earlier (2026-05-11)
+> on the MITRE audit, but did not ship before the deadline — the 38-tool
+> inventory already reached 13 Full / 9 Partial / 0 Missing coverage and
+> the held-out results (SHIELDBASE 89.9 %, VANKO 100 %) cleared the bar.
+> Phase 5 now heads the post-submission queue.
 
 **SRUM (libesedb-based, W3-43):** ✓ done. `ezt_srum_parse` now reads
 `SRUDB.dat` in-process via libyal `libesedb` (pyesedb), joining
@@ -390,25 +466,32 @@ Every new tool **must**:
 
 | Phase | New tools | Effort | Order | Status |
 |---|---|---|---|---|
-| 1 — SHIELDBASE essentials | 6 | 3-4 hr | first | ✓ shipped (W3-19) |
-| **1.5 — MITRE-driven Vol3 gaps** | **5** | **~2 hr** | **next** | pending |
-| 2 — Vol2 fallback | 15 | 6-8 hr | post-Phase 3 | pending |
-| 3 — YARA + carving | 5 | 6-8 hr | post-Phase 1.5 | pending |
-| 5 — Registry + browser | 5 | 4-6 hr | **pre-submission** ⚠ promoted | pending |
+| 1 — SHIELDBASE essentials | 6 | 3-4 hr | first | ✅ shipped (W3-19) |
+| 1.5 — MITRE-driven Vol3 gaps | 5 | ~2 hr | second | ✅ shipped (1.5.5 as cachedump) |
+| 3 — YARA + carving | 5 | 6-8 hr | third | ✅ shipped |
+| 5 — Registry + browser | 5 | 4-6 hr | post-submission (queue head) | pending |
+| 2 — Vol2 fallback | 15 | 6-8 hr | post-submission | pending |
 | 6 — Correlator helpers | 3 | 3-4 hr | post-submission | pending |
-| 7 — Linux/mac | ~8 | — | future | future |
+| 8 — Network / PCAP (Zeek-first) | 5 | 6-8 hr | post-submission | pending |
+| 9 — Log aggregation / non-Windows | 4 | 5-7 hr | post-submission | pending |
+| 7 — Linux/mac memory | ~8 | — | future | future |
 
-**Inventory growth across the pre-submission phases:**
+**Inventory growth — shipped, then the post-submission queue:**
 
 ```
-v0.4 (current)   38 tools  (W3-19 + W3-26 + W3-27 + W3-43 shipped + W3-47/48 wire-fit + W3-50/52 validator fixes)
-+ Phase 1.5      31 tools
-+ Phase 3        36 tools
-+ Phase 5        41 tools   ← MITRE-driven promotion to pre-submission
-+ Phase 2        56 tools   (Vol2 family; general-DFIR Win7-x86/XP closure)
+Phase 1 (W3-19)        ─┐
+Phase 1.5              ─┤  cumulative → 38 tools shipped for submission
+Phase 3               ─┘  (17 vol3 + 6 disk + 10 EZ + 4 hunt + query_rows)
+─────────────────────────  ↑ SHIELDBASE 89.9% / VANKO 100% ran on this set
++ Phase 5 (5)             43
++ Phase 2 (15)            58   (Vol2 family; Win7-x86/XP closure)
++ Phase 6 (3)             61   (correlator meta-tools)
++ Phase 8 (5)             66   (Zeek/PCAP network evidence)
++ Phase 9 (4)             70   (log aggregation / non-Windows)
 ```
 
-**Total pre-submission effort:** ~18-24 hours. Resulting MITRE coverage:
-22 of 22 target techniques at Full or Partial-with-acknowledged-gap.
-Current breakdown (per `docs/MITRE_COVERAGE.md`): 13 Full, 9 Partial,
-0 Missing. Phase 5 closes 7 of the 9 Partials to Full.
+**MITRE coverage at the shipped 38-tool inventory** (per
+`docs/MITRE_COVERAGE.md`): **13 Full, 9 Partial, 0 Missing**. Phase 5
+closes 7 of the 9 Partials to Full; Phase 8 closes the deferred T1071
+(DNS) Partial. **Post-submission effort total:** ~24-33 hours across
+Phases 5/2/6/8/9.

@@ -21,7 +21,11 @@
 | Baselines | Protocol SIFT baselines: ROCBA done (31% verified). STARK-APT done (did-not-finish $10.99 over budget). SHIELDBASE done (held-out session). |
 | Architecturally enforced | TB1-TB5 architectural; TB6/TB7 hybrid (rule-based + LLM). See `docs/ARCHITECTURE.md`. |
 
-**Remaining work:** All evals complete. Next: demo-video recording (#33) → Devpost submission by 2026-06-15.
+**Remaining work:** None — all evals complete, demo video recorded and
+published (https://youtu.be/qtFDdMojSvM), repo public (MIT), and the
+Devpost project submitted (2026-06-15). Post-submission roadmap items
+tracked in `plans/MCP_TOOL_ROADMAP.md` (Vol2 legacy memory, registry/
+browser depth, correlator, network/PCAP, log aggregation, Linux/macOS).
 
 ---
 
@@ -162,13 +166,15 @@ Missing any → eliminated. Track all 8 as workstreams from week 1.
 
 ## 5. Test Data & Ground Truth
 
-All three datasets are intaked as of 2026-05-09. Final split:
+First three datasets intaked as of 2026-05-09; VANKO-001 dropped late
+(2026-06-12 build window). Final split:
 
 | Case ID | Role | Hosts | Bytes | Threat actor | Notes |
 |---|---|---|---|---|---|
-| `rocba-001` | **DEV** | 1 (memory only) | 18 GB | physical break-in | Single-host memory triage; baselined and v0/v1-evaluated |
+| `rocba-001` | **DEV** | 1 (memory; +disk W3-58) | ~100 GB | physical break-in / IP theft | Single-host triage; baselined and v0/v1-evaluated; C: drive added 2026-06-08 |
 | `test2-stark-apt` | **TRAIN / SECONDARY DEV** | 4 (disk + memory) | ~58 GB | APT1 (2012) | Multi-host enterprise; cross-source correlation surface |
 | `test3-shieldbase` | **VALIDATE + DEMO (held-out)** | 15+ (disk + memory) | ~199 GB | CRIMSON OSPREY (state-level) | Canonical SANS FOR508 lab — the scenario Protocol SIFT was built around |
+| `test4-vanko` | **VALIDATE (held-out)** | 1 (physical disk) | 116 GiB | insider IP theft (Anthony Vanko) | SANS FOR500 "Abducted Zebrafish"; late drop; single-shot 36.4 % → 100.0 % post-W3-60 |
 
 Per-case authoring lives in `eval/cases/<case_id>/`:
 - `case.yaml` — machine-readable context (loaded by SIFT-OWL at runtime)
@@ -192,12 +198,6 @@ For each held-out case the eval harness has access to ground-truth labels that t
 
 - `test3-shieldbase/case.yaml.ground_truth_iocs` — STUN.exe / msedge masquerade / pssdnsvc / atmfd.dll / `net use H: \\172.16.6.12\c$\Users` / 2023-01-25 timeline. Sourced from the Protocol SIFT case template, which IS this dataset's briefing.
 - `test2-stark-apt/case.md` — APT1 attribution from `precooked/redline/APT1 - IOCS/`.
-
-### Tool-path corrections discovered at intake (vs. Protocol SIFT global CLAUDE.md)
-
-| Tool | Protocol SIFT says | Actual on this instance |
-|---|---|---|
-| Volatility 3 | `python3 /opt/volatility3-2.20.0/vol.py` | `vol` in PATH (`/usr/local/bin/vol` → `/opt/volatility3/bin/vol`), v2.28.0 |
 
 ### Tool-path corrections discovered at intake (vs. Protocol SIFT global CLAUDE.md)
 
