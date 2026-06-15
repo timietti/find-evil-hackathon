@@ -172,6 +172,13 @@ The **strict-verified percentage** at the top of
 `validator_report.md` is the headline accuracy number for that
 iteration.
 
+> **Full raw transcript:** every run keeps the structured tool-execution
+> log (`audit/exec_log.jsonl`) + per-iteration `tool_calls.jsonl`; the
+> published **`vanko-demo`** run additionally ships the complete raw
+> turn-by-turn `transcript.jsonl` (agent reasoning + `tool_use` /
+> `tool_result` stream) under each `iterations/iter_N/`, so the entire
+> agent communication for the demo case is reviewable from the repo alone.
+
 ## Step 10 — Re-validate any prior run (optional, no cost)
 
 ```bash

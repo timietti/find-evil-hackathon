@@ -34,6 +34,10 @@ eval/ground_truth/*/raw/
 #                   exclude bulky run data
 eval/results/**/agent_outputs/
 eval/results/**/transcript.jsonl
+# Exception: keep the full raw turn-by-turn transcript for the published
+# vanko-demo run (the demo video case) so the complete agent reasoning +
+# tool_use/tool_result stream is reviewable from the repo alone.
+!eval/results/vanko-demo/**/transcript.jsonl
 eval/results/**/audit/raw/
 eval/results/**/*.raw
 
