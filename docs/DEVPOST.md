@@ -446,6 +446,7 @@ MIT — `LICENSE` in repo.
 | Deliverable | File / link |
 |---|---|
 | Public repo | `https://github.com/timietti/find-evil-hackathon` |
+| Demo video | `https://youtu.be/qtFDdMojSvM` |
 | Architecture diagram | `docs/architecture.svg` + `docs/architecture.png` |
 | Accuracy report | `docs/ACCURACY_REPORT.md` |
 | SHIELDBASE held-out (single-shot) | `eval/results/test3-shieldbase/sift-owl-v2/20260510T194945Z-sonnet/REPORT.md` — 71.4 % |

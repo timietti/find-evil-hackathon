@@ -3,6 +3,8 @@
 > **Submission for [FIND EVIL!](https://find-evil.devpost.com/)** — SANS hackathon, Jun 15 2026.
 >
 > Codename: **SIFT-OWL** — *Operate, Witness, Learn*.
+>
+> 🎥 **Demo video:** [youtu.be/qtFDdMojSvM](https://youtu.be/qtFDdMojSvM)
 
 ## Status
 
@@ -77,7 +79,7 @@ bash scripts/bootstrap_sift_tools.sh
 # Inspect the MCP tool inventory (no Vol3 / evidence required)
 sift-mcp inspect
 
-# Validate the test suite passes on your machine (279 tests pass)
+# Validate the test suite passes on your machine (283 pass, 1 skipped)
 pytest -x --deselect tests/test_disk_e2e.py \
           --deselect tests/test_vol3_memory_e2e.py \
           --deselect tests/test_ez_tools_e2e.py

@@ -59,7 +59,7 @@ pytest -x --deselect tests/test_disk_e2e.py \
           --deselect tests/test_ez_tools_e2e.py
 ```
 
-Expect: 279 tests pass.
+Expect: 283 pass, 1 skipped.
 
 ## Step 6 — Scaffold your case with Claude (no YAML to write)
 
