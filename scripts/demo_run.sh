@@ -2,15 +2,19 @@
 #
 # Live agent run for the Devpost demo video.
 #
-# Targets VANKO-001 (held-out FOR500 case). Converges in 2 iterations
-# (iter 1 65.8% → iter 2 100.0%, ~$1.75 / ~26 min wall). Self-correction
-# sequence is visible between iter 1 and iter 2.
+# Targets VANKO-001 (held-out FOR500 case). Runs the full 3 iterations
+# and climbs 30.0% → 52.4% → 80.0% strict-verified (demoted 14 → 10 → 4,
+# tools 52 → 21 → 11; ~$2.71 / ~34 min wall). Self-correction is visible
+# at both the iter1→iter2 and iter2→iter3 transitions.
 #
 # Usage:
 #   1. Start OBS recording (F9).
 #   2. Run this script.
-#   3. When the validator prints "Convergence: 0 demoted claims. Stopping."
-#      and the loop exits, stop OBS (F9).
+#   3. When the loop prints "iter 3 complete: ..." then
+#      "SIFT-OWL v2 run complete. → ..." and the shell prompt returns,
+#      stop OBS (F9). (It does NOT print "Convergence ... Stopping." —
+#      that only fires on a zero-demotion iteration; this run hits the
+#      --max-iterations 3 cap instead.)
 #
 # Pre-reqs: see docs/DEMO_SCRIPT.md "Pre-record checklist".
 #

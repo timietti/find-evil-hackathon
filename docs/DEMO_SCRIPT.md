@@ -11,10 +11,24 @@ The video covers two phases, both captured live, spliced in editing:
    hashes every file (chain of custody) and writes `case.yaml` +
    `case.md` + `prompt-*.md` from the bundled templates.
 2. **Investigator** — the v2 self-correction loop runs against
-   VANKO-001 (held-out FOR500 case). Converges in 2 iterations
-   (iter 1 = 65.8 %, iter 2 = 100.0 % / 37 verified). $1.75 / ~26 min
-   wall. The iter-1 → iter-2 transition is the self-correction
-   sequence.
+   VANKO-001 (held-out FOR500 case). The actual demo run
+   (`20260615T055412Z-sonnet`) ran the **full 3 iterations** and
+   climbed **30.0 % → 52.4 % → 80.0 %** strict-verified, with demoted
+   claims falling **14 → 10 → 4** and tool calls dropping
+   **52 → 21 → 11**. **$2.71 / 33.8 min** wall. Both the iter-1 → iter-2
+   and iter-2 → iter-3 transitions are self-correction sequences — we
+   show both.
+
+> **Why it stops at 80 %, not 100 %.** The loop hit the 3-iteration cap
+> (`--max-iterations 3`); it did **not** print
+> `Convergence: 0 demoted claims. Stopping.` — that line only fires on a
+> zero-demotion iteration, which this run never reached. Of the 4 claims
+> still demoted at iter 3, three are validator *tokenization* artifacts
+> (prose trapped between backticks; a self-referential `[CONFIRMED]`
+> token inside the agent's own "addressing demotions" note) and one is a
+> genuine validator negation edge on the SRUM SID claim — **not**
+> unsupported forensics. We say this on camera. An honest 80 % that
+> shows real self-correction beats a staged 100 %.
 
 VO is recorded separately in Audacity and layered over the OBS takes.
 
@@ -25,16 +39,19 @@ VO is recorded separately in Audacity and layered over the OBS takes.
 | Time | Source | What viewer sees |
 |---|---|---|
 | 0:00 – 0:10 | terminal | `claude < prompts/setup-new-case.md` — Claude takes over |
-| 0:10 – 0:35 | terminal, speed-ramp ~10× | Claude walks the evidence dir + hashes every file |
-| 0:35 – 0:55 | freshly-written `case.yaml` | the inventory Claude wrote — paths, SHA-256s, partition offsets |
-| 0:55 – 1:10 | freshly-written `prompt-vanko-demo.md` | the investigator prompt Claude wrote |
-| 1:10 – 1:25 | terminal | `bash scripts/demo_run.sh` — v2 loop starts |
-| 1:25 – 2:15 | terminal, speed-ramp ~10× | iter 1 progress — MCP-call counter, validator running |
-| 2:15 – 2:45 | `iter_1/validator_report.md` | header (65.8 %, 25 V / 7 P / 0 F), one **partial** verdict spelled out |
-| 2:45 – 3:10 | `iter_2/prompt.md` | "Iteration 1 validator flagged these claims …" section |
-| 3:10 – 4:00 | terminal, speed-ramp ~6× | iter 2 progress (the **self-correction**) |
-| 4:00 – 4:30 | `iter_2/validator_report.md` | header (100.0 %, 37/37, `Convergence: 0 demoted claims. Stopping.`) |
-| 4:30 – 5:00 | `final_response.md` | top of the report + close |
+| 0:10 – 0:32 | terminal, speed-ramp ~20× | Claude walks the evidence dir + hashes every file |
+| 0:32 – 0:50 | freshly-written `case.yaml` | the inventory Claude wrote — paths, SHA-256s, GPT partition offset |
+| 0:50 – 1:05 | freshly-written `prompt-vanko-demo.md` | the token-quoting validator contract Claude cloned in |
+| 1:05 – 1:18 | terminal | `bash scripts/demo_run.sh vanko-demo` — v2 loop starts |
+| 1:18 – 1:55 | terminal, speed-ramp ~22× | iter 1 progress — MCP-call counter, validator running |
+| 1:55 – 2:20 | `iter_1/validator_report.md` | header (**30.0 %**, 6 V / 13 P / 1 nc), one **partial** verdict spelled out |
+| 2:20 – 2:40 | `iter_2/prompt.md` | the prepended "Iteration 1 — flagged claims + validator notes" block |
+| 2:40 – 3:10 | terminal, speed-ramp ~21× | iter 2 progress (**self-correction #1**) |
+| 3:10 – 3:30 | `iter_2/validator_report.md` | header (**52.4 %**, 11 V / 8 P) — climbing, not converged |
+| 3:30 – 3:55 | `iter_3/prompt.md` | iter-2 feedback — the single- vs double-backslash insight |
+| 3:55 – 4:20 | terminal, speed-ramp ~23× | iter 3 progress (**self-correction #2**, only 11 tool calls) |
+| 4:20 – 4:45 | `iter_3/validator_report.md` | header (**80.0 %**, 16 V / 2 P / 1 F / 1 nc) |
+| 4:45 – 5:00 | `REPORT.md` | progression table + final report top + close |
 
 Every artifact on screen comes from one of the two live takes — nothing is staged.
 
@@ -49,7 +66,7 @@ Every artifact on screen comes from one of the two live takes — nothing is sta
 4. OBS profile: 1920×1080 @ 30 fps, H.264 MP4, CRF 18.
 5. Terminal: GNOME Terminal full-screen, font ≥ 16 pt, dark theme.
 6. Mic level test in Audacity — peaks at ≈ −12 dB.
-7. Free disk for raw captures: ~3 GB for ~30 min of CRF-18 video.
+7. Free disk for raw captures: ~4 GB for ~40 min of CRF-18 video.
 
 ---
 
@@ -64,18 +81,18 @@ bash scripts/demo_setup.sh
 `scripts/demo_setup.sh` (committed) launches Claude Code with
 `prompts/setup-new-case.md` pre-loaded, then types one line:
 
-> *"The evidence is at `/cases/find-evil-test4/`. Briefly: SANS
-> FOR500 'Abducted Zebrafish' — single-host insider IP theft on a
-> Microsoft Surface 3. Call the case `vanko-demo`."*
+> *"The evidence is at `/cases/find-evil-test4/`. Briefly: a
+> single-host insider IP theft on a Microsoft Surface 3. Call the case
+> `vanko-demo`."*
 
-Claude then walks the evidence dir, sha-256s every file (~5 min for
-the 116 GiB E01 chain), classifies each, reads the partition table,
-and writes three files. When Claude prints the summary block ("Case
-registered: vanko-demo …"), F9 to stop OBS.
+Claude then walks the evidence dir, sha-256s every file, classifies
+each, reads the GPT partition table off the disk image, and writes
+three files. When Claude prints the summary block ("Case registered:
+vanko-demo …"), F9 to stop OBS.
 
 Output: `~/Videos/sift-owl-demo-setup-raw.mp4` (~5–10 min).
 
-## Step 2 — Investigator capture (one OBS take, ≈ 26 min)
+## Step 2 — Investigator capture (one OBS take, ≈ 34 min)
 
 ```bash
 # F9 to start OBS (fresh recording).
@@ -84,27 +101,41 @@ bash scripts/demo_run.sh vanko-demo
 ```
 
 (`demo_run.sh` takes the case-id from step 1 as the first argument;
-defaults to `test4-vanko` if omitted.) When the loop prints
-`Convergence: 0 demoted claims. Stopping.` and exits, F9 to stop OBS.
+defaults to `test4-vanko` if omitted. It runs `--model sonnet
+--max-budget-usd 5.00 --max-iterations 3`.) The loop runs all three
+iterations. **Stop cue:** when the terminal prints
 
-Output: `~/Videos/sift-owl-demo-run-raw.mp4` (≈ 25–26 min).
+```
+iter 3 complete: verified=16/20 (demoted=4) cost=$0.626 wall=9.5m
+SIFT-OWL v2 run complete. → eval/results/vanko-demo/sift-owl-v2/<run-id>
+```
 
-## Step 3 — Cutaway captures (≈ 5 min total)
+followed by the JSON summary block and the shell prompt returns, F9 to
+stop OBS. (Do **not** wait for "Convergence … Stopping." — that line
+does not fire on a capped run.)
 
-Five short OBS clips of the file viewers. F9 / F9 per clip, ~30 s each:
+Output: `~/Videos/sift-owl-demo-run-raw.mp4` (≈ 33–34 min).
+
+## Step 3 — Cutaway captures (≈ 6 min total)
+
+Eight short OBS clips of the file viewers. F9 / F9 per clip, ~30 s each:
 
 ```bash
 bash scripts/demo_open_artifacts.sh vanko-demo
 ```
 
-Opens each markdown / YAML file in `bat --paging=always` in order:
+Opens each markdown / YAML file in `bat --paging=always` in order
+(paths relative to the run dir
+`eval/results/vanko-demo/sift-owl-v2/<run-id>/`):
 
-1. `eval/cases/vanko-demo/case.yaml`      (scene 3)
+1. `eval/cases/vanko-demo/case.yaml`            (scene 3)
 2. `eval/agents/sift_owl_v2/prompt-vanko-demo.md` (scene 4)
-3. `iter_1/validator_report.md`           (scene 7)
-4. `iter_2/prompt.md`                     (scene 8)
-5. `iter_2/validator_report.md`           (scene 10)
-6. `final_response.md`                    (scene 11)
+3. `iterations/iter_1/validator_report.md`      (scene 7)
+4. `iterations/iter_2/prompt.md`                (scene 8)
+5. `iterations/iter_2/validator_report.md`      (scene 10)
+6. `iterations/iter_3/prompt.md`                (scene 11)
+7. `iterations/iter_3/validator_report.md`      (scene 13)
+8. `REPORT.md`                                  (scene 14)
 
 For each: F9, scroll to the section the table calls out, F9.
 
@@ -113,13 +144,13 @@ For each: F9, scroll to the section the table calls out, F9.
 Open Audacity, mono 48 kHz/24-bit, record the VO script (bottom of
 this file) in one pass. Save as `~/Audio/sift-owl-vo.wav`.
 
-## Step 5 — Edit (kdenlive or DaVinci Resolve, ≈ 60 min)
+## Step 5 — Edit (kdenlive or DaVinci Resolve, ≈ 75 min)
 
 Three tracks:
 
 | Track | Content |
 |---|---|
-| V1 | setup raw + run raw + 6 cutaway clips, cut and speed-ramped per the scene table above |
+| V1 | setup raw + run raw + 8 cutaway clips, cut and speed-ramped per the scene table above |
 | A1 | `sift-owl-vo.wav` aligned to scene boundaries |
 | A2 *(optional)* | royalty-free ambient bed at −22 LUFS |
 
@@ -127,16 +158,19 @@ Speed-ramp targets:
 
 ```
 00:00 - 00:10   setup raw  1×    (the claude invocation + first prompt)
-00:10 - 00:35   setup raw 10×    (hashing + classification)
-00:35 - 00:55   cut: case.yaml
-00:55 - 01:10   cut: prompt-vanko-demo.md
-01:10 - 01:25   run raw    1×    (loop start)
-01:25 - 02:15   run raw   10×    (iter 1)
-02:15 - 02:45   cut: iter_1/validator_report.md
-02:45 - 03:10   cut: iter_2/prompt.md
-03:10 - 04:00   run raw    6×    (iter 2 — self-correction)
-04:00 - 04:30   cut: iter_2/validator_report.md
-04:30 - 05:00   cut: final_response.md
+00:10 - 00:32   setup raw 20×    (hashing + classification)
+00:32 - 00:50   cut: case.yaml
+00:50 - 01:05   cut: prompt-vanko-demo.md
+01:05 - 01:18   run raw    1×    (loop start)
+01:18 - 01:55   run raw   22×    (iter 1, 13.7 min wall)
+01:55 - 02:20   cut: iter_1/validator_report.md
+02:20 - 02:40   cut: iter_2/prompt.md
+02:40 - 03:10   run raw   21×    (iter 2 — self-correction #1, 10.6 min)
+03:10 - 03:30   cut: iter_2/validator_report.md
+03:30 - 03:55   cut: iter_3/prompt.md
+03:55 - 04:20   run raw   23×    (iter 3 — self-correction #2, 9.5 min)
+04:20 - 04:45   cut: iter_3/validator_report.md
+04:45 - 05:00   cut: REPORT.md
 ```
 
 Burn-in subtitles from the VO track.
@@ -165,100 +199,124 @@ ffmpeg -i ~/Videos/sift-owl-demo-final.mp4 -af loudnorm=print_format=json -f nul
 
 ---
 
-## VO script (one continuous take, ~760 words)
+## VO script (one continuous take, ~830 words)
 
 > ### 0:00 — Setup invocation (10 s)
 >
 > "This is SIFT-OWL — an autonomous DFIR agent running on the SANS
 > SIFT Workstation. Before the agent investigates anything, it needs
 > a registered case. I'm handing Claude the bundled setup prompt and
-> pointing it at a folder of evidence."
+> pointing it at a folder of raw evidence."
 >
-> ### 0:10 — Hashing + scaffolding (25 s, over the timelapse)
+> ### 0:10 — Hashing + scaffolding (22 s, over the timelapse)
 >
 > "Claude walks the evidence directory, sha-two-fifty-six hashes
-> every file — that's the chain of custody anchor; the harness will
-> refuse to launch later if any of these hashes drifts — classifies
+> every file — that's the chain-of-custody anchor; the harness
+> re-hashes at the end and aborts if any byte drifted — classifies
 > each artifact, reads the GPT partition table off the disk image,
 > and writes three files: a machine-readable case manifest, a
 > human-readable briefing, and an investigator prompt cloned from
 > the bundled template. I never wrote a line of YAML."
 >
-> ### 0:35 — case.yaml on screen (20 s)
+> ### 0:32 — case.yaml on screen (18 s)
 >
-> "The manifest Claude wrote. Single physical disk, twenty-one E01
-> segments, one hundred sixteen gigabytes raw. SHA-256 anchor on the
-> first segment. The GPT partition table is read off the disk: six
-> partitions, the main C: drive is partition three starting at sector
-> one-four-one-one-zero-seven-two. The agent's tools will pass that
-> offset to The Sleuth Kit."
+> "The manifest Claude wrote. A single physical Surface 3 disk image —
+> one hundred sixteen gigabytes raw across a twenty-one-segment E-oh-one
+> chain — with the MD5, SHA-1, and SHA-256 anchors. Claude read the GPT
+> table: six partitions, and the main C: drive is partition three
+> starting at sector one-four-one-one-zero-seven-two. The agent's tools
+> pass that offset straight to The Sleuth Kit."
 >
-> ### 0:55 — prompt-vanko-demo.md on screen (15 s)
+> ### 0:50 — prompt-vanko-demo.md on screen (15 s)
 >
-> "And the investigator prompt — case briefing, evidence inventory,
-> goals one through four. The token-quoting style block at the
-> bottom is verbatim from the template — it's a non-negotiable
-> validator contract."
+> "And the investigator prompt. Note the token-quoting style block at
+> the bottom — it's a non-negotiable validator contract: quote bare
+> values, not field-name compounds, so the validator can substring-match
+> each token against the cited tool's parsed JSON. That contract is
+> exactly what the self-correction loop ends up enforcing."
 >
-> ### 1:10 — Loop start (15 s)
+> ### 1:05 — Loop start (13 s)
 >
-> "Now the actual investigation. The v2 self-correction loop, three
+> "Now the investigation. The v2 self-correction loop — three
 > iterations max, five-dollar budget cap, Sonnet four-six. The agent
-> runs inside a Claude Code subprocess with no shell, no file
-> system, and no network — only thirty-eight typed read-only
-> forensic functions are callable."
+> runs inside a Claude Code subprocess with no shell, no file system,
+> and no network — only thirty-eight typed, read-only forensic
+> functions are callable."
 >
-> ### 1:25 — Iter 1 (50 s — over the timelapse)
+> ### 1:18 — Iter 1 (37 s — over the timelapse)
 >
-> "Iter one. Every MCP call gets one row in the audit log with an
-> exec-ID, the arguments, the SHA-two-fifty-six of inputs and
-> outputs, and a parsed summary. The agent decides which tools to
-> fire — partition tables, MFT extraction, EVTX, prefetch, SRUM —
-> then writes its final report. The validator parses every
-> CONFIRMED claim into typed tokens and checks each one against
-> the cited tool's parsed JSON."
+> "Iteration one. Every MCP call gets one row in the audit log with an
+> exec-ID, the arguments, and the SHA-two-fifty-six of inputs and
+> outputs. The agent fires fifty-two tools — partition stat, MFT,
+> Prefetch, SRUM — then writes its report. The validator parses every
+> CONFIRMED claim into typed tokens and checks each against the cited
+> tool's parsed JSON."
 >
-> ### 2:15 — Iter 1 validator report (30 s)
+> ### 1:55 — Iter 1 validator report (25 s)
 >
-> "Iter one: sixty-five-point-eight percent strict-verified.
-> Twenty-five claims passed, seven came back as partial — the
-> validator extracted a token, looked it up in the cited tool's
-> parsed JSON, and didn't find an exact match. Here's one — a
-> compound where the agent wrote `is_directory true` as a single
-> token instead of the bare value `true`. Can't substring-match
-> that against the JSON haystack."
+> "Iteration one: thirty percent strict-verified. Six claims passed
+> clean; thirteen came back partial — some tokens matched, some didn't.
+> Here's the pattern that bites the whole report: the agent quoted the
+> Skype path with double backslashes — `\\Users\\PC User\\...` — but the
+> parsed MFT JSON stores `parent_path` with single backslashes. Exact
+> token, wrong escaping, no match. The validator notes precisely which
+> tokens it couldn't find."
 >
-> ### 2:45 — Iter 2 prompt (25 s)
+> ### 2:20 — Iter 2 prompt (20 s)
 >
 > "What the loop hands the agent next. The harness prepends the
-> iter-1 prompt with the flagged claims and the validator's notes
-> on what exactly didn't match. The agent picks them up and decides
-> whether to re-investigate, re-cite, or demote each one."
+> iteration-one prompt with each flagged claim, the tokens that
+> matched, and the tokens that didn't. The agent picks them up and
+> decides, per claim, whether to re-investigate, re-cite, or demote."
 >
-> ### 3:10 — Iter 2 (50 s — over the timelapse)
+> ### 2:40 — Iter 2 (30 s — over the timelapse)
 >
-> "Iter two — the self-correction. The agent rephrases the flagged
-> claims with bare-value tokens and adds the missing citations.
-> Notice the call count is much lower this time: it doesn't redo
-> the whole investigation, it surgically addresses what the
-> validator flagged. The validator re-runs."
+> "Iteration two — the first self-correction. Notice the tool count
+> drops to twenty-one: the agent isn't redoing the investigation, it's
+> surgically re-querying the exec-IDs it already has to read back the
+> exact stored strings. It re-cites, adds missing fields, and rewrites
+> the flagged claims. The validator re-runs."
 >
-> ### 4:00 — Iter 2 validator report (30 s)
+> ### 3:10 — Iter 2 validator report (20 s)
 >
-> "Iter two: one hundred percent strict-verified. Thirty-seven of
-> thirty-seven claims now pass. Validator prints 'Convergence: zero
-> demoted claims — stopping.' The loop terminates at iter two; iter
-> three doesn't fire. Total cost, a dollar seventy-five; total
-> wall, twenty-six minutes; thirteen MCP calls."
+> "Iteration two: fifty-two percent — verified jumps from six to eleven,
+> demoted claims fall from fourteen to ten. Climbing, not yet
+> converged. The loop continues because verified count improved."
 >
-> ### 4:30 — Final report + close (30 s)
+> ### 3:30 — Iter 3 prompt (25 s)
 >
-> "Final report. The agent reconstructed the full IP-theft spine:
-> fourteen classified documents in OneDrive, all sharing the exact
-> timestamp JARVIS detected the transfer; the mapped Stark-research
-> drive at letter D since May; the syncing OneDrive hierarchy.
-> Every claim is exec-ID-cited, every exec-ID is in the audit log,
-> every finding reproducible from raw bytes. Repo:
+> "The second round of feedback. By now the root cause is clear in the
+> agent's own working notes: MFT `parent_path` values are stored with
+> single backslashes — the parsed value, not the display form. It also
+> spots two of its own artifacts: a planning preamble and a footer line
+> the validator mis-read as tagless CONFIRMED claims. It strips both."
+>
+> ### 3:55 — Iter 3 (25 s — over the timelapse)
+>
+> "Iteration three — the second self-correction, and the most
+> surgical: eleven tool calls. The agent rewrites every path token to
+> single-backslash form, multi-cites the volume serial from the
+> filesystem stat output, and removes the mis-tokenized text."
+>
+> ### 4:20 — Iter 3 validator report (25 s)
+>
+> "Iteration three: eighty percent strict-verified — sixteen of twenty.
+> Demoted claims down to four. And I want to be precise about those
+> four, because this is an honest demo: three are validator
+> *tokenization* edge cases — prose caught between backticks, and a
+> `CONFIRMED` token sitting inside the agent's own note explaining a
+> previous fix — and one is a genuine negation edge on the SRUM SID
+> claim. None of the four is an unsupported forensic finding."
+>
+> ### 4:45 — Final report + close (15 s)
+>
+> "The loop stops at the three-iteration cap, thirty to fifty-two to
+> eighty percent. Total cost, two dollars seventy-one; total wall,
+> thirty-four minutes. The final report reconstructs the IP-theft
+> spine — classified docs copied into OneDrive at one shared timestamp,
+> a VeraCrypt container built the night before, the mapped Stark drive
+> at D — every CONFIRMED claim exec-ID-cited, every exec-ID in the
+> audit log, every finding reproducible from raw bytes. Repo:
 > github.com/timietti slash find-evil-hackathon. Open, MIT."
 
 ---
@@ -279,3 +337,5 @@ ffmpeg -i ~/Videos/sift-owl-demo-final.mp4 -af loudnorm=print_format=json -f nul
 - [ ] File ≤ 100 MB
 - [ ] YouTube unlisted backup uploaded
 - [ ] Devpost form has both URLs
+</content>
+</invoke>

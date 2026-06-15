@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# Opens the six artifacts the demo edit cuts to (2 from setup phase,
-# 4 from run phase).
+# Opens the eight artifacts the demo edit cuts to (2 from setup phase,
+# 6 from the 3-iteration run phase).
 #
 # Each `bat` invocation is a separate paged view: scroll to the section
 # you want on-screen, F9 to stop OBS recording, q to quit bat, F9 to
@@ -40,7 +40,9 @@ clips=(
     "iter 1 validator report  → scene 7"  "$RUN_DIR/iterations/iter_1/validator_report.md"
     "iter 2 prompt (flagged)  → scene 8"  "$RUN_DIR/iterations/iter_2/prompt.md"
     "iter 2 validator report  → scene 10" "$RUN_DIR/iterations/iter_2/validator_report.md"
-    "final report             → scene 11" "$RUN_DIR/final_response.md"
+    "iter 3 prompt (flagged)  → scene 11" "$RUN_DIR/iterations/iter_3/prompt.md"
+    "iter 3 validator report  → scene 13" "$RUN_DIR/iterations/iter_3/validator_report.md"
+    "final report (REPORT.md) → scene 14" "$RUN_DIR/REPORT.md"
 )
 
 for ((i=0; i < ${#clips[@]}; i+=2)); do
@@ -71,4 +73,4 @@ for ((i=0; i < ${#clips[@]}; i+=2)); do
 done
 
 echo
-echo "All six cutaway clips queued. Done."
+echo "All eight cutaway clips queued. Done."
