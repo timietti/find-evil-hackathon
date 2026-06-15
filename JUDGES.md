@@ -5,6 +5,18 @@ evidence. No public deployment URL — SIFT-OWL is a local, read-only
 forensic agent that runs on the SANS SIFT Workstation against an
 evidence directory you point it at.
 
+> **Evidence accessibility.** The four bundled cases were all run
+> against **hackathon-provided evidence** — supplied by the FIND
+> EVIL! organisers and downloaded from the official distribution
+> link to `/cases/find-evil-test*/`. No proprietary or
+> examiner-only datasets are involved, so a judge with the same
+> hackathon access can drop those images at the same paths and
+> reproduce any run exactly (per-file SHA-256 anchors live in
+> each `eval/cases/<id>/case.yaml`; full provenance in
+> [`EVIDENCE.md`](EVIDENCE.md)). To run against fresh evidence
+> instead, point the agent at your own directory per the steps
+> below.
+
 | Setting | Value |
 |---|---|
 | Target OS | SANS SIFT Workstation (Ubuntu 22.04 / 24.x, x86-64) |

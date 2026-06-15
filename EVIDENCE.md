@@ -12,6 +12,16 @@ against their own evidence registers a new case via the
 walkthrough in `JUDGES.md` (Claude scaffolds `case.yaml` from
 hashed evidence — no schema authoring required).
 
+> **Accessibility for judges.** Every evidence set listed here is
+> **first-party hackathon material** — supplied by the FIND EVIL!
+> organisers and downloaded from the official distribution link
+> to a fixed `/cases/find-evil-test*/` path tree on the SIFT
+> Workstation. Nothing is privately sourced, paywalled, or
+> examiner-only. A judge with the same hackathon access can pull
+> the identical images and reproduce every run bit-for-bit — the
+> SHA-256 anchors pinned in each `eval/cases/<id>/case.yaml`
+> confirm an exact match before the agent will launch.
+
 ---
 
 ## Per-case integrity

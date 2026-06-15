@@ -494,6 +494,47 @@ evidence file in `case.yaml`. Re-checked at run end where wall-time allowed:
 `/cases/` never written to. All derivative outputs go to `eval/results/<case>/`
 or `audit/raw/`.
 
+### 3.6 The one prompt-side control — and what happens when the model ignores it
+
+Every restriction that protects evidence is **architectural**, not prose. The
+agent cannot modify, copy, mount-rw, or exfiltrate evidence because the MCP
+boundary exposes no tool that can: trust boundaries TB1–TB5
+(`docs/ARCHITECTURE.md`) are each marked *Architectural* — built-in
+`Bash`/`Read`/`Edit`/`Write`/`WebFetch` are denied at the harness, paths are
+validated against an allow-list, `shell=True` is never used, and the inventory
+contains no network primitive. There is therefore **no prompt-based evidence
+restriction that a misbehaving model could "ignore"** — the spoliation surface
+is closed below the prompt.
+
+The **only** control that depends on the prompt is **TB7 — claim-tag
+discipline**: the agent is *asked* to label each claim `[CONFIRMED]` /
+`[INFERRED]` / `[HYPOTHESIS]` / `[GAP]` and to cite an `exec_id`. Crucially,
+the prompt is **not a trust dependency** here. When the model deviates, the
+failure mode is **deterministic validator-demotion, not silent acceptance**:
+the post-hoc validator (TB6) re-derives every token from the cited tool's
+parsed output and demotes any claim it cannot ground, regardless of how the
+agent tagged it. A model that over-claims does not score higher — it scores
+*lower*, because unsupported claims are stripped before the strict-verified
+percentage is computed.
+
+This is observable in the runs, not just asserted:
+
+- **VANKO-001 W3-59 (held-out, 36.4 %)** — the agent quoted compound
+  `field "value"` tokens that did not substring-match the JSON haystack. The
+  validator refused to verify them and the held-out score cratered to 36.4 %.
+  The deviation was caught and *reflected in the number*, not hidden; §2.4 +
+  Bug H document the gap, and the W3-60 prompt-side fix lifted the next run to
+  100.0 %.
+- **SHIELDBASE iter-1 (§6.1)** — 56/56 claims demoted to `not_confirmed` when
+  the agent's citation format fell outside the validator's recogniser. Again:
+  the architecture's response to a prompt-side discipline miss was to *withhold
+  verification*, never to wave the claims through.
+
+In short: prompt-side discipline failures degrade the **score**, never the
+**evidence integrity**, and never produce an unverified claim presented as
+verified. The post-hoc validator is the architectural backstop that makes the
+single prompt-dependent control safe to rely on.
+
 ---
 
 ## 4. MITRE ATT&CK coverage
