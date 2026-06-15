@@ -138,7 +138,7 @@ Every regression a real run surfaced got a fix + a test. Final v6:
   (SRUM — replaces Linux-broken SrumECmd), YARA 4.5, bulk_extractor 2.0.3
 - **Validator LLMs**: Sonnet 4.6 for the investigator, Haiku 4.5 for the
   prose-check rescue pass
-- **Testing**: 279 pytest unit tests + slow E2E markers; per-MCP-call
+- **Testing**: 284 pytest unit tests + slow E2E markers; per-MCP-call
   audit trail enables full replay
 
 ### Architecture diagram

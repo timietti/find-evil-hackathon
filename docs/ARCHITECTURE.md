@@ -72,12 +72,12 @@ After each iteration, a non-LLM validator pass runs:
 
 | # | Boundary | Enforcement | Type | Test |
 |---|---|---|---|---|
-| TB1 | Agent → tool execution | MCP function whitelist; built-in `Bash` / `Read` / `Edit` / `Write` / `WebFetch` / `Agent` denied via `--disallowed-tools`; only `mcp__sift-owl__*` allow-listed | **Architectural** | `tests/test_mcp_server.py::test_mcp_server_lists_all_tools` asserts the 20-tool inventory; agent harness wires `DISALLOWED_BUILTINS` |
+| TB1 | Agent → tool execution | MCP function whitelist; built-in `Bash` / `Read` / `Edit` / `Write` / `WebFetch` / `Agent` denied via `--disallowed-tools`; only `mcp__sift-owl__*` allow-listed | **Architectural** | `tests/test_mcp_server.py::test_mcp_server_lists_all_tools` asserts the 38-tool inventory; agent harness wires `DISALLOWED_BUILTINS` |
 | TB2 | MCP server → arbitrary paths | `validate_evidence_path()` rejects paths outside the allow-list (`SIFT_OWL_EVIDENCE_ROOT`, default `/cases`); resolves symlinks; raises `PathValidationError` | **Architectural** | `tests/test_vol3_image_info.py` — path-traversal + outside-root cases |
 | TB3 | Tool subprocess → shell injection | All invocations are `subprocess.run(argv_list, ...)`; **`shell=True` is never used**; argv built only from validated typed inputs | **Architectural** | grep-asserted: `grep -r "shell=True" mcp_server/` returns nothing |
 | TB4 | EZ Tools → arbitrary input file | EZ Tools accept only `extract_exec_id`; `_resolve_extract()` requires the row's `tool == "tsk_icat_extract"` and the on-disk file to exist under `audit/raw/extracts/` | **Architectural** | `tests/test_ez_tools_parsers.py` + e2e tests pass only when the extract chain is honored |
 | TB5 | Agent → network egress | No tool exposes HTTP/curl/wget; Vol3 PDB downloads are the only outbound traffic, handled by the subprocess at first-run | **Architectural** | Implicit — MCP inventory contains no networking primitives |
-| TB6 | Claim → cited evidence | Validator parses every CONFIRMED/INFERRED claim into structured tokens; verifies each token is in the cited tool's `parsed_summary` (or LLM prose-checks the rest) | **Hybrid** (rule-based + LLM) | `tests/test_validator.py` — 54 tests including paren-aware negation, timestamp prefix matching, mocked LLM prose check |
+| TB6 | Claim → cited evidence | Validator parses every CONFIRMED/INFERRED claim into structured tokens; verifies each token is in the cited tool's `parsed_summary` (or LLM prose-checks the rest) | **Hybrid** (rule-based + LLM) | `tests/test_validator.py` — 71 tests including paren-aware negation, timestamp prefix matching, mocked LLM prose check |
 | TB7 | Inference vs. confirmation | Agent prompts require explicit `[CONFIRMED]` / `[INFERRED]` / `[HYPOTHESIS]` / `[GAP]` tag per claim; validator demotes mismatches | **Prompt + post-hoc** | `tests/test_validator.py::test_parse_claims_*` |
 
 **Not enforced architecturally (documented limits):**
@@ -124,7 +124,7 @@ The agent sees `exec_id + summary + first 50 rows`. The full row list stays on d
 
 The companion **prompt v6** carries the W3-55 citation-discipline paragraph (forbids section-header `[CONFIRMED]` tags — each tag must be on a per-claim line with its own exec_id) and the W3-60 token-quoting Good/Bad table. The W3-55 + W3-60 paragraphs are prompt-side fixes, not validator code changes — they shape how the agent surfaces tokens so the unchanged rule-based extractor can match them against the JSON haystack.
 
-### Memory (Volatility 3) — 11
+### Memory (Volatility 3) — 17
 
 | Function | Wraps | Notes |
 |---|---|---|
@@ -139,6 +139,12 @@ The companion **prompt v6** carries the W3-55 citation-discipline paragraph (for
 | `vol3_userassist(image)` | `windows.registry.userassist` | Per-user Explorer-driven program execution |
 | `vol3_dlllist(image, pid?)` | `windows.dlllist` | DLLs per process; flag in-memory injected modules |
 | `vol3_handles(image, pid)` | `windows.handles --pid` | Per-PID handles; mutex names = malware-family fingerprints |
+| `vol3_scheduled_tasks(image)` | `windows.scheduled_tasks` | Task Scheduler entries from in-memory registry (T1053) |
+| `vol3_hashdump(image)` | `windows.hashdump` | Local SAM hashes (T1003.002 OS Credential Dumping) |
+| `vol3_cachedump(image)` | `windows.cachedump` | LSA cached domain credentials (T1003.005 DCC2/MSCASH) |
+| `vol3_skeleton_key_check(image)` | `windows.skeleton_key_check` | Mimikatz skeleton-key patch detection |
+| `vol3_envars(image, pid?)` | `windows.envars [--pid PID]` | Per-process environment variables |
+| `vol3_vadyarascan(image, pid, yara_file)` | `windows.vadyarascan --pid --yara-file` | Per-process in-memory YARA scan over VAD regions |
 
 ### Disk (Sleuth Kit + EWF) — 6
 
@@ -153,7 +159,7 @@ The companion **prompt v6** carries the W3-55 citation-discipline paragraph (for
 
 `tsk_icat_extract` is **the only path into EZ Tools** — they take the resulting `exec_id`, never a filesystem path. This is TB4.
 
-### Windows artifacts (EZ Tools) — 8
+### Windows artifacts (EZ Tools) — 10
 
 | Function | Wraps | Pre-req |
 |---|---|---|
@@ -165,6 +171,17 @@ The companion **prompt v6** carries the W3-55 citation-discipline paragraph (for
 | `ezt_jumplist_parse(extract_exec_id)` | `JLECmd --json` | extract a `.automaticDestinations-ms` / `.customDestinations-ms` |
 | `ezt_recyclebin_parse(extract_exec_id)` | `RBCmd --json` | extract a `$Recycle.Bin\S-*\$I*` record |
 | `ezt_srum_parse(extract_exec_id)` | libyal `libesedb` (pyesedb) — *not* SrumECmd; SrumECmd refuses to run on Linux | extract `Windows\System32\sru\SRUDB.dat` (Win8+) |
+| `ezt_task_xml_parse(extract_exec_id)` | Task Scheduler XML parser (T1053) | extract a `Windows\System32\Tasks\…` job XML |
+| `ezt_persistence_keys_parse(extract_exec_id)` | `RECmd` persistence-triage batch | extract a registry hive (`SYSTEM` / `SOFTWARE` / `NTUSER.DAT`) |
+
+### Threat hunt + carving + hashing — 4
+
+| Function | Wraps | Notes |
+|---|---|---|
+| `yara_scan_extract(extract_exec_id, rules)` | `yara -s -m -w <rules> <file>` | File-level YARA scan of a prior extract |
+| `bulk_extract(image, ...)` | `bulk_extractor -j <n> -o <out>` | Multi-scanner feature extraction (emails, URLs, PII, etc.) |
+| `strings_extract(extract_exec_id, min_len?)` | `bstrings.dll -f <file> --ms <min>` | Printable-string extraction from an extract |
+| `hash_file(extract_exec_id, ssdeep?)` | MD5 + SHA-1 + SHA-256 (+ optional ssdeep) | Hash a prior extract |
 
 ### Drill helper — 1
 
@@ -240,7 +257,7 @@ The validator has shipped across seven iterations; each version is preserved as 
 | **v7 (W3-56/57)** | Bug F (skip backticked UUIDv7 in `tokens.quoted` via `_UUID_SHAPE`) + Bug G (`.\\` dot-prefix path normalisation via `p.lstrip(".")`) + per-exec_id parsed-haystack cache (16 min → 3 min on 647 MB MFT) | ROCBA W3-57 retroactive re-validate + perf on large MFT JSON |
 | **prompt v6 (W3-55+W3-60)** | Prompt-side: W3-55 forbids section-header `[CONFIRMED]` tags (each claim on its own line with its own exec_id); W3-60 token-quoting Good/Bad table (quote bare values, not `field_name "value"` compounds) | Bug H surfaced on VANKO W3-59 held-out (36.4 %); W3-61 retry hit 100.0 % strict-verified with the prompt fix alone, no validator-code change |
 
-All versions ship in `agents/validator/`. Tests in `tests/test_validator.py` cover every regression that drove a version bump (now 284 tests).
+All versions ship in `agents/validator/`. Tests in `tests/test_validator.py` cover every regression that drove a version bump (now 71 tests).
 
 ## Termination & safety
 
